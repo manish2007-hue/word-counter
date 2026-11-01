@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Logo from '../components/Logo.astro';
 
 interface Props {
   title?: string;
@@ -23,7 +24,7 @@ const {
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isHome = canonicalSlug === '';
-const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://wordcountr.app';
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://cleanwordcounter.com';
 const siteUrl = base ? `${siteOrigin}${base}` : siteOrigin;
 const cleanSlug = canonicalSlug ? canonicalSlug.replace(/^\/+|\/+$/g, '') : '';
 const canonicalUrl = cleanSlug ? `${siteUrl}/${cleanSlug}/` : `${siteUrl}/`;
@@ -59,6 +60,7 @@ const finalSchema = schema || defaultSchema;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${base}/favicon.svg`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
     <meta name="theme-color" content="#171717" />
     <meta name="author" content="WordCountr Pro" />
@@ -122,15 +124,10 @@ const finalSchema = schema || defaultSchema;
     <header class="sticky top-0 z-50 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa]/85 dark:bg-[#000000]/85 backdrop-blur-md transition-colors duration-200">
       <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         
-        <!-- Left Brand Logo (Vercel Iconic Triangle + Wordmark) -->
+        <!-- Left Brand Logo -->
         <div class="flex items-center gap-3">
-          <a href={`${base}/`} class="group flex items-center gap-2.5">
-            <div class="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black transition-transform group-hover:scale-105 active:scale-95">
-              <!-- Vercel Triangle Glyph -->
-              <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 76 65">
-                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-              </svg>
-            </div>
+          <a href={`${base}/`} class="group flex items-center gap-2">
+            <Logo size={24} class="transition-transform group-hover:scale-110 active:scale-95" />
             <div class="flex items-center gap-2">
               <span class="text-[15px] font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
               <span class="hidden sm:inline-block rounded-[4px] border border-[#ebebeb] dark:border-[#262626] bg-[#f2f2f2] dark:bg-[#141414] px-1.5 py-0.5 font-mono text-[10px] font-medium text-[#8f8f8f] dark:text-[#707070]">
@@ -145,24 +142,41 @@ const finalSchema = schema || defaultSchema;
           <a href={`${base}/`} class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === '' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Word Counter
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Social Limits
+          <a href={`${base}/ai-token-counter`} data-nav-tab="tokens" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'ai-token-counter' || canonicalSlug === 'llm-token-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            AI Token Counter
           </a>
           <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'readability-checker' || canonicalSlug === 'flesch-kincaid-readability-calculator' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Readability
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Keyword Density
+          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            Social Limits
           </a>
           <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'academic-word-counter' || canonicalSlug === 'academic-word-counter-without-citations' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Academic Mode
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/llm-token-counter`} data-nav-tab="tokens" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'llm-token-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            LLM Tokens
+          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            Keywords
+          </a>
+
+          <!-- Subtle Divider for Site Authority & SEO Pages -->
+          <div class="h-3.5 w-px bg-[#ebebeb] dark:bg-[#222222] mx-1"></div>
+
+          <!-- Top SEO & Trust Pages (About, Contact, Privacy, Terms) -->
+          <a href={`${base}/about`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'about' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            About
+          </a>
+          <a href={`${base}/contact`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'contact' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            Contact
+          </a>
+          <a href={`${base}/privacy`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            Privacy
+          </a>
+          <a href={`${base}/terms`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'terms' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            Terms
           </a>
         </nav>
 
-        <!-- Right Side Utility Controls: Privacy Eyebrow, PWA, Theme Toggle, Mobile Trigger -->
+        <!-- Right Side Utility Controls: Privacy Eyebrow, Theme Toggle, Mobile Trigger -->
         <div class="flex items-center gap-2">
           
           <!-- Trust Privacy Pill (Vercel Mono Spec-sheet Badge) -->
@@ -171,20 +185,12 @@ const finalSchema = schema || defaultSchema;
             <span>100% Local</span>
           </div>
 
-          <!-- PWA Install Button (Vercel 6px Square Button) -->
-          <button id="pwa-install-btn" type="button" class="hidden sm:inline-flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 text-[12px] font-medium text-[#171717] dark:text-[#ededed] shadow-2xs hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition">
-            <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
-            </svg>
-            <span>Install</span>
-          </button>
-
           <!-- Theme Toggle Button (Vercel 6px Square Icon Button) -->
           <button
             id="theme-toggle-btn"
             type="button"
             aria-label="Toggle Dark/Light Mode"
-            class="flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition"
+            class="flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition cursor-pointer"
           >
             <!-- Sun icon (shown in dark mode) -->
             <svg id="theme-sun-icon" class="h-4 w-4 hidden text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -201,7 +207,7 @@ const finalSchema = schema || defaultSchema;
             id="mobile-menu-toggle-btn"
             type="button"
             aria-label="Open Navigation Menu"
-            class="lg:hidden flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition"
+            class="lg:hidden flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition cursor-pointer"
           >
             <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -219,23 +225,36 @@ const finalSchema = schema || defaultSchema;
         <a href={`${base}/`} class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Word Counter
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
-          Social Media Limits
+        <a href={`${base}/ai-token-counter`} data-nav-tab="tokens" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+          AI Token Counter (2020–2026 Models)
         </a>
         <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
-          Readability Formulas
+          Readability Formulas (Flesch-Kincaid)
+        </a>
+        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+          Social Media Limits &amp; SERP
         </a>
         <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
-          Keyword Density
+          Keyword Density &amp; N-Grams
         </a>
         <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Academic Mode (Exclude Citations)
         </a>
-        <div class="pt-3 border-t border-[#ebebeb] dark:border-[#222222] flex items-center justify-between font-mono text-xs text-[#8f8f8f]">
+
+        <!-- Mobile Top SEO & Authority Links (About, Contact, Privacy, Terms) -->
+        <div class="pt-2 border-t border-[#ebebeb] dark:border-[#222222] my-2"></div>
+        <div class="grid grid-cols-2 gap-1 text-xs font-mono text-[#8f8f8f]">
+          <a href={`${base}/about`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">About</a>
+          <a href={`${base}/contact`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">Contact</a>
+          <a href={`${base}/privacy`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">Privacy</a>
+          <a href={`${base}/terms`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">Terms</a>
+        </div>
+
+        <div class="pt-2 border-t border-[#ebebeb] dark:border-[#222222] flex items-center justify-between font-mono text-[11px] text-[#8f8f8f]">
           <span class="inline-flex items-center gap-1.5 text-[#0070f3]">
             <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span> 100% Client-Side Privacy
           </span>
-          <a href={`${base}/privacy`} class="hover:underline">Privacy</a>
+          <span>Zero Server Latency</span>
         </div>
       </div>
     </header>
@@ -257,11 +276,7 @@ const finalSchema = schema || defaultSchema;
           
           <div class="space-y-3">
             <div class="flex items-center gap-2">
-              <div class="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#171717] dark:bg-white text-white dark:text-black">
-                <svg class="h-3 w-3 fill-current" viewBox="0 0 76 65">
-                  <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-                </svg>
-              </div>
+              <Logo size={20} />
               <span class="text-sm font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
             </div>
             <p class="text-xs leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
@@ -277,7 +292,7 @@ const finalSchema = schema || defaultSchema;
             <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools &amp; Calculators</h4>
             <ul class="space-y-2 text-xs">
               <li><a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Online Word Counter</a></li>
-              <li><a href={`${base}/llm-token-counter`} class="hover:text-[#171717] dark:hover:text-white transition">LLM Token &amp; Cost Counter</a></li>
+              <li><a href={`${base}/ai-token-counter`} class="hover:text-[#171717] dark:hover:text-white transition">AI Token Counter (2020–2026 Models)</a></li>
               <li><a href={`${base}/docx-pdf-word-counter-private`} class="hover:text-[#171717] dark:hover:text-white transition">Private PDF &amp; DOCX Counter</a></li>
               <li><a href={`${base}/academic-word-counter-without-citations`} class="hover:text-[#171717] dark:hover:text-white transition">Citation Exclusion Counter</a></li>
               <li><a href={`${base}/flesch-kincaid-readability-calculator`} class="hover:text-[#171717] dark:hover:text-white transition">Flesch-Kincaid Calculator</a></li>
@@ -428,26 +443,11 @@ const finalSchema = schema || defaultSchema;
         });
       }
 
-      // 5. PWA Install Prompt
+      // 5. PWA Install Prompt (Available for install prompt events)
       let deferredPrompt: any = null;
-      const installBtn = document.getElementById('pwa-install-btn');
-
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        if (installBtn) {
-          installBtn.classList.remove('hidden');
-        }
-      });
-
-      installBtn?.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          installBtn.classList.add('hidden');
-        }
-        deferredPrompt = null;
       });
     </script>
   </body>

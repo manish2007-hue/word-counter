@@ -9,8 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=wordcountr",
-    "deploy:pages": "npm run build && wrangler pages deploy dist --project-name=wordcountr"
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=wordcountr --branch=main",
+    "deploy:pages": "npm run build && wrangler pages deploy dist --project-name=wordcountr --branch=main"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",

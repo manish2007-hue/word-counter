@@ -1,5 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <rect width="48" height="48" rx="12" fill="#1a56db"/>
-  <path d="M14 16L18 32L24 20L30 32L34 16" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="36" cy="14" r="5" fill="#10b981"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <style>
+    :root {
+      --left-stroke: #171717;
+      --dot-color: #0070f3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --left-stroke: #ffffff;
+        --dot-color: #00dfd8;
+      }
+    }
+    .left-wing {
+      stroke: var(--left-stroke);
+    }
+    .right-wing {
+      stroke: #0070f3;
+    }
+    .apex-dot {
+      fill: var(--dot-color);
+    }
+  </style>
+  <!-- Left Wing (Adaptive Black in light, White in dark) -->
+  <path class="left-wing" d="M4 8.5L10 24L16 13.5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right Wing (Signature Electric Blue) -->
+  <path class="right-wing" d="M16 13.5L22 24L28 8.5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Apex Pulse Dot -->
+  <circle class="apex-dot" cx="28" cy="8.5" r="2.2"/>
 </svg>

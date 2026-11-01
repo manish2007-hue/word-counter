@@ -360,7 +360,7 @@ const {
           <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
           </svg>
-          <span>LLM Tokens & Models</span>
+          <span>AI Token Counter</span>
         </button>
 
       </div>
@@ -665,101 +665,223 @@ const {
       </div>
     </div>
 
-    <!-- Tab 6: LLM Tokens & Prompt Cost Content -->
+    <!-- Tab 6: AI Token Counter & 2020–2026 Model Suite -->
     <div id="tab-content-tokens" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+      
+      <!-- Top Title Bar -->
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div>
           <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
             <svg class="w-4 h-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
             </svg>
-            <span>LLM Token &amp; Context Window Estimator</span>
+            <span>AI Token Counter &amp; Model Suite (2020 – 2026)</span>
           </h2>
           <p class="text-xs text-[#8f8f8f] mt-0.5 font-mono">
-            BPE sub-word token metrics and API prompt cost estimates across leading AI architectures.
+            BPE sub-word token metrics, context window capacity, and official API pricing for 45+ AI models.
           </p>
         </div>
-        <div class="flex items-center gap-2 font-mono text-xs text-[#0070f3] bg-[#0070f3]/10 px-3 py-1 rounded-[6px] border border-[#0070f3]/20">
-          <span id="token-ratio-stat">~0 chars/token</span>
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <span class="text-[#0070f3] bg-[#0070f3]/10 px-2.5 py-1 rounded-[6px] border border-[#0070f3]/20" id="token-ratio-stat">
+            ~0 chars/token
+          </span>
+          <span class="hidden sm:inline-block text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/5 px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#262626]">
+            45 Models Supported
+          </span>
         </div>
       </div>
 
-      <!-- Token Metric Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-6">
-        <!-- OpenAI GPT-4o -->
-        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
-            <span class="font-semibold text-[#171717] dark:text-[#ededed]">OpenAI GPT-4o / o1</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">128k ctx</span>
+      <!-- Controls: Era Pills, Provider Pills & Instant Search -->
+      <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-3.5 mb-5 space-y-3">
+        
+        <!-- Era Filter Row -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+          <span class="text-[#8f8f8f] text-[11px] uppercase tracking-wider font-semibold mr-1">Era:</span>
+          <button type="button" class="ai-era-pill px-2.5 py-1 rounded-[6px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer" data-era="all">All Eras</button>
+          <button type="button" class="ai-era-pill px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer" data-era="2025-2026">2025–2026 (Reasoning / SOTA)</button>
+          <button type="button" class="ai-era-pill px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer" data-era="2024">2024 (Omni &amp; Multimodal)</button>
+          <button type="button" class="ai-era-pill px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer" data-era="2023">2023 (ChatGPT &amp; GPT-4)</button>
+          <button type="button" class="ai-era-pill px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer" data-era="2020-2022">2020–2022 (GPT-3 &amp; Codex)</button>
+        </div>
+
+        <!-- Provider Filter Row -->
+        <div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+          <span class="text-[#8f8f8f] text-[11px] uppercase tracking-wider font-semibold mr-1">Brand:</span>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer" data-provider="all">All</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="OpenAI">OpenAI</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="Anthropic">Anthropic</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="Google">Google</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="DeepSeek">DeepSeek</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="Meta">Meta</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="Mistral">Mistral</button>
+          <button type="button" class="ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" data-provider="xAI">xAI</button>
+        </div>
+
+        <!-- Search Bar & Dropdown Select Combo -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-[#ebebeb] dark:border-[#222222]">
+          <div class="relative">
+            <input
+              type="text"
+              id="ai-model-search-input"
+              placeholder="Search model (e.g. Claude 3.7, DeepSeek R1, GPT-4.5, Davinci)..."
+              class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3 py-1.5 text-xs text-[#171717] dark:text-[#ededed] placeholder:text-[#8f8f8f] focus:outline-hidden focus:border-[#0070f3]"
+            />
           </div>
-          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-gpt4o-count">0</div>
-          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
-            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-gpt4o-cost">$0.0000</strong></span>
-            <span id="token-gpt4o-pct">0.00%</span>
-          </div>
-          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
-            <div id="token-gpt4o-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+          <div>
+            <select
+              id="ai-model-select"
+              class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3 py-1.5 text-xs text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-[#0070f3] font-mono cursor-pointer"
+            >
+              <!-- Populated dynamically via JS with all 45 models -->
+              <option value="claude-3-7-sonnet">Claude 3.7 Sonnet (2025, 200k ctx)</option>
+            </select>
           </div>
         </div>
 
-        <!-- Anthropic Claude 3.5 Sonnet -->
-        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
-            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Claude 3.5 Sonnet</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">200k ctx</span>
+      </div>
+
+      <!-- ACTIVE INSPECTED MODEL HERO CARD -->
+      <div id="ai-active-hero-card" class="rounded-[12px] border border-[#0070f3]/30 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 p-5 sm:p-6 mb-6 transition-all">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="flex h-8 w-8 items-center justify-center rounded-[6px] bg-[#0070f3] text-white font-mono font-bold text-xs">
+              AI
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base sm:text-lg font-bold text-[#171717] dark:text-[#ededed] tracking-tight" id="ai-active-name">
+                  Claude 3.7 Sonnet
+                </h3>
+                <span class="px-2 py-0.5 rounded-[4px] bg-[#0070f3]/20 text-[#0070f3] font-mono text-[10px] font-bold" id="ai-active-year">
+                  2025
+                </span>
+                <span class="px-2 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] font-mono text-[10px] text-[#8f8f8f]" id="ai-active-provider">
+                  Anthropic
+                </span>
+              </div>
+              <p class="text-xs text-[#8f8f8f] mt-0.5" id="ai-active-desc">
+                Hybrid standard &amp; extended reasoning model with state-of-the-art coding and prose capabilities.
+              </p>
+            </div>
           </div>
-          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-claude-count">0</div>
-          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
-            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-claude-cost">$0.0000</strong></span>
-            <span id="token-claude-pct">0.00%</span>
-          </div>
-          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
-            <div id="token-claude-bar" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%"></div>
+
+          <div class="font-mono text-xs text-right">
+            <span class="text-[#8f8f8f]">Tokenizer: </span>
+            <span class="text-[#0070f3] font-bold" id="ai-active-tokenizer">claude</span>
           </div>
         </div>
 
-        <!-- Google Gemini 1.5 / 2.0 Flash -->
-        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
-            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Gemini 1.5 / 2.0</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#0070f3]/10 text-[#0070f3] font-bold">1M ctx</span>
+        <!-- Active Model Stats Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+          
+          <!-- Token Count -->
+          <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4">
+            <div class="mono-eyebrow text-[#0070f3]">Active Token Count</div>
+            <div class="font-mono text-3xl font-bold text-[#0070f3] mt-1" id="ai-active-tokens">0</div>
+            <div class="text-[11px] text-[#8f8f8f] font-mono mt-1" id="ai-active-ratio-sub">~0 chars / token</div>
           </div>
-          <div class="mt-2 font-mono text-3xl font-bold text-[#0070f3]" id="token-gemini-count">0</div>
-          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
-            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-gemini-cost">$0.0000</strong></span>
-            <span id="token-gemini-pct">0.00%</span>
+
+          <!-- Context Window Utilization -->
+          <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4">
+            <div class="flex items-center justify-between">
+              <span class="mono-eyebrow text-[#8f8f8f]">Context Window Usage</span>
+              <span class="font-mono text-xs font-bold text-[#171717] dark:text-[#ededed]" id="ai-active-pct">0.00%</span>
+            </div>
+            <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="ai-active-ctx">
+              0 / 200,000
+            </div>
+            <div class="w-full h-1.5 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
+              <div id="ai-active-bar" class="h-full bg-[#0070f3] transition-all duration-300" style="width: 0%"></div>
+            </div>
           </div>
-          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
-            <div id="token-gemini-bar" class="h-full bg-[#0070f3] transition-all duration-300" style="width: 0%"></div>
+
+          <!-- Official API Cost Estimate -->
+          <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4">
+            <div class="mono-eyebrow text-[#8f8f8f]">API Input / Output Cost</div>
+            <div class="font-mono text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="ai-active-input-cost">
+              $0.000000
+            </div>
+            <div class="text-[11px] text-[#8f8f8f] font-mono mt-1 flex items-center justify-between">
+              <span id="ai-active-rate-in">$3.00 / 1M input</span>
+              <span id="ai-active-rate-out">$15.00 / 1M output</span>
+            </div>
           </div>
+
         </div>
 
-        <!-- Meta Llama 3 70B -->
-        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
-            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Meta Llama 3 70B</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold">128k ctx</span>
-          </div>
-          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-llama-count">0</div>
-          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
-            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-llama-cost">$0.0000</strong></span>
-            <span id="token-llama-pct">0.00%</span>
-          </div>
-          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
-            <div id="token-llama-bar" class="h-full bg-purple-500 transition-all duration-300" style="width: 0%"></div>
-          </div>
+      </div>
+
+      <!-- MULTI-MODEL COMPARISON GRID (All 45+ Models Filterable) -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="mono-eyebrow text-[#171717] dark:text-[#ededed]">Browse &amp; Compare Models (<span id="ai-grid-count">45</span> matching)</h4>
+          <span class="text-[11px] text-[#8f8f8f] font-mono">Click any card to inspect full details</span>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[480px] overflow-y-auto pr-1" id="ai-models-grid">
+          <!-- Populated dynamically via JS -->
         </div>
       </div>
 
-      <!-- Token Cost & Pricing Bar -->
+      <!-- HISTORICAL ERA EVOLUTION BENCHMARK (2020 TO 2026) -->
+      <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] overflow-hidden mb-5">
+        <div class="bg-[#fafafa] dark:bg-[#0e0e0e] px-4 py-3 border-b border-[#ebebeb] dark:border-[#222222]">
+          <h4 class="font-mono text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider">
+            Historical Era Benchmark: 2020 GPT-3 to 2026 Claude 3.7
+          </h4>
+          <p class="text-[11px] text-[#8f8f8f] mt-0.5">
+            How model context, tokenizer efficiency, and API cost per million tokens evolved over 6 years.
+          </p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-mono">
+            <thead>
+              <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-black/2 dark:bg-white/2 text-[#8f8f8f]">
+                <th class="py-2.5 px-3.5">ERA</th>
+                <th class="py-2.5 px-3.5">MILESTONE MODEL</th>
+                <th class="py-2.5 px-3.5">CONTEXT</th>
+                <th class="py-2.5 px-3.5">TOKENIZER</th>
+                <th class="py-2.5 px-3.5">YOUR TOKENS</th>
+                <th class="py-2.5 px-3.5 text-right">INPUT COST</th>
+              </tr>
+            </thead>
+            <tbody id="ai-benchmark-tbody" class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
+              <!-- Populated dynamically with live tokens & costs -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Action Footer Strip -->
       <div class="p-4 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0c] text-xs font-mono text-[#4d4d4d] dark:text-[#a1a1a1] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
-          <span>Calibrated against OpenAI cl100k/o200k &amp; Claude tokenizers. Rates reflect standard input API prompt pricing per 1M tokens.</span>
+          <span>100% Client-Side Tokenization. Exact byte-pair encoding heuristics calibrated against official model vocabularies.</span>
         </div>
         <button id="btn-copy-token-stats" type="button" class="vercel-btn-sm vercel-btn-sm-ghost shrink-0 cursor-pointer">
-          <span>Copy Token Summary</span>
+          <span>Copy AI Token Report</span>
         </button>
       </div>
+
+      <!-- Hidden backward-compatibility elements to ensure legacy scripts don't throw -->
+      <div class="hidden">
+        <span id="token-gpt4o-count">0</span>
+        <span id="token-gpt4o-cost">$0.0000</span>
+        <span id="token-gpt4o-pct">0%</span>
+        <div id="token-gpt4o-bar"></div>
+        <span id="token-claude-count">0</span>
+        <span id="token-claude-cost">$0.0000</span>
+        <span id="token-claude-pct">0%</span>
+        <div id="token-claude-bar"></div>
+        <span id="token-gemini-count">0</span>
+        <span id="token-gemini-cost">$0.0000</span>
+        <span id="token-gemini-pct">0%</span>
+        <div id="token-gemini-bar"></div>
+        <span id="token-llama-count">0</span>
+        <span id="token-llama-cost">$0.0000</span>
+        <span id="token-llama-pct">0%</span>
+        <div id="token-llama-bar"></div>
+      </div>
+
     </div>
 
   </div>
@@ -802,6 +924,7 @@ const {
   import { evaluatePlatformLimits } from '../lib/socialLimits';
   import { analyzeStyle } from '../lib/styleAnalyzer';
   import { estimateTokens } from '../lib/tokens';
+  import { AI_MODELS_CATALOG, calculateModelTokens, type AIModel } from '../lib/aiModels';
 
   // Container & initial props
   const container = document.getElementById('tool-container') as HTMLElement;
@@ -925,6 +1048,35 @@ const {
   const tokenLlamaPct = document.getElementById('token-llama-pct');
   const tokenLlamaBar = document.getElementById('token-llama-bar');
   const btnCopyTokenStats = document.getElementById('btn-copy-token-stats');
+
+  // 2020–2026 AI Model Suite Elements
+  const aiModelSelect = document.getElementById('ai-model-select') as HTMLSelectElement | null;
+  const aiModelSearchInput = document.getElementById('ai-model-search-input') as HTMLInputElement | null;
+  const aiEraPills = document.querySelectorAll('.ai-era-pill');
+  const aiProviderPills = document.querySelectorAll('.ai-provider-pill');
+
+  const aiActiveName = document.getElementById('ai-active-name');
+  const aiActiveYear = document.getElementById('ai-active-year');
+  const aiActiveProvider = document.getElementById('ai-active-provider');
+  const aiActiveDesc = document.getElementById('ai-active-desc');
+  const aiActiveTokenizer = document.getElementById('ai-active-tokenizer');
+  const aiActiveTokens = document.getElementById('ai-active-tokens');
+  const aiActiveRatioSub = document.getElementById('ai-active-ratio-sub');
+  const aiActivePct = document.getElementById('ai-active-pct');
+  const aiActiveCtx = document.getElementById('ai-active-ctx');
+  const aiActiveBar = document.getElementById('ai-active-bar');
+  const aiActiveInputCost = document.getElementById('ai-active-input-cost');
+  const aiActiveRateIn = document.getElementById('ai-active-rate-in');
+  const aiActiveRateOut = document.getElementById('ai-active-rate-out');
+
+  const aiModelsGrid = document.getElementById('ai-models-grid');
+  const aiGridCount = document.getElementById('ai-grid-count');
+  const aiBenchmarkTbody = document.getElementById('ai-benchmark-tbody');
+
+  let activeModelId = 'claude-3-7-sonnet';
+  let currentEraFilter = 'all';
+  let currentProviderFilter = 'all';
+  let currentSearchQuery = '';
 
   // State variables
   let currentTargetCount = initialTargetVal || 0;
@@ -1491,32 +1643,51 @@ const {
       console.error('SERP/Feed preview error:', e);
     }
 
-    // 8. Calculate LLM Token Metrics
+    // 8. Calculate 2020–2026 AI Token Metrics
     try {
-      const tokens = estimateTokens(textToAnalyze);
-      if (tokenRatioStat) tokenRatioStat.textContent = `~${tokens.charToTokenRatio} chars/token`;
+      const activeModel = AI_MODELS_CATALOG.find(m => m.id === activeModelId) || AI_MODELS_CATALOG[0];
+      const activeMetrics = calculateModelTokens(textToAnalyze, activeModel);
 
-      if (tokenGpt4oCount) tokenGpt4oCount.textContent = tokens.gpt4oTokens.toLocaleString();
-      if (tokenGpt4oCost) tokenGpt4oCost.textContent = `$${tokens.costs.gpt4o.toFixed(4)}`;
-      if (tokenGpt4oPct) tokenGpt4oPct.textContent = `${tokens.contextUsage.gpt4o.pct}%`;
-      if (tokenGpt4oBar) tokenGpt4oBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.gpt4o.pct > 0 ? 1 : 0, tokens.contextUsage.gpt4o.pct * 5))}%`;
+      if (tokenRatioStat) {
+        tokenRatioStat.textContent = `~${activeMetrics.charsPerToken} chars/token`;
+      }
 
-      if (tokenClaudeCount) tokenClaudeCount.textContent = tokens.claudeTokens.toLocaleString();
-      if (tokenClaudeCost) tokenClaudeCost.textContent = `$${tokens.costs.claudeSonnet.toFixed(4)}`;
-      if (tokenClaudePct) tokenClaudePct.textContent = `${tokens.contextUsage.claude.pct}%`;
-      if (tokenClaudeBar) tokenClaudeBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.claude.pct > 0 ? 1 : 0, tokens.contextUsage.claude.pct * 5))}%`;
+      renderActiveModelHero(textToAnalyze);
+      renderModelsGrid(textToAnalyze);
+      renderHistoricalBenchmark(textToAnalyze);
 
-      if (tokenGeminiCount) tokenGeminiCount.textContent = tokens.geminiTokens.toLocaleString();
-      if (tokenGeminiCost) tokenGeminiCost.textContent = `$${tokens.costs.geminiFlash.toFixed(4)}`;
-      if (tokenGeminiPct) tokenGeminiPct.textContent = `${tokens.contextUsage.gemini.pct}%`;
-      if (tokenGeminiBar) tokenGeminiBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.gemini.pct > 0 ? 1 : 0, tokens.contextUsage.gemini.pct * 5))}%`;
+      // Legacy fallback bindings for backward safety
+      const gpt4oModel = AI_MODELS_CATALOG.find(m => m.id === 'gpt-4o') || activeModel;
+      const claudeModel = AI_MODELS_CATALOG.find(m => m.id === 'claude-3-5-sonnet') || activeModel;
+      const geminiModel = AI_MODELS_CATALOG.find(m => m.id === 'gemini-2-flash') || activeModel;
+      const llamaModel = AI_MODELS_CATALOG.find(m => m.id === 'llama-3.1-70b') || activeModel;
 
-      if (tokenLlamaCount) tokenLlamaCount.textContent = tokens.llamaTokens.toLocaleString();
-      if (tokenLlamaCost) tokenLlamaCost.textContent = `$${tokens.costs.llama70b.toFixed(4)}`;
-      if (tokenLlamaPct) tokenLlamaPct.textContent = `${tokens.contextUsage.llama.pct}%`;
-      if (tokenLlamaBar) tokenLlamaBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.llama.pct > 0 ? 1 : 0, tokens.contextUsage.llama.pct * 5))}%`;
+      const gpt4oM = calculateModelTokens(textToAnalyze, gpt4oModel);
+      const claudeM = calculateModelTokens(textToAnalyze, claudeModel);
+      const geminiM = calculateModelTokens(textToAnalyze, geminiModel);
+      const llamaM = calculateModelTokens(textToAnalyze, llamaModel);
+
+      if (tokenGpt4oCount) tokenGpt4oCount.textContent = gpt4oM.tokens.toLocaleString();
+      if (tokenGpt4oCost) tokenGpt4oCost.textContent = `$${gpt4oM.inputCost.toFixed(4)}`;
+      if (tokenGpt4oPct) tokenGpt4oPct.textContent = `${gpt4oM.contextUsagePct}%`;
+      if (tokenGpt4oBar) tokenGpt4oBar.style.width = `${Math.min(100, Math.max(gpt4oM.contextUsagePct > 0 ? 1 : 0, gpt4oM.contextUsagePct * 5))}%`;
+
+      if (tokenClaudeCount) tokenClaudeCount.textContent = claudeM.tokens.toLocaleString();
+      if (tokenClaudeCost) tokenClaudeCost.textContent = `$${claudeM.inputCost.toFixed(4)}`;
+      if (tokenClaudePct) tokenClaudePct.textContent = `${claudeM.contextUsagePct}%`;
+      if (tokenClaudeBar) tokenClaudeBar.style.width = `${Math.min(100, Math.max(claudeM.contextUsagePct > 0 ? 1 : 0, claudeM.contextUsagePct * 5))}%`;
+
+      if (tokenGeminiCount) tokenGeminiCount.textContent = geminiM.tokens.toLocaleString();
+      if (tokenGeminiCost) tokenGeminiCost.textContent = `$${geminiM.inputCost.toFixed(4)}`;
+      if (tokenGeminiPct) tokenGeminiPct.textContent = `${geminiM.contextUsagePct}%`;
+      if (tokenGeminiBar) tokenGeminiBar.style.width = `${Math.min(100, Math.max(geminiM.contextUsagePct > 0 ? 1 : 0, geminiM.contextUsagePct * 5))}%`;
+
+      if (tokenLlamaCount) tokenLlamaCount.textContent = llamaM.tokens.toLocaleString();
+      if (tokenLlamaCost) tokenLlamaCost.textContent = `$${llamaM.inputCost.toFixed(4)}`;
+      if (tokenLlamaPct) tokenLlamaPct.textContent = `${llamaM.contextUsagePct}%`;
+      if (tokenLlamaBar) tokenLlamaBar.style.width = `${Math.min(100, Math.max(llamaM.contextUsagePct > 0 ? 1 : 0, llamaM.contextUsagePct * 5))}%`;
     } catch (e) {
-      console.error('LLM token error:', e);
+      console.error('AI token computation error:', e);
     }
 
     // Refresh inline highlights if visible
@@ -1530,22 +1701,287 @@ const {
     autosaveLabel.textContent = `Saved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
-  // Copy LLM token summary button
+  // ─── 2020–2026 AI MODEL SUITE LOGIC & RENDERING ───
+  function populateModelSelect() {
+    if (!aiModelSelect) return;
+    aiModelSelect.innerHTML = '';
+
+    const eraGroups = [
+      { label: '2025–2026 Reasoning & SOTA', minYear: 2025, maxYear: 2026 },
+      { label: '2024 Omni & Multimodal Flagships', minYear: 2024, maxYear: 2024 },
+      { label: '2023 ChatGPT & GPT-4 Era', minYear: 2023, maxYear: 2023 },
+      { label: '2020–2022 GPT-3 & Codex Era', minYear: 2020, maxYear: 2022 },
+    ];
+
+    eraGroups.forEach((groupInfo) => {
+      const groupEl = document.createElement('optgroup');
+      groupEl.label = groupInfo.label;
+
+      const groupModels = AI_MODELS_CATALOG.filter(m => m.year >= groupInfo.minYear && m.year <= groupInfo.maxYear);
+      groupModels.forEach((m) => {
+        const opt = document.createElement('option');
+        opt.value = m.id;
+        const ctxK = m.contextWindow >= 1000000 ? `${(m.contextWindow / 1000000).toFixed(1)}M` : `${Math.round(m.contextWindow / 1000)}k`;
+        opt.textContent = `${m.name} (${m.provider}, ${ctxK} ctx)`;
+        if (m.id === activeModelId) opt.selected = true;
+        groupEl.appendChild(opt);
+      });
+
+      aiModelSelect.appendChild(groupEl);
+    });
+  }
+
+  function getFilteredAIModels() {
+    return AI_MODELS_CATALOG.filter((m) => {
+      if (currentEraFilter === '2025-2026' && m.year < 2025) return false;
+      if (currentEraFilter === '2024' && m.year !== 2024) return false;
+      if (currentEraFilter === '2023' && m.year !== 2023) return false;
+      if (currentEraFilter === '2020-2022' && m.year > 2022) return false;
+
+      if (currentProviderFilter !== 'all' && m.provider !== currentProviderFilter) return false;
+
+      if (currentSearchQuery.trim()) {
+        const q = currentSearchQuery.toLowerCase();
+        const matchesName = m.name.toLowerCase().includes(q);
+        const matchesProv = m.provider.toLowerCase().includes(q);
+        const matchesFam = m.family.toLowerCase().includes(q);
+        const matchesYear = m.year.toString().includes(q);
+        const matchesDesc = m.description.toLowerCase().includes(q);
+        if (!matchesName && !matchesProv && !matchesFam && !matchesYear && !matchesDesc) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }
+
+  function renderActiveModelHero(text: string) {
+    const model = AI_MODELS_CATALOG.find(m => m.id === activeModelId) || AI_MODELS_CATALOG[0];
+    const metrics = calculateModelTokens(text, model);
+
+    if (aiActiveName) aiActiveName.textContent = model.name;
+    if (aiActiveYear) aiActiveYear.textContent = `${model.year}`;
+    if (aiActiveProvider) aiActiveProvider.textContent = model.provider;
+    if (aiActiveDesc) aiActiveDesc.textContent = model.description;
+    if (aiActiveTokenizer) aiActiveTokenizer.textContent = model.tokenizerType;
+
+    if (aiActiveTokens) aiActiveTokens.textContent = metrics.tokens.toLocaleString();
+    if (aiActiveRatioSub) aiActiveRatioSub.textContent = `~${metrics.charsPerToken} chars / token`;
+
+    if (aiActivePct) aiActivePct.textContent = `${metrics.contextUsagePct}%`;
+    if (aiActiveCtx) {
+      const maxStr = model.contextWindow >= 1000000 
+        ? `${(model.contextWindow / 1000000).toFixed(1)}M` 
+        : model.contextWindow.toLocaleString();
+      aiActiveCtx.textContent = `${metrics.tokens.toLocaleString()} / ${maxStr}`;
+    }
+
+    if (aiActiveBar) {
+      const barPct = Math.min(100, Math.max(metrics.contextUsagePct > 0 ? 0.5 : 0, metrics.contextUsagePct));
+      aiActiveBar.style.width = `${barPct}%`;
+      if (metrics.contextUsagePct > 90) {
+        aiActiveBar.className = 'h-full bg-[#ee0000] transition-all duration-300';
+      } else if (metrics.contextUsagePct > 60) {
+        aiActiveBar.className = 'h-full bg-amber-500 transition-all duration-300';
+      } else {
+        aiActiveBar.className = 'h-full bg-[#0070f3] transition-all duration-300';
+      }
+    }
+
+    if (aiActiveInputCost) {
+      aiActiveInputCost.textContent = `$${metrics.inputCost.toFixed(6)}`;
+    }
+    if (aiActiveRateIn) {
+      aiActiveRateIn.textContent = `$${model.inputCostPer1M.toFixed(2)} / 1M in`;
+    }
+    if (aiActiveRateOut) {
+      aiActiveRateOut.textContent = `$${model.outputCostPer1M.toFixed(2)} / 1M out`;
+    }
+  }
+
+  function renderModelsGrid(text: string) {
+    if (!aiModelsGrid) return;
+    const filtered = getFilteredAIModels();
+
+    if (aiGridCount) {
+      aiGridCount.textContent = `${filtered.length}`;
+    }
+
+    if (filtered.length === 0) {
+      aiModelsGrid.innerHTML = `
+        <div class="col-span-full py-8 text-center text-[#8f8f8f] font-mono text-xs border border-dashed border-[#ebebeb] dark:border-[#222222] rounded-[8px]">
+          No AI models match "${currentSearchQuery}". Try adjusting your era or brand filter.
+        </div>
+      `;
+      return;
+    }
+
+    aiModelsGrid.innerHTML = filtered.map((m) => {
+      const calc = calculateModelTokens(text, m);
+      const isSelected = m.id === activeModelId;
+      const ctxStr = m.contextWindow >= 1000000 ? `${(m.contextWindow / 1000000).toFixed(1)}M` : `${Math.round(m.contextWindow / 1000)}k`;
+
+      return `
+        <button
+          type="button"
+          class="ai-model-card text-left p-3.5 rounded-[10px] border transition cursor-pointer ${
+            isSelected
+              ? 'border-[#0070f3] bg-[#0070f3]/10 shadow-xs'
+              : 'border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] hover:border-[#8f8f8f]'
+          }"
+          data-model-id="${m.id}"
+        >
+          <div class="flex items-center justify-between mb-1.5 font-mono text-[11px]">
+            <span class="font-bold text-[#171717] dark:text-[#ededed] truncate max-w-[170px]">${m.name}</span>
+            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#8f8f8f] shrink-0">
+              ${m.year}
+            </span>
+          </div>
+
+          <div class="flex items-baseline justify-between mt-1.5 font-mono">
+            <div>
+              <span class="text-xl font-bold ${isSelected ? 'text-[#0070f3]' : 'text-[#171717] dark:text-[#ededed]'}">
+                ${calc.tokens.toLocaleString()}
+              </span>
+              <span class="text-[10px] text-[#8f8f8f] ml-1">tokens</span>
+            </div>
+            <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+              $${calc.inputCost.toFixed(5)}
+            </span>
+          </div>
+
+          <div class="mt-2.5">
+            <div class="flex items-center justify-between text-[10px] font-mono text-[#8f8f8f] mb-1">
+              <span>${m.provider} · ${ctxStr} ctx</span>
+              <span>${calc.contextUsagePct}%</span>
+            </div>
+            <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden">
+              <div class="h-full ${calc.contextUsagePct > 90 ? 'bg-[#ee0000]' : calc.contextUsagePct > 60 ? 'bg-amber-500' : 'bg-[#0070f3]'} transition-all duration-300" style="width: ${Math.min(100, Math.max(calc.contextUsagePct > 0 ? 1 : 0, calc.contextUsagePct))}%"></div>
+            </div>
+          </div>
+        </button>
+      `;
+    }).join('');
+
+    aiModelsGrid.querySelectorAll('.ai-model-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = (card as HTMLElement).dataset.modelId;
+        if (id) {
+          activeModelId = id;
+          if (aiModelSelect) aiModelSelect.value = id;
+          renderActiveModelHero(textarea.value);
+          renderModelsGrid(textarea.value);
+        }
+      });
+    });
+  }
+
+  function renderHistoricalBenchmark(text: string) {
+    if (!aiBenchmarkTbody) return;
+
+    const milestones = [
+      { era: '2020', id: 'davinci-legacy', label: 'GPT-3 Davinci (175B, June 2020 Original)' },
+      { era: '2022', id: 'text-davinci-003', label: 'InstructGPT (text-davinci-003)' },
+      { era: '2023', id: 'gpt-4-classic', label: 'GPT-4 (Original 2023 Launch)' },
+      { era: '2024', id: 'gpt-4o', label: 'GPT-4o (Omni Tokenizer o200k)' },
+      { era: '2025', id: 'deepseek-r1', label: 'DeepSeek R1 (Open Reasoning)' },
+      { era: '2026/25', id: 'claude-3-7-sonnet', label: 'Claude 3.7 Sonnet (Hybrid Reasoning)' },
+    ];
+
+    aiBenchmarkTbody.innerHTML = milestones.map((m) => {
+      const model = AI_MODELS_CATALOG.find(x => x.id === m.id) || AI_MODELS_CATALOG[0];
+      const calc = calculateModelTokens(text, model);
+      const ctxStr = model.contextWindow >= 1000000 ? `${(model.contextWindow / 1000000).toFixed(1)}M` : `${Math.round(model.contextWindow / 1000)}k`;
+
+      return `
+        <tr class="hover:bg-black/2 dark:hover:bg-white/2 transition">
+          <td class="py-2.5 px-3.5 font-bold text-[#171717] dark:text-[#ededed]">${m.era}</td>
+          <td class="py-2.5 px-3.5">
+            <span class="font-medium text-[#171717] dark:text-[#ededed]">${m.label}</span>
+            <span class="text-[10px] text-[#8f8f8f] block">${model.provider} · $${model.inputCostPer1M.toFixed(2)}/1M</span>
+          </td>
+          <td class="py-2.5 px-3.5 text-[#8f8f8f]">${ctxStr}</td>
+          <td class="py-2.5 px-3.5 text-[#8f8f8f]">${model.tokenizerType}</td>
+          <td class="py-2.5 px-3.5 font-bold text-[#0070f3]">${calc.tokens.toLocaleString()}</td>
+          <td class="py-2.5 px-3.5 text-right font-semibold text-emerald-600 dark:text-emerald-400">$${calc.inputCost.toFixed(5)}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Copy AI Token Summary & Historical Era Report
   btnCopyTokenStats?.addEventListener('click', () => {
     const text = textarea.value;
     if (!text.trim()) {
       notify('Editor is empty');
       return;
     }
-    const t = estimateTokens(text);
-    const summary = `🤖 LLM Token Metrics (via WordCountr):\n` +
-      `• OpenAI GPT-4o / o1: ${t.gpt4oTokens.toLocaleString()} tokens (Input: $${t.costs.gpt4o.toFixed(4)})\n` +
-      `• Claude 3.5 Sonnet: ${t.claudeTokens.toLocaleString()} tokens (Input: $${t.costs.claudeSonnet.toFixed(4)})\n` +
-      `• Google Gemini 1.5/2.0: ${t.geminiTokens.toLocaleString()} tokens (Input: $${t.costs.geminiFlash.toFixed(4)})\n` +
-      `• Meta Llama 3 70B: ${t.llamaTokens.toLocaleString()} tokens (Input: $${t.costs.llama70b.toFixed(4)})\n` +
-      `• Token Density: ${t.charToTokenRatio} characters per token`;
-    copyToClipboard(summary, '✓ Copied LLM token metrics');
+    const model = AI_MODELS_CATALOG.find(m => m.id === activeModelId) || AI_MODELS_CATALOG[0];
+    const calc = calculateModelTokens(text, model);
+
+    const davinci = AI_MODELS_CATALOG.find(x => x.id === 'davinci-legacy');
+    const gpt4 = AI_MODELS_CATALOG.find(x => x.id === 'gpt-4-classic');
+    const gpt4o = AI_MODELS_CATALOG.find(x => x.id === 'gpt-4o');
+    const deepseek = AI_MODELS_CATALOG.find(x => x.id === 'deepseek-r1');
+    const claude37 = AI_MODELS_CATALOG.find(x => x.id === 'claude-3-7-sonnet');
+
+    const summary = `🤖 AI Token & Model Report (via cleanwordcounter.com):\n` +
+      `• Active Model: ${model.name} (${model.provider}, ${model.year})\n` +
+      `• Token Count: ${calc.tokens.toLocaleString()} tokens\n` +
+      `• Context Usage: ${calc.tokens.toLocaleString()} / ${model.contextWindow.toLocaleString()} (${calc.contextUsagePct}%)\n` +
+      `• Prompt Input Cost: $${calc.inputCost.toFixed(6)} USD (@ $${model.inputCostPer1M.toFixed(2)}/1M)\n` +
+      `• Tokenizer: ${model.tokenizerType} (~${calc.charsPerToken} chars/token)\n\n` +
+      `Historical Era Evolution (2020–2026 for same text):\n` +
+      (davinci ? `• 2020 GPT-3 Davinci: ${calculateModelTokens(text, davinci).tokens.toLocaleString()} tokens ($${calculateModelTokens(text, davinci).inputCost.toFixed(4)})\n` : '') +
+      (gpt4 ? `• 2023 GPT-4: ${calculateModelTokens(text, gpt4).tokens.toLocaleString()} tokens ($${calculateModelTokens(text, gpt4).inputCost.toFixed(4)})\n` : '') +
+      (gpt4o ? `• 2024 GPT-4o: ${calculateModelTokens(text, gpt4o).tokens.toLocaleString()} tokens ($${calculateModelTokens(text, gpt4o).inputCost.toFixed(4)})\n` : '') +
+      (deepseek ? `• 2025 DeepSeek R1: ${calculateModelTokens(text, deepseek).tokens.toLocaleString()} tokens ($${calculateModelTokens(text, deepseek).inputCost.toFixed(4)})\n` : '') +
+      (claude37 ? `• 2026/25 Claude 3.7: ${calculateModelTokens(text, claude37).tokens.toLocaleString()} tokens ($${calculateModelTokens(text, claude37).inputCost.toFixed(4)})` : '');
+
+    copyToClipboard(summary, '✓ Copied AI token report');
   });
+
+  // Attach AI Model Suite UI Listeners
+  aiModelSelect?.addEventListener('change', () => {
+    if (aiModelSelect) {
+      activeModelId = aiModelSelect.value;
+      renderActiveModelHero(textarea.value);
+      renderModelsGrid(textarea.value);
+    }
+  });
+
+  aiModelSearchInput?.addEventListener('input', () => {
+    if (aiModelSearchInput) {
+      currentSearchQuery = aiModelSearchInput.value;
+      renderModelsGrid(textarea.value);
+    }
+  });
+
+  aiEraPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      aiEraPills.forEach(p => {
+        p.className = 'ai-era-pill px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer';
+      });
+      pill.className = 'ai-era-pill px-2.5 py-1 rounded-[6px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer';
+      currentEraFilter = (pill as HTMLElement).dataset.era || 'all';
+      renderModelsGrid(textarea.value);
+    });
+  });
+
+  aiProviderPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      aiProviderPills.forEach(p => {
+        p.className = 'ai-provider-pill px-2.5 py-0.5 rounded-[4px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition cursor-pointer';
+      });
+      pill.className = 'ai-provider-pill px-2.5 py-0.5 rounded-[4px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer';
+      currentProviderFilter = (pill as HTMLElement).dataset.provider || 'all';
+      renderModelsGrid(textarea.value);
+    });
+  });
+
+  // Populate model dropdown on initial script boot
+  populateModelSelect();
 
   // Event Listeners for Editor
   textarea?.addEventListener('input', updateAll);

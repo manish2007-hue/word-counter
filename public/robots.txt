@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wordcountr.app/sitemap.xml
-Host: https://wordcountr.app/
+Sitemap: https://cleanwordcounter.com/sitemap.xml
+Host: https://cleanwordcounter.com/

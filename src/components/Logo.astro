@@ -1,0 +1,42 @@
+---
+interface Props {
+  size?: number | string;
+  class?: string;
+}
+
+const { size = 26, class: className = '' } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 32 32"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class={`shrink-0 ${className}`}
+  aria-label="WordCountr Logo"
+>
+  <!-- Left Wing: Pure theme-adaptive vector stroke (dark in light mode, white in dark mode) -->
+  <path
+    d="M4 8.5L10 24L16 13.5"
+    class="stroke-[#171717] dark:stroke-white transition-colors duration-200"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Right Wing: Brand Electric Blue in both modes -->
+  <path
+    d="M16 13.5L22 24L28 8.5"
+    stroke="#0070f3"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <!-- Apex Pulse Dot: Electric Blue in light mode, luminous cyan in dark mode -->
+  <circle
+    cx="28"
+    cy="8.5"
+    r="2.2"
+    class="fill-[#0070f3] dark:fill-[#00dfd8] transition-colors duration-200"
+  />
+</svg>

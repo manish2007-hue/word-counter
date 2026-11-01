@@ -1,115 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wordcountr.app/</loc>
+    <loc>https://cleanwordcounter.com/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/llm-token-counter/</loc>
+    <loc>https://cleanwordcounter.com/ai-token-counter/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/academic-word-counter-without-citations/</loc>
+    <loc>https://cleanwordcounter.com/llm-token-counter/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/docx-pdf-word-counter-private/</loc>
+    <loc>https://cleanwordcounter.com/academic-word-counter-without-citations/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/flesch-kincaid-readability-calculator/</loc>
+    <loc>https://cleanwordcounter.com/docx-pdf-word-counter-private/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/words-to-pages-converter/</loc>
+    <loc>https://cleanwordcounter.com/flesch-kincaid-readability-calculator/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://cleanwordcounter.com/words-to-pages-converter/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/words-to-speaking-time/</loc>
+    <loc>https://cleanwordcounter.com/words-to-speaking-time/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/character-counter/linkedin/</loc>
+    <loc>https://cleanwordcounter.com/character-counter/linkedin/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/character-counter/twitter-x/</loc>
+    <loc>https://cleanwordcounter.com/character-counter/twitter-x/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/character-counter/google-meta-tags/</loc>
+    <loc>https://cleanwordcounter.com/character-counter/google-meta-tags/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/social-media-counter/</loc>
+    <loc>https://cleanwordcounter.com/social-media-counter/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/readability-checker/</loc>
+    <loc>https://cleanwordcounter.com/readability-checker/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/keyword-density-checker/</loc>
+    <loc>https://cleanwordcounter.com/keyword-density-checker/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/academic-word-counter/</loc>
+    <loc>https://cleanwordcounter.com/academic-word-counter/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/about/</loc>
+    <loc>https://cleanwordcounter.com/about/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/privacy/</loc>
+    <loc>https://cleanwordcounter.com/privacy/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/privacy-policy/</loc>
+    <loc>https://cleanwordcounter.com/privacy-policy/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/terms/</loc>
+    <loc>https://cleanwordcounter.com/terms/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://wordcountr.app/contact/</loc>
+    <loc>https://cleanwordcounter.com/contact/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

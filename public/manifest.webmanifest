@@ -4,8 +4,8 @@
   "description": "100% private, instant word and character counter with reading time, keyword density, readability scores, and offline support.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#1a56db",
+  "background_color": "#070708",
+  "theme_color": "#0070f3",
   "icons": [
     {
       "src": "/favicon.svg",
