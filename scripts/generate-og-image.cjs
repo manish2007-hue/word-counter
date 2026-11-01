@@ -1,0 +1,93 @@
+const fs = require('fs');
+const path = require('path');
+const sharp = require('sharp');
+
+const svg = `
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" />
+      <stop offset="100%" stop-color="#0a0a0a" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0070f3" />
+      <stop offset="100%" stop-color="#00dfd8" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+
+  <!-- Accent Glow -->
+  <circle cx="600" cy="150" r="280" fill="#0070f3" opacity="0.12" />
+
+  <!-- Container Box -->
+  <rect x="60" y="60" width="1080" height="510" rx="16" fill="#111111" stroke="#222222" stroke-width="1.5" />
+
+  <!-- Top Pill -->
+  <rect x="100" y="100" width="400" height="36" rx="18" fill="#1a1a1a" stroke="#333333" stroke-width="1" />
+  <circle cx="120" cy="118" r="5" fill="#0070f3" />
+  <text x="136" y="123" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#a1a1a1" letter-spacing="1.5">100% CLIENT-SIDE • ZERO ADS • PWA</text>
+
+  <!-- Logo Triangle -->
+  <polygon points="100,165 116,195 84,195" fill="#ffffff" />
+  <text x="130" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#ffffff" letter-spacing="-0.5">WordCountr <tspan fill="#0070f3">Pro</tspan></text>
+
+  <!-- Main Headline -->
+  <text x="100" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="800" fill="#ffffff" letter-spacing="-1.5">Free Online Word Counter</text>
+  <text x="100" y="315" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="800" fill="url(#blueGradient)" letter-spacing="-1.5">&amp; Precision Text Analytics</text>
+
+  <!-- Subheadline -->
+  <text x="100" y="370" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="400" fill="#888888">Instant words, characters, reading time, PDF word count, essay citation filter, and readability scores.</text>
+
+  <!-- Feature Tags -->
+  <g transform="translate(100, 420)">
+    <!-- Tag 1 -->
+    <rect x="0" y="0" width="220" height="44" rx="8" fill="#1a1a1a" stroke="#262626" stroke-width="1" />
+    <text x="20" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#ededed">Live Word &amp; Char Count</text>
+
+    <!-- Tag 2 -->
+    <rect x="235" y="0" width="200" height="44" rx="8" fill="#1a1a1a" stroke="#262626" stroke-width="1" />
+    <text x="255" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#ededed">PDF &amp; DOCX Parser</text>
+
+    <!-- Tag 3 -->
+    <rect x="450" y="0" width="220" height="44" rx="8" fill="#1a1a1a" stroke="#262626" stroke-width="1" />
+    <text x="470" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#ededed">Academic Essay Mode</text>
+
+    <!-- Tag 4 -->
+    <rect x="685" y="0" width="235" height="44" rx="8" fill="#1a1a1a" stroke="#262626" stroke-width="1" />
+    <text x="705" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#ededed">Readability Grade Levels</text>
+  </g>
+
+  <!-- Bottom URL / Brand -->
+  <text x="100" y="525" font-family="ui-monospace, monospace" font-size="15" font-weight="500" fill="#0070f3">https://manish2007-hue.github.io/word-counter/</text>
+  <text x="1040" y="525" text-anchor="end" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="500" fill="#666666">Open Source • Private • Fast</text>
+</svg>
+`;
+
+async function main() {
+  const publicDir = path.join(__dirname, '..', 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+
+  const svgPath = path.join(publicDir, 'og-image.svg');
+  const pngPath = path.join(publicDir, 'og-image.png');
+
+  fs.writeFileSync(svgPath, svg.trim());
+  console.log('Saved SVG to:', svgPath);
+
+  await sharp(Buffer.from(svg))
+    .png({ quality: 95 })
+    .toFile(pngPath);
+  console.log('Saved PNG to:', pngPath);
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

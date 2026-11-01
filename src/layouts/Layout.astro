@@ -4,27 +4,35 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   canonicalSlug?: string;
+  ogImage?: string;
+  ogType?: string;
   schema?: Record<string, any>;
 }
 
 const {
-  title = "WordCountr – Precision Word Counter, Readability & Writing Analytics",
-  description = "A fast, privacy-first word counter and text analytics workbench built for precision. Calculate words, characters, reading time, readability scores, and social limits locally in your browser.",
+  title = "Word Counter – Free Online Word Counter Tool & Word Count Checker",
+  description = "Free online word counter tool and word count checker. Count words, characters, sentences, PDF word count, essay citations, and Google Docs limits in real time.",
+  keywords = "word counter, word counter online, word counter free, word counter tool, free word counter, online word counter, essay word counter, word counter google docs, pdf word counter, word counter calculator, word count, word count checker, how to check word count on google docs, word count on google docs, how to see word count on google docs",
   canonicalSlug = '',
+  ogImage,
+  ogType = 'website',
   schema,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isHome = canonicalSlug === '';
 const siteUrl = 'https://manish2007-hue.github.io/word-counter';
-const canonicalUrl = canonicalSlug ? `${siteUrl}/${canonicalSlug}` : siteUrl;
+const cleanSlug = canonicalSlug ? canonicalSlug.replace(/^\/+|\/+$/g, '') : '';
+const canonicalUrl = cleanSlug ? `${siteUrl}/${cleanSlug}/` : `${siteUrl}/`;
+const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
 
 const defaultSchema = {
   "@context": "https://schema.org",
   "@type": ["WebApplication", "SoftwareApplication"],
-  "name": "WordCountr",
-  "headline": "Precision Online Word Counter & Writing Analytics",
+  "name": "WordCountr Pro",
+  "headline": "Free Online Word Counter Tool & Precision Word Count Checker",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "All",
   "offers": {
@@ -52,20 +60,37 @@ const finalSchema = schema || defaultSchema;
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
     <meta name="theme-color" content="#171717" />
+    <meta name="author" content="WordCountr Pro" />
+    <meta name="application-name" content="WordCountr Pro" />
+    <meta name="apple-mobile-web-app-title" content="WordCountr" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
+    <!-- Primary Title & Meta Description -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- OpenGraph & Twitter -->
-    <meta property="og:type" content="website" />
+    <!-- OpenGraph Protocols -->
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="WordCountr" />
+    <meta property="og:site_name" content="WordCountr Pro" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={title} />
 
     <!-- Google Fonts: Geist Sans & Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
