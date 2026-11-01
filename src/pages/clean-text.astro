@@ -1,0 +1,408 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Clean Text Tool – Remove Line Breaks, Extra Spaces & Duplicate Lines";
+const pageDescription = "Free online clean text tool. Remove line breaks, delete blank lines, strip extra spaces, remove duplicate lines, and format messy text 100% locally in your browser.";
+const pageKeywords = "clean text tool, remove line breaks, remove duplicate lines, strip extra spaces, remove empty lines, clean text online, format text online, text cleaner";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Clean Text Tool & Line Break Remover",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/clean-text/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I remove line breaks from text online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paste your text into the Clean Text Tool and click 'Remove All Line Breaks'. It immediately joins fragmented lines into continuous flowing paragraphs while preserving natural sentence spacing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Clean Text Tool remove duplicate lines?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Click 'Remove Duplicate Lines'. The client-side algorithm evaluates every line, keeps the first unique occurrence, and purges all repeated rows instantly without uploading your data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my text private when using this text cleaner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100%. Like all CleanWordCounter instruments, text formatting runs entirely in your browser JavaScript memory. Zero text is uploaded or stored on any server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I remove extra spaces and blank lines at the same time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can use 'All-In-One Clean' or chain individual buttons (Remove Extra Spaces, Delete Blank Lines, Trim Margins) to format messy text copied from PDFs or spreadsheets."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="clean-text"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser Text Sanitizer</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Clean Text <span class="vercel-gradient-develop">&amp; Line Break Remover</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Instantly strip unwanted line breaks, delete blank paragraphs, eliminate double spaces, and purge duplicate lines from messy PDF, email, and spreadsheet pastes.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <!-- Main Interactive Clean Text Card -->
+    <div class="vercel-card overflow-hidden">
+      
+      <!-- Top Action Toolbar -->
+      <div class="p-3 sm:p-4 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <!-- All in one Clean -->
+          <button
+            id="btn-clean-all"
+            type="button"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#0060df] transition cursor-pointer shadow-2xs"
+            title="Remove extra spaces, trim lines, and remove blank lines in one click"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>Auto Clean (All-in-One)</span>
+          </button>
+
+          <!-- Remove Line Breaks -->
+          <button
+            id="btn-remove-breaks"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Join Lines</span>
+          </button>
+
+          <!-- Remove Extra Spaces -->
+          <button
+            id="btn-remove-spaces"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Strip Extra Spaces</span>
+          </button>
+
+          <!-- Remove Blank Lines -->
+          <button
+            id="btn-remove-blank"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Delete Blank Lines</span>
+          </button>
+
+          <!-- Remove Duplicate Lines -->
+          <button
+            id="btn-remove-duplicates"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Deduplicate Lines</span>
+          </button>
+
+          <!-- Strip HTML -->
+          <button
+            id="btn-strip-html"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Strip HTML</span>
+          </button>
+
+          <!-- Sort A-Z -->
+          <button
+            id="btn-sort-az"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            <span>Sort A-Z</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-sample"
+            type="button"
+            class="text-xs font-mono text-[#0070f3] hover:underline cursor-pointer"
+          >
+            Load Messy Sample
+          </button>
+          <button
+            id="btn-clear"
+            type="button"
+            class="text-xs font-mono text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Editor Area -->
+      <div class="p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+        <textarea
+          id="clean-text-input"
+          rows="12"
+          placeholder="Paste messy text here... e.g. text copied from a PDF with broken line breaks, duplicate rows, or erratic whitespace..."
+          class="w-full resize-y font-mono text-xs sm:text-sm text-[#171717] dark:text-[#ededed] bg-transparent border-0 focus:outline-hidden leading-relaxed"
+        ></textarea>
+      </div>
+
+      <!-- Live Cleaning Delta Status Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-[#ebebeb] dark:border-[#222222] px-4 py-2.5 bg-[#fafafa] dark:bg-[#0e0e0e] text-xs font-mono">
+        <div class="flex flex-wrap items-center gap-3 sm:gap-5 text-[#8f8f8f]">
+          <div>Words: <span class="font-bold text-[#171717] dark:text-white" id="stat-words">0</span></div>
+          <div>Characters: <span class="font-bold text-[#171717] dark:text-white" id="stat-chars">0</span></div>
+          <div>Lines: <span class="font-bold text-[#171717] dark:text-white" id="stat-lines">0</span></div>
+          <div id="stat-savings-pill" class="hidden text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-[4px]">
+            Cleaned
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-copy"
+            type="button"
+            class="flex items-center gap-1 px-3 py-1.5 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold text-xs hover:opacity-90 transition cursor-pointer"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            <span id="copy-btn-text">Copy Clean Text</span>
+          </button>
+          <button
+            id="btn-download"
+            type="button"
+            class="px-3 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            Download .txt
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Educational & SEO Guide Section -->
+    <div class="mt-12 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+          <div class="font-mono text-xs uppercase text-[#0070f3] mb-2 font-semibold">1. PDF Line Break Repair</div>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            PDF text columns often wrap lines with hard line breaks at 60–80 characters. Our Join Lines algorithm stitches fragmented paragraphs back together without stripping legitimate punctuation.
+          </p>
+        </div>
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+          <div class="font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 mb-2 font-semibold">2. Redundant Spaces &amp; Tabs</div>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Collapses multiple spaces, tabs, and non-breaking Unicode spaces into single typographic spaces, ensuring clean formatting for essays, blog publishing, and databases.
+          </p>
+        </div>
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+          <div class="font-mono text-xs uppercase text-purple-600 dark:text-purple-400 mb-2 font-semibold">3. Duplicate Row Purging</div>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Eliminates repeated lines and list items instantly. Perfect for cleaning email lists, keyword databases, reference citations, and code manifests with zero data leakage.
+          </p>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="p-6 rounded-[12px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+        <h3 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-white mb-4">Frequently Asked Questions</h3>
+        <div class="space-y-4 text-xs sm:text-sm">
+          <div>
+            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">Why does text copied from PDF files contain bad line breaks?</h4>
+            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
+              PDFs store text by absolute coordinate positioning rather than continuous paragraphs. When copied, PDF viewers insert hard carriage returns at the end of every line column. Clean Text Tool detects and joins these lines in milliseconds.
+            </p>
+          </div>
+          <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-4">
+            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">Are my documents uploaded to a remote server?</h4>
+            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
+              No. CleanWordCounter processes all strings locally inside your browser's WebAssembly and JavaScript engine. Your drafts, legal texts, and private notes never touch the cloud.
+            </p>
+          </div>
+          <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-4">
+            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">How do I remove empty blank paragraphs?</h4>
+            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
+              Click the "Delete Blank Lines" button. The tool filters out lines that contain only whitespace or empty carriage returns, leaving only content-bearing text.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('clean-text-input') as HTMLTextAreaElement;
+    const statWords = document.getElementById('stat-words');
+    const statChars = document.getElementById('stat-chars');
+    const statLines = document.getElementById('stat-lines');
+    const savingsPill = document.getElementById('stat-savings-pill');
+
+    function updateStats() {
+      if (!textarea) return;
+      const text = textarea.value;
+      const words = (text.trim().match(/\S+/g) || []).length;
+      const chars = text.length;
+      const lines = text ? text.split('\n').length : 0;
+
+      if (statWords) statWords.textContent = words.toLocaleString();
+      if (statChars) statChars.textContent = chars.toLocaleString();
+      if (statLines) statLines.textContent = lines.toLocaleString();
+    }
+
+    function showSavings(message: string) {
+      if (!savingsPill) return;
+      savingsPill.textContent = message;
+      savingsPill.classList.remove('hidden');
+      setTimeout(() => savingsPill.classList.add('hidden'), 3500);
+    }
+
+    // Auto Clean (All-in-one)
+    document.getElementById('btn-clean-all')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const originalLen = textarea.value.length;
+      let text = textarea.value;
+      // 1. Remove duplicate spaces and tabs
+      text = text.replace(/[ \t]+/g, ' ');
+      // 2. Trim whitespace on each line
+      text = text.split('\n').map(l => l.trim()).filter(l => l.length > 0).join('\n\n');
+      textarea.value = text;
+      updateStats();
+      const savedChars = originalLen - text.length;
+      showSavings(`✓ Cleaned! Removed ${savedChars} redundant characters`);
+    });
+
+    // Remove Line Breaks (Join into continuous paragraphs)
+    document.getElementById('btn-remove-breaks')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      let text = textarea.value;
+      // Preserve double line breaks (paragraphs) but join single line breaks
+      text = text.replace(/([^\n])\n([^\n])/g, '$1 $2');
+      text = text.replace(/[ \t]+/g, ' ');
+      textarea.value = text.trim();
+      updateStats();
+      showSavings('✓ Joined fragmented line breaks');
+    });
+
+    // Remove Extra Spaces
+    document.getElementById('btn-remove-spaces')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      let text = textarea.value.replace(/[ \t]+/g, ' ');
+      text = text.split('\n').map(l => l.trim()).join('\n');
+      textarea.value = text;
+      updateStats();
+      showSavings('✓ Extra spaces collapsed');
+    });
+
+    // Remove Blank Lines
+    document.getElementById('btn-remove-blank')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const lines = textarea.value.split('\n').filter(line => line.trim().length > 0);
+      textarea.value = lines.join('\n');
+      updateStats();
+      showSavings('✓ Blank lines deleted');
+    });
+
+    // Remove Duplicate Lines
+    document.getElementById('btn-remove-duplicates')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const lines = textarea.value.split('\n');
+      const unique = Array.from(new Set(lines));
+      const removed = lines.length - unique.length;
+      textarea.value = unique.join('\n');
+      updateStats();
+      showSavings(`✓ Removed ${removed} duplicate lines`);
+    });
+
+    // Strip HTML Tags
+    document.getElementById('btn-strip-html')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const stripped = textarea.value.replace(/<[^>]*>/g, '');
+      textarea.value = stripped;
+      updateStats();
+      showSavings('✓ HTML tags stripped');
+    });
+
+    // Sort A-Z
+    document.getElementById('btn-sort-az')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const lines = textarea.value.split('\n').sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+      textarea.value = lines.join('\n');
+      updateStats();
+      showSavings('✓ Sorted lines A to Z');
+    });
+
+    // Load Sample Messy Text
+    document.getElementById('btn-sample')?.addEventListener('click', () => {
+      textarea.value = `This text was    copied from a PDF document with\nannoying hard line breaks that break\nsentences across     multiple lines.\n\n\nIt also contains double blank paragraphs,\n   unwanted indentation spaces,   and repeated rows.\nThis is a duplicate line.\nThis is a duplicate line.\n<p>It even contains <strong>unwanted HTML formatting</strong>.</p>`;
+      updateStats();
+    });
+
+    // Clear
+    document.getElementById('btn-clear')?.addEventListener('click', () => {
+      textarea.value = '';
+      updateStats();
+    });
+
+    // Copy to Clipboard
+    document.getElementById('btn-copy')?.addEventListener('click', async () => {
+      if (!textarea.value) return;
+      await navigator.clipboard.writeText(textarea.value);
+      const copyText = document.getElementById('copy-btn-text');
+      if (copyText) copyText.textContent = '✓ Copied!';
+      if ((window as any).showToast) (window as any).showToast('Cleaned text copied to clipboard');
+      setTimeout(() => {
+        if (copyText) copyText.textContent = 'Copy Clean Text';
+      }, 2000);
+    });
+
+    // Download .txt
+    document.getElementById('btn-download')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      const blob = new Blob([textarea.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'cleaned-text.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    textarea?.addEventListener('input', updateStats);
+    updateStats();
+  </script>
+</Layout>

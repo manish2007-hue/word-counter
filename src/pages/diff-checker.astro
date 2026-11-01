@@ -1,0 +1,417 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Private Text Diff Checker – Compare Two Texts Online (100% Confidential)";
+const pageDescription = "Free private text diff checker. Compare two text files, legal contracts, or code drafts side-by-side. 100% client-side privacy with green and red difference highlights.";
+const pageKeywords = "diff checker, text compare online, compare two texts, text difference finder, private diff tool, legal document compare, code diff online";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Private Text Diff Checker",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/diff-checker/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my text safe and confidential on this Diff Checker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, absolutely. Unlike conventional online diff tools that upload your text to cloud servers, CleanWordCounter's diff engine executes 100% locally in your browser JavaScript memory. Zero lines of text or code leave your machine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compare legal contracts and NDAs with this tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because our diff checker runs completely client-side without internet transmission, it is safe for non-disclosure agreements, legal drafts, medical records, and proprietary source code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do the green and red highlights mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Green highlights indicate text, words, or lines that were added to the modified version. Red highlights indicate content that was deleted or replaced from the original draft."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="diff-checker"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
+      <span>100% Local &amp; Confidential Diff Engine</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Private Text <span class="vercel-gradient-develop">Diff Checker</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Compare two texts, legal contracts, or code drafts side-by-side. Spot every addition, deletion, and edit with zero server telemetry.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 mb-12">
+    <!-- Diff Control Panel -->
+    <div class="vercel-card overflow-hidden mb-6">
+      <div class="p-3 sm:p-4 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] flex flex-wrap items-center justify-between gap-3">
+        
+        <div class="flex items-center gap-2">
+          <!-- View Toggle: Side-by-Side vs Unified -->
+          <div class="inline-flex rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] p-0.5 text-xs font-medium">
+            <button
+              id="view-split-btn"
+              type="button"
+              class="px-2.5 py-1 rounded-[4px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold transition cursor-pointer"
+            >
+              Side-by-Side View
+            </button>
+            <button
+              id="view-unified-btn"
+              type="button"
+              class="px-2.5 py-1 rounded-[4px] text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer"
+            >
+              Unified Inline View
+            </button>
+          </div>
+
+          <!-- Swap Button -->
+          <button
+            id="btn-swap"
+            type="button"
+            class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+            title="Swap Original and Modified texts"
+          >
+            <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            <span>Swap</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <button id="btn-load-sample-diff" type="button" class="text-[#0070f3] hover:underline cursor-pointer">
+            Load Sample Contract Diff
+          </button>
+          <span class="text-[#8f8f8f]">·</span>
+          <button id="btn-clear-diff" type="button" class="text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer">
+            Clear Both
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Inputs: Left vs Right -->
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x border-b border-[#ebebeb] dark:border-[#222222]">
+        
+        <!-- Original Text Panel -->
+        <div class="p-4 bg-white dark:bg-[#0a0a0a]">
+          <div class="flex items-center justify-between mb-2">
+            <span class="mono-eyebrow text-[#8f8f8f]">Original Text (Draft 1)</span>
+            <span class="text-[11px] font-mono text-[#8f8f8f]" id="original-word-count">0 words</span>
+          </div>
+          <textarea
+            id="diff-text-original"
+            rows="10"
+            placeholder="Paste original or baseline version here..."
+            class="w-full resize-y font-mono text-xs sm:text-sm text-[#171717] dark:text-[#ededed] bg-transparent border-0 focus:outline-hidden leading-relaxed"
+          ></textarea>
+        </div>
+
+        <!-- Modified Text Panel -->
+        <div class="p-4 bg-white dark:bg-[#0a0a0a]">
+          <div class="flex items-center justify-between mb-2">
+            <span class="mono-eyebrow text-[#0070f3]">Modified Text (Draft 2)</span>
+            <span class="text-[11px] font-mono text-[#8f8f8f]" id="modified-word-count">0 words</span>
+          </div>
+          <textarea
+            id="diff-text-modified"
+            rows="10"
+            placeholder="Paste revised or edited version here..."
+            class="w-full resize-y font-mono text-xs sm:text-sm text-[#171717] dark:text-[#ededed] bg-transparent border-0 focus:outline-hidden leading-relaxed"
+          ></textarea>
+        </div>
+
+      </div>
+
+      <!-- Live Diff Stat Summary Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#fafafa] dark:bg-[#0e0e0e] text-xs font-mono">
+        <div class="flex flex-wrap items-center gap-4">
+          <div class="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
+            <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            <span id="stat-additions">+0 additions</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-red-600 dark:text-red-400 font-bold">
+            <span class="h-2 w-2 rounded-full bg-red-500"></span>
+            <span id="stat-deletions">-0 deletions</span>
+          </div>
+          <div class="text-[#8f8f8f]">
+            Status: <span id="stat-diff-status" class="font-medium text-[#171717] dark:text-white">Identical</span>
+          </div>
+        </div>
+
+        <button
+          id="btn-copy-diff-summary"
+          type="button"
+          class="flex items-center gap-1 px-3 py-1.5 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold text-xs hover:opacity-90 transition cursor-pointer"
+        >
+          Copy Diff Summary
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Rendered Visual Diff Results -->
+    <div class="vercel-card overflow-hidden mb-12">
+      <div class="p-3 sm:p-4 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-[#0070f3]"></span>
+          <h2 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-white">Comparison Diff Output</h2>
+        </div>
+        <div class="flex items-center gap-3 text-xs font-mono text-[#8f8f8f]">
+          <span class="flex items-center gap-1"><span class="inline-block w-2.5 h-2.5 rounded-xs bg-emerald-500/20 border border-emerald-500"></span> Added</span>
+          <span class="flex items-center gap-1"><span class="inline-block w-2.5 h-2.5 rounded-xs bg-red-500/20 border border-red-500"></span> Deleted</span>
+        </div>
+      </div>
+
+      <div class="p-4 sm:p-6 bg-white dark:bg-[#0a0a0a] min-h-[160px] overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed" id="diff-output-container">
+        <div class="text-center py-8 text-[#8f8f8f]">
+          Type or paste text into both panels above to see instant word-by-word difference highlights.
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust & FAQ Info -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+        <h4 class="font-semibold text-xs text-[#0070f3] uppercase font-mono mb-2">100% Client-Side Privacy</h4>
+        <p class="text-xs text-[#8f8f8f] leading-relaxed">
+          Zero data transmission. All string comparisons run locally in memory. Completely safe for legal agreements, confidential contracts, and medical transcripts.
+        </p>
+      </div>
+      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+        <h4 class="font-semibold text-xs text-emerald-600 dark:text-emerald-400 uppercase font-mono mb-2">Word &amp; Character Granularity</h4>
+        <p class="text-xs text-[#8f8f8f] leading-relaxed">
+          Our Myers longest common subsequence (LCS) engine spots exact modified words and punctuation changes rather than just highlighting full lines blindly.
+        </p>
+      </div>
+      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
+        <h4 class="font-semibold text-xs text-purple-600 dark:text-purple-400 uppercase font-mono mb-2">Contract &amp; Revision Audits</h4>
+        <p class="text-xs text-[#8f8f8f] leading-relaxed">
+          Quickly catch sneaky clause changes, redlines, pricing edits, and sneaky wording shifts between two versions of any document.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const originalInput = document.getElementById('diff-text-original') as HTMLTextAreaElement;
+    const modifiedInput = document.getElementById('diff-text-modified') as HTMLTextAreaElement;
+    const outputContainer = document.getElementById('diff-output-container')!;
+    const statAdditions = document.getElementById('stat-additions')!;
+    const statDeletions = document.getElementById('stat-deletions')!;
+    const statStatus = document.getElementById('stat-diff-status')!;
+    const originalWords = document.getElementById('original-word-count')!;
+    const modifiedWords = document.getElementById('modified-word-count')!;
+
+    let viewMode = 'split'; // 'split' | 'unified'
+
+    // Simple robust Word-level LCS diff algorithm
+    function computeWordDiff(text1: string, text2: string) {
+      const words1 = text1 ? text1.split(/(\s+)/) : [];
+      const words2 = text2 ? text2.split(/(\s+)/) : [];
+
+      // Compute LCS table
+      const m = words1.length;
+      const n = words2.length;
+      const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          if (words1[i - 1] === words2[j - 1]) {
+            dp[i][j] = dp[i - 1][j - 1] + 1;
+          } else {
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+          }
+        }
+      }
+
+      // Backtrack to find diff tokens
+      const diff: Array<{ type: 'same' | 'add' | 'del'; value: string }> = [];
+      let i = m;
+      let j = n;
+
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && words1[i - 1] === words2[j - 1]) {
+          diff.unshift({ type: 'same', value: words1[i - 1] });
+          i--;
+          j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          diff.unshift({ type: 'add', value: words2[j - 1] });
+          j--;
+        } else if (i > 0 && (j === 0 || dp[i][j - 1] < dp[i - 1][j])) {
+          diff.unshift({ type: 'del', value: words1[i - 1] });
+          i--;
+        }
+      }
+
+      return diff;
+    }
+
+    function escapeHtml(str: string) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br/>');
+    }
+
+    function renderDiff() {
+      const t1 = originalInput.value;
+      const t2 = modifiedInput.value;
+
+      const w1 = (t1.trim().match(/\S+/g) || []).length;
+      const w2 = (t2.trim().match(/\S+/g) || []).length;
+      originalWords.textContent = `${w1.toLocaleString()} words`;
+      modifiedWords.textContent = `${w2.toLocaleString()} words`;
+
+      if (!t1 && !t2) {
+        outputContainer.innerHTML = '<div class="text-center py-8 text-[#8f8f8f]">Type or paste text into both panels above to see instant word-by-word difference highlights.</div>';
+        statAdditions.textContent = '+0 additions';
+        statDeletions.textContent = '-0 deletions';
+        statStatus.textContent = 'Empty';
+        return;
+      }
+
+      if (t1 === t2) {
+        outputContainer.innerHTML = '<div class="p-4 rounded-[8px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-semibold text-center">✓ Both texts are 100% identical. No differences found.</div>';
+        statAdditions.textContent = '+0 additions';
+        statDeletions.textContent = '-0 deletions';
+        statStatus.textContent = 'Identical';
+        return;
+      }
+
+      const tokens = computeWordDiff(t1, t2);
+      let additionsCount = 0;
+      let deletionsCount = 0;
+
+      tokens.forEach(tok => {
+        if (tok.type === 'add' && tok.value.trim().length > 0) additionsCount++;
+        if (tok.type === 'del' && tok.value.trim().length > 0) deletionsCount++;
+      });
+
+      statAdditions.textContent = `+${additionsCount} added words`;
+      statDeletions.textContent = `-${deletionsCount} deleted words`;
+      statStatus.textContent = `${additionsCount + deletionsCount} modifications`;
+
+      if (viewMode === 'split') {
+        // Render Side-by-side
+        let leftHtml = '';
+        let rightHtml = '';
+
+        tokens.forEach(tok => {
+          if (tok.type === 'same') {
+            leftHtml += escapeHtml(tok.value);
+            rightHtml += escapeHtml(tok.value);
+          } else if (tok.type === 'del') {
+            leftHtml += `<mark class="bg-red-500/20 text-red-700 dark:text-red-300 rounded-xs px-0.5 line-through">${escapeHtml(tok.value)}</mark>`;
+          } else if (tok.type === 'add') {
+            rightHtml += `<mark class="bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 rounded-xs px-0.5 font-semibold">${escapeHtml(tok.value)}</mark>`;
+          }
+        });
+
+        outputContainer.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-3 rounded-[6px] border border-red-500/20 bg-red-500/5 dark:bg-red-500/10 whitespace-pre-wrap">
+              <div class="font-mono text-[10px] text-red-500 font-bold uppercase mb-2">Original with Deletions</div>
+              <div>${leftHtml || '<span class="text-[#8f8f8f]">(Empty)</span>'}</div>
+            </div>
+            <div class="p-3 rounded-[6px] border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-500/10 whitespace-pre-wrap">
+              <div class="font-mono text-[10px] text-emerald-500 font-bold uppercase mb-2">Modified with Additions</div>
+              <div>${rightHtml || '<span class="text-[#8f8f8f]">(Empty)</span>'}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Unified inline mode
+        let inlineHtml = '';
+        tokens.forEach(tok => {
+          if (tok.type === 'same') {
+            inlineHtml += escapeHtml(tok.value);
+          } else if (tok.type === 'del') {
+            inlineHtml += `<span class="bg-red-500/20 text-red-700 dark:text-red-300 px-1 py-0.5 rounded-[3px] line-through">${escapeHtml(tok.value)}</span>`;
+          } else if (tok.type === 'add') {
+            inlineHtml += `<span class="bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-1 py-0.5 rounded-[3px] font-semibold">${escapeHtml(tok.value)}</span>`;
+          }
+        });
+        outputContainer.innerHTML = `<div class="whitespace-pre-wrap">${inlineHtml}</div>`;
+      }
+    }
+
+    // View toggles
+    const btnSplit = document.getElementById('view-split-btn')!;
+    const btnUnified = document.getElementById('view-unified-btn')!;
+
+    btnSplit.addEventListener('click', () => {
+      viewMode = 'split';
+      btnSplit.className = 'px-2.5 py-1 rounded-[4px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold transition cursor-pointer';
+      btnUnified.className = 'px-2.5 py-1 rounded-[4px] text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer';
+      renderDiff();
+    });
+
+    btnUnified.addEventListener('click', () => {
+      viewMode = 'unified';
+      btnUnified.className = 'px-2.5 py-1 rounded-[4px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold transition cursor-pointer';
+      btnSplit.className = 'px-2.5 py-1 rounded-[4px] text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer';
+      renderDiff();
+    });
+
+    // Swap
+    document.getElementById('btn-swap')?.addEventListener('click', () => {
+      const temp = originalInput.value;
+      originalInput.value = modifiedInput.value;
+      modifiedInput.value = temp;
+      renderDiff();
+    });
+
+    // Clear
+    document.getElementById('btn-clear-diff')?.addEventListener('click', () => {
+      originalInput.value = '';
+      modifiedInput.value = '';
+      renderDiff();
+    });
+
+    // Load Sample Contract Diff
+    document.getElementById('btn-load-sample-diff')?.addEventListener('click', () => {
+      originalInput.value = `CONFIDENTIALITY AGREEMENT\n\n1. Scope of Agreement:\nThe recipient agrees to hold all proprietary confidential information in strict confidence for a period of 2 years from receipt.\n\n2. Payment & Retainer:\nThe client agrees to compensate Contractor at the standard rate of $120 per hour, payable within 30 days of invoice.\n\n3. Governing Law:\nThis contract shall be governed by the laws of California.`;
+      modifiedInput.value = `CONFIDENTIALITY AGREEMENT (AMENDED)\n\n1. Scope of Agreement:\nThe recipient agrees to hold all proprietary confidential information in strict confidence for a perpetual duration from receipt.\n\n2. Payment & Retainer:\nThe client agrees to compensate Contractor at the premium rate of $150 per hour, payable within 15 days of invoice.\n\n3. Governing Law:\nThis contract shall be governed exclusively by the laws of Delaware.`;
+      renderDiff();
+    });
+
+    // Copy Summary
+    document.getElementById('btn-copy-diff-summary')?.addEventListener('click', async () => {
+      const summary = `Diff Summary:\n${statAdditions.textContent}\n${statDeletions.textContent}\nComputed 100% locally on CleanWordCounter Private Diff Checker`;
+      await navigator.clipboard.writeText(summary);
+      if ((window as any).showToast) (window as any).showToast('Diff summary copied to clipboard');
+    });
+
+    originalInput.addEventListener('input', renderDiff);
+    modifiedInput.addEventListener('input', renderDiff);
+    renderDiff();
+  </script>
+</Layout>

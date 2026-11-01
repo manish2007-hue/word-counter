@@ -1,0 +1,212 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Remove Line Breaks Online – Convert Broken Lines to Flowing Text";
+const pageDescription = "Free online line break remover. Clean text from PDF copy-pastes, remove carriage returns, strip newlines, and restore clean paragraphs instantly.";
+const pageKeywords = "remove line breaks, line break remover, remove line breaks online, remove newlines, text joiner, strip carriage returns";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Line Break Remover Online",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/remove-line-breaks/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the Line Break Remover work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paste your text and choose 'Remove All Line Breaks' or 'Preserve Paragraphs'. The tool replaces line-ending carriage returns with single spaces while preserving paragraph boundaries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I remove line breaks from PDF text without losing paragraphs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Our intelligent paragraph mode detects double returns (paragraphs) and only joins single returns that were artificially wrapped by PDF columns."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="remove-line-breaks"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% Client-Side Line Break Remover</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Remove Line Breaks <span class="vercel-gradient-develop">Online</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Convert fragmented PDF text, terminal outputs, and emails with awkward carriage returns into smooth, readable paragraphs.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="vercel-card overflow-hidden">
+      
+      <!-- Top Action Toolbar -->
+      <div class="p-3 sm:p-4 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button
+            id="btn-remove-breaks-smart"
+            type="button"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#0060df] transition cursor-pointer shadow-2xs"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span>Remove Breaks &amp; Keep Paragraphs</span>
+          </button>
+
+          <button
+            id="btn-remove-all-breaks"
+            type="button"
+            class="px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            Remove ALL Breaks (Single Line)
+          </button>
+
+          <button
+            id="btn-strip-spaces"
+            type="button"
+            class="px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+          >
+            Strip Extra Spaces
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="btn-load-sample" type="button" class="text-xs font-mono text-[#0070f3] hover:underline cursor-pointer">
+            Sample
+          </button>
+          <button id="btn-clear-box" type="button" class="text-xs font-mono text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <!-- Textarea -->
+      <div class="p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+        <textarea
+          id="breaks-input"
+          rows="12"
+          placeholder="Paste text with broken lines here..."
+          class="w-full resize-y font-mono text-xs sm:text-sm text-[#171717] dark:text-[#ededed] bg-transparent border-0 focus:outline-hidden leading-relaxed"
+        ></textarea>
+      </div>
+
+      <!-- Action & Stats Footer -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-t border-[#ebebeb] dark:border-[#222222] px-4 py-2.5 bg-[#fafafa] dark:bg-[#0e0e0e] text-xs font-mono">
+        <div class="flex items-center gap-4 text-[#8f8f8f]">
+          <div>Words: <span class="font-bold text-[#171717] dark:text-white" id="stat-words">0</span></div>
+          <div>Lines: <span class="font-bold text-[#171717] dark:text-white" id="stat-lines">0</span></div>
+          <span id="clean-status" class="hidden text-emerald-600 dark:text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-[4px]"></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-copy-result"
+            type="button"
+            class="flex items-center gap-1 px-3 py-1.5 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black font-semibold text-xs hover:opacity-90 transition cursor-pointer"
+          >
+            Copy Text
+          </button>
+          <a
+            href="/clean-text"
+            class="px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#1f1f1f] transition"
+          >
+            More Cleaning Options →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const textarea = document.getElementById('breaks-input') as HTMLTextAreaElement;
+    const statWords = document.getElementById('stat-words');
+    const statLines = document.getElementById('stat-lines');
+    const cleanStatus = document.getElementById('clean-status');
+
+    function update() {
+      if (!textarea) return;
+      const text = textarea.value;
+      const words = (text.trim().match(/\S+/g) || []).length;
+      const lines = text ? text.split('\n').length : 0;
+      if (statWords) statWords.textContent = words.toLocaleString();
+      if (statLines) statLines.textContent = lines.toLocaleString();
+    }
+
+    function notify(msg: string) {
+      if (!cleanStatus) return;
+      cleanStatus.textContent = msg;
+      cleanStatus.classList.remove('hidden');
+      setTimeout(() => cleanStatus.classList.add('hidden'), 3000);
+    }
+
+    document.getElementById('btn-remove-breaks-smart')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      let text = textarea.value;
+      text = text.replace(/([^\n])\n([^\n])/g, '$1 $2');
+      text = text.replace(/[ \t]+/g, ' ');
+      textarea.value = text.trim();
+      update();
+      notify('✓ Paragraphs preserved, line breaks removed');
+    });
+
+    document.getElementById('btn-remove-all-breaks')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      textarea.value = textarea.value.replace(/[\r\n]+/g, ' ').replace(/[ \t]+/g, ' ').trim();
+      update();
+      notify('✓ All line breaks removed');
+    });
+
+    document.getElementById('btn-strip-spaces')?.addEventListener('click', () => {
+      if (!textarea.value) return;
+      textarea.value = textarea.value.replace(/[ \t]+/g, ' ');
+      update();
+      notify('✓ Extra spaces stripped');
+    });
+
+    document.getElementById('btn-load-sample')?.addEventListener('click', () => {
+      textarea.value = `This sentence was broken\nacross multiple lines because of\na PDF column margin.\n\nHere is a second paragraph that was\nalso broken awkwardly across\nthree different lines.`;
+      update();
+    });
+
+    document.getElementById('btn-clear-box')?.addEventListener('click', () => {
+      textarea.value = '';
+      update();
+    });
+
+    document.getElementById('btn-copy-result')?.addEventListener('click', async () => {
+      if (!textarea.value) return;
+      await navigator.clipboard.writeText(textarea.value);
+      if ((window as any).showToast) (window as any).showToast('Text copied to clipboard');
+    });
+
+    textarea?.addEventListener('input', update);
+    update();
+  </script>
+</Layout>
