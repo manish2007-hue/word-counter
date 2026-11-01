@@ -8,6 +8,95 @@ const pageTitle = "Word Counter – Free Online Word Counter Tool & Word Count C
 const pageDescription = "Free online word counter tool and word count checker. Count words, characters, sentences, PDF word count, essay citations, and Google Docs limits in real time.";
 const pageKeywords = "word counter, word counter online, word counter free, word counter tool, free word counter, online word counter, essay word counter, word counter google docs, pdf word counter, word counter calculator, word count, word count checker, how to check word count on google docs, word count on google docs, how to see word count on google docs";
 
+// Comprehensive FAQ Dataset for Word Counter Websites
+const mostFaqs = [
+  {
+    category: "General Word & Character Counting",
+    question: "What is an online word counter and how does it work?",
+    answer: "An online word counter is a digital text analytics utility that calculates the exact number of words, characters (with and without spaces), sentences, paragraphs, and reading time in a block of text. It works using natural language tokenization algorithms that parse text across whitespace boundaries and punctuation markers in real time as you type or paste."
+  },
+  {
+    category: "General Word & Character Counting",
+    question: "What is the difference between word count and character count?",
+    answer: "Word count measures the number of distinct words separated by spaces or punctuation (for example, 'online word counter' is 3 words). Character count measures every individual letter, number, symbol, and space. The same phrase contains 19 characters with spaces, or 17 characters without spaces."
+  },
+  {
+    category: "General Word & Character Counting",
+    question: "Does a word counter count spaces, numbers, and punctuation marks?",
+    answer: "Yes. Groupings of numbers (like '2025' or '100') count as individual words. Punctuation attached to words (like hyphens in 'state-of-the-art' or apostrophes in 'don\\'t') is treated as part of the word, while standalone symbols are not counted as words. Character counts provide two separate values: total characters including spaces, and characters excluding spaces."
+  },
+  {
+    category: "General Word & Character Counting",
+    question: "How many words is a page? (Words to Pages conversion)",
+    answer: "In standard academic and professional typography (12 pt Times New Roman or Arial font with 1-inch margins), a single-spaced page contains approximately 500 words, while a double-spaced page contains approximately 250 words. Therefore, 1,000 words equals roughly 2 single-spaced pages or 4 double-spaced pages."
+  },
+  {
+    category: "Document & Processor Guides",
+    question: "How do I check the word count on Google Docs?",
+    answer: "To check word count in Google Docs, press Ctrl + Shift + C on Windows and Chromebooks, or Command + Shift + C on Mac. You can also click Tools > Word count in the top menu. To keep a live count visible in the bottom-left corner while typing, check the box for 'Display word count while typing'."
+  },
+  {
+    category: "Document & Processor Guides",
+    question: "How do I check the word count in Microsoft Word?",
+    answer: "In Microsoft Word, the live word count is displayed continuously in the bottom-left corner of the status bar. Clicking this indicator opens the Word Count dialog showing words, characters, paragraphs, and lines. You can also view it by opening the Review tab and clicking Word Count, or pressing Ctrl + Shift + G."
+  },
+  {
+    category: "Document & Processor Guides",
+    question: "Can I count words in a PDF or Word (.docx) document without copying and pasting?",
+    answer: "Yes! You can drag and drop any .pdf, .docx, .txt, or .md file directly into the WordCountr Pro editor viewport. The built-in WebAssembly parser extracts the clean text stream in browser memory without sending confidential documents to external conversion servers."
+  },
+  {
+    category: "Writing & Publishing Metrics",
+    question: "How are estimated reading time and speaking time calculated?",
+    answer: "Reading time is estimated using the global benchmark silent reading speed of 225 words per minute (WPM) for adults. Speaking time is calculated at 130 words per minute, the standard delivery tempo for presentations, keynote speeches, podcasts, and video voiceovers."
+  },
+  {
+    category: "Writing & Publishing Metrics",
+    question: "What is keyword density and why is it important for SEO?",
+    answer: "Keyword density is the percentage of times a specific keyword or phrase appears relative to the total word count: (Keyword Count / Total Words) * 100. In search engine optimization (SEO), tracking keyword density ensures target keywords are naturally represented (typically 1% to 2.5%) without triggering search penalties for keyword stuffing."
+  },
+  {
+    category: "Writing & Publishing Metrics",
+    question: "What readability scores should I aim for? (Flesch-Kincaid & Grade Levels)",
+    answer: "Readability formulas evaluate how easily readers understand your copy based on sentence length and syllable count. For general websites, blogs, and public communications, aiming for Grade 7 to 9 (a Flesch Reading Ease score of 60 to 70) ensures broad accessibility, higher dwell time, and clear comprehension."
+  },
+  {
+    category: "Writing & Publishing Metrics",
+    question: "What are the character limits for Twitter (X), LinkedIn, Instagram, and TikTok?",
+    answer: "Standard platform character ceilings include: X / Twitter posts: 280 characters; LinkedIn posts: 3,000 characters (with an above-the-fold cutoff around 140 characters); Instagram captions: 2,200 characters (first 125 characters preview); Google SEO titles: 60 characters; and Google meta descriptions: 160 characters."
+  },
+  {
+    category: "Tool Features & Privacy",
+    question: "Is WordCountr Pro safe, private, and secure for confidential documents?",
+    answer: "Yes, 100%. WordCountr Pro runs entirely on client-side JavaScript inside your web browser. Unlike cloud-based counters, your text, manuscripts, legal contracts, and uploaded documents are never transmitted over the internet, never saved on remote servers, and never tracked."
+  },
+  {
+    category: "Tool Features & Privacy",
+    question: "Can I use this word counter offline on mobile or desktop?",
+    answer: "Yes. WordCountr Pro is an installable Progressive Web App (PWA). You can install it on your iPhone, Android, Mac, or Windows PC by clicking 'Install' or 'Add to Home Screen'. Once installed, all word counting, readability scoring, and file parsing features work completely offline."
+  },
+  {
+    category: "Tool Features & Privacy",
+    question: "How does Academic Essay Mode exclude citations and references?",
+    answer: "University guidelines (APA 7th, MLA 9th, Chicago, Harvard) require students to exclude parenthetical citations (e.g., (Smith, 2024) or [1-3]) and end-of-paper References or Works Cited sections from net word limits. WordCountr automatically detects and deducts these elements, displaying both Gross and Net Essay word counts."
+  }
+];
+
+// Standalone Schema.org FAQPage JSON-LD
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": mostFaqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
+// Composite Graph for Head (WebApplication + HowTo + FAQPage)
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -56,51 +145,7 @@ const structuredData = {
         }
       ]
     },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "How do I check word count on Google Docs?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "You can check word count on Google Docs by pressing Ctrl + Shift + C (Windows) or Command + Shift + C (Mac), or by clicking Tools > Word count. To see the word count live while typing, check 'Display word count while typing' in the dialog box."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is WordCountr a completely free word counter tool?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes! WordCountr Pro is 100% free with zero ads, zero subscriptions, and zero limits. All word counting, readability calculations, and document parsing run locally in your web browser."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does the essay word counter handle citations and references?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "WordCountr's Academic Essay Mode detects parenthetical in-text citations like (Author, 2024) or [1-3] and end-of-document reference sections, automatically deducting them from your gross total to provide your official net essay word count."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use WordCountr as a PDF word counter?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. WordCountr includes a built-in PDF word counter and DOCX parser. Simply drag and drop your document into the editor to extract and analyze text instantly in browser memory without uploading files to remote servers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How does the online word counter calculator compute words and characters?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "The calculator utilizes Intl.Segmenter for boundary tokenization (including CJK scripts without spaces), measures characters with and without whitespace, models reading duration at 225 WPM, and calculates multi-formula readability grades."
-          }
-        }
-      ]
-    }
+    faqPageSchema
   ]
 };
 ---
@@ -111,6 +156,9 @@ const structuredData = {
   keywords={pageKeywords}
   schema={structuredData}
 >
+  <!-- Dedicated Standalone Schema.org FAQPage JSON-LD for Search Crawlers -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqPageSchema, null, 2)} />
+
   <!-- Interactive Tool Workspace (Above the fold) -->
   <WordCounter showHeroCopy={true} />
 
@@ -426,63 +474,44 @@ const structuredData = {
         </div>
       </div>
 
-      <!-- FAQ Section with Schema-aligned Questions -->
-      <div class="vercel-card p-6 sm:p-10">
-        <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070] mb-2">Technical FAQ</div>
-        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-6">
-          Frequently Asked Questions
-        </h2>
-        <div class="space-y-3">
-          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
-              <span>How do I check word count on Google Docs?</span>
-              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
-              To check your word count on Google Docs, press <kbd class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono text-xs">Ctrl + Shift + C</kbd> on Windows or <kbd class="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono text-xs">Cmd + Shift + C</kbd> on Mac. Alternatively, click <strong>Tools &gt; Word count</strong> in the top menu. To view your live count while writing, check the option <em>"Display word count while typing"</em>.
-            </p>
-          </details>
-
-          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
-              <span>Is WordCountr a completely free word counter tool?</span>
-              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
-              Yes. WordCountr Pro is 100% free with zero paywalls, zero banner ads, and zero limits on document size. All computation runs client-side directly within your browser.
-            </p>
-          </details>
-
-          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
-              <span>What is Academic Essay Mode and how does citation exclusion work?</span>
-              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
-              Academic institutions enforce strict essay limits that exempt parenthetical citations (e.g. <code>(Smith, 2024)</code> or <code>[1-3]</code>) and the end References section. WordCountr automatically detects and excludes these elements, calculating your official net essay word count without manual subtraction.
-            </p>
-          </details>
-
-          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
-              <span>Can I use WordCountr as an offline PDF word counter?</span>
-              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
-              Yes! You can drag and drop PDF and Word (.docx) files directly into the editor. Files are parsed in browser memory using WebAssembly. Furthermore, WordCountr is an installable PWA that functions entirely without internet connectivity.
-            </p>
-          </details>
-
-          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
-              <span>How does WordCountr count words and calculate readability?</span>
-              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
-            </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
-              WordCountr uses Unicode-compliant <code>Intl.Segmenter</code> tokenization for international languages, measures reading speed at 225 WPM, and scores readability using Flesch Reading Ease, Flesch-Kincaid Grade Level, Gunning Fog, Coleman-Liau, and ARI.
-            </p>
-          </details>
+      <!-- FAQ Section with Schema-aligned Questions (Most Asked FAQs Across the Web) -->
+      <div class="vercel-card p-6 sm:p-10 space-y-8" id="faq">
+        <div>
+          <div class="mono-eyebrow text-[#0070f3] mb-2">Knowledge Base &amp; Search FAQ</div>
+          <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-xs sm:text-sm text-[#8f8f8f] mt-1.5 leading-relaxed">
+            Everything you need to know about word counts, character limits, document parsing, reading metrics, and writing analytics.
+          </p>
         </div>
+
+        <!-- Grouped FAQs by Category -->
+        {
+          ["General Word & Character Counting", "Document & Processor Guides", "Writing & Publishing Metrics", "Tool Features & Privacy"].map((categoryName) => {
+            const categoryFaqs = mostFaqs.filter((f) => f.category === categoryName);
+            return (
+              <div class="space-y-3">
+                <div class="font-mono text-[11px] tracking-wider uppercase text-[#8f8f8f] font-semibold border-b border-[#ebebeb] dark:border-[#222222] pb-1.5">
+                  {categoryName}
+                </div>
+                <div class="space-y-2.5">
+                  {categoryFaqs.map((faq) => (
+                    <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition-all hover:border-[#0070f3]/40">
+                      <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
+                        <span class="pr-4">{faq.question}</span>
+                        <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs shrink-0">▼</span>
+                      </summary>
+                      <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1] pt-2 border-t border-[#ebebeb]/60 dark:border-[#222222]/60">
+                        {faq.answer}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
 
     </div>
