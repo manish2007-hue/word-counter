@@ -1,0 +1,79 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="500: Server & Execution Error | WordCountr Pro"
+  description="An unexpected runtime error occurred while processing text analytics. WordCountr Pro error recovery."
+>
+  <div class="mx-auto max-w-xl px-4 py-20 sm:py-28 text-center">
+    
+    <!-- Status Badge -->
+    <div class="inline-flex h-16 w-16 items-center justify-center rounded-[12px] border border-[#ee0000]/30 bg-[#ee0000]/10 text-[#ee0000] text-2xl font-bold font-mono shadow-sm mb-6">
+      500
+    </div>
+
+    <!-- Main Heading -->
+    <h1 class="text-3xl sm:text-4xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-3">
+      Execution Error
+    </h1>
+
+    <p class="text-xs sm:text-sm text-[#8f8f8f] max-w-md mx-auto leading-relaxed mb-6">
+      An unexpected error occurred while executing client-side scripts. Because WordCountr Pro operates 100% in your browser memory, this may be caused by an oversized pasted buffer or browser memory pressure.
+    </p>
+
+    <!-- Error Recovery Action Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+      <button
+        type="button"
+        onclick="window.location.reload()"
+        class="vercel-btn-primary w-full sm:w-auto text-xs py-2 px-4 cursor-pointer"
+      >
+        <span>Reload Application</span>
+        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        id="clear-cache-btn"
+        class="vercel-btn-secondary w-full sm:w-auto text-xs py-2 px-4 cursor-pointer text-[#ee0000] hover:text-[#ee0000]"
+      >
+        <span>Reset Stored Draft</span>
+      </button>
+
+      <a
+        href={`${base}/`}
+        class="vercel-btn-secondary w-full sm:w-auto text-xs py-2 px-4 text-center"
+      >
+        <span>Return Home</span>
+      </a>
+    </div>
+
+    <!-- Support Help -->
+    <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-6 text-xs text-[#8f8f8f]">
+      <p>
+        If this issue persists, please report the crash to <a href="mailto:hello@wordcountr.app" class="text-[#0070f3] hover:underline font-mono">hello@wordcountr.app</a> or visit our <a href={`${base}/contact`} class="text-[#0070f3] hover:underline">Contact Page</a>.
+      </p>
+    </div>
+
+  </div>
+
+  <script>
+    const clearBtn = document.getElementById('clear-cache-btn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        try {
+          localStorage.removeItem('wordcountr-draft');
+          alert('Local draft cleared. Reloading workspace...');
+          window.location.href = window.location.pathname.replace(/\/500\/?$/, '/');
+        } catch (e) {
+          window.location.reload();
+        }
+      });
+    }
+  </script>
+</Layout>

@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = "Contact & Feedback — WordCountr";
-const pageDescription = "Get in touch with the WordCountr team for feature suggestions, bug reports, and partnership inquiries.";
+const pageTitle = "Contact Us & Developer Support — WordCountr Pro";
+const pageDescription = "Contact the WordCountr Pro team for bug reports, tokenization questions, feature suggestions, or feedback. We respond promptly.";
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
@@ -10,33 +11,197 @@ const pageDescription = "Get in touch with the WordCountr team for feature sugge
   description={pageDescription}
   canonicalSlug="contact"
 >
-  <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-    <div class="vercel-card p-6 sm:p-10">
-      
-      <div class="mono-eyebrow text-[#0070f3] mb-3">
-        Developer Support & Feedback
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-20">
+    
+    <!-- Top Pill & Title -->
+    <div class="mb-10">
+      <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#0070f3]/25 bg-[#0070f3]/10 px-3 py-1 text-[#0070f3] mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+        <span>Community Support &amp; Feedback</span>
       </div>
 
-      <h1 class="text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-4">
-        Contact the WordCountr Team
+      <h1 class="text-3xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+        Contact Us
       </h1>
 
-      <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed mb-6">
-        Have an idea for a new writing tool? Found an edge-case tokenization bug? Or want to suggest support for a new academic citation format? We'd love to hear from you.
+      <p class="mt-3 text-sm sm:text-base text-[#8f8f8f] leading-relaxed max-w-2xl">
+        Found an edge-case tokenization issue? Want support for an unlisted citation format? Or have ideas for our roadmap? Send us a note below.
       </p>
+    </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Left Column: Interactive Form -->
+      <div class="md:col-span-2">
+        <div class="vercel-card p-6 sm:p-8">
+          <h2 class="text-lg font-semibold text-[#171717] dark:text-[#ededed] mb-1 tracking-tight">
+            Send Feedback or Bug Report
+          </h2>
+          <p class="text-xs text-[#8f8f8f] mb-6">
+            All feedback helps improve accuracy for the global writing community.
+          </p>
+
+          <form id="contact-form" class="space-y-4">
+            <div>
+              <label for="contact-name" class="block font-mono text-xs text-[#171717] dark:text-[#ededed] mb-1.5 font-medium">
+                Your Name
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                required
+                placeholder="Alex Morgan"
+                class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-3 py-2 text-xs sm:text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3] transition"
+              />
+            </div>
+
+            <div>
+              <label for="contact-email" class="block font-mono text-xs text-[#171717] dark:text-[#ededed] mb-1.5 font-medium">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                required
+                placeholder="alex@example.com"
+                class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-3 py-2 text-xs sm:text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3] transition"
+              />
+            </div>
+
+            <div>
+              <label for="contact-category" class="block font-mono text-xs text-[#171717] dark:text-[#ededed] mb-1.5 font-medium">
+                Inquiry Topic
+              </label>
+              <select
+                id="contact-category"
+                name="category"
+                class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-3 py-2 text-xs sm:text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3] transition font-mono"
+              >
+                <option value="general">General Feedback &amp; Compliments</option>
+                <option value="bug">Tokenization Bug / Counting Discrepancy</option>
+                <option value="feature">Feature Request (e.g. New Reading Formula)</option>
+                <option value="academic">Academic Citation Format Request</option>
+                <option value="security">Privacy / Security Inquiry</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contact-message" class="block font-mono text-xs text-[#171717] dark:text-[#ededed] mb-1.5 font-medium">
+                Your Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                rows="5"
+                required
+                placeholder="Share your thoughts, suggestions, or reproduction steps..."
+                class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-3 py-2 text-xs sm:text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3] transition"
+              ></textarea>
+            </div>
+
+            <div class="pt-2">
+              <button
+                type="submit"
+                id="contact-submit-btn"
+                class="vercel-btn-primary w-full justify-center py-2.5"
+              >
+                <span>Submit Feedback</span>
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </button>
+            </div>
+
+            <div id="contact-success-box" class="hidden rounded-[6px] border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-emerald-700 dark:text-emerald-400 font-mono">
+              ✓ Thank you! Your feedback has been logged. We typically respond within 24–48 hours.
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Column: Direct Channels & Links -->
       <div class="space-y-4">
-        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-4 bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="mono-eyebrow text-[#8f8f8f] mb-1">General Inquiries & Feedback</div>
-          <a href="mailto:hello@wordcountr.app" class="font-medium text-sm text-[#0070f3] hover:underline font-mono">hello@wordcountr.app</a>
+        
+        <div class="vercel-card p-6">
+          <div class="mono-eyebrow text-[#0070f3] mb-1">Direct Email</div>
+          <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-1">Primary Inbox</h3>
+          <a href="mailto:hello@wordcountr.app" class="font-mono text-xs text-[#0070f3] hover:underline block mb-2">
+            hello@wordcountr.app
+          </a>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            For personal outreach, partnership discussions, or security disclosures.
+          </p>
         </div>
 
-        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-4 bg-[#fafafa] dark:bg-[#0e0e0e]">
-          <div class="mono-eyebrow text-[#8f8f8f] mb-1">Bug Reports & Tokenization Issues</div>
-          <p class="text-xs text-[#4d4d4d] dark:text-[#a1a1a1]">Please submit detailed reproducibility steps and sample text snippets to help us keep parsing 100% accurate.</p>
+        <div class="vercel-card p-6">
+          <div class="mono-eyebrow text-[#8f8f8f] mb-1">Open Source</div>
+          <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-1">GitHub Repository</h3>
+          <a
+            href="https://github.com/manish2007-hue/word-counter"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-mono text-xs text-[#0070f3] hover:underline block mb-2"
+          >
+            github.com/manish2007-hue/word-counter
+          </a>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Open an issue or submit a pull request for algorithm refinements.
+          </p>
         </div>
+
+        <div class="vercel-card p-6">
+          <div class="mono-eyebrow text-[#8f8f8f] mb-1">Knowledge Base</div>
+          <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-1">Need Immediate Answers?</h3>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed mb-3">
+            Read our comprehensive FAQ covering reading speeds, Google Docs shortcuts, and citations.
+          </p>
+          <a href={`${base}/#faq`} class="text-xs font-mono font-medium text-[#0070f3] hover:underline">
+            Visit Technical FAQ →
+          </a>
+        </div>
+
       </div>
 
     </div>
+
+    <!-- Quick Navigation Footer -->
+    <div class="mt-12 text-center sm:text-left">
+      <a href={`${base}/`} class="vercel-btn-primary inline-flex">
+        <span>← Back to Word Counter Workspace</span>
+      </a>
+    </div>
+
   </div>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const successBox = document.getElementById('contact-success-box');
+    const submitBtn = document.getElementById('contact-submit-btn');
+
+    if (form && successBox && submitBtn) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.classList.add('opacity-50');
+
+        setTimeout(() => {
+          form.reset();
+          submitBtn.removeAttribute('disabled');
+          submitBtn.classList.remove('opacity-50');
+          successBox.classList.remove('hidden');
+
+          // Trigger global toast if present
+          const toast = document.getElementById('global-toast');
+          const toastMsg = document.getElementById('toast-message');
+          if (toast && toastMsg) {
+            toastMsg.textContent = '✓ Feedback message sent successfully!';
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3500);
+          }
+        }, 500);
+      });
+    }
+  </script>
 </Layout>

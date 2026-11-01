@@ -31,27 +31,33 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://manish2007-hue.github.io/word-counter/privacy/</loc>
-    <lastmod>2026-11-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://manish2007-hue.github.io/word-counter/about/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://manish2007-hue.github.io/word-counter/privacy/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://manish2007-hue.github.io/word-counter/privacy-policy/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://manish2007-hue.github.io/word-counter/terms/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://manish2007-hue.github.io/word-counter/contact/</loc>
     <lastmod>2026-11-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.6</priority>
   </url>
 </urlset>
