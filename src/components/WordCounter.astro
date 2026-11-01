@@ -301,12 +301,26 @@ const {
       ></div>
     </div>
 
-    <!-- Bottom Status Bar: Auto-Save & Reading Grade -->
-    <div class="flex items-center justify-between border-t border-[#ebebeb] dark:border-[#222222] px-4 py-2 text-[11px] text-[#8f8f8f] bg-[#fafafa] dark:bg-[#0e0e0e] font-mono">
+    <!-- Bottom Status Bar: Auto-Save, Live Keywords Under Tool, & Reading Grade -->
+    <div class="flex flex-wrap items-center justify-between gap-2 border-t border-[#ebebeb] dark:border-[#222222] px-4 py-2 text-[11px] text-[#8f8f8f] bg-[#fafafa] dark:bg-[#0e0e0e] font-mono">
       <div class="flex items-center gap-2">
         <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#0070f3]" id="autosave-indicator"></span>
         <span id="autosave-label">Saved to device memory</span>
       </div>
+
+      <!-- Quick Keywords Strip Directly Under The Editor Tool -->
+      <div id="editor-keywords-strip" class="hidden sm:flex items-center gap-1.5 text-[11px]">
+        <span class="text-[#8f8f8f] flex items-center gap-1 font-semibold">
+          <svg class="h-3 w-3 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+          </svg>
+          <span>Keywords:</span>
+        </span>
+        <div id="editor-keywords-list" class="flex items-center gap-1">
+          <span class="text-[#8f8f8f] text-[10px]">Type text to view frequency</span>
+        </div>
+      </div>
+
       <div id="reading-level-pill" class="font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
         Reading Level: Ready
       </div>
@@ -1467,6 +1481,33 @@ const {
             if (phrase) highlightWordInEditor(phrase);
           });
         });
+      }
+
+      // Update quick keywords strip directly under editor tool
+      const editorKeywordsList = document.getElementById('editor-keywords-list');
+      if (editorKeywordsList) {
+        if (!kwResult.oneWord || kwResult.oneWord.length === 0) {
+          editorKeywordsList.innerHTML = '<span class="text-[#8f8f8f] text-[10px]">Type text to view frequency</span>';
+        } else {
+          const topKeywords = kwResult.oneWord.slice(0, 4);
+          editorKeywordsList.innerHTML = topKeywords.map(k => `
+            <button type="button" class="quick-keyword-pill inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[4px] bg-black/5 dark:bg-white/10 hover:bg-[#0070f3]/15 text-[#171717] dark:text-[#ededed] font-mono text-[10px] transition cursor-pointer" data-phrase="${k.phrase}" title="${k.count} occurrences (${k.density}%)">
+              <span>${k.phrase}</span>
+              <span class="text-[#0070f3] font-bold">(${k.count})</span>
+            </button>
+          `).join('');
+
+          editorKeywordsList.querySelectorAll('.quick-keyword-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+              const phrase = (pill as HTMLElement).dataset.phrase;
+              if (phrase) {
+                highlightWordInEditor(phrase);
+                switchTab('keywords');
+                document.getElementById('analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            });
+          });
+        }
       }
     } catch (e) {
       console.error('Keyword density error:', e);

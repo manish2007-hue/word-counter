@@ -138,49 +138,233 @@ const finalSchema = schema || defaultSchema;
         </div>
 
         <!-- Center Desktop Nav Links (Vercel 6px rounded hover style) -->
-        <nav class="hidden lg:flex items-center gap-1 text-[13px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
-          <a href={`${base}/`} class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === '' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+        <nav class="hidden lg:flex items-center gap-1.5 text-[13px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
+          <a
+            href={`${base}/`}
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === ''
+                ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
             Word Counter
           </a>
-          <a href={`${base}/ai-token-counter`} data-nav-tab="tokens" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'ai-token-counter' || canonicalSlug === 'llm-token-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+
+          <a
+            href={`${base}/ai-token-counter`}
+            data-nav-tab="tokens"
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'ai-token-counter' || canonicalSlug === 'llm-token-counter'
+                ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
             AI Token Counter
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'readability-checker' || canonicalSlug === 'flesch-kincaid-readability-calculator' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Readability
-          </a>
-          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Social Limits
-          </a>
-          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'academic-word-counter' || canonicalSlug === 'academic-word-counter-without-citations' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Academic Mode
-          </a>
-          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Keywords
-          </a>
 
-          <!-- Subtle Divider for Site Authority & SEO Pages -->
-          <div class="h-3.5 w-px bg-[#ebebeb] dark:bg-[#222222] mx-1"></div>
+          <!-- Interactive "Tools" Dropdown (Containing Keywords & Other Special Analyzers) -->
+          <div class="relative group" id="nav-tools-menu">
+            <button
+              id="tools-menu-btn"
+              type="button"
+              class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] transition-colors hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+              aria-haspopup="true"
+            >
+              <span>Tools</span>
+              <svg class="h-3 w-3 text-[#8f8f8f] transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-          <!-- Top SEO & Trust Pages (About, Contact, Privacy, Terms) -->
-          <a href={`${base}/about`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'about' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            About
-          </a>
-          <a href={`${base}/contact`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'contact' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Contact
-          </a>
-          <a href={`${base}/privacy`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Privacy
-          </a>
-          <a href={`${base}/terms`} class={`px-2 py-1.5 rounded-[6px] text-xs transition-colors ${canonicalSlug === 'terms' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-medium' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Terms
-          </a>
+            <!-- Dropdown Popover Menu -->
+            <div
+              id="tools-dropdown-menu"
+              class="hidden group-hover:block absolute left-0 top-full pt-1.5 z-50 w-72"
+            >
+              <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl">
+                
+                <div class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8f8f8f]">
+                  Analysis &amp; Density
+                </div>
+
+                <!-- Keywords / Keyword Density Checker -->
+                <a
+                  href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`}
+                  data-nav-tab="keywords"
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-[#0070f3]/10 text-[#0070f3]">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Keyword Density</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">N-gram phrase frequency &amp; SEO density</div>
+                  </div>
+                </a>
+
+                <!-- Readability Checker -->
+                <a
+                  href={isHome ? "#analysis-section" : `${base}/readability-checker`}
+                  data-nav-tab="readability"
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Readability Formulas</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Flesch-Kincaid &amp; consensus school grade</div>
+                  </div>
+                </a>
+
+                <!-- Social Limits -->
+                <a
+                  href={isHome ? "#analysis-section" : `${base}/social-media-counter`}
+                  data-nav-tab="social"
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-[#0070f3]/10 text-[#0070f3]">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Social Media Limits</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">10 channel limits &amp; SERP feed previews</div>
+                  </div>
+                </a>
+
+                <!-- Academic Mode -->
+                <a
+                  href={isHome ? "#analysis-section" : `${base}/academic-word-counter`}
+                  data-nav-tab="academic"
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Academic Mode</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Exclude APA/MLA citations &amp; references</div>
+                  </div>
+                </a>
+
+                <div class="my-1 border-t border-[#ebebeb] dark:border-[#222222]"></div>
+                <div class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8f8f8f]">
+                  Calculators &amp; Parsing
+                </div>
+
+                <!-- PDF & DOCX Counter -->
+                <a
+                  href={`${base}/docx-pdf-word-counter-private`}
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Private PDF &amp; DOCX</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">In-memory confidential text extraction</div>
+                  </div>
+                </a>
+
+                <!-- Words to Pages -->
+                <a
+                  href={`${base}/words-to-pages-converter`}
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Words to Pages</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Single &amp; double-spaced page calculator</div>
+                  </div>
+                </a>
+
+                <!-- Words to Speaking Time -->
+                <a
+                  href={`${base}/words-to-speaking-time`}
+                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
+                >
+                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-teal-500/10 text-teal-600 dark:text-teal-400">
+                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Words to Speaking Time</div>
+                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Speech pacing &amp; presentation timing</div>
+                  </div>
+                </a>
+
+              </div>
+            </div>
+          </div>
         </nav>
 
-        <!-- Right Side Utility Controls: Privacy Eyebrow, Theme Toggle, Mobile Trigger -->
-        <div class="flex items-center gap-2">
+        <!-- Right Side: Properly Managed & Good Looking SEO / Policy Links + Utility Controls -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
           
+          <!-- Managed SEO & Trust Capsule (About, Contact, Privacy, Terms) -->
+          <nav aria-label="Company & Policies" class="hidden sm:flex items-center rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#f5f5f5]/70 dark:bg-[#121212]/70 p-0.5 text-xs font-mono shadow-2xs">
+            <a
+              href={`${base}/about`}
+              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
+                canonicalSlug === 'about'
+                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
+                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
+              }`}
+            >
+              About
+            </a>
+            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
+            <a
+              href={`${base}/contact`}
+              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
+                canonicalSlug === 'contact'
+                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
+                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
+              }`}
+            >
+              Contact
+            </a>
+            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
+            <a
+              href={`${base}/privacy`}
+              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
+                canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy'
+                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
+                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
+              }`}
+            >
+              Privacy
+            </a>
+            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
+            <a
+              href={`${base}/terms`}
+              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
+                canonicalSlug === 'terms'
+                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
+                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
+              }`}
+            >
+              Terms
+            </a>
+          </nav>
+
           <!-- Trust Privacy Pill (Vercel Mono Spec-sheet Badge) -->
-          <div class="hidden sm:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
+          <div class="hidden lg:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
             <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
             <span>100% Local</span>
           </div>
@@ -401,7 +585,22 @@ const finalSchema = schema || defaultSchema;
         }
       });
 
-      // 2.1 Tab Navigation Event Interceptor (SPA smooth scroll on home page)
+      // 2.1 Tools Dropdown Click/Touch Handler
+      const toolsBtn = document.getElementById('tools-menu-btn');
+      const toolsDropdown = document.getElementById('tools-dropdown-menu');
+
+      toolsBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toolsDropdown?.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!toolsDropdown?.contains(e.target as Node) && e.target !== toolsBtn) {
+          toolsDropdown?.classList.add('hidden');
+        }
+      });
+
+      // 2.2 Tab Navigation Event Interceptor (SPA smooth scroll on home page)
       document.querySelectorAll('[data-nav-tab]').forEach((link) => {
         link.addEventListener('click', (e) => {
           const tab = (link as HTMLElement).dataset.navTab;
@@ -410,8 +609,9 @@ const finalSchema = schema || defaultSchema;
             e.preventDefault();
             (window as any).switchAnalysisTab(tab);
             analysisSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // Close mobile drawer if open
+            // Close mobile drawer and tools dropdown if open
             mobileDrawer?.classList.add('hidden');
+            toolsDropdown?.classList.add('hidden');
             hamburgerIcon?.classList.remove('hidden');
             closeIcon?.classList.add('hidden');
           }
