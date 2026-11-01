@@ -1,4 +1,6 @@
 ---
+import { SOCIAL_PLATFORMS } from '../lib/socialLimits';
+
 interface Props {
   initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style';
   initialTarget?: number;
@@ -435,7 +437,31 @@ const {
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="social-cards-grid">
-        <!-- Rendered dynamically -->
+        {SOCIAL_PLATFORMS.map((platform) => (
+          <div class="p-3.5 sm:p-4 rounded-[10px] border transition-all bg-[#fafafa] dark:bg-[#0e0e0e] border-[#ebebeb] dark:border-[#222222]">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">
+                {platform.name}
+              </span>
+              <span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#0070f3] bg-[#0070f3]/10 px-2 py-0.5 rounded-[4px]">
+                {platform.maxChars.toLocaleString()} left
+              </span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mb-2">
+              <div
+                class="h-full transition-all duration-300 bg-[#0070f3]"
+                style="width: 0%"
+              ></div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-[#8f8f8f] font-mono">
+              <span>0 / {platform.maxChars.toLocaleString()}</span>
+              <span>0%</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
 
