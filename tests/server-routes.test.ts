@@ -4,15 +4,15 @@ async function runRouteTests() {
   console.log(`🌐 Testing Live Server Routes on http://localhost:${port} ...\n`);
 
   const routes = [
-    { path: '/', expectedTexts: ['WordCountr', 'How WordCountr Compares', 'Social Media', 'Character Constraints', 'Privacy (100% Client-Side)'] },
+    { path: '/', expectedTexts: ['CleanWordCounter', 'How CleanWordCounter Compares', 'Social Media', 'Character Constraints', 'Privacy (100% Client-Side)'] },
     { path: '/social-media-counter', expectedTexts: ['Social Media Character Counter', 'X / Twitter Post', 'LinkedIn Post', 'Instagram Caption'] },
     { path: '/readability-checker', expectedTexts: ['Readability Score', 'Flesch Reading Ease', 'Flesch-Kincaid Grade Level', 'Gunning Fog'] },
     { path: '/keyword-density-checker', expectedTexts: ['Keyword Density', 'N-Gram Frequency', 'Filter stop words'] },
     { path: '/academic-word-counter', expectedTexts: ['Academic Word Counter', 'Exclude Citations', 'Official'] },
     { path: '/privacy', expectedTexts: ['Privacy Policy', '100% Client-Side', 'Zero-Transmission'] },
-    { path: '/about', expectedTexts: ['About WordCountr', 'Mission'] },
+    { path: '/about', expectedTexts: ['About CleanWordCounter', 'Mission'] },
     { path: '/terms', expectedTexts: ['Terms of Service'] },
-    { path: '/contact', expectedTexts: ['Contact the WordCountr Team'] },
+    { path: '/contact', expectedTexts: ['Contact the CleanWordCounter Team'] },
   ];
 
   let passed = 0;

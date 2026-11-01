@@ -543,7 +543,7 @@ const {
           <div class="bg-white dark:bg-[#121212] rounded-[8px] p-4 border border-[#ebebeb] dark:border-[#262626] font-sans">
             <div class="text-xs text-[#202124] dark:text-[#bdc1c6] mb-1 flex items-center gap-1.5 font-mono">
               <span class="inline-block w-4 h-4 rounded-full bg-[#0070f3]/20 text-[#0070f3] text-center text-[10px] leading-4 font-bold">G</span>
-              <span>https://wordcountr.app › blog › draft</span>
+              <span>https://cleanwordcounter.com › blog › draft</span>
             </div>
             <div id="serp-preview-title" class="text-base sm:text-lg font-medium text-[#1a0dab] dark:text-[#8ab4f8] hover:underline cursor-pointer leading-snug">
               Document title appears here...
@@ -567,7 +567,7 @@ const {
             <div class="flex items-center gap-2.5 mb-2.5">
               <div class="w-8 h-8 rounded-full bg-[#171717] dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-xs">W</div>
               <div>
-                <div class="text-xs font-bold text-[#171717] dark:text-[#ededed]">WordCountr Author <span class="font-normal text-[#8f8f8f]">@writer · Now</span></div>
+                <div class="text-xs font-bold text-[#171717] dark:text-[#ededed]">CleanWordCounter Author <span class="font-normal text-[#8f8f8f]">@writer · Now</span></div>
               </div>
             </div>
             <div id="x-preview-content" class="text-sm text-[#171717] dark:text-[#ededed] whitespace-pre-wrap leading-relaxed">
@@ -1106,7 +1106,7 @@ const {
     content: string;
     updatedAt: number;
   }
-  const DOCS_STORAGE_KEY = 'wordcountr_documents_v2';
+  const DOCS_STORAGE_KEY = 'cleanwordcounter_documents_v2';
   let documents: DocTab[] = [];
   let activeDocId = '';
 
@@ -1124,7 +1124,7 @@ const {
   }
 
   // Restore session / Initialize multi-document tabs
-  const legacySavedDraft = localStorage.getItem('wordcountr-draft');
+  const legacySavedDraft = localStorage.getItem('cleanwordcounter-draft');
   try {
     const rawDocs = localStorage.getItem(DOCS_STORAGE_KEY);
     if (rawDocs) {
@@ -1145,7 +1145,7 @@ const {
   activeDocId = documents[0].id;
   if (textarea) textarea.value = documents[0].content;
 
-  const savedTarget = localStorage.getItem('wordcountr-target');
+  const savedTarget = localStorage.getItem('cleanwordcounter-target');
   if (savedTarget && !currentTargetCount) {
     currentTargetCount = parseInt(savedTarget, 10) || 0;
   }
@@ -1165,7 +1165,7 @@ const {
       cur.updatedAt = Date.now();
       try {
         localStorage.setItem(DOCS_STORAGE_KEY, JSON.stringify(documents));
-        localStorage.setItem('wordcountr-draft', textarea.value);
+        localStorage.setItem('cleanwordcounter-draft', textarea.value);
       } catch (e) {}
     }
   }
@@ -2081,21 +2081,21 @@ const {
   btnTarget280?.addEventListener('click', () => {
     currentTargetCount = 280;
     currentTargetType = 'characters';
-    localStorage.setItem('wordcountr-target', '280');
+    localStorage.setItem('cleanwordcounter-target', '280');
     updateAll();
     notify('Target set to 280 characters (X post)');
   });
   btnTarget500?.addEventListener('click', () => {
     currentTargetCount = 500;
     currentTargetType = 'words';
-    localStorage.setItem('wordcountr-target', '500');
+    localStorage.setItem('cleanwordcounter-target', '500');
     updateAll();
     notify('Target set to 500 words');
   });
   btnTarget1000?.addEventListener('click', () => {
     currentTargetCount = 1000;
     currentTargetType = 'words';
-    localStorage.setItem('wordcountr-target', '1000');
+    localStorage.setItem('cleanwordcounter-target', '1000');
     updateAll();
     notify('Target set to 1,000 words');
   });
@@ -2108,7 +2108,7 @@ const {
   btnCancelTargetModal?.addEventListener('click', () => targetModal.classList.add('hidden'));
   btnClearTarget?.addEventListener('click', () => {
     currentTargetCount = 0;
-    localStorage.removeItem('wordcountr-target');
+    localStorage.removeItem('cleanwordcounter-target');
     targetModal.classList.add('hidden');
     updateAll();
     notify('Target goal removed');
@@ -2118,7 +2118,7 @@ const {
     if (!isNaN(val) && val > 0) {
       currentTargetCount = val;
       currentTargetType = 'words';
-      localStorage.setItem('wordcountr-target', val.toString());
+      localStorage.setItem('cleanwordcounter-target', val.toString());
       notify(`Target goal set to ${val.toLocaleString()} words`);
     }
     targetModal.classList.add('hidden');
@@ -2214,14 +2214,14 @@ const {
         const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `wordcountr-document-${Date.now()}.txt`;
+        a.download = `cleanwordcounter-document-${Date.now()}.txt`;
         a.click();
         notify('✓ Downloaded document.txt');
       } else if (type === 'md') {
         const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `wordcountr-document-${Date.now()}.md`;
+        a.download = `cleanwordcounter-document-${Date.now()}.md`;
         a.click();
         notify('✓ Downloaded document.md');
       } else if (type === 'report') {
@@ -2229,7 +2229,7 @@ const {
         const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
         const s = analyzeStyle(text);
         const report = `═══════════════════════════════════════\n` +
-          `       WORDCOUNTR ANALYSIS REPORT       \n` +
+          `       CLEANWORDCOUNTER ANALYSIS REPORT       \n` +
           `═══════════════════════════════════════\n\n` +
           `• Words: ${m.words.toLocaleString()}\n` +
           `• Characters (with spaces): ${m.characters.toLocaleString()}\n` +
@@ -2250,7 +2250,7 @@ const {
           `• Filler Words Detected: ${s.fillerWordsCount}\n` +
           `• Passive Voice Phrases: ${s.passiveVoiceCount}\n\n` +
           `═══════════════════════════════════════\n` +
-          `Generated via WordCountr — 100% Client-Side Privacy\n`;
+          `Generated via CleanWordCounter — 100% Client-Side Privacy\n`;
         copyToClipboard(report, '✓ Copied complete analysis report');
       }
       exportDropdown?.classList.add('hidden');
@@ -2264,7 +2264,7 @@ const {
       return;
     }
     const metrics = calculateMetrics(textarea.value);
-    const summary = `📊 Text Analysis (via WordCountr):\n` +
+    const summary = `📊 Text Analysis (via CleanWordCounter):\n` +
       `• Words: ${metrics.words.toLocaleString()}\n` +
       `• Characters (with spaces): ${metrics.characters.toLocaleString()}\n` +
       `• Characters (without spaces): ${metrics.charactersNoSpaces.toLocaleString()}\n` +
@@ -2305,7 +2305,7 @@ const {
       clearTimeout(clearTimer);
       clearConfirmActive = false;
       textarea.value = '';
-      localStorage.removeItem('wordcountr-draft');
+      localStorage.removeItem('cleanwordcounter-draft');
       updateAll();
       textarea.focus();
       btnClearText.innerHTML = `

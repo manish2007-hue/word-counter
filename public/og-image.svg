@@ -34,7 +34,7 @@
     <path d="M16 13.5L22 24L28 8.5" stroke="#0070F3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
     <circle cx="28" cy="8.5" r="2.2" fill="#00dfd8"/>
   </g>
-  <text x="140" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#ffffff" letter-spacing="-0.5">WordCountr <tspan fill="#0070f3">Pro</tspan></text>
+  <text x="140" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#ffffff" letter-spacing="-0.5">CleanWordCounter <tspan fill="#0070f3">Pro</tspan></text>
 
   <!-- Main Headline -->
   <text x="100" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="800" fill="#ffffff" letter-spacing="-1.5">Free Online Word Counter</text>

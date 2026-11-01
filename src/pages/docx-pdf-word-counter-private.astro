@@ -11,7 +11,7 @@ const schema = {
   "@graph": [
     {
       "@type": "WebApplication",
-      "name": "WordCountr Private Document Counter",
+      "name": "CleanWordCounter Private Document Counter",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "All",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -25,15 +25,15 @@ const schema = {
           "name": "Are my PDF or DOCX files uploaded to external servers?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No. WordCountr uses in-memory WebAssembly and client-side JavaScript parsers. Your files are decoded directly in your device's RAM and never leave your web browser."
+            "text": "No. CleanWordCounter uses in-memory WebAssembly and client-side JavaScript parsers. Your files are decoded directly in your device's RAM and never leave your web browser."
           }
         },
         {
           "@type": "Question",
-          "name": "Is WordCountr compliant with NDAs, HIPAA, and confidentiality agreements?",
+          "name": "Is CleanWordCounter compliant with NDAs, HIPAA, and confidentiality agreements?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. Because there is zero data transmission over the network, using WordCountr preserves full confidentiality for legal contracts, medical transcripts, manuscripts, and proprietary code."
+            "text": "Yes. Because there is zero data transmission over the network, using CleanWordCounter preserves full confidentiality for legal contracts, medical transcripts, manuscripts, and proprietary code."
           }
         },
         {
@@ -84,7 +84,7 @@ const schema = {
           Most online word counters require you to upload your PDF or Word documents to their backend cloud servers for OCR or text extraction. If you work in legal defense, medical translation, financial auditing, or corporate journalism, uploading unpublished drafts or client records violates non-disclosure agreements (NDAs) and privacy regulations like GDPR and HIPAA.
         </p>
         <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
-          WordCountr executes client-side parsers (Mozilla pdfjs-dist and in-memory Mammoth DOCX pipelines) directly inside your web browser’s JavaScript sandbox. You can even disconnect your Wi-Fi and the tool will continue counting words flawlessly.
+          CleanWordCounter executes client-side parsers (Mozilla pdfjs-dist and in-memory Mammoth DOCX pipelines) directly inside your web browser’s JavaScript sandbox. You can even disconnect your Wi-Fi and the tool will continue counting words flawlessly.
         </p>
       </div>
     </div>

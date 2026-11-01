@@ -1,5 +1,5 @@
-// Offline Service Worker for WordCountr
-const CACHE_NAME = 'wordcountr-cache-v1';
+// Offline Service Worker for CleanWordCounter
+const CACHE_NAME = 'cleanwordcounter-cache-v1';
 const PRECACHE_URLS = [
   '/',
   '/favicon.svg',

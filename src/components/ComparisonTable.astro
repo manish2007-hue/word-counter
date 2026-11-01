@@ -1,8 +1,8 @@
 ---
-// How WordCountr Compares Feature Comparison Table - Nuanced Architectural Benchmark
+// How CleanWordCounter Compares Feature Comparison Table - Nuanced Architectural Benchmark
 interface FeatureRow {
   capability: string;
-  wordcountr: { text: string; highlight?: boolean };
+  cleanwordcounter: { text: string; highlight?: boolean };
   wordcounterNet: { text: string; positive?: boolean };
   hemingway: { text: string; positive?: boolean };
   grammarly: { text: string; positive?: boolean };
@@ -11,70 +11,70 @@ interface FeatureRow {
 const features: FeatureRow[] = [
   {
     capability: "Data Privacy & Telemetry",
-    wordcountr: { text: "100% Local (Zero Network Calls)", highlight: true },
+    cleanwordcounter: { text: "100% Local (Zero Network Calls)", highlight: true },
     wordcounterNet: { text: "Ad-Tracked & Analytics Cookies", positive: false },
     hemingway: { text: "Web Cloud / Desktop Local ($)", positive: false },
     grammarly: { text: "Cloud Storage & AI Training", positive: false },
   },
   {
     capability: "Ad-Free Writing Viewport",
-    wordcountr: { text: "100% Ad-Free (Zero Popups)", highlight: true },
+    cleanwordcounter: { text: "100% Ad-Free (Zero Popups)", highlight: true },
     wordcounterNet: { text: "Heavy Banner & Video Ads", positive: false },
     hemingway: { text: "Ad-Free Interface", positive: true },
     grammarly: { text: "In-App Upgrade Modals", positive: false },
   },
   {
     capability: "In-Memory .DOCX & .PDF Parsing",
-    wordcountr: { text: "Native Client-Side WebAssembly", highlight: true },
+    cleanwordcounter: { text: "Native Client-Side WebAssembly", highlight: true },
     wordcounterNet: { text: "Not Supported", positive: false },
     hemingway: { text: "Plain Text / Markdown Only", positive: false },
     grammarly: { text: "Server-Side Upload Required", positive: false },
   },
   {
     capability: "Academic Citation Exclusion",
-    wordcountr: { text: "Auto-Filters APA/MLA Citations", highlight: true },
+    cleanwordcounter: { text: "Auto-Filters APA/MLA Citations", highlight: true },
     wordcounterNet: { text: "Not Supported", positive: false },
     hemingway: { text: "Not Supported", positive: false },
     grammarly: { text: "Plagiarism Suite Only (Paid)", positive: false },
   },
   {
     capability: "Keyword Density & N-Grams",
-    wordcountr: { text: "1–3 Word N-Grams + Stopwords", highlight: true },
+    cleanwordcounter: { text: "1–3 Word N-Grams + Stopwords", highlight: true },
     wordcounterNet: { text: "1–3 Word N-Grams (Basic)", positive: true },
     hemingway: { text: "Not Supported", positive: false },
     grammarly: { text: "Not Supported", positive: false },
   },
   {
     capability: "Multi-Formula Readability",
-    wordcountr: { text: "4 Standard Consensus Formulas", highlight: true },
+    cleanwordcounter: { text: "4 Standard Consensus Formulas", highlight: true },
     wordcounterNet: { text: "Flesch Reading Ease Only", positive: false },
     hemingway: { text: "Automated Readability Index", positive: true },
     grammarly: { text: "Proprietary Clarity Index", positive: true },
   },
   {
     capability: "Style & Quality Audit",
-    wordcountr: { text: "Passive Voice + Filler Detection", highlight: true },
+    cleanwordcounter: { text: "Passive Voice + Filler Detection", highlight: true },
     wordcounterNet: { text: "Basic Thesaurus Only", positive: false },
     hemingway: { text: "Adverbs, Passive, Weak Words", positive: true },
     grammarly: { text: "Deep Grammar & Tone Checks", positive: true },
   },
   {
     capability: "Live Social & SERP Truncation",
-    wordcountr: { text: "10 Channels + SERP Snippet Preview", highlight: true },
+    cleanwordcounter: { text: "10 Channels + SERP Snippet Preview", highlight: true },
     wordcounterNet: { text: "Character Counter Only", positive: false },
     hemingway: { text: "Not Supported", positive: false },
     grammarly: { text: "Character Counter Only", positive: false },
   },
   {
     capability: "Offline PWA Capability",
-    wordcountr: { text: "Full Progressive Web App (Offline)", highlight: true },
+    cleanwordcounter: { text: "Full Progressive Web App (Offline)", highlight: true },
     wordcounterNet: { text: "Online Only (Ad-Dependent)", positive: false },
     hemingway: { text: "Paid Desktop App ($19.99)", positive: false },
     grammarly: { text: "Online Only (Requires Cloud)", positive: false },
   },
   {
     capability: "Draft Storage Architecture",
-    wordcountr: { text: "Instant Local Storage / Multi-Tab", highlight: true },
+    cleanwordcounter: { text: "Instant Local Storage / Multi-Tab", highlight: true },
     wordcounterNet: { text: "Volatile Browser Cookies", positive: false },
     hemingway: { text: "Local Files (Desktop Version)", positive: true },
     grammarly: { text: "Cloud Account Sync", positive: true },
@@ -87,7 +87,7 @@ const features: FeatureRow[] = [
   <div class="mb-6">
     <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070] mb-2">Architectural Benchmark</div>
     <h2 class="text-2xl sm:text-3xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.04em]">
-      How WordCountr Compares
+      How CleanWordCounter Compares
     </h2>
     <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] mt-1 font-mono">
       Nuanced technical comparison against popular writing and readability tools.
@@ -100,7 +100,7 @@ const features: FeatureRow[] = [
         <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono">
           <th class="py-3 px-4 font-medium w-[24%]">CAPABILITY</th>
           <th class="py-3 px-4 font-semibold text-[#0070f3] bg-[#0070f3]/5 dark:bg-[#0070f3]/10 w-[24%]">
-            WordCountr
+            CleanWordCounter
           </th>
           <th class="py-3 px-3 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-[18%]">WordCounter.net</th>
           <th class="py-3 px-3 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-[17%]">Hemingway Editor</th>
@@ -117,7 +117,7 @@ const features: FeatureRow[] = [
             <td class="py-3 px-4 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 text-[#0070f3] font-semibold text-xs">
               <span class="inline-flex items-center gap-1.5">
                 <span class="inline-flex items-center justify-center h-4 w-4 rounded-full bg-[#0070f3]/20 text-[#0070f3] text-[10px]">✓</span>
-                <span>{f.wordcountr.text}</span>
+                <span>{f.cleanwordcounter.text}</span>
               </span>
             </td>
 

@@ -5,8 +5,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
-  title="500: Server & Execution Error | WordCountr Pro"
-  description="An unexpected runtime error occurred while processing text analytics. WordCountr Pro error recovery."
+  title="500: Server & Execution Error | CleanWordCounter"
+  description="An unexpected runtime error occurred while processing text analytics. CleanWordCounter error recovery."
 >
   <div class="mx-auto max-w-xl px-4 py-20 sm:py-28 text-center">
     
@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </h1>
 
     <p class="text-xs sm:text-sm text-[#8f8f8f] max-w-md mx-auto leading-relaxed mb-6">
-      An unexpected error occurred while executing client-side scripts. Because WordCountr Pro operates 100% in your browser memory, this may be caused by an oversized pasted buffer or browser memory pressure.
+      An unexpected error occurred while executing client-side scripts. Because CleanWordCounter operates 100% in your browser memory, this may be caused by an oversized pasted buffer or browser memory pressure.
     </p>
 
     <!-- Error Recovery Action Buttons -->
@@ -56,7 +56,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <!-- Support Help -->
     <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-6 text-xs text-[#8f8f8f]">
       <p>
-        If this issue persists, please report the crash to <a href="mailto:hello@wordcountr.app" class="text-[#0070f3] hover:underline font-mono">hello@wordcountr.app</a> or visit our <a href={`${base}/contact`} class="text-[#0070f3] hover:underline">Contact Page</a>.
+        If this issue persists, please report the crash to <a href="mailto:hello@cleanwordcounter.com" class="text-[#0070f3] hover:underline font-mono">hello@cleanwordcounter.com</a> or visit our <a href={`${base}/contact`} class="text-[#0070f3] hover:underline">Contact Page</a>.
       </p>
     </div>
 
@@ -67,7 +67,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     if (clearBtn) {
       clearBtn.addEventListener('click', () => {
         try {
-          localStorage.removeItem('wordcountr-draft');
+          localStorage.removeItem('cleanwordcounter-draft');
           alert('Local draft cleared. Reloading workspace...');
           window.location.href = window.location.pathname.replace(/\/500\/?$/, '/');
         } catch (e) {

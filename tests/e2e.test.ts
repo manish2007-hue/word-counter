@@ -132,10 +132,10 @@ async function runE2eTests() {
     const wordsAfterClear = await page.locator('#stat-words').innerText();
     assert(wordsAfterClear === '0', 'Word count reset to 0');
 
-    // 9. Test "How WordCountr Compares" Table (Matching Image 1)
+    // 9. Test "How CleanWordCounter Compares" Table (Matching Image 1)
     console.log('\n--- Test 9: Comparison Table on Homepage ---');
-    const compareHeading = page.locator('h2:has-text("How WordCountr Compares")');
-    assert(await compareHeading.isVisible(), 'Comparison Table "How WordCountr Compares" is present on page');
+    const compareHeading = page.locator('h2:has-text("How CleanWordCounter Compares")');
+    assert(await compareHeading.isVisible(), 'Comparison Table "How CleanWordCounter Compares" is present on page');
 
     // 10. Test Specialized Sub-Pages
     console.log('\n--- Test 10: Routing to Specialized Sub-Pages ---');

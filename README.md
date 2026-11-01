@@ -1,8 +1,8 @@
-# WordCountr ✍️⚡
+# CleanWordCounter ✍️⚡
 
 > A category-defining, privacy-first Online Word Counter & Writing Aid built with Astro, Tailwind CSS v4, and the Apple Design System. 100% client-side, zero server tracking, instant performance, and works offline as a PWA.
 
-![WordCountr Preview](https://raw.githubusercontent.com/manish2007-hue/word-counter/main/public/favicon.svg)
+![CleanWordCounter Preview](https://raw.githubusercontent.com/manish2007-hue/word-counter/main/public/favicon.svg)
 
 ---
 
@@ -57,7 +57,7 @@ Visit `http://localhost:5173/` in your browser.
 
 ## 🧪 Testing
 
-WordCountr includes automated unit, integration, and HTTP route verification suites:
+CleanWordCounter includes automated unit, integration, and HTTP route verification suites:
 
 ```bash
 # Run unit & integration tests

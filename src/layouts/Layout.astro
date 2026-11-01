@@ -33,7 +33,7 @@ const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
 const defaultSchema = {
   "@context": "https://schema.org",
   "@type": ["WebApplication", "SoftwareApplication"],
-  "name": "WordCountr Pro",
+  "name": "CleanWordCounter",
   "headline": "Free Online Word Counter Tool & Precision Word Count Checker",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "All",
@@ -63,9 +63,9 @@ const finalSchema = schema || defaultSchema;
     <link rel="apple-touch-icon" href={`${base}/favicon.svg`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
     <meta name="theme-color" content="#171717" />
-    <meta name="author" content="WordCountr Pro" />
-    <meta name="application-name" content="WordCountr Pro" />
-    <meta name="apple-mobile-web-app-title" content="WordCountr" />
+    <meta name="author" content="CleanWordCounter" />
+    <meta name="application-name" content="CleanWordCounter" />
+    <meta name="apple-mobile-web-app-title" content="CleanWordCounter" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 
     <!-- Primary Title & Meta Description -->
@@ -79,7 +79,7 @@ const finalSchema = schema || defaultSchema;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="WordCountr Pro" />
+    <meta property="og:site_name" content="CleanWordCounter" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:secure_url" content={ogImageUrl} />
@@ -107,7 +107,7 @@ const finalSchema = schema || defaultSchema;
     <script is:inline>
       (function() {
         try {
-          const savedTheme = localStorage.getItem('wordcountr-theme');
+          const savedTheme = localStorage.getItem('cleanwordcounter-theme');
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
             document.documentElement.classList.add('dark');
@@ -122,28 +122,28 @@ const finalSchema = schema || defaultSchema;
     
     <!-- Top Vercel Geist Sticky Navigation -->
     <header class="sticky top-0 z-50 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa]/85 dark:bg-[#000000]/85 backdrop-blur-md transition-colors duration-200">
-      <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-3 sm:px-6">
         
         <!-- Left Brand Logo -->
-        <div class="flex items-center gap-3">
-          <a href={`${base}/`} class="group flex items-center gap-2">
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href={`${base}/`} class="group flex items-center gap-2" aria-label="CleanWordCounter Home">
             <Logo size={24} class="transition-transform group-hover:scale-110 active:scale-95" />
-            <div class="flex items-center gap-2">
-              <span class="text-[15px] font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
-              <span class="hidden sm:inline-block rounded-[4px] border border-[#ebebeb] dark:border-[#262626] bg-[#f2f2f2] dark:bg-[#141414] px-1.5 py-0.5 font-mono text-[10px] font-medium text-[#8f8f8f] dark:text-[#707070]">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="text-[15px] font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Clean<span class="text-[#0070f3]">WordCounter</span></span>
+              <span class="hidden xl:inline-block rounded-[4px] border border-[#ebebeb] dark:border-[#262626] bg-[#f2f2f2] dark:bg-[#141414] px-1.5 py-0.5 font-mono text-[10px] font-medium text-[#8f8f8f] dark:text-[#707070]">
                 v1.0
               </span>
             </div>
           </a>
         </div>
 
-        <!-- Center Desktop Nav Links (Vercel 6px rounded hover style) -->
-        <nav class="hidden lg:flex items-center gap-1.5 text-[13px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
+        <!-- Center Desktop Nav: Pixel-Perfect to Design [Word Counter] AI Token Counter Readability Social Limits Academic Mode Keywords | About Contact Privacy Terms -->
+        <nav aria-label="Main Navigation" class="hidden lg:flex items-center gap-0.5 xl:gap-1 text-[13px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
           <a
             href={`${base}/`}
             class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === ''
-                ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
                 : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
@@ -155,216 +155,115 @@ const finalSchema = schema || defaultSchema;
             data-nav-tab="tokens"
             class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === 'ai-token-counter' || canonicalSlug === 'llm-token-counter'
-                ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
                 : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
             AI Token Counter
           </a>
 
-          <!-- Interactive "Tools" Dropdown (Containing Keywords & Other Special Analyzers) -->
-          <div class="relative group" id="nav-tools-menu">
-            <button
-              id="tools-menu-btn"
-              type="button"
-              class="flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] transition-colors hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
-              aria-haspopup="true"
-            >
-              <span>Tools</span>
-              <svg class="h-3 w-3 text-[#8f8f8f] transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+          <a
+            href={isHome ? "#analysis-section" : `${base}/readability-checker`}
+            data-nav-tab="readability"
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'readability-checker' || canonicalSlug === 'flesch-kincaid-readability-calculator'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Readability
+          </a>
 
-            <!-- Dropdown Popover Menu -->
-            <div
-              id="tools-dropdown-menu"
-              class="hidden group-hover:block absolute left-0 top-full pt-1.5 z-50 w-72"
-            >
-              <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl">
-                
-                <div class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8f8f8f]">
-                  Analysis &amp; Density
-                </div>
+          <a
+            href={isHome ? "#analysis-section" : `${base}/social-media-counter`}
+            data-nav-tab="social"
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'social-media-counter' || canonicalSlug.startsWith('character-counter')
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Social Limits
+          </a>
 
-                <!-- Keywords / Keyword Density Checker -->
-                <a
-                  href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`}
-                  data-nav-tab="keywords"
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-[#0070f3]/10 text-[#0070f3]">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Keyword Density</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">N-gram phrase frequency &amp; SEO density</div>
-                  </div>
-                </a>
+          <a
+            href={isHome ? "#analysis-section" : `${base}/academic-word-counter`}
+            data-nav-tab="academic"
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'academic-word-counter' || canonicalSlug === 'academic-word-counter-without-citations'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Academic Mode
+          </a>
 
-                <!-- Readability Checker -->
-                <a
-                  href={isHome ? "#analysis-section" : `${base}/readability-checker`}
-                  data-nav-tab="readability"
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Readability Formulas</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Flesch-Kincaid &amp; consensus school grade</div>
-                  </div>
-                </a>
+          <a
+            href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`}
+            data-nav-tab="keywords"
+            class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'keyword-density-checker'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Keywords
+          </a>
 
-                <!-- Social Limits -->
-                <a
-                  href={isHome ? "#analysis-section" : `${base}/social-media-counter`}
-                  data-nav-tab="social"
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-[#0070f3]/10 text-[#0070f3]">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Social Media Limits</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">10 channel limits &amp; SERP feed previews</div>
-                  </div>
-                </a>
+          <!-- Subtle Vertical Divider Bar (|) -->
+          <span class="h-4 w-[1px] bg-[#e4e4e7] dark:bg-[#27272a] mx-1 xl:mx-1.5 self-center" aria-hidden="true"></span>
 
-                <!-- Academic Mode -->
-                <a
-                  href={isHome ? "#analysis-section" : `${base}/academic-word-counter`}
-                  data-nav-tab="academic"
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-purple-500/10 text-purple-600 dark:text-purple-400">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Academic Mode</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Exclude APA/MLA citations &amp; references</div>
-                  </div>
-                </a>
+          <!-- Direct Company & SEO Policy Pages -->
+          <a
+            href={`${base}/about`}
+            class={`px-2 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'about'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'text-[#666666] dark:text-[#888888] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            About
+          </a>
 
-                <div class="my-1 border-t border-[#ebebeb] dark:border-[#222222]"></div>
-                <div class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-[#8f8f8f]">
-                  Calculators &amp; Parsing
-                </div>
+          <a
+            href={`${base}/contact`}
+            class={`px-2 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'contact'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'text-[#666666] dark:text-[#888888] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Contact
+          </a>
 
-                <!-- PDF & DOCX Counter -->
-                <a
-                  href={`${base}/docx-pdf-word-counter-private`}
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Private PDF &amp; DOCX</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">In-memory confidential text extraction</div>
-                  </div>
-                </a>
+          <a
+            href={`${base}/privacy`}
+            class={`px-2 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'text-[#666666] dark:text-[#888888] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Privacy
+          </a>
 
-                <!-- Words to Pages -->
-                <a
-                  href={`${base}/words-to-pages-converter`}
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Words to Pages</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Single &amp; double-spaced page calculator</div>
-                  </div>
-                </a>
-
-                <!-- Words to Speaking Time -->
-                <a
-                  href={`${base}/words-to-speaking-time`}
-                  class="flex items-start gap-2.5 rounded-[6px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
-                >
-                  <div class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-[4px] bg-teal-500/10 text-teal-600 dark:text-teal-400">
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">Words to Speaking Time</div>
-                    <div class="text-[11px] text-[#8f8f8f] leading-snug">Speech pacing &amp; presentation timing</div>
-                  </div>
-                </a>
-
-              </div>
-            </div>
-          </div>
+          <a
+            href={`${base}/terms`}
+            class={`px-2 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'terms'
+                ? 'text-[#171717] dark:text-[#ededed] bg-[#f0f0f2] dark:bg-[#202022] font-semibold'
+                : 'text-[#666666] dark:text-[#888888] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Terms
+          </a>
         </nav>
 
-        <!-- Right Side: Properly Managed & Good Looking SEO / Policy Links + Utility Controls -->
-        <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- Right Side: Trust Pill & Theme Toggle Controls -->
+        <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          <!-- Managed SEO & Trust Capsule (About, Contact, Privacy, Terms) -->
-          <nav aria-label="Company & Policies" class="hidden sm:flex items-center rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#f5f5f5]/70 dark:bg-[#121212]/70 p-0.5 text-xs font-mono shadow-2xs">
-            <a
-              href={`${base}/about`}
-              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
-                canonicalSlug === 'about'
-                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
-                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
-              }`}
-            >
-              About
-            </a>
-            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
-            <a
-              href={`${base}/contact`}
-              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
-                canonicalSlug === 'contact'
-                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
-                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
-              }`}
-            >
-              Contact
-            </a>
-            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
-            <a
-              href={`${base}/privacy`}
-              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
-                canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy'
-                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
-                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
-              }`}
-            >
-              Privacy
-            </a>
-            <span class="text-[#d1d1d1] dark:text-[#333333] select-none text-[10px]">·</span>
-            <a
-              href={`${base}/terms`}
-              class={`px-2.5 py-1 rounded-[6px] transition-colors ${
-                canonicalSlug === 'terms'
-                  ? 'text-[#171717] dark:text-[#ededed] bg-white dark:bg-[#1f1f1f] shadow-2xs font-semibold'
-                  : 'text-[#666666] dark:text-[#999999] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-white/70 dark:hover:bg-[#1f1f1f]/70'
-              }`}
-            >
-              Terms
-            </a>
-          </nav>
-
           <!-- Trust Privacy Pill (Vercel Mono Spec-sheet Badge) -->
-          <div class="hidden lg:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
+          <div class="hidden 2xl:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
             <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
             <span>100% Local</span>
           </div>
@@ -461,7 +360,7 @@ const finalSchema = schema || defaultSchema;
           <div class="space-y-3">
             <div class="flex items-center gap-2">
               <Logo size={20} />
-              <span class="text-sm font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
+              <span class="text-sm font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Clean<span class="text-[#0070f3]">WordCounter</span></span>
             </div>
             <p class="text-xs leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
               A precision writing instrument and text analytics suite. Real-time words, readability grades, and character limits computed 100% locally in your browser.
@@ -520,7 +419,7 @@ const finalSchema = schema || defaultSchema;
         </div>
 
         <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8f8f8f]">
-          <p>© {new Date().getFullYear()} WordCountr. Inspired by the Vercel Geist design system.</p>
+          <p>© {new Date().getFullYear()} CleanWordCounter. Inspired by the Vercel Geist design system.</p>
           <div class="flex items-center gap-4 mt-3 sm:mt-0 font-mono text-[11px]">
             <a href={`${base}/privacy`} class="hover:text-[#171717] dark:hover:text-white transition">Privacy</a>
             <span>·</span>
@@ -561,7 +460,7 @@ const finalSchema = schema || defaultSchema;
 
       themeBtn?.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.setItem('wordcountr-theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('cleanwordcounter-theme', isDark ? 'dark' : 'light');
         updateThemeIcons();
         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark } }));
       });

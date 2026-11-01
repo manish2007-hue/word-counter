@@ -12,7 +12,7 @@ function assert(condition: boolean, msg: string) {
   console.log(`✅ PASSED: ${msg}`);
 }
 
-console.log('=== RUNNING WORDCOUNTR COMPREHENSIVE TEST SUITE ===\n');
+console.log('=== RUNNING CLEANWORDCOUNTER COMPREHENSIVE TEST SUITE ===\n');
 
 // 1. METRICS TESTS
 console.log('--- Test Group 1: Metrics Engine ---');

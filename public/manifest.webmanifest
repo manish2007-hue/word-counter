@@ -1,6 +1,6 @@
 {
-  "name": "WordCountr - Online Word Counter & Writing Aid",
-  "short_name": "WordCountr",
+  "name": "CleanWordCounter - Online Word Counter & Writing Aid",
+  "short_name": "CleanWordCounter",
   "description": "100% private, instant word and character counter with reading time, keyword density, readability scores, and offline support.",
   "start_url": "/",
   "display": "standalone",
