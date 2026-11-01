@@ -12,46 +12,46 @@ const conversionData = [
 ];
 ---
 
-<section class="mt-12 rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-8 shadow-xs" id="words-to-pages">
+<section class="mt-12 vercel-card p-6 sm:p-8" id="words-to-pages">
   <div class="max-w-3xl mb-6">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] mb-3">
-      Academic & Publishing Reference
+    <div class="mono-eyebrow text-[#0070f3] mb-2">
+      Academic & Publishing Spec
     </div>
-    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
-      Words to Pages Conversion Guide
+    <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Words to Pages Conversion Matrix
     </h2>
-    <p class="text-xs sm:text-sm text-[#86868b] mt-1.5 leading-relaxed">
-      Standard page estimates based on 12pt Times New Roman, Arial, or Calibri with standard 1-inch margins. Academic assignments typically follow the double-spaced standard (250 words/page).
+    <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] mt-1.5 leading-relaxed">
+      Standard page estimates based on 12pt typography with 1-inch margins. Academic submissions follow standard double-spaced format (approx. 250 words per page).
     </p>
   </div>
 
-  <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+  <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
     <table class="w-full text-left text-xs sm:text-sm">
       <thead>
-        <tr class="border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#161617] text-[#515154] dark:text-[#a1a1a6] font-semibold">
-          <th class="py-3 px-4">Word Count</th>
-          <th class="py-3 px-4">Single-Spaced</th>
-          <th class="py-3 px-4">Double-Spaced</th>
-          <th class="py-3 px-4">Reading Time</th>
-          <th class="py-3 px-4 hidden md:table-cell">Common Format</th>
+        <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono">
+          <th class="py-2.5 px-4 font-medium">WORD COUNT</th>
+          <th class="py-2.5 px-4 font-medium">SINGLE-SPACED</th>
+          <th class="py-2.5 px-4 font-medium text-[#0070f3]">DOUBLE-SPACED</th>
+          <th class="py-2.5 px-4 font-medium">READ TIME</th>
+          <th class="py-2.5 px-4 font-medium hidden md:table-cell">SPEC USE CASE</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-[#e5e5e7] dark:divide-[#2c2c2e]">
+      <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
         {conversionData.map((row) => (
-          <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono-numbers">
-            <td class="py-3 px-4 font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">
+          <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono">
+            <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">
               {row.words.toLocaleString()} words
             </td>
-            <td class="py-3 px-4 text-[#515154] dark:text-[#a1a1a6]">
+            <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">
               {row.single}
             </td>
-            <td class="py-3 px-4 font-semibold text-[#0066cc] dark:text-[#2997ff]">
+            <td class="py-2.5 px-4 font-semibold text-[#0070f3]">
               {row.double}
             </td>
-            <td class="py-3 px-4 text-[#86868b]">
+            <td class="py-2.5 px-4 text-[#8f8f8f]">
               {row.readTime}
             </td>
-            <td class="py-3 px-4 text-[#86868b] font-sans hidden md:table-cell">
+            <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">
               {row.useCase}
             </td>
           </tr>
@@ -60,12 +60,12 @@ const conversionData = [
     </table>
   </div>
 
-  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#86868b] bg-[#fafafc] dark:bg-[#161617] p-3.5 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#8f8f8f] bg-[#fafafa] dark:bg-[#0e0e0e] p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] font-mono">
     <div>
-      💡 <strong>Quick Formula:</strong> Double-spaced pages ≈ Words ÷ 250 &bull; Single-spaced pages ≈ Words ÷ 500.
+      💡 <strong>Standard:</strong> Double-spaced pages ≈ Words ÷ 250 &bull; Single-spaced pages ≈ Words ÷ 500.
     </div>
     <div class="text-[11px]">
-      Calculated at average silent reading pace of 225 WPM.
+      Computed at silent reading baseline of 225 WPM.
     </div>
   </div>
 </section>

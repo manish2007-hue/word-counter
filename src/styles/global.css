@@ -5,33 +5,39 @@
 
 @layer base {
   :root {
-    --canvas: #f5f5f7;
-    --canvas-pure: #ffffff;
-    --canvas-card: #ffffff;
-    --ink: #1d1d1f;
-    --ink-secondary: #515154;
-    --ink-muted: #86868b;
-    --hairline: #e5e5e7;
-    --hairline-subtle: #f0f0f2;
-    --apple-blue: #0066cc;
-    --apple-blue-hover: #0071e3;
-    --apple-blue-active: #0055b3;
-    --apple-blue-on-dark: #2997ff;
+    --canvas: #fafafa;
+    --canvas-elevated: #ffffff;
+    --canvas-subtle: #f2f2f2;
+    --ink: #171717;
+    --body: #4d4d4d;
+    --mute: #8f8f8f;
+    --faint: #a1a1a1;
+    --hairline: #ebebeb;
+    --hairline-soft: #f2f2f2;
+    --link: #0070f3;
+    --link-deep: #0761d1;
+    --link-soft: #d3e5ff;
+    --error: #ee0000;
+    --warning: #f5a623;
+    --success: #0070f3;
   }
 
   .dark {
     --canvas: #000000;
-    --canvas-pure: #0a0a0c;
-    --canvas-card: #1c1c1e;
-    --ink: #f5f5f7;
-    --ink-secondary: #a1a1a6;
-    --ink-muted: #86868b;
-    --hairline: #2c2c2e;
-    --hairline-subtle: #242426;
-    --apple-blue: #2997ff;
-    --apple-blue-hover: #47a7ff;
-    --apple-blue-active: #0071e3;
-    --apple-blue-on-dark: #2997ff;
+    --canvas-elevated: #0a0a0a;
+    --canvas-subtle: #141414;
+    --ink: #ededed;
+    --body: #a1a1a1;
+    --mute: #707070;
+    --faint: #4d4d4d;
+    --hairline: #222222;
+    --hairline-soft: #1a1a1a;
+    --link: #0070f3;
+    --link-deep: #3291ff;
+    --link-soft: #002244;
+    --error: #f33;
+    --warning: #f5a623;
+    --success: #0070f3;
   }
 }
 
@@ -43,75 +49,233 @@ html {
 body {
   background-color: var(--canvas);
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
   overflow-x: hidden;
 }
 
-/* SF Pro Display & Tight Headings */
+/* Vercel Geist Display & Headings */
 h1, h2, h3, .font-display {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
-  letter-spacing: -0.022em;
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", system-ui, sans-serif;
+  letter-spacing: -0.04em;
+  font-weight: 600;
 }
 
-/* Monospace for metric numbers */
-.font-mono-numbers {
-  font-family: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+/* Geist Mono for technical eyebrows, code & numbers */
+code, pre, .font-mono, .font-mono-numbers {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "JetBrains Mono", monospace;
   font-variant-numeric: tabular-nums;
 }
 
-/* Apple-style sleek scrollbars */
+/* Vercel Uppercase Technical Eyebrow */
+.mono-eyebrow {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Vercel Mesh Gradient Background for Hero Band */
+.vercel-hero-mesh {
+  background-image:
+    radial-gradient(at 20% 15%, rgba(0, 124, 240, 0.08) 0px, transparent 55%),
+    radial-gradient(at 80% 10%, rgba(80, 227, 194, 0.09) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.06) 0px, transparent 60%),
+    radial-gradient(at 85% 85%, rgba(255, 0, 128, 0.06) 0px, transparent 50%),
+    radial-gradient(at 15% 90%, rgba(249, 203, 40, 0.06) 0px, transparent 50%);
+}
+
+.dark .vercel-hero-mesh {
+  background-image:
+    radial-gradient(at 20% 15%, rgba(0, 124, 240, 0.15) 0px, transparent 55%),
+    radial-gradient(at 80% 10%, rgba(80, 227, 194, 0.12) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.14) 0px, transparent 60%),
+    radial-gradient(at 85% 85%, rgba(255, 0, 128, 0.12) 0px, transparent 50%),
+    radial-gradient(at 15% 90%, rgba(249, 203, 40, 0.1) 0px, transparent 50%);
+}
+
+/* Vercel Signature Multi-Stop Gradient Text */
+.vercel-gradient-develop {
+  background: linear-gradient(to right, #007cf0, #00dfd8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vercel-gradient-preview {
+  background: linear-gradient(to right, #7928ca, #ff0080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vercel-gradient-ship {
+  background: linear-gradient(to right, #ff4d4d, #f9cb28);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vercel-mesh-text {
+  background: linear-gradient(135deg, #007cf0 0%, #7928ca 50%, #ff0080 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Vercel Hairline Cards */
+.vercel-card {
+  background-color: var(--canvas-elevated);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vercel-card:hover {
+  border-color: #d4d4d4;
+}
+
+.dark .vercel-card:hover {
+  border-color: #333333;
+}
+
+/* Vercel Buttons */
+/* 1. Marketing Primary Pill (Start Deploying) */
+.vercel-btn-primary {
+  background-color: var(--ink);
+  color: var(--canvas-elevated);
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+.vercel-btn-primary:hover {
+  opacity: 0.9;
+}
+.vercel-btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* 2. Marketing Secondary Pill */
+.vercel-btn-secondary {
+  background-color: var(--canvas-elevated);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  font-family: "Geist", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border-radius: 9999px;
+  padding: 8px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.vercel-btn-secondary:hover {
+  border-color: #c4c4c4;
+}
+.dark .vercel-btn-secondary:hover {
+  border-color: #444444;
+}
+.vercel-btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* 3. Nav / App Square Button (6px radius) */
+.vercel-btn-sm {
+  border-radius: 6px;
+  font-family: "Geist", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.vercel-btn-sm-ghost {
+  background-color: transparent;
+  color: var(--body);
+  border: 1px solid var(--hairline);
+}
+.vercel-btn-sm-ghost:hover {
+  background-color: var(--canvas-subtle);
+  color: var(--ink);
+  border-color: #d4d4d4;
+}
+.dark .vercel-btn-sm-ghost:hover {
+  border-color: #383838;
+}
+
+.vercel-btn-sm-primary {
+  background-color: var(--ink);
+  color: var(--canvas-elevated);
+  border: 1px solid var(--ink);
+}
+.vercel-btn-sm-primary:hover {
+  opacity: 0.9;
+}
+
+/* 4. Category Tab Pill (64px radius) */
+.vercel-category-pill {
+  border-radius: 64px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+/* Crisp Vercel Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #d2d2d7;
-  border-radius: 9999px;
+  background: #d4d4d4;
+  border-radius: 4px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: #3a3a3c;
+  background: #2a2a2a;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #86868b;
+  background: #a1a1a1;
 }
 
 /* Selection */
 ::selection {
-  background-color: #0066cc;
+  background-color: #0070f3;
   color: #ffffff;
-}
-.dark ::selection {
-  background-color: #2997ff;
-  color: #000000;
-}
-
-/* Smooth micro-interactions */
-.apple-button {
-  transition: all 0.18s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-.apple-button:active {
-  transform: scale(0.97);
 }
 
 /* Toast Animation */
 @keyframes toast-enter {
-  0% { transform: translate(-50%, 20px) scale(0.95); opacity: 0; }
+  0% { transform: translate(-50%, 16px) scale(0.96); opacity: 0; }
   100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 @keyframes toast-exit {
   0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, 20px) scale(0.95); opacity: 0; }
+  100% { transform: translate(-50%, 16px) scale(0.96); opacity: 0; }
 }
 .animate-toast-in {
-  animation: toast-enter 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: toast-enter 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .animate-toast-out {
-  animation: toast-exit 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: toast-exit 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

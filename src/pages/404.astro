@@ -2,23 +2,26 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Page Not Found | WordCountr" description="The page you are looking for does not exist.">
+<Layout title="404: Page Not Found | WordCountr" description="The page you are looking for does not exist.">
   <div class="mx-auto max-w-lg px-4 py-24 text-center">
-    <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] text-2xl font-bold mb-6">
+    <div class="inline-flex h-14 w-14 items-center justify-center rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] text-[#0070f3] text-xl font-bold font-mono mb-6">
       404
     </div>
-    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+    <h1 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
       Page Not Found
     </h1>
-    <p class="mt-3 text-sm text-[#86868b]">
-      The page you requested could not be found. Return to the word counter workspace below.
+    <p class="mt-3 text-sm text-[#8f8f8f]">
+      This page could not be located on the server.
     </p>
     <div class="mt-8">
       <a
         href="/"
-        class="inline-flex items-center gap-2 rounded-full bg-[#0066cc] dark:bg-[#2997ff] px-6 py-2.5 text-sm font-semibold text-white dark:text-black shadow-sm transition hover:bg-[#0071e3] active:scale-95"
+        class="vercel-btn-primary"
       >
-        Go to WordCounter
+        <span>Return to Workspace</span>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+        </svg>
       </a>
     </div>
   </div>

@@ -9,8 +9,8 @@ interface Props {
 }
 
 const {
-  title = "Word Counter Pro – Free Character, Word & Readability Tool",
-  description = "Free, fast, and 100% private online word counter. Track words, characters, reading time, readability scores, social media limits, and academic essay length.",
+  title = "WordCountr – Precision Word Counter, Readability & Writing Analytics",
+  description = "A fast, privacy-first word counter and text analytics workbench built for precision. Calculate words, characters, reading time, readability scores, and social limits locally in your browser.",
   canonicalSlug = '',
   schema,
 } = Astro.props;
@@ -23,8 +23,8 @@ const canonicalUrl = canonicalSlug ? `${siteUrl}/${canonicalSlug}` : siteUrl;
 const defaultSchema = {
   "@context": "https://schema.org",
   "@type": ["WebApplication", "SoftwareApplication"],
-  "name": "WordCountr Pro",
-  "headline": "Free Online Word Counter & Writing Aid",
+  "name": "WordCountr",
+  "headline": "Precision Online Word Counter & Writing Analytics",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "All",
   "offers": {
@@ -51,7 +51,7 @@ const finalSchema = schema || defaultSchema;
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
-    <meta name="theme-color" content="#0066cc" />
+    <meta name="theme-color" content="#171717" />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -62,15 +62,15 @@ const finalSchema = schema || defaultSchema;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="WordCountr Pro" />
+    <meta property="og:site_name" content="WordCountr" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <!-- Fonts: Inter & JetBrains Mono as premium cross-platform fallbacks for SF Pro -->
+    <!-- Google Fonts: Geist Sans & Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Schema Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(finalSchema)} />
@@ -90,91 +90,94 @@ const finalSchema = schema || defaultSchema;
       })();
     </script>
   </head>
-  <body class="flex min-h-screen flex-col bg-[#f5f5f7] dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] antialiased selection:bg-[#0066cc] selection:text-white dark:selection:bg-[#2997ff] dark:selection:text-black transition-colors duration-200">
+  <body class="flex min-h-screen flex-col bg-[#fafafa] dark:bg-[#000000] text-[#171717] dark:text-[#ededed] antialiased selection:bg-[#0070f3] selection:text-white transition-colors duration-200">
     
-    <!-- Top Global Frosted Navigation -->
-    <header class="sticky top-0 z-50 border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/80 dark:bg-[#161617]/80 backdrop-blur-xl transition-colors duration-200">
+    <!-- Top Vercel Geist Sticky Navigation -->
+    <header class="sticky top-0 z-50 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa]/85 dark:bg-[#000000]/85 backdrop-blur-md transition-colors duration-200">
       <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         
-        <!-- Left Brand Logo -->
+        <!-- Left Brand Logo (Vercel Iconic Triangle + Wordmark) -->
         <div class="flex items-center gap-3">
           <a href={`${base}/`} class="group flex items-center gap-2.5">
-            <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-[#0066cc] text-white font-semibold shadow-xs transition group-hover:scale-105 active:scale-95">
-              <span class="font-mono text-base font-bold">W</span>
+            <div class="flex h-7 w-7 items-center justify-center rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black transition-transform group-hover:scale-105 active:scale-95">
+              <!-- Vercel Triangle Glyph -->
+              <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 76 65">
+                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+              </svg>
             </div>
-            <div class="flex items-center gap-1.5">
-              <span class="text-[17px] font-semibold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">Word<span class="text-[#0066cc] dark:text-[#2997ff]">Countr</span></span>
-              <span class="hidden sm:inline-block rounded-full bg-[#0066cc]/10 dark:bg-[#2997ff]/15 px-2 py-0.5 text-[11px] font-medium text-[#0066cc] dark:text-[#2997ff]">
-                Pro
+            <div class="flex items-center gap-2">
+              <span class="text-[15px] font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
+              <span class="hidden sm:inline-block rounded-[4px] border border-[#ebebeb] dark:border-[#262626] bg-[#f2f2f2] dark:bg-[#141414] px-1.5 py-0.5 font-mono text-[10px] font-medium text-[#8f8f8f] dark:text-[#707070]">
+                v1.0
               </span>
             </div>
           </a>
         </div>
 
-        <!-- Center Desktop Nav Links (Supports SPA Tab Switch on Home + Static Routing) -->
-        <nav class="hidden lg:flex items-center gap-1 text-[13px] font-medium text-[#515154] dark:text-[#a1a1a6]">
-          <a href={`${base}/`} class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === '' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+        <!-- Center Desktop Nav Links (Vercel 6px rounded hover style) -->
+        <nav class="hidden lg:flex items-center gap-1 text-[13px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
+          <a href={`${base}/`} class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === '' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Word Counter
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Social Limits
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'readability-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'readability-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Readability
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Keyword Density
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'academic-word-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'academic-word-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Academic Mode
           </a>
         </nav>
 
-        <!-- Right Side Utility Controls: Privacy Pill, Install PWA, Theme Toggle, Mobile Menu -->
+        <!-- Right Side Utility Controls: Privacy Eyebrow, PWA, Theme Toggle, Mobile Trigger -->
         <div class="flex items-center gap-2">
           
-          <!-- Trust Privacy Pill -->
-          <div class="hidden sm:flex items-center gap-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-500/15 px-3 py-1 text-[12px] font-medium text-emerald-700 dark:text-emerald-400 border border-emerald-500/20" title="100% Client-Side. Your text never leaves your device.">
-            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>100% Private</span>
+          <!-- Trust Privacy Pill (Vercel Mono Spec-sheet Badge) -->
+          <div class="hidden sm:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
+            <span>100% Local</span>
           </div>
 
-          <!-- PWA Install Button -->
-          <button id="pwa-install-btn" type="button" class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1 text-[12px] font-medium text-[#1d1d1f] dark:text-[#f5f5f7] shadow-xs hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button">
-            <svg class="h-3.5 w-3.5 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <!-- PWA Install Button (Vercel 6px Square Button) -->
+          <button id="pwa-install-btn" type="button" class="hidden sm:inline-flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 text-[12px] font-medium text-[#171717] dark:text-[#ededed] shadow-2xs hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition">
+            <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
             <span>Install</span>
           </button>
 
-          <!-- Theme Toggle Button (Desktop & Mobile) -->
+          <!-- Theme Toggle Button (Vercel 6px Square Icon Button) -->
           <button
             id="theme-toggle-btn"
             type="button"
             aria-label="Toggle Dark/Light Mode"
-            class="flex h-9 w-9 items-center justify-center rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+            class="flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition"
           >
             <!-- Sun icon (shown in dark mode) -->
             <svg id="theme-sun-icon" class="h-4 w-4 hidden text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
             <!-- Moon icon (shown in light mode) -->
-            <svg id="theme-moon-icon" class="h-4 w-4 block text-[#1d1d1f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg id="theme-moon-icon" class="h-4 w-4 block text-[#171717]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
           </button>
 
-          <!-- Mobile Hamburger Menu Button -->
+          <!-- Mobile Menu Trigger -->
           <button
             id="mobile-menu-toggle-btn"
             type="button"
             aria-label="Open Navigation Menu"
-            class="lg:hidden flex h-9 w-9 items-center justify-center rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+            class="lg:hidden flex h-8 w-8 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition"
           >
-            <svg id="hamburger-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg id="hamburger-icon" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-            <svg id="close-icon" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg id="close-icon" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -183,53 +186,27 @@ const finalSchema = schema || defaultSchema;
       </div>
 
       <!-- Mobile Navigation Drawer -->
-      <div id="mobile-nav-drawer" class="lg:hidden hidden border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/95 dark:bg-[#161617]/95 backdrop-blur-xl px-4 py-4 space-y-2">
-        <a href={`${base}/`} class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+      <div id="mobile-nav-drawer" class="lg:hidden hidden border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa]/98 dark:bg-[#0a0a0a]/98 backdrop-blur-md px-4 py-3 space-y-1">
+        <a href={`${base}/`} class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Word Counter
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Social Media Limits
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Readability Formulas
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Keyword Density
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Academic Mode (Exclude Citations)
         </a>
-        <div class="pt-3 border-t border-[#e5e5e7] dark:border-[#2c2c2e] flex items-center justify-between text-xs text-[#86868b]">
-          <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> 100% Client-Side Privacy
+        <div class="pt-3 border-t border-[#ebebeb] dark:border-[#222222] flex items-center justify-between font-mono text-xs text-[#8f8f8f]">
+          <span class="inline-flex items-center gap-1.5 text-[#0070f3]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span> 100% Client-Side Privacy
           </span>
-          <a href={`${base}/privacy`} class="hover:underline">Privacy Policy</a>
-        </div>
-      </div>
-    </header>
-      </div>
-
-      <!-- Mobile Dropdown Navigation Drawer -->
-      <div id="mobile-nav-drawer" class="hidden lg:hidden border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/95 dark:bg-[#161617]/95 backdrop-blur-2xl px-4 py-4 transition-all duration-200">
-        <div class="flex flex-col space-y-2 text-[15px] font-medium">
-          <a href="/" class={`px-3 py-2.5 rounded-xl transition ${canonicalSlug === '' ? 'bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold' : 'text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Word Counter
-          </a>
-          <a href="/social-media-counter" class={`px-3 py-2.5 rounded-xl transition ${canonicalSlug === 'social-media-counter' ? 'bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold' : 'text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Social Media Limits
-          </a>
-          <a href="/readability-checker" class={`px-3 py-2.5 rounded-xl transition ${canonicalSlug === 'readability-checker' ? 'bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold' : 'text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Readability & Grade Levels
-          </a>
-          <a href="/keyword-density-checker" class={`px-3 py-2.5 rounded-xl transition ${canonicalSlug === 'keyword-density-checker' ? 'bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold' : 'text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Keyword Density Analyzer
-          </a>
-          <a href="/academic-word-counter" class={`px-3 py-2.5 rounded-xl transition ${canonicalSlug === 'academic-word-counter' ? 'bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold' : 'text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5'}`}>
-            Academic Mode (Citation Filter)
-          </a>
-          <a href="/privacy" class="px-3 py-2.5 rounded-xl text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/20 font-medium">
-            🔒 Privacy Policy (100% Client-Side)
-          </a>
+          <a href={`${base}/privacy`} class="hover:underline">Privacy</a>
         </div>
       </div>
     </header>
@@ -239,85 +216,89 @@ const finalSchema = schema || defaultSchema;
       <slot />
     </main>
 
-    <!-- Global Floating Toast Notification -->
-    <div id="global-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white/90 dark:bg-[#1c1c1e]/90 backdrop-blur-xl px-5 py-2.5 text-xs font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] shadow-xl transition-all duration-200">
+    <!-- Global Floating Toast Notification (Vercel Style) -->
+    <div id="global-toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-[#171717] dark:bg-[#ededed] px-4 py-2 font-mono text-xs font-medium text-white dark:text-black shadow-lg transition-all duration-150">
       <span id="toast-message">✓ Copied to clipboard</span>
     </div>
 
-    <!-- Apple-Style Minimal Parchment Footer -->
-    <footer class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-14 text-[13px] text-[#86868b] transition-colors duration-200">
+    <!-- Vercel Geist Footer (Hairline-bordered, clean multi-column spec layout) -->
+    <footer class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14 text-[13px] text-[#8f8f8f] transition-colors duration-200">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           
           <div class="space-y-3">
             <div class="flex items-center gap-2">
-              <div class="flex h-6 w-6 items-center justify-center rounded-lg bg-[#0066cc] text-white font-bold text-xs">W</div>
-              <span class="text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Word<span class="text-[#0066cc] dark:text-[#2997ff]">Countr</span></span>
+              <div class="flex h-6 w-6 items-center justify-center rounded-[4px] bg-[#171717] dark:bg-white text-white dark:text-black">
+                <svg class="h-3 w-3 fill-current" viewBox="0 0 76 65">
+                  <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Word<span class="text-[#0070f3]">Countr</span></span>
             </div>
-            <p class="text-xs leading-relaxed text-[#515154] dark:text-[#86868b]">
-              The privacy-first writing tool engineered for clarity. Word count, reading time, keyword density, and readability grades computed 100% locally on your device.
+            <p class="text-xs leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
+              A precision writing instrument and text analytics suite. Real-time words, readability grades, and character limits computed 100% locally in your browser.
             </p>
-            <div class="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-              <span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
-              <span>Zero server logging · 100% browser execution</span>
+            <div class="flex items-center gap-1.5 font-mono text-xs text-[#0070f3]">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+              <span>Zero server latency · Zero data transmission</span>
             </div>
           </div>
 
           <div>
-            <h4 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">Precision Tools</h4>
+            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href={`${base}/`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Online Word Counter</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Social Character Limits (X, LinkedIn)</a></li>
-              <li><a href={`${base}/readability-checker`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Readability & Flesch Grade Levels</a></li>
-              <li><a href={`${base}/keyword-density-checker`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Keyword Density & N-Gram Analyzer</a></li>
-              <li><a href={`${base}/academic-word-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Academic Essay Mode (Citation Filter)</a></li>
+              <li><a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Online Word Counter</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Social Character Limits</a></li>
+              <li><a href={`${base}/readability-checker`} class="hover:text-[#171717] dark:hover:text-white transition">Readability & Grade Levels</a></li>
+              <li><a href={`${base}/keyword-density-checker`} class="hover:text-[#171717] dark:hover:text-white transition">Keyword Density & N-Grams</a></li>
+              <li><a href={`${base}/academic-word-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Academic Citation Filter</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">Platform Specs</h4>
+            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Platforms</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Twitter/X Post (280 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">LinkedIn Post (3,000 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Instagram Caption (2,200 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Meta Title (60 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Description (155 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">X / Twitter (280 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">LinkedIn (3,000 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Instagram (2,200 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Google Meta Title (60 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Google Meta Description (155 chars)</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">Guarantees</h4>
-            <ul class="space-y-2 text-xs text-[#515154] dark:text-[#86868b]">
+            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Architecture</h4>
+            <ul class="space-y-2 text-xs text-[#4d4d4d] dark:text-[#a1a1a1]">
               <li class="flex items-center gap-1.5">
-                <span class="text-[#0066cc] dark:text-[#2997ff]">✓</span> Zero ads in tool viewport
+                <span class="text-[#0070f3]">✓</span> 100% Client-Side Engine
               </li>
               <li class="flex items-center gap-1.5">
-                <span class="text-[#0066cc] dark:text-[#2997ff]">✓</span> Full offline functionality (PWA)
+                <span class="text-[#0070f3]">✓</span> Full Offline PWA Support
               </li>
               <li class="flex items-center gap-1.5">
-                <span class="text-[#0066cc] dark:text-[#2997ff]">✓</span> Client-side DOCX & PDF parsing
+                <span class="text-[#0070f3]">✓</span> In-Memory DOCX & PDF Parsing
               </li>
               <li class="flex items-center gap-1.5">
-                <span class="text-[#0066cc] dark:text-[#2997ff]">✓</span> Local draft auto-save
+                <span class="text-[#0070f3]">✓</span> LocalStorage Auto-Draft
               </li>
               <li class="pt-2">
-                <a href={`${base}/privacy`} class="text-[#0066cc] dark:text-[#2997ff] hover:underline font-medium">Read Privacy Guarantee →</a>
+                <a href={`${base}/privacy`} class="text-[#0070f3] hover:underline font-medium">Privacy Architecture →</a>
               </li>
             </ul>
           </div>
 
         </div>
 
-        <div class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#86868b]">
-          <p>© {new Date().getFullYear()} WordCountr Pro. Designed with simplicity, precision, and privacy.</p>
-          <div class="flex items-center gap-4 mt-3 sm:mt-0">
-            <a href={`${base}/privacy`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Privacy Policy</a>
+        <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8f8f8f]">
+          <p>© {new Date().getFullYear()} WordCountr. Inspired by the Vercel Geist design system.</p>
+          <div class="flex items-center gap-4 mt-3 sm:mt-0 font-mono text-[11px]">
+            <a href={`${base}/privacy`} class="hover:text-[#171717] dark:hover:text-white transition">Privacy</a>
             <span>·</span>
-            <a href={`${base}/terms`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Terms</a>
+            <a href={`${base}/terms`} class="hover:text-[#171717] dark:hover:text-white transition">Terms</a>
             <span>·</span>
-            <a href={`${base}/about`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">About</a>
+            <a href={`${base}/about`} class="hover:text-[#171717] dark:hover:text-white transition">About</a>
             <span>·</span>
-            <a href={`${base}/contact`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Contact</a>
+            <a href={`${base}/contact`} class="hover:text-[#171717] dark:hover:text-white transition">Contact</a>
           </div>
         </div>
       </div>
@@ -403,7 +384,7 @@ const finalSchema = schema || defaultSchema;
         setTimeout(() => {
           toast.classList.remove('animate-toast-in');
           toast.classList.add('animate-toast-out');
-          setTimeout(() => toast.classList.add('hidden'), 200);
+          setTimeout(() => toast.classList.add('hidden'), 180);
         }, 2200);
       };
 

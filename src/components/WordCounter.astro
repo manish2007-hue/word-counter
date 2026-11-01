@@ -1,6 +1,6 @@
 ---
 interface Props {
-  initialTab?: 'keywords' | 'readability' | 'social' | 'academic';
+  initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style';
   initialTarget?: number;
   showHeroCopy?: boolean;
 }
@@ -15,121 +15,139 @@ const {
 <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
   
   {showHeroCopy && (
-    <div class="text-center mb-8">
-      <div class="inline-flex items-center gap-2 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-[12px] font-medium text-[#515154] dark:text-[#a1a1a6] shadow-2xs mb-4">
-        <span class="h-1.5 w-1.5 rounded-full bg-[#0066cc] dark:bg-[#2997ff]"></span>
-        <span>The Precision Writing Instrument</span>
+    <div class="text-center mb-10 py-6 sm:py-8 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#ebebeb]/60 dark:border-[#222222]/60">
+      <!-- Vercel Uppercase Technical Eyebrow -->
+      <div class="inline-flex items-center gap-2 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white/80 dark:bg-[#0a0a0a]/80 px-3 py-1 mono-eyebrow text-[#8f8f8f] dark:text-[#707070] shadow-2xs mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+        <span>Developer-Grade Writing Analytics</span>
       </div>
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
-        Count smarter. <span class="text-[#0066cc] dark:text-[#2997ff]">Write with precision.</span>
+      
+      <!-- Vercel Display Heading with Tight Tracking & Gradient Accent -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] leading-[1.08]">
+        Count smarter. <span class="vercel-gradient-develop">Write with precision.</span>
       </h1>
-      <p class="mt-3 text-[15px] sm:text-[17px] text-[#86868b] max-w-2xl mx-auto leading-relaxed">
+      
+      <!-- Body Copy -->
+      <p class="mt-3 text-[15px] sm:text-[17px] text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
         Real-time word, character, and readability analytics computed 100% inside your browser. 
-        <span class="inline-block text-[#1d1d1f] dark:text-[#f5f5f7] font-medium">Your text never leaves your device.</span>
+        <span class="inline-block text-[#171717] dark:text-[#ededed] font-medium">Zero server calls. 100% client-side privacy.</span>
       </p>
+
+      <!-- Vercel Marketing CTA Buttons (Pill Format) -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <a href="#main-workspace" class="vercel-btn-primary">
+          <span>Start Analyzing</span>
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+          </svg>
+        </a>
+        <button id="btn-sample-text" type="button" class="vercel-btn-secondary">
+          <span>Load Sample Essay</span>
+        </button>
+      </div>
     </div>
   )}
 
-  <!-- MAIN LIVE METRIC STATS TILES (Apple Museum Tile Grid) -->
+  <!-- MAIN LIVE METRIC STATS TILES (Vercel Hairline Cards Grid) -->
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 mb-5">
     
     <!-- Words Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Words</div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="stat-words">0</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5 truncate" id="stat-longest-word">Avg 0 chars/word</div>
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Words</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#0070f3]" id="stat-words">0</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5 truncate" id="stat-longest-word">Avg 0 chars/word</div>
     </div>
 
     <!-- Characters Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Characters</div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-characters">0</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-chars-no-spaces">0 no spaces</div>
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Characters</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="stat-characters">0</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5" id="stat-chars-no-spaces">0 no spaces</div>
     </div>
 
     <!-- Sentences Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Sentences</div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-sentences">0</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-words-per-sentence">0 words/sent</div>
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Sentences</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="stat-sentences">0</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5" id="stat-words-per-sentence">0 words/sent</div>
     </div>
 
     <!-- Paragraphs Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Paragraphs</div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-paragraphs">0</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-sents-per-para">0 sents/para</div>
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Paragraphs</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="stat-paragraphs">0</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5" id="stat-sents-per-para">0 sents/para</div>
     </div>
 
     <!-- Reading Time Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="flex items-center justify-between mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">
         <span>Reading Time</span>
-        <span class="text-[10px] text-[#86868b]">225 wpm</span>
+        <span class="text-[10px] text-[#8f8f8f] font-mono">225 wpm</span>
       </div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400" id="stat-reading-time">0 sec</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5">Silent reading</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#0070f3]" id="stat-reading-time">0 sec</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5">Silent reading</div>
     </div>
 
     <!-- Speaking Time Tile -->
-    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
-      <div class="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
+    <div class="vercel-card p-3.5 sm:p-4">
+      <div class="flex items-center justify-between mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">
         <span>Speaking Time</span>
-        <span class="text-[10px] text-[#86868b]">130 wpm</span>
+        <span class="text-[10px] text-[#8f8f8f] font-mono">130 wpm</span>
       </div>
-      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="stat-speaking-time">0 sec</div>
-      <div class="text-[11px] text-[#86868b] mt-0.5">Speech / presentation</div>
+      <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="stat-speaking-time">0 sec</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5">Speech / keynote</div>
     </div>
 
   </div>
 
-  <!-- WORD BUDGET / TARGET CAPSULE -->
-  <div id="target-budget-container" class="mb-4 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs">
+  <!-- WORD BUDGET / TARGET CAPSULE (Vercel Hairline Strip) -->
+  <div id="target-budget-container" class="mb-4 vercel-card p-3.5 sm:p-4">
     <div class="flex flex-wrap items-center justify-between gap-3 mb-2 text-xs">
       <div class="flex items-center gap-2">
-        <span class="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-1.5">
-          <svg class="h-4 w-4 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <span class="font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-1.5 font-mono text-xs">
+          <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          Word Target Goal:
+          GOAL TARGET:
         </span>
-        <span id="target-text-status" class="font-mono-numbers font-medium text-[#515154] dark:text-[#a1a1a6]">
+        <span id="target-text-status" class="font-mono text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
           No target set
         </span>
       </div>
       <div class="flex flex-wrap items-center gap-1.5">
-        <button id="btn-quick-target-280" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">280 Chars (X)</button>
-        <button id="btn-quick-target-500" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">500 Words</button>
-        <button id="btn-quick-target-1000" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">1,000 Words</button>
-        <button id="btn-set-custom-target" type="button" class="px-3 py-1 rounded-full text-[11px] bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold hover:bg-[#0066cc]/20 transition apple-button">Custom Goal...</button>
+        <button id="btn-quick-target-280" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-[11px] py-1 px-2.5">280 Chars (X)</button>
+        <button id="btn-quick-target-500" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-[11px] py-1 px-2.5">500 Words</button>
+        <button id="btn-quick-target-1000" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-[11px] py-1 px-2.5">1,000 Words</button>
+        <button id="btn-set-custom-target" type="button" class="vercel-btn-sm text-[11px] py-1 px-2.5 bg-[#0070f3]/10 dark:bg-[#0070f3]/20 text-[#0070f3] border border-[#0070f3]/30 font-medium">Custom Goal...</button>
       </div>
     </div>
     <!-- Visual Progress Capsule -->
-    <div class="h-2 w-full overflow-hidden rounded-full bg-[#f0f0f2] dark:bg-[#2c2c2e]">
-      <div id="target-progress-fill" class="h-full w-0 bg-[#0066cc] dark:bg-[#2997ff] transition-all duration-300 rounded-full"></div>
+    <div class="h-1.5 w-full overflow-hidden rounded-full bg-[#f2f2f2] dark:bg-[#1a1a1a]">
+      <div id="target-progress-fill" class="h-full w-0 bg-[#0070f3] transition-all duration-300 rounded-full"></div>
     </div>
   </div>
 
-  <!-- MAIN WORKSPACE BOX -->
-  <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] shadow-xs overflow-hidden relative">
+  <!-- MAIN WORKSPACE BOX (Vercel Crisp Hairline Editor) -->
+  <div id="main-workspace" class="vercel-card overflow-hidden relative">
     
-    <!-- Action Bar / Toolbar -->
-    <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#19191b] px-4 py-3">
+    <!-- Action Bar / Toolbar (Vercel Inset Tool Strip) -->
+    <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] px-4 py-2.5">
       
       <!-- Left Controls: File Upload, Case Converter -->
       <div class="flex flex-wrap items-center gap-2">
         
-        <!-- File Upload Button & Hidden Input -->
+        <!-- File Upload Button & Hidden Input (6px Square Button) -->
         <button
           id="btn-trigger-upload"
           type="button"
-          class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3.5 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          class="vercel-btn-sm vercel-btn-sm-ghost"
         >
-          <svg class="h-3.5 w-3.5 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
           </svg>
           <span>Upload File</span>
-          <span class="text-[10px] text-[#86868b] hidden sm:inline">(.docx, .pdf, .txt)</span>
+          <span class="text-[10px] text-[#8f8f8f] font-mono hidden sm:inline">(.docx, .pdf, .txt)</span>
         </button>
         <input type="file" id="file-upload-input" accept=".txt,.md,.rtf,.docx,.pdf" class="hidden" />
 
@@ -138,35 +156,35 @@ const {
           <button
             id="case-menu-btn"
             type="button"
-            class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+            class="vercel-btn-sm vercel-btn-sm-ghost"
           >
             <span>Change Case</span>
-            <svg class="h-3 w-3 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="h-3 w-3 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
           
-          <div id="case-dropdown" class="hidden absolute left-0 mt-1.5 w-44 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-xl p-1.5 shadow-xl z-30 text-xs">
-            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="sentence">Sentence case</button>
-            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="lower">lowercase</button>
-            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="upper">UPPERCASE</button>
-            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="title">Title Case</button>
+          <div id="case-dropdown" class="hidden absolute left-0 mt-1.5 w-44 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl z-30 text-xs">
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="sentence">Sentence case</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="lower">lowercase</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="upper">UPPERCASE</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="title">Title Case</button>
           </div>
         </div>
 
       </div>
 
-      <!-- Right Controls: Copy Stats, Copy Text, Clear -->
+      <!-- Right Controls: Copy Stats, Copy Text, Export, Clear -->
       <div class="flex items-center gap-2">
         
         <!-- Copy Stats Button -->
         <button
           id="btn-copy-stats"
           type="button"
-          class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          class="vercel-btn-sm vercel-btn-sm-ghost"
           title="Copy formatted statistics summary"
         >
-          <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
           </svg>
           <span class="hidden sm:inline">Copy Stats</span>
@@ -176,10 +194,10 @@ const {
         <button
           id="btn-copy-text"
           type="button"
-          class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          class="vercel-btn-sm vercel-btn-sm-ghost"
           title="Copy editor text to clipboard"
         >
-          <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
           </svg>
           <span class="hidden sm:inline">Copy Text</span>
@@ -190,10 +208,10 @@ const {
           <button
             id="export-menu-btn"
             type="button"
-            class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+            class="vercel-btn-sm vercel-btn-sm-ghost"
             title="Export text & report"
           >
-            <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
             <span class="hidden sm:inline">Export</span>
@@ -201,11 +219,11 @@ const {
           
           <div
             id="export-dropdown"
-            class="hidden absolute right-0 mt-1.5 w-44 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-1.5 shadow-xl z-20 text-xs"
+            class="hidden absolute right-0 mt-1.5 w-44 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl z-20 text-xs"
           >
-            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="txt">Download as .TXT</button>
-            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="md">Download as .MD</button>
-            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="report">Copy Full Report</button>
+            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="txt">Download as .TXT</button>
+            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="md">Download as .MD</button>
+            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="report">Copy Full Report</button>
           </div>
         </div>
 
@@ -213,7 +231,7 @@ const {
         <button
           id="btn-clear-text"
           type="button"
-          class="inline-flex items-center gap-1 rounded-full border border-rose-200 dark:border-rose-900/40 bg-rose-50/60 dark:bg-rose-950/20 px-3 py-1.5 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition apple-button"
+          class="vercel-btn-sm text-xs text-[#ee0000] border border-[#ee0000]/20 bg-[#ee0000]/5 hover:bg-[#ee0000]/10 transition"
           title="Clear editor text"
         >
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -225,75 +243,77 @@ const {
       </div>
     </div>
 
-    <!-- Drag & Drop Visual Overlay -->
-    <div id="drop-overlay" class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#0066cc]/90 dark:bg-[#0055b3]/95 text-white backdrop-blur-md rounded-3xl p-6 text-center">
-      <svg class="h-14 w-14 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-      </svg>
-      <p class="mt-4 text-xl font-bold">Release to count words instantly</p>
-      <p class="text-xs text-blue-100 mt-1">100% processed in browser. Supports .docx, .pdf, .txt, .md</p>
+    <!-- Drag & Drop Visual Overlay (Vercel Inset Sheet) -->
+    <div id="drop-overlay" class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#171717]/95 dark:bg-[#000000]/95 text-white backdrop-blur-md p-6 text-center">
+      <div class="h-12 w-12 rounded-[8px] bg-white/10 flex items-center justify-center mb-3">
+        <svg class="h-6 w-6 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+      </div>
+      <p class="text-lg font-semibold tracking-tight">Drop file to count words locally</p>
+      <p class="text-xs text-[#8f8f8f] mt-1 font-mono">100% processed in browser. Supports .docx, .pdf, .txt, .md</p>
     </div>
 
     <!-- MAIN ERGONOMIC TEXTAREA -->
-    <div class="relative p-4 sm:p-6">
+    <div class="relative p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
       <textarea
         id="main-text-input"
         rows="13"
-        class="w-full resize-y bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] placeholder:text-[#86868b] font-normal leading-relaxed text-[16px] sm:text-[17px] focus:outline-hidden"
-        placeholder="Start typing, paste your text here (Ctrl+V), or drag & drop a .docx, .pdf, or .txt file..."
+        class="w-full resize-y bg-transparent text-[#171717] dark:text-[#ededed] placeholder:text-[#8f8f8f] font-normal leading-relaxed text-[15px] sm:text-[16px] focus:outline-hidden"
+        placeholder="Type, paste (Ctrl+V), or drag & drop text, docx, or pdf here to begin..."
         spellcheck="true"
       ></textarea>
     </div>
 
     <!-- Bottom Status Bar: Auto-Save & Reading Grade -->
-    <div class="flex items-center justify-between border-t border-[#e5e5e7] dark:border-[#2c2c2e] px-4 py-2.5 text-[11px] text-[#86868b] bg-[#fafafc] dark:bg-[#19191b]">
+    <div class="flex items-center justify-between border-t border-[#ebebeb] dark:border-[#222222] px-4 py-2 text-[11px] text-[#8f8f8f] bg-[#fafafa] dark:bg-[#0e0e0e] font-mono">
       <div class="flex items-center gap-2">
-        <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" id="autosave-indicator"></span>
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#0070f3]" id="autosave-indicator"></span>
         <span id="autosave-label">Saved to device memory</span>
       </div>
-      <div id="reading-level-pill" class="font-medium text-[#515154] dark:text-[#a1a1a6]">
+      <div id="reading-level-pill" class="font-medium text-[#4d4d4d] dark:text-[#a1a1a1]">
         Reading Level: Ready
       </div>
     </div>
 
   </div>
 
-  <!-- APPLE-STYLE SEGMENTED ANALYSIS TABS -->
-  <div class="mt-8 rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] shadow-xs overflow-hidden" id="analysis-section">
+  <!-- VERCEL SEGMENTED ANALYSIS TABS -->
+  <div class="mt-8 vercel-card overflow-hidden" id="analysis-section">
     
-    <!-- Tab Navigation Segmented Bar -->
-    <div class="p-2 border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#19191b] overflow-x-auto">
-      <div class="flex items-center gap-1.5 min-w-max">
+    <!-- Tab Navigation Segmented Bar (Vercel Category Tab Pills) -->
+    <div class="p-2 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] overflow-x-auto">
+      <div class="flex items-center gap-1 min-w-max">
         
-        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[#0066cc] text-white dark:bg-[#2997ff] dark:text-black transition apple-button shrink-0" data-tab="keywords">
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black shrink-0 transition" data-tab="keywords">
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
           </svg>
           <span>Keyword Density</span>
         </button>
 
-        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="readability">
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="readability">
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
           </svg>
           <span>Readability & Grades</span>
         </button>
 
-        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="social">
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="social">
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
           </svg>
           <span>Social Media Limits</span>
         </button>
 
-        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="academic">
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="academic">
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
           </svg>
           <span>Academic Essay Mode</span>
         </button>
 
-        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="style">
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="style">
           <svg class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
@@ -304,39 +324,39 @@ const {
     </div>
 
     <!-- Tab 1: Keyword Density Content -->
-    <div id="tab-content-keywords" class="analysis-panel p-4 sm:p-6">
+    <div id="tab-content-keywords" class="analysis-panel p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
         <div>
-          <h3 class="text-[16px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Keyword Frequency & Density</h3>
-          <p class="text-xs text-[#86868b]">Identify recurring terms and calibrate your SEO phrase balance.</p>
+          <h3 class="text-[16px] font-semibold text-[#171717] dark:text-[#ededed] tracking-tight">Keyword Frequency & Density</h3>
+          <p class="text-xs text-[#8f8f8f]">Identify recurring terms and calibrate your SEO phrase balance.</p>
         </div>
         <div class="flex items-center gap-3">
-          <label class="flex items-center gap-2 text-xs text-[#515154] dark:text-[#a1a1a6] cursor-pointer">
-            <input type="checkbox" id="check-filter-stopwords" checked class="rounded border-[#d2d2d7] text-[#0066cc] focus:ring-[#0066cc]" />
+          <label class="flex items-center gap-2 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] cursor-pointer font-mono">
+            <input type="checkbox" id="check-filter-stopwords" checked class="rounded-[4px] border-[#ebebeb] text-[#0070f3] focus:ring-[#0070f3]" />
             <span>Filter stop words (the, is, at...)</span>
           </label>
         </div>
       </div>
 
-      <!-- N-gram sub-selector -->
-      <div class="flex gap-2 mb-4">
-        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] transition apple-button" data-ngram="1">1 Word</button>
-        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button" data-ngram="2">2 Words</button>
-        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button" data-ngram="3">3 Words</button>
+      <!-- N-gram sub-selector (6px Vercel Square Buttons) -->
+      <div class="flex gap-1.5 mb-4 font-mono">
+        <button class="ngram-btn px-2.5 py-1 rounded-[6px] text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black transition" data-ngram="1">1 Word</button>
+        <button class="ngram-btn px-2.5 py-1 rounded-[6px] text-xs font-medium border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition" data-ngram="2">2 Words</button>
+        <button class="ngram-btn px-2.5 py-1 rounded-[6px] text-xs font-medium border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition" data-ngram="3">3 Words</button>
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
         <table class="w-full text-left text-xs">
           <thead>
-            <tr class="border-b border-[#e5e5e7] dark:border-[#2c2c2e] text-[#86868b]">
-              <th class="py-2.5 font-medium">PHRASE</th>
-              <th class="py-2.5 font-medium text-center">OCCURRENCES</th>
-              <th class="py-2.5 font-medium text-right">DENSITY</th>
+            <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono">
+              <th class="py-2.5 px-3 font-medium">PHRASE</th>
+              <th class="py-2.5 px-3 font-medium text-center">OCCURRENCES</th>
+              <th class="py-2.5 px-3 font-medium text-right">DENSITY</th>
             </tr>
           </thead>
-          <tbody id="keywords-table-body" class="divide-y divide-[#f0f0f2] dark:divide-[#242426]">
+          <tbody id="keywords-table-body" class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
             <tr>
-              <td colspan="3" class="py-8 text-center text-[#86868b]">Type or paste text above to calculate keyword density.</td>
+              <td colspan="3" class="py-8 text-center text-[#8f8f8f] font-mono">Type or paste text above to calculate keyword density.</td>
             </tr>
           </tbody>
         </table>
@@ -344,29 +364,29 @@ const {
     </div>
 
     <!-- Tab 2: Readability Scores Content -->
-    <div id="tab-content-readability" class="analysis-panel hidden p-4 sm:p-6">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+    <div id="tab-content-readability" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
         
         <!-- Flesch Reading Ease Card -->
-        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] p-5">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Flesch Reading Ease</div>
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-5">
+          <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Flesch Reading Ease</div>
           <div class="mt-2 flex items-baseline gap-3">
-            <span class="font-mono-numbers text-4xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="read-fre-score">0</span>
-            <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff]" id="read-fre-badge">N/A</span>
+            <span class="font-mono text-4xl font-bold text-[#0070f3]" id="read-fre-score">0</span>
+            <span class="text-xs font-mono px-2 py-0.5 rounded-[4px] border border-[#0070f3]/30 bg-[#0070f3]/10 text-[#0070f3]" id="read-fre-badge">N/A</span>
           </div>
-          <p class="mt-3 text-xs leading-relaxed text-[#515154] dark:text-[#a1a1a6]" id="read-fre-desc">
+          <p class="mt-3 text-xs leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]" id="read-fre-desc">
             Scores between 60–70 indicate standard plain English easily understood by general audiences.
           </p>
         </div>
 
         <!-- Grade Level Summary Card -->
-        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] p-5">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Consensus US School Grade</div>
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-5">
+          <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">Consensus School Grade</div>
           <div class="mt-2 flex items-baseline gap-3">
-            <span class="font-mono-numbers text-4xl font-bold text-emerald-600 dark:text-emerald-400" id="read-grade-avg">0</span>
-            <span class="text-xs text-[#86868b]">Grade Level</span>
+            <span class="font-mono text-4xl font-bold text-[#171717] dark:text-[#ededed]" id="read-grade-avg">0</span>
+            <span class="text-xs font-mono text-[#8f8f8f]">Grade Level</span>
           </div>
-          <p class="mt-3 text-xs leading-relaxed text-[#515154] dark:text-[#a1a1a6]" id="read-grade-summary">
+          <p class="mt-3 text-xs leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]" id="read-grade-summary">
             Calculated as an aggregate consensus across 4 standard readability formulas.
           </p>
         </div>
@@ -375,41 +395,41 @@ const {
 
       <!-- 4 Formulas Comparison -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-[11px] text-[#86868b]">Flesch-Kincaid</div>
-          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-fkg">0.0</div>
-          <div class="text-[10px] text-[#86868b]">Grade equivalent</div>
+        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-3.5 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#8f8f8f]">Flesch-Kincaid</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-0.5" id="read-fkg">0.0</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">Grade equivalent</div>
         </div>
-        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-[11px] text-[#86868b]">Gunning Fog</div>
-          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-fog">0.0</div>
-          <div class="text-[10px] text-[#86868b]">Formal education yrs</div>
+        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-3.5 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#8f8f8f]">Gunning Fog</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-0.5" id="read-fog">0.0</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">Formal education yrs</div>
         </div>
-        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-[11px] text-[#86868b]">Coleman-Liau</div>
-          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-cli">0.0</div>
-          <div class="text-[10px] text-[#86868b]">Letter-based index</div>
+        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-3.5 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#8f8f8f]">Coleman-Liau</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-0.5" id="read-cli">0.0</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">Letter-based index</div>
         </div>
-        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-[11px] text-[#86868b]">Auto Readability (ARI)</div>
-          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-ari">0.0</div>
-          <div class="text-[10px] text-[#86868b]">Speed algorithm</div>
+        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] p-3.5 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#8f8f8f]">Auto Readability</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-0.5" id="read-ari">0.0</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">Speed algorithm</div>
         </div>
       </div>
     </div>
 
     <!-- Tab 3: Social Media Limits Content -->
-    <div id="tab-content-social" class="analysis-panel hidden p-4 sm:p-6">
+    <div id="tab-content-social" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
       <div class="flex items-center justify-between mb-5">
         <div>
-          <h2 class="text-base sm:text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
+            <svg class="w-4 h-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
             </svg>
-            <span>Social Media &amp; Search Character Constraints</span>
+            <span>Platform Character Constraints</span>
           </h2>
-          <p class="text-xs text-[#86868b] mt-0.5">
-            Live limits across 10 publishing channels for your current text (<span id="social-live-char-count">0 characters</span>).
+          <p class="text-xs text-[#8f8f8f] mt-0.5 font-mono">
+            Live limits across 10 publishing channels (<span id="social-live-char-count">0 characters</span>).
           </p>
         </div>
       </div>
@@ -420,81 +440,81 @@ const {
     </div>
 
     <!-- Tab 4: Academic Mode Content -->
-    <div id="tab-content-academic" class="analysis-panel hidden p-4 sm:p-6">
-      <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-blue-200 dark:border-blue-900/40 bg-[#f5f5f7] dark:bg-[#161617] p-5 mb-5">
+    <div id="tab-content-academic" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+      <div class="flex flex-wrap items-center justify-between gap-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 sm:p-5 mb-5">
         <div>
-          <h3 class="text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Exclude References & In-Text Citations</h3>
-          <p class="text-xs text-[#86868b] mt-0.5">
-            Auto-detects end bibliographies (*References*, *Works Cited*) and in-text parenthetical citations (e.g. <code>(Smith, 2024)</code>, <code>[1-3]</code>).
+          <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed]">Exclude References & In-Text Citations</h3>
+          <p class="text-xs text-[#8f8f8f] mt-0.5">
+            Auto-detects end bibliographies (*References*, *Works Cited*) and in-text citations like <code>(Smith, 2024)</code> or <code>[1-3]</code>.
           </p>
         </div>
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" id="toggle-academic-mode" class="sr-only peer">
-          <div class="w-11 h-6 bg-[#d2d2d7] peer-focus:outline-hidden rounded-full peer dark:bg-[#3a3a3c] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0066cc] dark:peer-checked:bg-[#2997ff]"></div>
-          <span class="ml-2.5 text-xs font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Enable Filter</span>
+          <div class="w-10 h-5 bg-[#ebebeb] dark:bg-[#262626] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0070f3]"></div>
+          <span class="ml-2.5 font-mono text-xs font-medium text-[#171717] dark:text-[#ededed]">Enable Filter</span>
         </label>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-4 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-xs text-[#86868b]">Gross Word Count</div>
-          <div class="font-mono-numbers text-2xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-1" id="acad-gross-words">0</div>
-          <div class="text-[11px] text-[#86868b] mt-0.5">Total uncleaned text</div>
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] p-4 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#8f8f8f]">Gross Word Count</div>
+          <div class="font-mono text-2xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="acad-gross-words">0</div>
+          <div class="text-[11px] text-[#8f8f8f] mt-0.5 font-mono">Total uncleaned text</div>
         </div>
 
-        <div class="rounded-2xl border border-emerald-200 dark:border-emerald-800/40 p-4 bg-emerald-500/5 dark:bg-emerald-500/10">
-          <div class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Net Essay Words (Official)</div>
-          <div class="font-mono-numbers text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="acad-net-words">0</div>
-          <div class="text-[11px] text-emerald-600/80 dark:text-emerald-400/80 mt-0.5">Excludes citations & bibliographies</div>
+        <div class="rounded-[10px] border border-[#0070f3]/30 p-4 bg-[#0070f3]/5 dark:bg-[#0070f3]/10">
+          <div class="mono-eyebrow text-[#0070f3]">Net Essay Words (Official)</div>
+          <div class="font-mono text-2xl font-bold text-[#0070f3] mt-1" id="acad-net-words">0</div>
+          <div class="text-[11px] text-[#0070f3]/80 mt-0.5 font-mono">Excludes citations & bibliography</div>
         </div>
 
-        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-4 bg-white dark:bg-[#1c1c1e]">
-          <div class="text-xs text-[#86868b]">Excluded Words</div>
-          <div class="font-mono-numbers text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1" id="acad-excluded-words">0</div>
-          <div class="text-[11px] text-[#86868b] mt-0.5" id="acad-excluded-desc">0 citations / 0 ref words</div>
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] p-4 bg-white dark:bg-[#0a0a0a]">
+          <div class="mono-eyebrow text-[#ee0000]">Excluded Words</div>
+          <div class="font-mono text-2xl font-bold text-[#ee0000] mt-1" id="acad-excluded-words">0</div>
+          <div class="text-[11px] text-[#8f8f8f] mt-0.5 font-mono" id="acad-excluded-desc">0 citations / 0 ref words</div>
         </div>
       </div>
     </div>
 
     <!-- Tab 5: Style & Quality (Filler Words & Passive Voice) Content -->
-    <div id="tab-content-style" class="analysis-panel hidden p-4 sm:p-6">
+    <div id="tab-content-style" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
       <div class="mb-5">
-        <h2 class="text-base sm:text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-2">
+        <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
           <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
           <span>Style & Quality Audit</span>
         </h2>
-        <p class="text-xs text-[#86868b] mt-0.5">
+        <p class="text-xs text-[#8f8f8f] mt-0.5">
           Detects weak filler words and passive voice constructions to make your copy punchy, direct, and authoritative.
         </p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <div class="rounded-2xl border border-amber-200 dark:border-amber-900/40 p-4 bg-amber-500/5 dark:bg-amber-500/10">
-          <div class="text-xs font-semibold text-amber-800 dark:text-amber-400">Filler Words Detected</div>
-          <div class="font-mono-numbers text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="style-filler-count">0</div>
-          <div class="text-[11px] text-[#86868b] mt-1" id="style-filler-desc">No weak fillers found. Your copy is clean.</div>
+        <div class="rounded-[10px] border border-amber-500/20 p-4 bg-amber-500/5 dark:bg-amber-500/10">
+          <div class="mono-eyebrow text-amber-600 dark:text-amber-400">Filler Words Detected</div>
+          <div class="font-mono text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="style-filler-count">0</div>
+          <div class="text-[11px] text-[#8f8f8f] mt-1 font-mono" id="style-filler-desc">No weak fillers found. Your copy is clean.</div>
         </div>
 
-        <div class="rounded-2xl border border-indigo-200 dark:border-indigo-900/40 p-4 bg-indigo-500/5 dark:bg-indigo-500/10">
-          <div class="text-xs font-semibold text-indigo-800 dark:text-indigo-400">Passive Voice Phrases</div>
-          <div class="font-mono-numbers text-3xl font-bold text-indigo-600 dark:text-indigo-400 mt-1" id="style-passive-count">0</div>
-          <div class="text-[11px] text-[#86868b] mt-1" id="style-passive-desc">No passive voice found. Strong active verbs.</div>
+        <div class="rounded-[10px] border border-[#0070f3]/20 p-4 bg-[#0070f3]/5 dark:bg-[#0070f3]/10">
+          <div class="mono-eyebrow text-[#0070f3]">Passive Voice Phrases</div>
+          <div class="font-mono text-3xl font-bold text-[#0070f3] mt-1" id="style-passive-count">0</div>
+          <div class="text-[11px] text-[#8f8f8f] mt-1 font-mono" id="style-passive-desc">No passive voice found. Strong active verbs.</div>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-[#515154] dark:text-[#a1a1a6] mb-3">Filler Words Breakdown</h4>
+          <h4 class="mono-eyebrow text-[#171717] dark:text-[#ededed] mb-3">Filler Words Breakdown</h4>
           <div id="style-filler-list" class="flex flex-wrap gap-2 text-xs">
-            <span class="text-[#86868b]">No filler words detected.</span>
+            <span class="text-[#8f8f8f] font-mono text-xs">No filler words detected.</span>
           </div>
         </div>
         <div>
-          <h4 class="text-xs font-bold uppercase tracking-wider text-[#515154] dark:text-[#a1a1a6] mb-3">Passive Voice Phrases</h4>
+          <h4 class="mono-eyebrow text-[#171717] dark:text-[#ededed] mb-3">Passive Voice Phrases</h4>
           <div id="style-passive-list" class="flex flex-wrap gap-2 text-xs">
-            <span class="text-[#86868b]">No passive voice detected.</span>
+            <span class="text-[#8f8f8f] font-mono text-xs">No passive voice detected.</span>
           </div>
         </div>
       </div>
@@ -504,28 +524,28 @@ const {
 
 </div>
 
-<!-- APPLE-STYLE CUSTOM TARGET MODAL -->
-<div id="target-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4">
-  <div class="w-full max-w-sm rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 shadow-2xl transition-all">
-    <h3 class="text-base font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">Set Target Word Goal</h3>
-    <p class="text-xs text-[#86868b] mt-1">Set a budget to track your progress bar as you write.</p>
+<!-- VERCEL CUSTOM TARGET MODAL (Clean hairline modal) -->
+<div id="target-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+  <div class="w-full max-w-sm rounded-[12px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xl transition-all">
+    <h3 class="text-base font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Set Word Goal</h3>
+    <p class="text-xs text-[#8f8f8f] mt-1 font-mono">Set a budget to calibrate live progress as you write.</p>
     
     <div class="mt-4">
-      <label class="block text-xs font-medium text-[#515154] dark:text-[#a1a1a6] mb-1.5">Target Count</label>
+      <label class="block text-xs font-mono text-[#8f8f8f] mb-1.5 uppercase">Target Word Count</label>
       <input
         type="number"
         id="custom-target-input"
         min="1"
         max="1000000"
         placeholder="e.g. 500"
-        class="w-full rounded-xl border border-[#d2d2d7] dark:border-[#3a3a3c] bg-[#f5f5f7] dark:bg-[#2c2c2e] px-3.5 py-2.5 text-sm text-[#1d1d1f] dark:text-[#f5f5f7] focus:outline-hidden focus:ring-2 focus:ring-[#0066cc]"
+        class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] px-3.5 py-2 text-sm text-[#171717] dark:text-[#ededed] font-mono focus:outline-hidden focus:border-[#0070f3]"
       />
     </div>
 
     <div class="mt-6 flex items-center justify-end gap-2">
-      <button id="btn-cancel-target-modal" type="button" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:bg-black/5 dark:hover:bg-white/5 transition apple-button">Cancel</button>
-      <button id="btn-clear-target" type="button" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition apple-button">Clear</button>
-      <button id="btn-save-target-modal" type="button" class="px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-[#0066cc] hover:bg-[#0071e3] transition apple-button">Save Goal</button>
+      <button id="btn-cancel-target-modal" type="button" class="vercel-btn-sm vercel-btn-sm-ghost">Cancel</button>
+      <button id="btn-clear-target" type="button" class="vercel-btn-sm text-[#ee0000] border border-[#ee0000]/20 bg-[#ee0000]/5 hover:bg-[#ee0000]/10">Clear</button>
+      <button id="btn-save-target-modal" type="button" class="vercel-btn-sm vercel-btn-sm-primary">Save Goal</button>
     </div>
   </div>
 </div>
@@ -572,6 +592,7 @@ const {
   const btnCopyStats = document.getElementById('btn-copy-stats')!;
   const btnCopyText = document.getElementById('btn-copy-text')!;
   const btnClearText = document.getElementById('btn-clear-text')!;
+  const btnSampleText = document.getElementById('btn-sample-text');
 
   // Target Goal Modal & Presets
   const targetModal = document.getElementById('target-modal')!;
@@ -628,7 +649,6 @@ const {
   let currentTargetType: 'words' | 'characters' = 'words';
   let currentNgram = 1;
   let academicModeEnabled = false;
-  let autoSaveTimeout: any = null;
 
   // Restore session from localStorage if available
   const savedText = localStorage.getItem('wordcountr-draft');
@@ -649,7 +669,7 @@ const {
     }
   }
 
-  // Robust Clipboard Helper (with fallback for mobile/non-https)
+  // Robust Clipboard Helper
   function copyToClipboard(text: string, successMsg: string) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
@@ -702,88 +722,79 @@ const {
     const metrics = calculateMetrics(textToAnalyze);
 
     statWords.textContent = metrics.words.toLocaleString();
-    statLongestWord.textContent = metrics.longestWord ? `Longest: "${metrics.longestWord}"` : `Avg ${metrics.averageWordLength} chars/word`;
+    statLongestWord.textContent = metrics.words > 0 ? `Avg ${metrics.averageWordLength} chars/word` : 'Avg 0 chars/word';
     statChars.textContent = metrics.characters.toLocaleString();
     statCharsNoSpaces.textContent = `${metrics.charactersNoSpaces.toLocaleString()} no spaces`;
     statSentences.textContent = metrics.sentences.toLocaleString();
-    const wordsPerSent = metrics.sentences > 0 ? (metrics.words / metrics.sentences).toFixed(1) : '0';
-    statWordsPerSentence.textContent = `${wordsPerSent} words/sent`;
+    statWordsPerSentence.textContent = `${metrics.averageWordsPerSentence} words/sent`;
     statParagraphs.textContent = metrics.paragraphs.toLocaleString();
-    const sentsPerPara = metrics.paragraphs > 0 ? (metrics.sentences / metrics.paragraphs).toFixed(1) : '0';
-    statSentsPerPara.textContent = `${sentsPerPara} sents/para`;
+    statSentsPerPara.textContent = `${metrics.averageSentencesPerParagraph} sents/para`;
     statReadingTime.textContent = metrics.readingTimeFormatted;
     statSpeakingTime.textContent = metrics.speakingTimeFormatted;
 
-    // 2. Target Goal Bar
+    // 2. Target Goal Progress Tracking
     if (currentTargetCount > 0) {
-      const current = currentTargetType === 'words' ? metrics.words : metrics.characters;
-      const unit = currentTargetType;
-      const percent = Math.min(100, Math.round((current / currentTargetCount) * 100));
-      const remaining = currentTargetCount - current;
+      const currentValue = currentTargetType === 'words' ? metrics.words : metrics.characters;
+      const unit = currentTargetType === 'words' ? 'words' : 'chars';
+      const pct = Math.min(100, Math.round((currentValue / currentTargetCount) * 100));
+      const remaining = Math.max(0, currentTargetCount - currentValue);
 
-      targetProgressFill.style.width = `${percent}%`;
+      targetTextStatus.textContent = `${currentValue.toLocaleString()} / ${currentTargetCount.toLocaleString()} ${unit} (${pct}%) — ${remaining.toLocaleString()} left`;
+      targetProgressFill.style.width = `${pct}%`;
 
-      if (remaining > 0) {
-        targetTextStatus.innerHTML = `<span class="font-bold text-[#0066cc] dark:text-[#2997ff]">${current.toLocaleString()}</span> of <span class="font-bold">${currentTargetCount.toLocaleString()}</span> ${unit} (${remaining.toLocaleString()} remaining · ${percent}%)`;
-        targetProgressFill.className = 'h-full bg-[#0066cc] dark:bg-[#2997ff] transition-all duration-300 rounded-full';
-      } else if (remaining === 0) {
-        targetTextStatus.innerHTML = `🎯 <span class="font-bold text-emerald-600 dark:text-emerald-400">Goal Reached! Exactly ${currentTargetCount.toLocaleString()} ${unit}</span>`;
-        targetProgressFill.className = 'h-full bg-emerald-500 transition-all duration-300 rounded-full';
+      if (pct >= 100) {
+        targetProgressFill.className = 'h-full transition-all duration-300 rounded-full bg-[#0070f3]';
       } else {
-        const over = Math.abs(remaining);
-        targetTextStatus.innerHTML = `⚠️ <span class="font-bold text-rose-600 dark:text-rose-400">${current.toLocaleString()}</span> of ${currentTargetCount.toLocaleString()} ${unit} (<span class="text-rose-600 dark:text-rose-400 font-bold">${over.toLocaleString()} over limit</span>)`;
-        targetProgressFill.className = 'h-full bg-rose-500 transition-all duration-300 rounded-full';
+        targetProgressFill.className = 'h-full transition-all duration-300 rounded-full bg-[#0070f3]';
       }
     } else {
-      targetProgressFill.style.width = '0%';
       targetTextStatus.textContent = 'No target set';
+      targetProgressFill.style.width = '0%';
     }
 
-    // 3. Readability Scores
-    const readability = calculateReadability(textToAnalyze, metrics.words, metrics.sentences, metrics.charactersNoSpaces);
-    readFreScore.textContent = readability.fleschReadingEase.toString();
-    readFreBadge.textContent = readability.fleschReadingEaseLabel;
-    readGradeAvg.textContent = readability.averageGradeLevel > 0 ? readability.averageGradeLevel.toString() : 'N/A';
-    readGradeSummary.textContent = readability.gradeLevelSummary;
-    readFkg.textContent = readability.fleschKincaidGrade.toFixed(1);
-    readFog.textContent = readability.gunningFog.toFixed(1);
-    readCli.textContent = readability.colemanLiau.toFixed(1);
-    readAri.textContent = readability.automatedReadabilityIndex.toFixed(1);
+    // 3. Readability Calculations
+    const read = calculateReadability(textToAnalyze, metrics.words, metrics.sentences, metrics.charactersNoSpaces);
+    readFreScore.textContent = read.fleschReadingEase.toString();
+    readFreBadge.textContent = read.fleschReadingEaseLabel;
+    readGradeAvg.textContent = `Grade ${read.averageGradeLevel}`;
+    readGradeSummary.textContent = read.gradeLevelSummary;
+    readFkg.textContent = read.fleschKincaidGrade.toFixed(1);
+    readFog.textContent = read.gunningFog.toFixed(1);
+    readCli.textContent = read.colemanLiau.toFixed(1);
+    readAri.textContent = read.automatedReadabilityIndex.toFixed(1);
 
-    readingLevelPill.textContent = readability.averageGradeLevel > 0 
-      ? `Reading Level: Grade ${readability.averageGradeLevel} (${readability.fleschReadingEaseLabel})` 
-      : 'Reading Level: —';
+    readingLevelPill.textContent = metrics.words > 0
+      ? `Reading: Grade ${read.averageGradeLevel} (${read.fleschReadingEaseLabel})`
+      : 'Reading Level: Ready';
 
-    // 4. Keyword Density
-    const kwResult = calculateKeywordDensity(textToAnalyze, checkStopwords?.checked ?? true, 12);
-    let activeKwList = kwResult.oneWord;
-    if (currentNgram === 2) activeKwList = kwResult.twoWord;
-    if (currentNgram === 3) activeKwList = kwResult.threeWord;
+    // 4. Keyword Density Analysis
+    const filterStop = checkStopwords ? checkStopwords.checked : true;
+    const keywords = calculateKeywordDensity(textToAnalyze, currentNgram as 1 | 2 | 3, filterStop);
 
-    if (activeKwList.length === 0) {
-      keywordsTableBody.innerHTML = `<tr><td colspan="3" class="py-8 text-center text-[#86868b]">No matching keyword phrases detected.</td></tr>`;
+    if (keywords.length === 0) {
+      keywordsTableBody.innerHTML = `
+        <tr>
+          <td colspan="3" class="py-8 text-center text-[#8f8f8f] font-mono">
+            ${metrics.words === 0 ? 'Type or paste text above to calculate keyword density.' : 'No keywords found matching current filter.'}
+          </td>
+        </tr>
+      `;
     } else {
-      keywordsTableBody.innerHTML = activeKwList.map((k) => `
-        <tr class="keyword-row hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer" data-keyword="${k.phrase}" title="Click to highlight in text editor">
-          <td class="py-2.5 font-medium text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-[#0066cc] dark:text-[#2997ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <span>${k.phrase}</span>
+      keywordsTableBody.innerHTML = keywords.slice(0, 15).map((k) => `
+        <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono">
+          <td class="py-2.5 px-3 font-medium text-[#171717] dark:text-[#ededed]">
+            <button type="button" class="keyword-item hover:text-[#0070f3] hover:underline text-left cursor-pointer" data-phrase="${k.phrase}">
+              ${k.phrase}
+            </button>
           </td>
-          <td class="py-2.5 text-center font-mono-numbers text-[#515154] dark:text-[#a1a1a6] font-semibold">${k.count}</td>
-          <td class="py-2.5 text-right font-mono-numbers">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${k.density > 4 ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400' : 'bg-[#f5f5f7] text-[#1d1d1f] dark:bg-[#2c2c2e] dark:text-[#f5f5f7]'}">
-              ${k.density}%
-            </span>
-          </td>
+          <td class="py-2.5 px-3 text-center text-[#4d4d4d] dark:text-[#a1a1a1]">${k.count.toLocaleString()}</td>
+          <td class="py-2.5 px-3 text-right font-medium text-[#0070f3]">${k.density}%</td>
         </tr>
       `).join('');
 
-      // Attach click-to-highlight listeners
-      keywordsTableBody.querySelectorAll('.keyword-row').forEach((row) => {
-        row.addEventListener('click', () => {
-          const phrase = (row as HTMLElement).dataset.keyword;
+      document.querySelectorAll('.keyword-item').forEach((item) => {
+        item.addEventListener('click', () => {
+          const phrase = (item as HTMLElement).dataset.phrase;
           if (phrase) highlightWordInEditor(phrase);
         });
       });
@@ -801,50 +812,47 @@ const {
       const isWarning = s.percentage >= 85 && !isExceeded;
 
       return `
-        <div class="p-3.5 sm:p-4 rounded-2xl border transition-all ${
+        <div class="p-3.5 sm:p-4 rounded-[10px] border transition-all ${
           isExceeded
-            ? 'bg-[#fff2f2] dark:bg-[#2b1616] border-[#ff3b30]/30'
+            ? 'bg-[#ee0000]/5 dark:bg-[#ee0000]/10 border-[#ee0000]/30'
             : isWarning
-            ? 'bg-[#fffaf0] dark:bg-[#2b2416] border-[#ff9500]/30'
-            : 'bg-[#fafafc] dark:bg-[#161617] border-[#e5e5ea] dark:border-[#2c2c2e]'
+            ? 'bg-[#f5a623]/5 dark:bg-[#f5a623]/10 border-[#f5a623]/30'
+            : 'bg-[#fafafa] dark:bg-[#0e0e0e] border-[#ebebeb] dark:border-[#222222]'
         }">
           <div class="flex items-center justify-between mb-2">
-            <span class="font-semibold text-xs text-[#1d1d1f] dark:text-[#f5f5f7]">
+            <span class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">
               ${s.limit.name}
             </span>
             ${
               isExceeded
-                ? `<span class="flex items-center gap-1 text-[10px] font-bold text-[#ff3b30] bg-[#ffe5e5] dark:bg-[#3a1515] px-2 py-0.5 rounded-full">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M12 8v4m0 4h.01" stroke-width="2" stroke-linecap="round"/></svg>
+                ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#ee0000] bg-[#ee0000]/10 px-2 py-0.5 rounded-[4px]">
                     +${Math.abs(s.remainingChars).toLocaleString()}
                   </span>`
                 : isWarning
-                ? `<span class="flex items-center gap-1 text-[10px] font-bold text-[#ff9500] bg-[#fff3cd] dark:bg-[#3a2e15] px-2 py-0.5 rounded-full">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#f5a623] bg-[#f5a623]/10 px-2 py-0.5 rounded-[4px]">
                     ${s.remainingChars.toLocaleString()} left
                   </span>`
-                : `<span class="flex items-center gap-1 text-[10px] font-semibold text-[#34c759] bg-[#e8f5e9] dark:bg-[#1b3a24] px-2 py-0.5 rounded-full">
-                    <svg class="w-3 h-3 text-[#34c759]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                : `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#0070f3] bg-[#0070f3]/10 px-2 py-0.5 rounded-[4px]">
                     ${s.remainingChars.toLocaleString()} left
                   </span>`
             }
           </div>
 
           <!-- Progress Bar -->
-          <div class="w-full h-1 bg-[#e5e5ea] dark:bg-[#2c2c2e] rounded-full overflow-hidden mb-2">
+          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mb-2">
             <div
               class="h-full transition-all duration-300 ${
                 isExceeded
-                  ? 'bg-[#ff3b30]'
+                  ? 'bg-[#ee0000]'
                   : isWarning
-                  ? 'bg-[#ff9500]'
-                  : 'bg-[#0071e3] dark:bg-[#2997ff]'
+                  ? 'bg-[#f5a623]'
+                  : 'bg-[#0070f3]'
               }"
               style="width: ${s.percentage}%"
             ></div>
           </div>
 
-          <div class="flex items-center justify-between text-[11px] text-[#86868b] font-mono-numbers">
+          <div class="flex items-center justify-between text-[11px] text-[#8f8f8f] font-mono">
             <span>${s.currentChars.toLocaleString()} / ${s.limit.maxChars.toLocaleString()}</span>
             <span>${s.percentage}%</span>
           </div>
@@ -860,23 +868,23 @@ const {
     stylePassiveDesc.textContent = style.passiveVoiceCount > 0 ? `${style.passiveVoiceCount} passive constructions flagged.` : 'No passive voice found. Strong active verbs.';
 
     if (style.fillerMatches.length === 0) {
-      styleFillerList.innerHTML = `<span class="text-[#86868b]">No filler words detected.</span>`;
+      styleFillerList.innerHTML = `<span class="text-[#8f8f8f] font-mono text-xs">No filler words detected.</span>`;
     } else {
       styleFillerList.innerHTML = style.fillerMatches.map(f => `
-        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-400 font-medium hover:bg-amber-500/20 transition cursor-pointer" data-phrase="${f.word}">
+        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-400 font-mono text-xs hover:bg-amber-500/20 transition cursor-pointer" data-phrase="${f.word}">
           <span>"${f.word}"</span>
-          <span class="text-[10px] bg-amber-500/20 px-1.5 py-0.5 rounded-full font-bold">${f.count}</span>
+          <span class="text-[10px] bg-amber-500/20 px-1 rounded-[4px] font-bold">${f.count}</span>
         </button>
       `).join('');
     }
 
     if (style.passiveMatches.length === 0) {
-      stylePassiveList.innerHTML = `<span class="text-[#86868b]">No passive voice detected.</span>`;
+      stylePassiveList.innerHTML = `<span class="text-[#8f8f8f] font-mono text-xs">No passive voice detected.</span>`;
     } else {
       stylePassiveList.innerHTML = style.passiveMatches.map(p => `
-        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-800 dark:text-indigo-400 font-medium hover:bg-indigo-500/20 transition cursor-pointer" data-phrase="${p.phrase}">
+        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-[#0070f3]/20 bg-[#0070f3]/10 text-[#0070f3] font-mono text-xs hover:bg-[#0070f3]/20 transition cursor-pointer" data-phrase="${p.phrase}">
           <span>"${p.phrase}"</span>
-          <span class="text-[10px] bg-indigo-500/20 px-1.5 py-0.5 rounded-full font-bold">${p.count}</span>
+          <span class="text-[10px] bg-[#0070f3]/20 px-1 rounded-[4px] font-bold">${p.count}</span>
         </button>
       `).join('');
     }
@@ -903,14 +911,14 @@ const {
     updateAll();
   });
 
-  // Switch Active Tab function
+  // Switch Active Tab function (Vercel Category Pill style)
   function switchTab(targetTab: string) {
     tabButtons.forEach((btn) => {
       const b = btn as HTMLElement;
       if (b.dataset.tab === targetTab) {
-        b.className = 'analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[#0066cc] text-white dark:bg-[#2997ff] dark:text-black transition apple-button shrink-0';
+        b.className = 'analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black shrink-0 transition';
       } else {
-        b.className = 'analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0';
+        b.className = 'analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition';
       }
     });
 
@@ -940,9 +948,9 @@ const {
     btn.addEventListener('click', () => {
       currentNgram = parseInt((btn as HTMLElement).dataset.ngram || '1', 10);
       ngramButtons.forEach((b) => {
-        (b as HTMLElement).className = 'ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button';
+        (b as HTMLElement).className = 'ngram-btn px-2.5 py-1 rounded-[6px] text-xs font-medium border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white transition';
       });
-      (btn as HTMLElement).className = 'ngram-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] transition apple-button';
+      (btn as HTMLElement).className = 'ngram-btn px-2.5 py-1 rounded-[6px] text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black transition';
       updateAll();
     });
   });
@@ -1000,6 +1008,14 @@ const {
     } else if (e.key === 'Escape') {
       targetModal.classList.add('hidden');
     }
+  });
+
+  // Sample Text Button
+  btnSampleText?.addEventListener('click', () => {
+    const sample = `The Geist design language embodies precision, subtraction, and typographic rhythm. Developed for modern web applications and developer tools, it favors a disciplined ink-and-canvas contrast over chromatic excess.\n\nEvery metric is rendered in tabular monospace font, allowing engineers and writers to analyze text dynamics with computational certainty. In this environment, clarity is not merely an aesthetic choice — it is the fundamental feature. The user's content remains confidential, processed entirely in browser memory without telemetry or remote latency.\n\nAccording to recent usability studies (Nielsen, 2024), distraction-free writing environments increase cognitive focus by over forty percent. When software respects user focus, the craft of writing flourishes effortlessly.\n\nReferences\nNielsen, J. (2024). Cognitive Workspaces and Developer Flow. Journal of Interface Science, 12(3), 45-62.`;
+    textarea.value = sample;
+    updateAll();
+    notify('Loaded sample document');
   });
 
   // Case Converter Dropdown
@@ -1091,7 +1107,7 @@ const {
         const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
         const s = analyzeStyle(text);
         const report = `═══════════════════════════════════════\n` +
-          `       WORDCOUNTR PRO ANALYSIS REPORT   \n` +
+          `       WORDCOUNTR ANALYSIS REPORT       \n` +
           `═══════════════════════════════════════\n\n` +
           `• Words: ${m.words.toLocaleString()}\n` +
           `• Characters (with spaces): ${m.characters.toLocaleString()}\n` +
@@ -1112,7 +1128,7 @@ const {
           `• Filler Words Detected: ${s.fillerWordsCount}\n` +
           `• Passive Voice Phrases: ${s.passiveVoiceCount}\n\n` +
           `═══════════════════════════════════════\n` +
-          `Generated via WordCountr Pro — 100% Private\n`;
+          `Generated via WordCountr — 100% Client-Side Privacy\n`;
         copyToClipboard(report, '✓ Copied complete analysis report');
       }
       exportDropdown?.classList.add('hidden');
@@ -1126,7 +1142,7 @@ const {
       return;
     }
     const metrics = calculateMetrics(textarea.value);
-    const summary = `📊 Text Analysis (via WordCountr.app):\n` +
+    const summary = `📊 Text Analysis (via WordCountr):\n` +
       `• Words: ${metrics.words.toLocaleString()}\n` +
       `• Characters (with spaces): ${metrics.characters.toLocaleString()}\n` +
       `• Characters (without spaces): ${metrics.charactersNoSpaces.toLocaleString()}\n` +
@@ -1200,7 +1216,7 @@ const {
       alert(`File parse error: ${err.message}`);
       autosaveLabel.textContent = 'File parse error';
     } finally {
-      fileInput.value = ''; // Reset so the same file can be reloaded if desired
+      fileInput.value = '';
     }
   });
 

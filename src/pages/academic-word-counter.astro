@@ -44,61 +44,63 @@ const faqSchema = {
   schema={faqSchema}
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-4 text-center">
-    <div class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-4">
-      🎓 Academic Essay & Citation Exclusion
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-4">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Academic Citation Exclusion Engine</span>
     </div>
-    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
-      Academic Word Counter — <span class="text-emerald-600 dark:text-emerald-400">Exclude Citations</span>
+    <h1 class="text-3xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Academic Word Counter — <span class="vercel-gradient-develop">Exclude Citations</span>
     </h1>
-    <p class="mt-3 text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto leading-relaxed">
-      The only word counter built for students and researchers that automatically detects and excludes references, works cited, and parenthetical citations from your essay count.
+    <p class="mt-3 text-sm sm:text-base text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      The precision word counter built for research students that automatically isolates and subtracts bibliographies, references, and parenthetical citations from your paper's net word count.
     </p>
   </div>
 
   <WordCounter initialTab="academic" showHeroCopy={false} />
 
   <!-- Below the fold Educational Guide -->
-  <section class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-16">
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-12">
       
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
-        <h2 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-4">
-          What Counts in Academic Word Limits? (University Guidelines)
+      <div class="vercel-card p-6 sm:p-10">
+        <div class="mono-eyebrow text-[#0070f3] mb-2">University Assessment Norms</div>
+        <h2 class="text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-4">
+          What Counts in Academic Word Limits?
         </h2>
-        <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+        <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
           <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7]">
+            <thead class="bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono border-b border-[#ebebeb] dark:border-[#222222]">
               <tr>
-                <th class="py-3 px-4 font-semibold">Paper Element</th>
-                <th class="py-3 px-4 font-semibold">Included in Count?</th>
-                <th class="py-3 px-4 font-semibold">Standard University Rule</th>
+                <th class="py-2.5 px-4 font-medium">ESSAY ELEMENT</th>
+                <th class="py-2.5 px-4 font-medium text-center">TYPICALLY COUNTED?</th>
+                <th class="py-2.5 px-4 font-medium">STANDARD REASONING</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#f0f0f2] dark:divide-[#242426] text-[#515154] dark:text-[#86868b]">
+            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222] text-[#4d4d4d] dark:text-[#a1a1a1]">
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Main Body Text</td>
-                <td class="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">YES (Always)</td>
-                <td class="py-3 px-4">All paragraphs, introductory sections, and conclusions.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">Main Body Paragraphs</td>
+                <td class="py-2.5 px-4 text-center font-bold text-[#0070f3]">YES</td>
+                <td class="py-2.5 px-4">Core argumentative prose and analysis.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Title Page & Abstract</td>
-                <td class="py-3 px-4 text-amber-600 dark:text-amber-400 font-medium">Varies by Dept</td>
-                <td class="py-3 px-4">Abstracts typically have their own separate 150–250 word limit.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">In-Text Citations (e.g. Smith, 2024)</td>
+                <td class="py-2.5 px-4 text-center font-bold text-[#ee0000]">EXCLUDED</td>
+                <td class="py-2.5 px-4">Exempt in APA, MLA, and Harvard university guidelines.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">In-Text Citations <code>(Smith, 2024)</code></td>
-                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED (Usually)</td>
-                <td class="py-3 px-4">Excluded under standard APA / Harvard university rubrics.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">References & Works Cited</td>
+                <td class="py-2.5 px-4 text-center font-bold text-[#ee0000]">EXCLUDED</td>
+                <td class="py-2.5 px-4">End bibliographies are universally exempt from word counts.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">References / Bibliography</td>
-                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED (Universal)</td>
-                <td class="py-3 px-4">Works cited lists are universally exempt from essay word limits.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">Direct Block Quotes</td>
+                <td class="py-2.5 px-4 text-center font-bold text-[#0070f3]">YES</td>
+                <td class="py-2.5 px-4">Counted towards your word limit in all standard grading rubrics.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Appendices</td>
-                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED</td>
-                <td class="py-3 px-4">Supplementary data, raw surveys, and charts are not counted.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed]">Title Page & Abstract</td>
+                <td class="py-2.5 px-4 text-center font-bold text-[#ee0000]">EXCLUDED</td>
+                <td class="py-2.5 px-4">Preliminary front matter is not part of the essay body.</td>
               </tr>
             </tbody>
           </table>

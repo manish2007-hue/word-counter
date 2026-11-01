@@ -1,10 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
-import { PLATFORM_LIMITS } from '../lib/socialLimits';
 
-const pageTitle = "Social Media Character Counter — Twitter, LinkedIn & Instagram Limits";
-const pageDescription = "Free online social media character counter. Instantly check character and word limits for Twitter/X (280), LinkedIn (3,000), Instagram (2,200), SEO Meta descriptions (155), and YouTube titles.";
+const pageTitle = "Social Media Character Counter — Character Limits for X, LinkedIn, Instagram";
+const pageDescription = "Free online social media character counter. Real-time character meters for Twitter/X (280), LinkedIn (3,000), Instagram (2,200), and Google SEO snippets. 100% private.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -12,26 +11,26 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is the Twitter/X character limit in 2026?",
+      "name": "What is the Twitter/X character limit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The standard post limit on X (formerly Twitter) is 280 characters for standard accounts. Premium verified subscribers can post up to 25,000 characters."
+        "text": "The standard Twitter/X character limit for unverified accounts is 280 characters. URLs take up 23 characters regardless of length. Posts between 200 and 250 characters consistently earn higher engagement."
       }
     },
     {
       "@type": "Question",
-      "name": "What is the optimal character count for LinkedIn posts?",
+      "name": "What is the LinkedIn post character limit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "While LinkedIn allows up to 3,000 characters per post, the mobile feed cuts text off with a '...see more' button after approximately 140 to 160 characters. Keeping your primary hook inside the first 140 characters drives the highest click-through rate."
+        "text": "LinkedIn allows up to 3,000 characters per regular feed post. However, the critical cutoff hook happens at approximately 140 to 210 characters, after which users must click '...see more'."
       }
     },
     {
       "@type": "Question",
-      "name": "What is the Google SEO Meta Description character limit?",
+      "name": "What is the ideal length for SEO meta titles and descriptions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Google displays up to 155–160 characters (approx. 960 pixels) on desktop and 115–120 characters on mobile. Keeping your meta description between 120 and 155 characters ensures it will not be truncated with an ellipsis on SERP."
+        "text": "For optimal Google search results, keep page meta titles under 60 characters (around 580 pixels) and meta descriptions between 150 and 160 characters (around 960 pixels) to avoid mobile and desktop truncation."
       }
     }
   ]
@@ -45,67 +44,67 @@ const faqSchema = {
   schema={faqSchema}
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-4 text-center">
-    <div class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-xs font-semibold text-[#0066cc] dark:text-[#2997ff] mb-4">
-      📱 Multi-Platform Character Compliance
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-4">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Multi-Platform Character Compliance</span>
     </div>
-    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
-      Social Media <span class="text-[#0066cc] dark:text-[#2997ff]">Character Counter</span>
+    <h1 class="text-3xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Social Media <span class="vercel-gradient-develop">Character Counter</span>
     </h1>
-    <p class="mt-3 text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto leading-relaxed">
-      Craft captions, tweets, and headlines with live character limit meters. Avoid cutoffs on Twitter/X, LinkedIn, Instagram, and Google Search.
+    <p class="mt-3 text-sm sm:text-base text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Craft captions, tweets, and metadata with live constraint meters. Prevent truncation on X, LinkedIn, Instagram, and search engines.
     </p>
   </div>
 
   <WordCounter initialTab="social" showHeroCopy={false} />
 
   <!-- Below the fold SEO guide -->
-  <section class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-16">
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-12">
       
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
-        <h2 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-4">
-          2026 Character Limit Quick Reference Cheat Sheet
+      <div class="vercel-card p-6 sm:p-10">
+        <div class="mono-eyebrow text-[#0070f3] mb-2">Publishing Reference</div>
+        <h2 class="text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-4">
+          Platform Character Constraints
         </h2>
-        <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+        <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
           <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7]">
+            <thead class="bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono border-b border-[#ebebeb] dark:border-[#222222]">
               <tr>
-                <th class="py-3 px-4 font-semibold">Platform</th>
-                <th class="py-3 px-4 font-semibold">Hard Limit</th>
-                <th class="py-3 px-4 font-semibold">Feed Cutoff (Preview)</th>
-                <th class="py-3 px-4 font-semibold">Status</th>
+                <th class="py-2.5 px-4 font-medium">PLATFORM</th>
+                <th class="py-2.5 px-4 font-medium">MAX LIMIT</th>
+                <th class="py-2.5 px-4 font-medium">CUTOFF / VISIBILITY HOOK</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#f0f0f2] dark:divide-[#242426] text-[#515154] dark:text-[#86868b]">
-              {PLATFORM_LIMITS.map((p) => (
-                <tr>
-                  <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-2">
-                    <span class="font-mono text-xs">{p.icon}</span>
-                    <span>{p.name}</span>
-                  </td>
-                  <td class="py-3 px-4 font-mono-numbers font-semibold text-[#0066cc] dark:text-[#2997ff]">
-                    {p.maxChars.toLocaleString()} chars
-                  </td>
-                  <td class="py-3 px-4 text-xs">
-                    {p.tip}
-                  </td>
-                  <td class="py-3 px-4 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
-                    Verified 2026
-                  </td>
-                </tr>
-              ))}
+            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222] text-[#4d4d4d] dark:text-[#a1a1a1] font-mono">
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Twitter / X Post</td>
+                <td class="py-2.5 px-4">280 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Optimal engagement at 200–250 characters.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">LinkedIn Post</td>
+                <td class="py-2.5 px-4">3,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Truncated behind "...see more" after ~140–210 chars.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Instagram Caption</td>
+                <td class="py-2.5 px-4">2,200 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">First 125 characters display before "more" prompt.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Google Meta Title</td>
+                <td class="py-2.5 px-4">60 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Truncated with ellipsis in SERPs past 600px (~60 chars).</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Google Meta Description</td>
+                <td class="py-2.5 px-4">155 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Snippet truncated past 960px (~155–160 chars).</td>
+              </tr>
             </tbody>
           </table>
         </div>
-      </div>
-
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs space-y-4">
-        <h2 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
-          Why Character Precision Drives Social Engagement
-        </h2>
-        <p class="text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-          Every social media algorithm relies on user engagement within the first 60 seconds of a post being published. If your caption gets abruptly truncated with a messy hyphen or cuts off mid-sentence before the reader understands the value of the post, your click-through rate collapses. Using WordCountr's live limit checker ensures your call to action, emojis, and hashtags land within the high-visibility zone.
-        </p>
       </div>
 
     </div>

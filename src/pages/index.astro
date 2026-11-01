@@ -4,8 +4,8 @@ import WordCounter from '../components/WordCounter.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import WordsToPages from '../components/WordsToPages.astro';
 
-const pageTitle = "Free Online Word Counter - Count Words, Characters & Sentences Instantly";
-const pageDescription = "Count words, characters, sentences, and paragraphs in real time. Free online word counter with reading time, keyword density, readability grades, and social media limits. 100% private — text never leaves your browser.";
+const pageTitle = "WordCountr – Precision Word Counter, Readability & Text Analytics";
+const pageDescription = "Calculate words, characters, sentences, reading time, keyword density, and readability grades in real time. 100% private in-browser text analytics.";
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -13,10 +13,10 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Is this online word counter really 100% private?",
+      "name": "Is WordCountr really 100% private?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes! Unlike older tools like WordCounter.net or QuillBot that transmit your text to external servers, WordCountr processes 100% of your writing locally inside your browser using client-side JavaScript. Your confidential manuscripts, NDA documents, essays, and notes never leave your computer or device."
+        "text": "Yes! Unlike older tools that transmit text to remote servers, WordCountr processes 100% of your writing locally inside your browser using client-side JavaScript. Your confidential manuscripts, NDA documents, essays, and notes never leave your device."
       }
     },
     {
@@ -40,7 +40,7 @@ const faqSchema = {
       "name": "What file types can I upload to count words?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You can drag and drop Microsoft Word (.docx), Adobe PDF (.pdf), plain text (.txt), Markdown (.md), and Rich Text (.rtf) files directly into the editor for instant parsing."
+        "text": "You can drag and drop Microsoft Word (.docx), Adobe PDF (.pdf), plain text (.txt), Markdown (.md), and Rich Text (.rtf) files directly into the editor for instant parsing in browser memory."
       }
     },
     {
@@ -63,83 +63,84 @@ const faqSchema = {
   <!-- Interactive Tool Workspace (Above the fold) -->
   <WordCounter showHeroCopy={true} />
 
-  <!-- BELOW THE FOLD: HIGH INTENT SEO CONTENT & RICH FEATURED SNIPPETS -->
-  <section class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-20 transition-colors duration-200">
+  <!-- BELOW THE FOLD: VERCEL GEIST SEO SECTIONS & TECHNICAL MATRICES -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-20 transition-colors duration-200">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-16">
       
       <!-- Position Zero Definition Block -->
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
-        <span class="inline-block rounded-full bg-[#0066cc]/10 dark:bg-[#2997ff]/15 px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-[#0066cc] dark:text-[#2997ff] mb-4">
-          Definition & Overview
-        </span>
+      <div class="vercel-card p-6 sm:p-10">
+        <div class="mono-eyebrow text-[#0070f3] mb-3">
+          Spec Sheet & Overview
+        </div>
 
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
           What Is an Online Word Counter?
         </h2>
         
-        <!-- Target Featured Snippet Callout (48 words, exact definition) -->
-        <div class="mt-5 rounded-2xl border border-[#0066cc]/20 dark:border-[#2997ff]/20 bg-[#0066cc]/5 dark:bg-[#2997ff]/10 p-5 text-sm sm:text-base leading-relaxed text-[#1d1d1f] dark:text-[#f5f5f7]">
+        <!-- Target Featured Snippet Callout -->
+        <div class="mt-4 rounded-[8px] border border-[#0070f3]/25 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 p-5 text-sm sm:text-base leading-relaxed text-[#171717] dark:text-[#ededed]">
           <p>
-            <strong>An online word counter is a free digital tool that instantly calculates the total number of words, characters, sentences, and paragraphs in any block of text.</strong> It is commonly used by writers, students, bloggers, and marketers to meet specific writing length requirements, check readability, and optimize content for SEO and social media platforms.
+            <strong>An online word counter is a digital tool that instantly calculates the total count of words, characters, sentences, and paragraphs in any block of text.</strong> It is used by writers, students, engineers, and marketers to satisfy strict word count ceilings, verify readability grade levels, and calibrate keyword densities.
           </p>
         </div>
 
-        <p class="mt-5 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-          Whether you are crafting a college admission essay with a strict 500-word limit, writing a 280-character post on X (formerly Twitter), or drafting an in-depth 2,500-word SEO pillar guide, keeping precise track of your character volume and readability grade is vital to communication success.
+        <p class="mt-4 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Whether you are writing a college admissions essay with a strict 650-word cap, composing a 280-character post on X, or drafting an exhaustive 2,500-word technical whitepaper, keeping precise track of your character volume and readability score is critical to communication clarity.
         </p>
       </div>
 
-      <!-- Comparison Table (Image 1 Feature Showdown) -->
+      <!-- Comparison Table -->
       <ComparisonTable />
 
-      <!-- Words to Pages Reference Guide (High-Intent SEO Asset) -->
+      <!-- Words to Pages Reference Guide -->
       <WordsToPages />
 
-      <!-- Why Competitors Fail vs Our Advantage -->
+      <!-- Architectural Advantages Grid -->
       <div>
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-6 text-center sm:text-left">
-          Engineered to Outperform Legacy Counters
+        <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070] mb-2 text-center sm:text-left">Engineering Principles</div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-6 text-center sm:text-left">
+          Built for Precision and Privacy
         </h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           
-          <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-6 bg-white dark:bg-[#1c1c1e] shadow-2xs">
-            <div class="flex items-center gap-2.5 font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-[15px]">
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>
+          <div class="vercel-card p-6">
+            <div class="flex items-center gap-2.5 font-semibold text-[#171717] dark:text-[#ededed] text-[15px]">
+              <span class="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#0070f3]/15 text-[#0070f3] text-xs font-bold">✓</span>
               <span>100% Client-Side Privacy</span>
             </div>
-            <p class="mt-2 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-              Older sites send your confidential text across the internet to their servers. WordCountr processes every keystroke directly within your browser's V8 engine. Zero server requests. Zero logging.
+            <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+              Legacy tools send your text over the internet to remote servers. WordCountr processes every keystroke directly within your browser's local JavaScript runtime. Zero cloud logging.
             </p>
           </div>
 
-          <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-6 bg-white dark:bg-[#1c1c1e] shadow-2xs">
-            <div class="flex items-center gap-2.5 font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-[15px]">
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>
-              <span>Zero-Ad Viewport</span>
+          <div class="vercel-card p-6">
+            <div class="flex items-center gap-2.5 font-semibold text-[#171717] dark:text-[#ededed] text-[15px]">
+              <span class="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#0070f3]/15 text-[#0070f3] text-xs font-bold">✓</span>
+              <span>Zero-Ad Focused Viewport</span>
             </div>
-            <p class="mt-2 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-              We never crowd your workspace with distracting banners, layout-shifting popups, or deceptive download buttons. Enjoy an uncluttered, focus-first environment.
+            <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+              We never crowd your workspace with distracting banners, layout-shifting popups, or deceptive download links. Enjoy a clean, distraction-free writing environment.
             </p>
           </div>
 
-          <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-6 bg-white dark:bg-[#1c1c1e] shadow-2xs">
-            <div class="flex items-center gap-2.5 font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-[15px]">
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>
+          <div class="vercel-card p-6">
+            <div class="flex items-center gap-2.5 font-semibold text-[#171717] dark:text-[#ededed] text-[15px]">
+              <span class="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#0070f3]/15 text-[#0070f3] text-xs font-bold">✓</span>
               <span>Works Completely Offline (PWA)</span>
             </div>
-            <p class="mt-2 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-              Writing on an airplane, train, or in a library with unstable Wi-Fi? Our Service Worker caches all assets, letting you analyze writing without internet connectivity.
+            <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+              Writing on an airplane or with intermittent Wi-Fi? Our service worker caches all static assets, letting you run word counting and readability scoring without connectivity.
             </p>
           </div>
 
-          <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-6 bg-white dark:bg-[#1c1c1e] shadow-2xs">
-            <div class="flex items-center gap-2.5 font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-[15px]">
-              <span class="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">✓</span>
-              <span>In-Browser File Parsing</span>
+          <div class="vercel-card p-6">
+            <div class="flex items-center gap-2.5 font-semibold text-[#171717] dark:text-[#ededed] text-[15px]">
+              <span class="flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#0070f3]/15 text-[#0070f3] text-xs font-bold">✓</span>
+              <span>In-Memory Document Parsing</span>
             </div>
-            <p class="mt-2 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
-              Drag and drop .docx and .pdf documents directly into the editor. Text is parsed locally in browser memory without manual copying or external conversion services.
+            <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+              Drag and drop .docx and .pdf documents directly into the editor. Text is parsed locally in browser memory without sending files to third-party conversion servers.
             </p>
           </div>
 
@@ -147,60 +148,61 @@ const faqSchema = {
       </div>
 
       <!-- Word Count Standards Table -->
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">
-          Standard Word Counts Across Writing Formats
+      <div class="vercel-card p-6 sm:p-10">
+        <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070] mb-2">Publishing Norms</div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-2">
+          Standard Word Counts Across Mediums
         </h2>
-        <p class="text-xs sm:text-sm text-[#86868b] mb-6">
-          Standard length guidelines established by universities, digital publishers, and publishing houses:
+        <p class="text-xs sm:text-sm text-[#8f8f8f] mb-6">
+          Established benchmarks for academic submissions, digital platforms, and publishing standards:
         </p>
 
-        <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+        <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
           <table class="w-full text-left text-xs sm:text-sm">
-            <thead class="bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7]">
+            <thead class="bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono border-b border-[#ebebeb] dark:border-[#222222]">
               <tr>
-                <th class="py-3 px-4 font-semibold">Document / Medium</th>
-                <th class="py-3 px-4 font-semibold">Ideal Word Count</th>
-                <th class="py-3 px-4 font-semibold">Character Range</th>
-                <th class="py-3 px-4 font-semibold">Purpose / Advice</th>
+                <th class="py-2.5 px-4 font-medium">MEDIUM</th>
+                <th class="py-2.5 px-4 font-medium">IDEAL WORDS</th>
+                <th class="py-2.5 px-4 font-medium">CHARACTERS</th>
+                <th class="py-2.5 px-4 font-medium">SPEC ADVICE</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#f0f0f2] dark:divide-[#242426] text-[#515154] dark:text-[#86868b]">
+            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222] text-[#4d4d4d] dark:text-[#a1a1a1] font-mono">
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">College Admission Essay</td>
-                <td class="py-3 px-4 font-mono-numbers">500 – 650 words</td>
-                <td class="py-3 px-4 font-mono-numbers">3,000 – 4,000 chars</td>
-                <td class="py-3 px-4">Common App limit is strictly 650 words maximum.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">College Admission Essay</td>
+                <td class="py-2.5 px-4">500 – 650 words</td>
+                <td class="py-2.5 px-4">3,000 – 4,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Common App ceiling is strictly 650 words maximum.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Academic Research Paper</td>
-                <td class="py-3 px-4 font-mono-numbers">3,000 – 6,000 words</td>
-                <td class="py-3 px-4 font-mono-numbers">20,000 – 40,000 chars</td>
-                <td class="py-3 px-4">Standard journal article excluding references and tables.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Academic Research Paper</td>
+                <td class="py-2.5 px-4">3,000 – 6,000 words</td>
+                <td class="py-2.5 px-4">20,000 – 40,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Standard journal article excluding references and tables.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">SEO Blog Post (Pillar)</td>
-                <td class="py-3 px-4 font-mono-numbers">1,500 – 2,500 words</td>
-                <td class="py-3 px-4 font-mono-numbers">9,000 – 16,000 chars</td>
-                <td class="py-3 px-4">Comprehensive guides that outrank thin 500-word competitor content.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">SEO Pillar Guide</td>
+                <td class="py-2.5 px-4">1,500 – 2,500 words</td>
+                <td class="py-2.5 px-4">9,000 – 16,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Comprehensive topic clusters that outperform thin pages.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Novel / Fiction Book</td>
-                <td class="py-3 px-4 font-mono-numbers">70,000 – 100,000 words</td>
-                <td class="py-3 px-4 font-mono-numbers">400,000 – 600,000 chars</td>
-                <td class="py-3 px-4">Traditional commercial fiction debut length.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">Fiction Novel</td>
+                <td class="py-2.5 px-4">70,000 – 100,000 words</td>
+                <td class="py-2.5 px-4">400,000 – 600,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Commercial debut novel target length.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">LinkedIn Post</td>
-                <td class="py-3 px-4 font-mono-numbers">150 – 300 words</td>
-                <td class="py-3 px-4 font-mono-numbers">Under 3,000 chars</td>
-                <td class="py-3 px-4">Keep opening hook under 140 chars before the "see more" cutoff.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">LinkedIn Post</td>
+                <td class="py-2.5 px-4">150 – 300 words</td>
+                <td class="py-2.5 px-4">Under 3,000 chars</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Keep opening hook under 140 chars before cutoff.</td>
               </tr>
               <tr>
-                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">X / Twitter Post</td>
-                <td class="py-3 px-4 font-mono-numbers">30 – 50 words</td>
-                <td class="py-3 px-4 font-mono-numbers">280 chars max</td>
-                <td class="py-3 px-4">Tweets around 200–250 chars yield optimal retweets and engagement.</td>
+                <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-[#ededed] font-sans">X / Twitter Post</td>
+                <td class="py-2.5 px-4">30 – 50 words</td>
+                <td class="py-2.5 px-4">280 chars max</td>
+                <td class="py-2.5 px-4 font-sans text-xs">Posts around 200–250 chars yield optimal engagement.</td>
               </tr>
             </tbody>
           </table>
@@ -208,47 +210,48 @@ const faqSchema = {
       </div>
 
       <!-- FAQ Section with Schema-aligned Questions -->
-      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
-        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-6">
+      <div class="vercel-card p-6 sm:p-10">
+        <div class="mono-eyebrow text-[#8f8f8f] dark:text-[#707070] mb-2">Technical FAQ</div>
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-6">
           Frequently Asked Questions
         </h2>
-        <div class="space-y-4">
-          <details class="group rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7]/50 dark:bg-[#161617]/50 p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
+        <div class="space-y-3">
+          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
+            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
               <span>Is my text kept private and confidential?</span>
-              <span class="text-[#86868b] group-open:rotate-180 transition-transform">▼</span>
+              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
             </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#515154] dark:text-[#86868b]">
-              Absolutely 100%. WordCountr runs completely on client-side JavaScript. None of your text is ever transmitted over the network or saved to remote cloud servers. You can even disconnect your internet entirely while typing, and the tool will continue functioning with zero interruptions.
+            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
+              Yes. WordCountr runs completely on client-side JavaScript. None of your text is ever transmitted over the network or saved to remote cloud servers. You can disconnect your internet entirely while typing, and the tool will continue functioning with zero interruptions.
             </p>
           </details>
 
-          <details class="group rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7]/50 dark:bg-[#161617]/50 p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
+          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
+            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
               <span>How does WordCountr differ from Microsoft Word and Google Docs counts?</span>
-              <span class="text-[#86868b] group-open:rotate-180 transition-transform">▼</span>
+              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
             </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#515154] dark:text-[#86868b]">
-              WordCountr matches Microsoft Word and Google Docs tokenization standards for standard alphanumeric characters. In addition, WordCountr gives you real-time readability scores, keyword density tables, speaking time, and an academic mode that excludes citations — features that native word processors lack.
+            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
+              WordCountr matches Microsoft Word and Google Docs tokenization standards for standard alphanumeric characters. In addition, WordCountr gives you real-time readability scores, keyword density tables, speaking time, and an academic mode that excludes citations.
             </p>
           </details>
 
-          <details class="group rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7]/50 dark:bg-[#161617]/50 p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
+          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
+            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
               <span>What is Academic Mode and how does citation exclusion work?</span>
-              <span class="text-[#86868b] group-open:rotate-180 transition-transform">▼</span>
+              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
             </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#515154] dark:text-[#86868b]">
+            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
               Most universities and academic journals have strict word limits (e.g. 3,000 words) that explicitly exempt in-text citations (such as <code>(Smith, 2024)</code> or <code>[1-3]</code>) and the end References or Bibliography section. WordCountr automatically detects and subtracts these items to provide your official net essay count.
             </p>
           </details>
 
-          <details class="group rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7]/50 dark:bg-[#161617]/50 p-4 transition">
-            <summary class="flex cursor-pointer items-center justify-between text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
-              <span>Can I install WordCountr as an app on my device?</span>
-              <span class="text-[#86868b] group-open:rotate-180 transition-transform">▼</span>
+          <details class="group rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 transition">
+            <summary class="flex cursor-pointer items-center justify-between text-sm font-medium text-[#171717] dark:text-[#ededed]">
+              <span>Can I install WordCountr as an offline app?</span>
+              <span class="text-[#8f8f8f] group-open:rotate-180 transition-transform font-mono text-xs">▼</span>
             </summary>
-            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#515154] dark:text-[#86868b]">
+            <p class="mt-3 text-xs sm:text-sm leading-relaxed text-[#4d4d4d] dark:text-[#a1a1a1]">
               Yes! WordCountr is a Progressive Web App (PWA). Click the "Install" button in the header or use your browser's "Add to Home Screen" option in Chrome, Edge, or Safari to install it as a standalone, distraction-free desktop or mobile app.
             </p>
           </details>
