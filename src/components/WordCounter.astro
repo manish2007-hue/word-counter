@@ -726,9 +726,11 @@ const {
     statChars.textContent = metrics.characters.toLocaleString();
     statCharsNoSpaces.textContent = `${metrics.charactersNoSpaces.toLocaleString()} no spaces`;
     statSentences.textContent = metrics.sentences.toLocaleString();
-    statWordsPerSentence.textContent = `${metrics.averageWordsPerSentence} words/sent`;
+    const wordsPerSent = metrics.sentences > 0 ? (metrics.words / metrics.sentences).toFixed(1) : '0';
+    statWordsPerSentence.textContent = `${wordsPerSent} words/sent`;
     statParagraphs.textContent = metrics.paragraphs.toLocaleString();
-    statSentsPerPara.textContent = `${metrics.averageSentencesPerParagraph} sents/para`;
+    const sentsPerPara = metrics.paragraphs > 0 ? (metrics.sentences / metrics.paragraphs).toFixed(1) : '0';
+    statSentsPerPara.textContent = `${sentsPerPara} sents/para`;
     statReadingTime.textContent = metrics.readingTimeFormatted;
     statSpeakingTime.textContent = metrics.speakingTimeFormatted;
 
@@ -753,112 +755,131 @@ const {
     }
 
     // 3. Readability Calculations
-    const read = calculateReadability(textToAnalyze, metrics.words, metrics.sentences, metrics.charactersNoSpaces);
-    readFreScore.textContent = read.fleschReadingEase.toString();
-    readFreBadge.textContent = read.fleschReadingEaseLabel;
-    readGradeAvg.textContent = `Grade ${read.averageGradeLevel}`;
-    readGradeSummary.textContent = read.gradeLevelSummary;
-    readFkg.textContent = read.fleschKincaidGrade.toFixed(1);
-    readFog.textContent = read.gunningFog.toFixed(1);
-    readCli.textContent = read.colemanLiau.toFixed(1);
-    readAri.textContent = read.automatedReadabilityIndex.toFixed(1);
+    try {
+      const read = calculateReadability(textToAnalyze, metrics.words, metrics.sentences, metrics.charactersNoSpaces);
+      if (readFreScore) readFreScore.textContent = read.fleschReadingEase.toString();
+      if (readFreBadge) readFreBadge.textContent = read.fleschReadingEaseLabel;
+      if (readGradeAvg) readGradeAvg.textContent = `Grade ${read.averageGradeLevel}`;
+      if (readGradeSummary) readGradeSummary.textContent = read.gradeLevelSummary;
+      if (readFkg) readFkg.textContent = read.fleschKincaidGrade.toFixed(1);
+      if (readFog) readFog.textContent = read.gunningFog.toFixed(1);
+      if (readCli) readCli.textContent = read.colemanLiau.toFixed(1);
+      if (readAri) readAri.textContent = read.automatedReadabilityIndex.toFixed(1);
 
-    readingLevelPill.textContent = metrics.words > 0
-      ? `Reading: Grade ${read.averageGradeLevel} (${read.fleschReadingEaseLabel})`
-      : 'Reading Level: Ready';
+      if (readingLevelPill) {
+        readingLevelPill.textContent = metrics.words > 0
+          ? `Reading: Grade ${read.averageGradeLevel} (${read.fleschReadingEaseLabel})`
+          : 'Reading Level: Ready';
+      }
+    } catch (e) {
+      console.error('Readability calc error:', e);
+    }
 
     // 4. Keyword Density Analysis
-    const filterStop = checkStopwords ? checkStopwords.checked : true;
-    const keywords = calculateKeywordDensity(textToAnalyze, currentNgram as 1 | 2 | 3, filterStop);
+    try {
+      const filterStop = checkStopwords ? checkStopwords.checked : true;
+      const kwResult = calculateKeywordDensity(textToAnalyze, filterStop, 15);
+      let activeKwList = kwResult.oneWord;
+      if (currentNgram === 2) activeKwList = kwResult.twoWord;
+      if (currentNgram === 3) activeKwList = kwResult.threeWord;
 
-    if (keywords.length === 0) {
-      keywordsTableBody.innerHTML = `
-        <tr>
-          <td colspan="3" class="py-8 text-center text-[#8f8f8f] font-mono">
-            ${metrics.words === 0 ? 'Type or paste text above to calculate keyword density.' : 'No keywords found matching current filter.'}
-          </td>
-        </tr>
-      `;
-    } else {
-      keywordsTableBody.innerHTML = keywords.slice(0, 15).map((k) => `
-        <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono">
-          <td class="py-2.5 px-3 font-medium text-[#171717] dark:text-[#ededed]">
-            <button type="button" class="keyword-item hover:text-[#0070f3] hover:underline text-left cursor-pointer" data-phrase="${k.phrase}">
-              ${k.phrase}
-            </button>
-          </td>
-          <td class="py-2.5 px-3 text-center text-[#4d4d4d] dark:text-[#a1a1a1]">${k.count.toLocaleString()}</td>
-          <td class="py-2.5 px-3 text-right font-medium text-[#0070f3]">${k.density}%</td>
-        </tr>
-      `).join('');
+      if (!activeKwList || activeKwList.length === 0) {
+        keywordsTableBody.innerHTML = `
+          <tr>
+            <td colspan="3" class="py-8 text-center text-[#8f8f8f] font-mono">
+              ${metrics.words === 0 ? 'Type or paste text above to calculate keyword density.' : 'No keywords found matching current filter.'}
+            </td>
+          </tr>
+        `;
+      } else {
+        keywordsTableBody.innerHTML = activeKwList.map((k) => `
+          <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono">
+            <td class="py-2.5 px-3 font-medium text-[#171717] dark:text-[#ededed]">
+              <button type="button" class="keyword-item hover:text-[#0070f3] hover:underline text-left cursor-pointer" data-phrase="${k.phrase}">
+                ${k.phrase}
+              </button>
+            </td>
+            <td class="py-2.5 px-3 text-center text-[#4d4d4d] dark:text-[#a1a1a1]">${k.count.toLocaleString()}</td>
+            <td class="py-2.5 px-3 text-right font-medium text-[#0070f3]">${k.density}%</td>
+          </tr>
+        `).join('');
 
-      document.querySelectorAll('.keyword-item').forEach((item) => {
-        item.addEventListener('click', () => {
-          const phrase = (item as HTMLElement).dataset.phrase;
-          if (phrase) highlightWordInEditor(phrase);
+        document.querySelectorAll('.keyword-item').forEach((item) => {
+          item.addEventListener('click', () => {
+            const phrase = (item as HTMLElement).dataset.phrase;
+            if (phrase) highlightWordInEditor(phrase);
+          });
         });
-      });
+      }
+    } catch (e) {
+      console.error('Keyword density error:', e);
     }
 
     // 5. Social Media Limits
-    const socialCharCountLabel = document.getElementById('social-live-char-count');
-    if (socialCharCountLabel) {
-      socialCharCountLabel.textContent = `${metrics.characters.toLocaleString()} characters`;
-    }
+    try {
+      const socialCharCountLabel = document.getElementById('social-live-char-count');
+      if (socialCharCountLabel) {
+        socialCharCountLabel.textContent = `${metrics.characters.toLocaleString()} characters`;
+      }
 
-    const socialStatuses = evaluatePlatformLimits(metrics.characters);
-    socialGrid.innerHTML = socialStatuses.map((s) => {
-      const isExceeded = s.isOverLimit;
-      const isWarning = s.percentage >= 85 && !isExceeded;
+      const socialStatuses = evaluatePlatformLimits(metrics.characters);
+      if (socialGrid) {
+        socialGrid.innerHTML = socialStatuses.map((s) => {
+          const isExceeded = s.isOverLimit;
+          const isWarning = s.percentage >= 85 && !isExceeded;
 
-      return `
-        <div class="p-3.5 sm:p-4 rounded-[10px] border transition-all ${
-          isExceeded
-            ? 'bg-[#ee0000]/5 dark:bg-[#ee0000]/10 border-[#ee0000]/30'
-            : isWarning
-            ? 'bg-[#f5a623]/5 dark:bg-[#f5a623]/10 border-[#f5a623]/30'
-            : 'bg-[#fafafa] dark:bg-[#0e0e0e] border-[#ebebeb] dark:border-[#222222]'
-        }">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">
-              ${s.limit.name}
-            </span>
-            ${
+          return `
+            <div class="p-3.5 sm:p-4 rounded-[10px] border transition-all ${
               isExceeded
-                ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#ee0000] bg-[#ee0000]/10 px-2 py-0.5 rounded-[4px]">
-                    +${Math.abs(s.remainingChars).toLocaleString()}
-                  </span>`
+                ? 'bg-[#ee0000]/5 dark:bg-[#ee0000]/10 border-[#ee0000]/30'
                 : isWarning
-                ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#f5a623] bg-[#f5a623]/10 px-2 py-0.5 rounded-[4px]">
-                    ${s.remainingChars.toLocaleString()} left
-                  </span>`
-                : `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#0070f3] bg-[#0070f3]/10 px-2 py-0.5 rounded-[4px]">
-                    ${s.remainingChars.toLocaleString()} left
-                  </span>`
-            }
-          </div>
+                ? 'bg-[#f5a623]/5 dark:bg-[#f5a623]/10 border-[#f5a623]/30'
+                : 'bg-[#fafafa] dark:bg-[#0e0e0e] border-[#ebebeb] dark:border-[#222222]'
+            }">
+              <div class="flex items-center justify-between mb-2">
+                <span class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">
+                  ${s.limit.name}
+                </span>
+                ${
+                  isExceeded
+                    ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#ee0000] bg-[#ee0000]/10 px-2 py-0.5 rounded-[4px]">
+                        +${Math.abs(s.remainingChars).toLocaleString()}
+                      </span>`
+                    : isWarning
+                    ? `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#f5a623] bg-[#f5a623]/10 px-2 py-0.5 rounded-[4px]">
+                        ${s.remainingChars.toLocaleString()} left
+                      </span>`
+                    : `<span class="flex items-center gap-1 font-mono text-[10px] font-medium text-[#0070f3] bg-[#0070f3]/10 px-2 py-0.5 rounded-[4px]">
+                        ${s.remainingChars.toLocaleString()} left
+                      </span>`
+                }
+              </div>
 
-          <!-- Progress Bar -->
-          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mb-2">
-            <div
-              class="h-full transition-all duration-300 ${
-                isExceeded
-                  ? 'bg-[#ee0000]'
-                  : isWarning
-                  ? 'bg-[#f5a623]'
-                  : 'bg-[#0070f3]'
-              }"
-              style="width: ${s.percentage}%"
-            ></div>
-          </div>
+              <!-- Progress Bar -->
+              <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mb-2">
+                <div
+                  class="h-full transition-all duration-300 ${
+                    isExceeded
+                      ? 'bg-[#ee0000]'
+                      : isWarning
+                      ? 'bg-[#f5a623]'
+                      : 'bg-[#0070f3]'
+                  }"
+                  style="width: ${s.percentage}%"
+                ></div>
+              </div>
 
-          <div class="flex items-center justify-between text-[11px] text-[#8f8f8f] font-mono">
-            <span>${s.currentChars.toLocaleString()} / ${s.limit.maxChars.toLocaleString()}</span>
-            <span>${s.percentage}%</span>
-          </div>
-        </div>
-      `;
-    }).join('');
+              <div class="flex items-center justify-between text-[11px] text-[#8f8f8f] font-mono">
+                <span>${s.currentChars.toLocaleString()} / ${s.limit.maxChars.toLocaleString()}</span>
+                <span>${s.percentage}%</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      console.error('Social limits error:', e);
+    }
 
     // 6. Style & Quality Audit (Filler Words & Passive Voice)
     const style = analyzeStyle(textToAnalyze);
