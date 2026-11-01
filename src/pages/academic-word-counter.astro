@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Academic Word Counter — Exclude Citations & References from Word Count";
+const pageDescription = "Free online academic essay word counter. Auto-detect and exclude references, bibliography, and in-text parenthetical citations from your paper's official word count. 100% private.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do references and bibliographies count towards essay word limits?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "At nearly all universities and academic journals, references, bibliographies, and works cited lists are explicitly excluded from the required word limit. WordCountr automatically removes this section when Academic Mode is enabled."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do in-text citations count in university essays?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most university assessment guidelines (including APA, MLA, and Chicago styles) state that parenthetical author-year citations such as (Smith, 2024) or numbered brackets like [1-3] should not count toward student penalty limits. WordCountr isolates these citations to give you your net body word count."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the standard penalty for exceeding word limits on academic papers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most universities enforce a 10% tolerance rule (+/- 10%). Exceeding the upper limit beyond 10% often results in a grade deduction (commonly 5 to 10 marks), or examiners simply stop reading past the word limit."
+      }
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalSlug="academic-word-counter"
+  schema={faqSchema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-4 text-center">
+    <div class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-4">
+      🎓 Academic Essay & Citation Exclusion
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+      Academic Word Counter — <span class="text-emerald-600 dark:text-emerald-400">Exclude Citations</span>
+    </h1>
+    <p class="mt-3 text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto leading-relaxed">
+      The only word counter built for students and researchers that automatically detects and excludes references, works cited, and parenthetical citations from your essay count.
+    </p>
+  </div>
+
+  <WordCounter initialTab="academic" showHeroCopy={false} />
+
+  <!-- Below the fold Educational Guide -->
+  <section class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-16">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-12">
+      
+      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
+        <h2 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-4">
+          What Counts in Academic Word Limits? (University Guidelines)
+        </h2>
+        <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7]">
+              <tr>
+                <th class="py-3 px-4 font-semibold">Paper Element</th>
+                <th class="py-3 px-4 font-semibold">Included in Count?</th>
+                <th class="py-3 px-4 font-semibold">Standard University Rule</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#f0f0f2] dark:divide-[#242426] text-[#515154] dark:text-[#86868b]">
+              <tr>
+                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Main Body Text</td>
+                <td class="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">YES (Always)</td>
+                <td class="py-3 px-4">All paragraphs, introductory sections, and conclusions.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Title Page & Abstract</td>
+                <td class="py-3 px-4 text-amber-600 dark:text-amber-400 font-medium">Varies by Dept</td>
+                <td class="py-3 px-4">Abstracts typically have their own separate 150–250 word limit.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">In-Text Citations <code>(Smith, 2024)</code></td>
+                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED (Usually)</td>
+                <td class="py-3 px-4">Excluded under standard APA / Harvard university rubrics.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">References / Bibliography</td>
+                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED (Universal)</td>
+                <td class="py-3 px-4">Works cited lists are universally exempt from essay word limits.</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">Appendices</td>
+                <td class="py-3 px-4 text-rose-600 dark:text-rose-400 font-bold">EXCLUDED</td>
+                <td class="py-3 px-4">Supplementary data, raw surveys, and charts are not counted.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

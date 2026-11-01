@@ -1,0 +1,1024 @@
+---
+interface Props {
+  initialTab?: 'keywords' | 'readability' | 'social' | 'academic';
+  initialTarget?: number;
+  showHeroCopy?: boolean;
+}
+
+const {
+  initialTab = 'keywords',
+  initialTarget = 0,
+  showHeroCopy = true,
+} = Astro.props;
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
+  
+  {showHeroCopy && (
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center gap-2 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-[12px] font-medium text-[#515154] dark:text-[#a1a1a6] shadow-2xs mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0066cc] dark:bg-[#2997ff]"></span>
+        <span>The Precision Writing Instrument</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+        Count smarter. <span class="text-[#0066cc] dark:text-[#2997ff]">Write with precision.</span>
+      </h1>
+      <p class="mt-3 text-[15px] sm:text-[17px] text-[#86868b] max-w-2xl mx-auto leading-relaxed">
+        Real-time word, character, and readability analytics computed 100% inside your browser. 
+        <span class="inline-block text-[#1d1d1f] dark:text-[#f5f5f7] font-medium">Your text never leaves your device.</span>
+      </p>
+    </div>
+  )}
+
+  <!-- MAIN LIVE METRIC STATS TILES (Apple Museum Tile Grid) -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 mb-5">
+    
+    <!-- Words Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Words</div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="stat-words">0</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5 truncate" id="stat-longest-word">Avg 0 chars/word</div>
+    </div>
+
+    <!-- Characters Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Characters</div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-characters">0</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-chars-no-spaces">0 no spaces</div>
+    </div>
+
+    <!-- Sentences Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Sentences</div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-sentences">0</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-words-per-sentence">0 words/sent</div>
+    </div>
+
+    <!-- Paragraphs Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Paragraphs</div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7]" id="stat-paragraphs">0</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5" id="stat-sents-per-para">0 sents/para</div>
+    </div>
+
+    <!-- Reading Time Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
+        <span>Reading Time</span>
+        <span class="text-[10px] text-[#86868b]">225 wpm</span>
+      </div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400" id="stat-reading-time">0 sec</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5">Silent reading</div>
+    </div>
+
+    <!-- Speaking Time Tile -->
+    <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs transition-all hover:border-[#0066cc]/40 dark:hover:border-[#2997ff]/40">
+      <div class="flex items-center justify-between text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">
+        <span>Speaking Time</span>
+        <span class="text-[10px] text-[#86868b]">130 wpm</span>
+      </div>
+      <div class="mt-1 font-mono-numbers text-2xl sm:text-3xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="stat-speaking-time">0 sec</div>
+      <div class="text-[11px] text-[#86868b] mt-0.5">Speech / presentation</div>
+    </div>
+
+  </div>
+
+  <!-- WORD BUDGET / TARGET CAPSULE -->
+  <div id="target-budget-container" class="mb-4 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-3.5 sm:p-4 shadow-2xs">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-2 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-1.5">
+          <svg class="h-4 w-4 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Word Target Goal:
+        </span>
+        <span id="target-text-status" class="font-mono-numbers font-medium text-[#515154] dark:text-[#a1a1a6]">
+          No target set
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center gap-1.5">
+        <button id="btn-quick-target-280" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">280 Chars (X)</button>
+        <button id="btn-quick-target-500" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">500 Words</button>
+        <button id="btn-quick-target-1000" type="button" class="px-2.5 py-1 rounded-full text-[11px] font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e5e5e7] dark:hover:bg-[#3a3a3c] text-[#1d1d1f] dark:text-[#f5f5f7] transition apple-button">1,000 Words</button>
+        <button id="btn-set-custom-target" type="button" class="px-3 py-1 rounded-full text-[11px] bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] font-semibold hover:bg-[#0066cc]/20 transition apple-button">Custom Goal...</button>
+      </div>
+    </div>
+    <!-- Visual Progress Capsule -->
+    <div class="h-2 w-full overflow-hidden rounded-full bg-[#f0f0f2] dark:bg-[#2c2c2e]">
+      <div id="target-progress-fill" class="h-full w-0 bg-[#0066cc] dark:bg-[#2997ff] transition-all duration-300 rounded-full"></div>
+    </div>
+  </div>
+
+  <!-- MAIN WORKSPACE BOX -->
+  <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] shadow-xs overflow-hidden relative">
+    
+    <!-- Action Bar / Toolbar -->
+    <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#19191b] px-4 py-3">
+      
+      <!-- Left Controls: File Upload, Case Converter -->
+      <div class="flex flex-wrap items-center gap-2">
+        
+        <!-- File Upload Button & Hidden Input -->
+        <button
+          id="btn-trigger-upload"
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3.5 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+        >
+          <svg class="h-3.5 w-3.5 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+          </svg>
+          <span>Upload File</span>
+          <span class="text-[10px] text-[#86868b] hidden sm:inline">(.docx, .pdf, .txt)</span>
+        </button>
+        <input type="file" id="file-upload-input" accept=".txt,.md,.rtf,.docx,.pdf" class="hidden" />
+
+        <!-- Change Case Dropdown -->
+        <div class="relative inline-block text-left" id="case-menu-wrapper">
+          <button
+            id="case-menu-btn"
+            type="button"
+            class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          >
+            <span>Change Case</span>
+            <svg class="h-3 w-3 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          
+          <div id="case-dropdown" class="hidden absolute left-0 mt-1.5 w-44 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/95 dark:bg-[#1c1c1e]/95 backdrop-blur-xl p-1.5 shadow-xl z-30 text-xs">
+            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="sentence">Sentence case</button>
+            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="lower">lowercase</button>
+            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="upper">UPPERCASE</button>
+            <button class="case-option w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-case="title">Title Case</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Controls: Copy Stats, Copy Text, Clear -->
+      <div class="flex items-center gap-2">
+        
+        <!-- Copy Stats Button -->
+        <button
+          id="btn-copy-stats"
+          type="button"
+          class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          title="Copy formatted statistics summary"
+        >
+          <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+          <span class="hidden sm:inline">Copy Stats</span>
+        </button>
+
+        <!-- Copy Text Button -->
+        <button
+          id="btn-copy-text"
+          type="button"
+          class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+          title="Copy editor text to clipboard"
+        >
+          <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <span class="hidden sm:inline">Copy Text</span>
+        </button>
+
+        <!-- Clear Text Button -->
+        <button
+          id="btn-clear-text"
+          type="button"
+          class="inline-flex items-center gap-1 rounded-full border border-rose-200 dark:border-rose-900/40 bg-rose-50/60 dark:bg-rose-950/20 px-3 py-1.5 text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition apple-button"
+          title="Clear editor text"
+        >
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          <span>Clear</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Drag & Drop Visual Overlay -->
+    <div id="drop-overlay" class="hidden absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#0066cc]/90 dark:bg-[#0055b3]/95 text-white backdrop-blur-md rounded-3xl p-6 text-center">
+      <svg class="h-14 w-14 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+      </svg>
+      <p class="mt-4 text-xl font-bold">Release to count words instantly</p>
+      <p class="text-xs text-blue-100 mt-1">100% processed in browser. Supports .docx, .pdf, .txt, .md</p>
+    </div>
+
+    <!-- MAIN ERGONOMIC TEXTAREA -->
+    <div class="relative p-4 sm:p-6">
+      <textarea
+        id="main-text-input"
+        rows="13"
+        class="w-full resize-y bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] placeholder:text-[#86868b] font-normal leading-relaxed text-[16px] sm:text-[17px] focus:outline-hidden"
+        placeholder="Start typing, paste your text here (Ctrl+V), or drag & drop a .docx, .pdf, or .txt file..."
+        spellcheck="true"
+      ></textarea>
+    </div>
+
+    <!-- Bottom Status Bar: Auto-Save & Reading Grade -->
+    <div class="flex items-center justify-between border-t border-[#e5e5e7] dark:border-[#2c2c2e] px-4 py-2.5 text-[11px] text-[#86868b] bg-[#fafafc] dark:bg-[#19191b]">
+      <div class="flex items-center gap-2">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" id="autosave-indicator"></span>
+        <span id="autosave-label">Saved to device memory</span>
+      </div>
+      <div id="reading-level-pill" class="font-medium text-[#515154] dark:text-[#a1a1a6]">
+        Reading Level: Ready
+      </div>
+    </div>
+
+  </div>
+
+  <!-- APPLE-STYLE SEGMENTED ANALYSIS TABS -->
+  <div class="mt-8 rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] shadow-xs overflow-hidden" id="analysis-section">
+    
+    <!-- Tab Navigation Segmented Bar -->
+    <div class="p-2 border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#19191b] overflow-x-auto">
+      <div class="flex items-center gap-1.5 min-w-max">
+        
+        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[#0066cc] text-white dark:bg-[#2997ff] dark:text-black transition apple-button shrink-0" data-tab="keywords">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+          </svg>
+          <span>Keyword Density</span>
+        </button>
+
+        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="readability">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          <span>Readability & Grades</span>
+        </button>
+
+        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="social">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+          </svg>
+          <span>Social Media Limits</span>
+        </button>
+
+        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="academic">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
+          </svg>
+          <span>Academic Essay Mode</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Tab 1: Keyword Density Content -->
+    <div id="tab-content-keywords" class="analysis-panel p-4 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div>
+          <h3 class="text-[16px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Keyword Frequency & Density</h3>
+          <p class="text-xs text-[#86868b]">Identify recurring terms and calibrate your SEO phrase balance.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <label class="flex items-center gap-2 text-xs text-[#515154] dark:text-[#a1a1a6] cursor-pointer">
+            <input type="checkbox" id="check-filter-stopwords" checked class="rounded border-[#d2d2d7] text-[#0066cc] focus:ring-[#0066cc]" />
+            <span>Filter stop words (the, is, at...)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- N-gram sub-selector -->
+      <div class="flex gap-2 mb-4">
+        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] transition apple-button" data-ngram="1">1 Word</button>
+        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button" data-ngram="2">2 Words</button>
+        <button class="ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button" data-ngram="3">3 Words</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-[#e5e5e7] dark:border-[#2c2c2e] text-[#86868b]">
+              <th class="py-2.5 font-medium">PHRASE</th>
+              <th class="py-2.5 font-medium text-center">OCCURRENCES</th>
+              <th class="py-2.5 font-medium text-right">DENSITY</th>
+            </tr>
+          </thead>
+          <tbody id="keywords-table-body" class="divide-y divide-[#f0f0f2] dark:divide-[#242426]">
+            <tr>
+              <td colspan="3" class="py-8 text-center text-[#86868b]">Type or paste text above to calculate keyword density.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab 2: Readability Scores Content -->
+    <div id="tab-content-readability" class="analysis-panel hidden p-4 sm:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        
+        <!-- Flesch Reading Ease Card -->
+        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] p-5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Flesch Reading Ease</div>
+          <div class="mt-2 flex items-baseline gap-3">
+            <span class="font-mono-numbers text-4xl font-bold text-[#0066cc] dark:text-[#2997ff]" id="read-fre-score">0</span>
+            <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff]" id="read-fre-badge">N/A</span>
+          </div>
+          <p class="mt-3 text-xs leading-relaxed text-[#515154] dark:text-[#a1a1a6]" id="read-fre-desc">
+            Scores between 60–70 indicate standard plain English easily understood by general audiences.
+          </p>
+        </div>
+
+        <!-- Grade Level Summary Card -->
+        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] p-5">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-[#86868b]">Consensus US School Grade</div>
+          <div class="mt-2 flex items-baseline gap-3">
+            <span class="font-mono-numbers text-4xl font-bold text-emerald-600 dark:text-emerald-400" id="read-grade-avg">0</span>
+            <span class="text-xs text-[#86868b]">Grade Level</span>
+          </div>
+          <p class="mt-3 text-xs leading-relaxed text-[#515154] dark:text-[#a1a1a6]" id="read-grade-summary">
+            Calculated as an aggregate consensus across 4 standard readability formulas.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- 4 Formulas Comparison -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-[11px] text-[#86868b]">Flesch-Kincaid</div>
+          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-fkg">0.0</div>
+          <div class="text-[10px] text-[#86868b]">Grade equivalent</div>
+        </div>
+        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-[11px] text-[#86868b]">Gunning Fog</div>
+          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-fog">0.0</div>
+          <div class="text-[10px] text-[#86868b]">Formal education yrs</div>
+        </div>
+        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-[11px] text-[#86868b]">Coleman-Liau</div>
+          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-cli">0.0</div>
+          <div class="text-[10px] text-[#86868b]">Letter-based index</div>
+        </div>
+        <div class="rounded-xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-3.5 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-[11px] text-[#86868b]">Auto Readability (ARI)</div>
+          <div class="font-mono-numbers text-xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-0.5" id="read-ari">0.0</div>
+          <div class="text-[10px] text-[#86868b]">Speed algorithm</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Social Media Limits Content -->
+    <div id="tab-content-social" class="analysis-panel hidden p-4 sm:p-6">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-base sm:text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#0066cc] dark:text-[#2997ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+            <span>Social Media &amp; Search Character Constraints</span>
+          </h2>
+          <p class="text-xs text-[#86868b] mt-0.5">
+            Live limits across 10 publishing channels for your current text (<span id="social-live-char-count">0 characters</span>).
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="social-cards-grid">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Tab 4: Academic Mode Content -->
+    <div id="tab-content-academic" class="analysis-panel hidden p-4 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-blue-200 dark:border-blue-900/40 bg-[#f5f5f7] dark:bg-[#161617] p-5 mb-5">
+        <div>
+          <h3 class="text-sm font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Exclude References & In-Text Citations</h3>
+          <p class="text-xs text-[#86868b] mt-0.5">
+            Auto-detects end bibliographies (*References*, *Works Cited*) and in-text parenthetical citations (e.g. <code>(Smith, 2024)</code>, <code>[1-3]</code>).
+          </p>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="toggle-academic-mode" class="sr-only peer">
+          <div class="w-11 h-6 bg-[#d2d2d7] peer-focus:outline-hidden rounded-full peer dark:bg-[#3a3a3c] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0066cc] dark:peer-checked:bg-[#2997ff]"></div>
+          <span class="ml-2.5 text-xs font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Enable Filter</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-4 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-xs text-[#86868b]">Gross Word Count</div>
+          <div class="font-mono-numbers text-2xl font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mt-1" id="acad-gross-words">0</div>
+          <div class="text-[11px] text-[#86868b] mt-0.5">Total uncleaned text</div>
+        </div>
+
+        <div class="rounded-2xl border border-emerald-200 dark:border-emerald-800/40 p-4 bg-emerald-500/5 dark:bg-emerald-500/10">
+          <div class="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Net Essay Words (Official)</div>
+          <div class="font-mono-numbers text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1" id="acad-net-words">0</div>
+          <div class="text-[11px] text-emerald-600/80 dark:text-emerald-400/80 mt-0.5">Excludes citations & bibliographies</div>
+        </div>
+
+        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-4 bg-white dark:bg-[#1c1c1e]">
+          <div class="text-xs text-[#86868b]">Excluded Words</div>
+          <div class="font-mono-numbers text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1" id="acad-excluded-words">0</div>
+          <div class="text-[11px] text-[#86868b] mt-0.5" id="acad-excluded-desc">0 citations / 0 ref words</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- APPLE-STYLE CUSTOM TARGET MODAL -->
+<div id="target-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md p-4">
+  <div class="w-full max-w-sm rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 shadow-2xl transition-all">
+    <h3 class="text-base font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">Set Target Word Goal</h3>
+    <p class="text-xs text-[#86868b] mt-1">Set a budget to track your progress bar as you write.</p>
+    
+    <div class="mt-4">
+      <label class="block text-xs font-medium text-[#515154] dark:text-[#a1a1a6] mb-1.5">Target Count</label>
+      <input
+        type="number"
+        id="custom-target-input"
+        min="1"
+        max="1000000"
+        placeholder="e.g. 500"
+        class="w-full rounded-xl border border-[#d2d2d7] dark:border-[#3a3a3c] bg-[#f5f5f7] dark:bg-[#2c2c2e] px-3.5 py-2.5 text-sm text-[#1d1d1f] dark:text-[#f5f5f7] focus:outline-hidden focus:ring-2 focus:ring-[#0066cc]"
+      />
+    </div>
+
+    <div class="mt-6 flex items-center justify-end gap-2">
+      <button id="btn-cancel-target-modal" type="button" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:bg-black/5 dark:hover:bg-white/5 transition apple-button">Cancel</button>
+      <button id="btn-clear-target" type="button" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition apple-button">Clear</button>
+      <button id="btn-save-target-modal" type="button" class="px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-[#0066cc] hover:bg-[#0071e3] transition apple-button">Save Goal</button>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT SCRIPT COMPONENT LOGIC -->
+<script>
+  import { calculateMetrics } from '../lib/metrics';
+  import { calculateReadability } from '../lib/readability';
+  import { calculateKeywordDensity } from '../lib/keywords';
+  import { filterAcademicText } from '../lib/academic';
+  import { parseUploadedFile } from '../lib/fileParser';
+  import { evaluatePlatformLimits } from '../lib/socialLimits';
+
+  // Container & initial props
+  const container = document.getElementById('tool-container') as HTMLElement;
+  const initialTab = container?.dataset.initialTab || 'keywords';
+  const initialTargetVal = parseInt(container?.dataset.initialTarget || '0', 10);
+
+  // DOM elements
+  const textarea = document.getElementById('main-text-input') as HTMLTextAreaElement;
+  const statWords = document.getElementById('stat-words')!;
+  const statLongestWord = document.getElementById('stat-longest-word')!;
+  const statChars = document.getElementById('stat-characters')!;
+  const statCharsNoSpaces = document.getElementById('stat-chars-no-spaces')!;
+  const statSentences = document.getElementById('stat-sentences')!;
+  const statWordsPerSentence = document.getElementById('stat-words-per-sentence')!;
+  const statParagraphs = document.getElementById('stat-paragraphs')!;
+  const statSentsPerPara = document.getElementById('stat-sents-per-para')!;
+  const statReadingTime = document.getElementById('stat-reading-time')!;
+  const statSpeakingTime = document.getElementById('stat-speaking-time')!;
+
+  const targetTextStatus = document.getElementById('target-text-status')!;
+  const targetProgressFill = document.getElementById('target-progress-fill')!;
+  const autosaveLabel = document.getElementById('autosave-label')!;
+  const readingLevelPill = document.getElementById('reading-level-pill')!;
+
+  // File upload
+  const btnTriggerUpload = document.getElementById('btn-trigger-upload');
+  const fileInput = document.getElementById('file-upload-input') as HTMLInputElement;
+  const dropOverlay = document.getElementById('drop-overlay')!;
+
+  // Action Buttons
+  const btnCopyStats = document.getElementById('btn-copy-stats')!;
+  const btnCopyText = document.getElementById('btn-copy-text')!;
+  const btnClearText = document.getElementById('btn-clear-text')!;
+
+  // Target Goal Modal & Presets
+  const targetModal = document.getElementById('target-modal')!;
+  const customTargetInput = document.getElementById('custom-target-input') as HTMLInputElement;
+  const btnSetCustomTarget = document.getElementById('btn-set-custom-target')!;
+  const btnCancelTargetModal = document.getElementById('btn-cancel-target-modal')!;
+  const btnClearTarget = document.getElementById('btn-clear-target')!;
+  const btnSaveTargetModal = document.getElementById('btn-save-target-modal')!;
+
+  const btnTarget280 = document.getElementById('btn-quick-target-280')!;
+  const btnTarget500 = document.getElementById('btn-quick-target-500')!;
+  const btnTarget1000 = document.getElementById('btn-quick-target-1000')!;
+
+  // Analysis Tabs
+  const tabButtons = document.querySelectorAll('.analysis-tab-btn');
+  const panels = document.querySelectorAll('.analysis-panel');
+
+  // Keyword Elements
+  const keywordsTableBody = document.getElementById('keywords-table-body')!;
+  const checkStopwords = document.getElementById('check-filter-stopwords') as HTMLInputElement;
+  const ngramButtons = document.querySelectorAll('.ngram-btn');
+
+  // Readability Elements
+  const readFreScore = document.getElementById('read-fre-score')!;
+  const readFreBadge = document.getElementById('read-fre-badge')!;
+  const readFreDesc = document.getElementById('read-fre-desc')!;
+  const readGradeAvg = document.getElementById('read-grade-avg')!;
+  const readGradeSummary = document.getElementById('read-grade-summary')!;
+  const readFkg = document.getElementById('read-fkg')!;
+  const readFog = document.getElementById('read-fog')!;
+  const readCli = document.getElementById('read-cli')!;
+  const readAri = document.getElementById('read-ari')!;
+
+  // Social Grid
+  const socialGrid = document.getElementById('social-cards-grid')!;
+
+  // Academic Elements
+  const toggleAcademic = document.getElementById('toggle-academic-mode') as HTMLInputElement;
+  const acadGrossWords = document.getElementById('acad-gross-words')!;
+  const acadNetWords = document.getElementById('acad-net-words')!;
+  const acadExcludedWords = document.getElementById('acad-excluded-words')!;
+  const acadExcludedDesc = document.getElementById('acad-excluded-desc')!;
+
+  // State variables
+  let currentTargetCount = initialTargetVal || 0;
+  let currentTargetType: 'words' | 'characters' = 'words';
+  let currentNgram = 1;
+  let academicModeEnabled = false;
+  let autoSaveTimeout: any = null;
+
+  // Restore session from localStorage if available
+  const savedText = localStorage.getItem('wordcountr-draft');
+  if (savedText && textarea && !textarea.value) {
+    textarea.value = savedText;
+  }
+  const savedTarget = localStorage.getItem('wordcountr-target');
+  if (savedTarget && !currentTargetCount) {
+    currentTargetCount = parseInt(savedTarget, 10) || 0;
+  }
+
+  // Toast Helper
+  function notify(msg: string) {
+    if (typeof (window as any).showToast === 'function') {
+      (window as any).showToast(msg);
+    }
+  }
+
+  // Robust Clipboard Helper (with fallback for mobile/non-https)
+  function copyToClipboard(text: string, successMsg: string) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        notify(successMsg);
+      }).catch(() => fallbackCopy(text, successMsg));
+    } else {
+      fallbackCopy(text, successMsg);
+    }
+  }
+
+  function fallbackCopy(text: string, successMsg: string) {
+    const temp = document.createElement('textarea');
+    temp.value = text;
+    temp.style.position = 'fixed';
+    temp.style.opacity = '0';
+    document.body.appendChild(temp);
+    temp.focus();
+    temp.select();
+    try {
+      document.execCommand('copy');
+      notify(successMsg);
+    } catch (e) {
+      alert('Unable to copy to clipboard.');
+    }
+    document.body.removeChild(temp);
+  }
+
+  function updateAll() {
+    if (!textarea) return;
+    const text = textarea.value;
+
+    // Check academic mode filtering
+    let textToAnalyze = text;
+    if (academicModeEnabled) {
+      const acad = filterAcademicText(text);
+      textToAnalyze = acad.cleanedText;
+      acadGrossWords.textContent = acad.originalWords.toLocaleString();
+      acadNetWords.textContent = acad.filteredWords.toLocaleString();
+      acadExcludedWords.textContent = acad.excludedWords.toLocaleString();
+      acadExcludedDesc.textContent = `${acad.inTextCitationsCount} in-text citations · ${acad.referencesWordCount} reference words`;
+    } else {
+      const acad = filterAcademicText(text);
+      acadGrossWords.textContent = acad.originalWords.toLocaleString();
+      acadNetWords.textContent = acad.originalWords.toLocaleString();
+      acadExcludedWords.textContent = '0 (Disabled)';
+      acadExcludedDesc.textContent = `Found ${acad.inTextCitationsCount} in-text citations · ${acad.referencesWordCount} ref words`;
+    }
+
+    // 1. Calculate Core Metrics
+    const metrics = calculateMetrics(textToAnalyze);
+
+    statWords.textContent = metrics.words.toLocaleString();
+    statLongestWord.textContent = metrics.longestWord ? `Longest: "${metrics.longestWord}"` : `Avg ${metrics.averageWordLength} chars/word`;
+    statChars.textContent = metrics.characters.toLocaleString();
+    statCharsNoSpaces.textContent = `${metrics.charactersNoSpaces.toLocaleString()} no spaces`;
+    statSentences.textContent = metrics.sentences.toLocaleString();
+    const wordsPerSent = metrics.sentences > 0 ? (metrics.words / metrics.sentences).toFixed(1) : '0';
+    statWordsPerSentence.textContent = `${wordsPerSent} words/sent`;
+    statParagraphs.textContent = metrics.paragraphs.toLocaleString();
+    const sentsPerPara = metrics.paragraphs > 0 ? (metrics.sentences / metrics.paragraphs).toFixed(1) : '0';
+    statSentsPerPara.textContent = `${sentsPerPara} sents/para`;
+    statReadingTime.textContent = metrics.readingTimeFormatted;
+    statSpeakingTime.textContent = metrics.speakingTimeFormatted;
+
+    // 2. Target Goal Bar
+    if (currentTargetCount > 0) {
+      const current = currentTargetType === 'words' ? metrics.words : metrics.characters;
+      const unit = currentTargetType;
+      const percent = Math.min(100, Math.round((current / currentTargetCount) * 100));
+      const remaining = currentTargetCount - current;
+
+      targetProgressFill.style.width = `${percent}%`;
+
+      if (remaining > 0) {
+        targetTextStatus.innerHTML = `<span class="font-bold text-[#0066cc] dark:text-[#2997ff]">${current.toLocaleString()}</span> of <span class="font-bold">${currentTargetCount.toLocaleString()}</span> ${unit} (${remaining.toLocaleString()} remaining · ${percent}%)`;
+        targetProgressFill.className = 'h-full bg-[#0066cc] dark:bg-[#2997ff] transition-all duration-300 rounded-full';
+      } else if (remaining === 0) {
+        targetTextStatus.innerHTML = `🎯 <span class="font-bold text-emerald-600 dark:text-emerald-400">Goal Reached! Exactly ${currentTargetCount.toLocaleString()} ${unit}</span>`;
+        targetProgressFill.className = 'h-full bg-emerald-500 transition-all duration-300 rounded-full';
+      } else {
+        const over = Math.abs(remaining);
+        targetTextStatus.innerHTML = `⚠️ <span class="font-bold text-rose-600 dark:text-rose-400">${current.toLocaleString()}</span> of ${currentTargetCount.toLocaleString()} ${unit} (<span class="text-rose-600 dark:text-rose-400 font-bold">${over.toLocaleString()} over limit</span>)`;
+        targetProgressFill.className = 'h-full bg-rose-500 transition-all duration-300 rounded-full';
+      }
+    } else {
+      targetProgressFill.style.width = '0%';
+      targetTextStatus.textContent = 'No target set';
+    }
+
+    // 3. Readability Scores
+    const readability = calculateReadability(textToAnalyze, metrics.words, metrics.sentences, metrics.charactersNoSpaces);
+    readFreScore.textContent = readability.fleschReadingEase.toString();
+    readFreBadge.textContent = readability.fleschReadingEaseLabel;
+    readGradeAvg.textContent = readability.averageGradeLevel > 0 ? readability.averageGradeLevel.toString() : 'N/A';
+    readGradeSummary.textContent = readability.gradeLevelSummary;
+    readFkg.textContent = readability.fleschKincaidGrade.toFixed(1);
+    readFog.textContent = readability.gunningFog.toFixed(1);
+    readCli.textContent = readability.colemanLiau.toFixed(1);
+    readAri.textContent = readability.automatedReadabilityIndex.toFixed(1);
+
+    readingLevelPill.textContent = readability.averageGradeLevel > 0 
+      ? `Reading Level: Grade ${readability.averageGradeLevel} (${readability.fleschReadingEaseLabel})` 
+      : 'Reading Level: —';
+
+    // 4. Keyword Density
+    const kwResult = calculateKeywordDensity(textToAnalyze, checkStopwords?.checked ?? true, 12);
+    let activeKwList = kwResult.oneWord;
+    if (currentNgram === 2) activeKwList = kwResult.twoWord;
+    if (currentNgram === 3) activeKwList = kwResult.threeWord;
+
+    if (activeKwList.length === 0) {
+      keywordsTableBody.innerHTML = `<tr><td colspan="3" class="py-8 text-center text-[#86868b]">No matching keyword phrases detected.</td></tr>`;
+    } else {
+      keywordsTableBody.innerHTML = activeKwList.map((k) => `
+        <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+          <td class="py-2.5 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">${k.phrase}</td>
+          <td class="py-2.5 text-center font-mono-numbers text-[#515154] dark:text-[#a1a1a6] font-semibold">${k.count}</td>
+          <td class="py-2.5 text-right font-mono-numbers">
+            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${k.density > 4 ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400' : 'bg-[#f5f5f7] text-[#1d1d1f] dark:bg-[#2c2c2e] dark:text-[#f5f5f7]'}">
+              ${k.density}%
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // 5. Social Media Limits
+    const socialCharCountLabel = document.getElementById('social-live-char-count');
+    if (socialCharCountLabel) {
+      socialCharCountLabel.textContent = `${metrics.characters.toLocaleString()} characters`;
+    }
+
+    const socialStatuses = evaluatePlatformLimits(metrics.characters);
+    socialGrid.innerHTML = socialStatuses.map((s) => {
+      const isExceeded = s.isOverLimit;
+      const isWarning = s.percentage >= 85 && !isExceeded;
+
+      return `
+        <div class="p-3.5 sm:p-4 rounded-2xl border transition-all ${
+          isExceeded
+            ? 'bg-[#fff2f2] dark:bg-[#2b1616] border-[#ff3b30]/30'
+            : isWarning
+            ? 'bg-[#fffaf0] dark:bg-[#2b2416] border-[#ff9500]/30'
+            : 'bg-[#fafafc] dark:bg-[#161617] border-[#e5e5ea] dark:border-[#2c2c2e]'
+        }">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-semibold text-xs text-[#1d1d1f] dark:text-[#f5f5f7]">
+              ${s.limit.name}
+            </span>
+            ${
+              isExceeded
+                ? `<span class="flex items-center gap-1 text-[10px] font-bold text-[#ff3b30] bg-[#ffe5e5] dark:bg-[#3a1515] px-2 py-0.5 rounded-full">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M12 8v4m0 4h.01" stroke-width="2" stroke-linecap="round"/></svg>
+                    +${Math.abs(s.remainingChars).toLocaleString()}
+                  </span>`
+                : isWarning
+                ? `<span class="flex items-center gap-1 text-[10px] font-bold text-[#ff9500] bg-[#fff3cd] dark:bg-[#3a2e15] px-2 py-0.5 rounded-full">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    ${s.remainingChars.toLocaleString()} left
+                  </span>`
+                : `<span class="flex items-center gap-1 text-[10px] font-semibold text-[#34c759] bg-[#e8f5e9] dark:bg-[#1b3a24] px-2 py-0.5 rounded-full">
+                    <svg class="w-3 h-3 text-[#34c759]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M8 12l3 3 5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    ${s.remainingChars.toLocaleString()} left
+                  </span>`
+            }
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-1 bg-[#e5e5ea] dark:bg-[#2c2c2e] rounded-full overflow-hidden mb-2">
+            <div
+              class="h-full transition-all duration-300 ${
+                isExceeded
+                  ? 'bg-[#ff3b30]'
+                  : isWarning
+                  ? 'bg-[#ff9500]'
+                  : 'bg-[#0071e3] dark:bg-[#2997ff]'
+              }"
+              style="width: ${s.percentage}%"
+            ></div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-[#86868b] font-mono-numbers">
+            <span>${s.currentChars.toLocaleString()} / ${s.limit.maxChars.toLocaleString()}</span>
+            <span>${s.percentage}%</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Debounced LocalStorage Auto-Save
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(() => {
+      localStorage.setItem('wordcountr-draft', text);
+      autosaveLabel.textContent = `Saved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    }, 1500);
+  }
+
+  // Event Listeners for Editor
+  textarea?.addEventListener('input', updateAll);
+  textarea?.addEventListener('paste', () => setTimeout(updateAll, 50));
+  checkStopwords?.addEventListener('change', updateAll);
+  toggleAcademic?.addEventListener('change', (e) => {
+    academicModeEnabled = (e.target as HTMLInputElement).checked;
+    updateAll();
+  });
+
+  // Switch Active Tab function
+  function switchTab(targetTab: string) {
+    tabButtons.forEach((btn) => {
+      const b = btn as HTMLElement;
+      if (b.dataset.tab === targetTab) {
+        b.className = 'analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-[#0066cc] text-white dark:bg-[#2997ff] dark:text-black transition apple-button shrink-0';
+      } else {
+        b.className = 'analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0';
+      }
+    });
+
+    panels.forEach((p) => p.classList.add('hidden'));
+    const activePanel = document.getElementById(`tab-content-${targetTab}`);
+    if (activePanel) activePanel.classList.remove('hidden');
+  }
+
+  tabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tabName = (btn as HTMLElement).dataset.tab;
+      if (tabName) switchTab(tabName);
+    });
+  });
+
+  // Initialize with initialTab prop
+  if (initialTab && initialTab !== 'keywords') {
+    switchTab(initialTab);
+    if (initialTab === 'academic') {
+      academicModeEnabled = true;
+      if (toggleAcademic) toggleAcademic.checked = true;
+    }
+  }
+
+  // N-Gram Buttons
+  ngramButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      currentNgram = parseInt((btn as HTMLElement).dataset.ngram || '1', 10);
+      ngramButtons.forEach((b) => {
+        (b as HTMLElement).className = 'ngram-btn px-3 py-1 rounded-full text-xs font-medium bg-[#f5f5f7] dark:bg-[#2c2c2e] text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white transition apple-button';
+      });
+      (btn as HTMLElement).className = 'ngram-btn px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] transition apple-button';
+      updateAll();
+    });
+  });
+
+  // Target Goal Buttons
+  btnTarget280?.addEventListener('click', () => {
+    currentTargetCount = 280;
+    currentTargetType = 'characters';
+    localStorage.setItem('wordcountr-target', '280');
+    updateAll();
+    notify('Target set to 280 characters (X post)');
+  });
+  btnTarget500?.addEventListener('click', () => {
+    currentTargetCount = 500;
+    currentTargetType = 'words';
+    localStorage.setItem('wordcountr-target', '500');
+    updateAll();
+    notify('Target set to 500 words');
+  });
+  btnTarget1000?.addEventListener('click', () => {
+    currentTargetCount = 1000;
+    currentTargetType = 'words';
+    localStorage.setItem('wordcountr-target', '1000');
+    updateAll();
+    notify('Target set to 1,000 words');
+  });
+
+  btnSetCustomTarget?.addEventListener('click', () => {
+    customTargetInput.value = currentTargetCount > 0 ? currentTargetCount.toString() : '';
+    targetModal.classList.remove('hidden');
+    setTimeout(() => customTargetInput.focus(), 50);
+  });
+  btnCancelTargetModal?.addEventListener('click', () => targetModal.classList.add('hidden'));
+  btnClearTarget?.addEventListener('click', () => {
+    currentTargetCount = 0;
+    localStorage.removeItem('wordcountr-target');
+    targetModal.classList.add('hidden');
+    updateAll();
+    notify('Target goal removed');
+  });
+  btnSaveTargetModal?.addEventListener('click', () => {
+    const val = parseInt(customTargetInput.value, 10);
+    if (!isNaN(val) && val > 0) {
+      currentTargetCount = val;
+      currentTargetType = 'words';
+      localStorage.setItem('wordcountr-target', val.toString());
+      notify(`Target goal set to ${val.toLocaleString()} words`);
+    }
+    targetModal.classList.add('hidden');
+    updateAll();
+  });
+  customTargetInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      btnSaveTargetModal.click();
+    } else if (e.key === 'Escape') {
+      targetModal.classList.add('hidden');
+    }
+  });
+
+  // Case Converter Dropdown
+  const caseMenuBtn = document.getElementById('case-menu-btn');
+  const caseDropdown = document.getElementById('case-dropdown');
+  caseMenuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    caseDropdown?.classList.toggle('hidden');
+  });
+  window.addEventListener('click', () => caseDropdown?.classList.add('hidden'));
+
+  document.querySelectorAll('.case-option').forEach((opt) => {
+    opt.addEventListener('click', () => {
+      const caseType = (opt as HTMLElement).dataset.case;
+      const text = textarea.value;
+      if (!text) {
+        notify('Editor is empty');
+        return;
+      }
+      if (caseType === 'upper') {
+        textarea.value = text.toUpperCase();
+        notify('Converted to UPPERCASE');
+      } else if (caseType === 'lower') {
+        textarea.value = text.toLowerCase();
+        notify('Converted to lowercase');
+      } else if (caseType === 'sentence') {
+        textarea.value = text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
+        notify('Converted to Sentence case');
+      } else if (caseType === 'title') {
+        textarea.value = text.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+        notify('Converted to Title Case');
+      }
+      caseDropdown?.classList.add('hidden');
+      updateAll();
+    });
+  });
+
+  // Action Buttons: Copy Stats, Copy Text, Clear
+  btnCopyStats?.addEventListener('click', () => {
+    if (!textarea.value.trim()) {
+      notify('Editor is empty');
+      return;
+    }
+    const metrics = calculateMetrics(textarea.value);
+    const summary = `📊 Text Analysis (via WordCountr.app):\n` +
+      `• Words: ${metrics.words.toLocaleString()}\n` +
+      `• Characters (with spaces): ${metrics.characters.toLocaleString()}\n` +
+      `• Characters (without spaces): ${metrics.charactersNoSpaces.toLocaleString()}\n` +
+      `• Sentences: ${metrics.sentences.toLocaleString()}\n` +
+      `• Paragraphs: ${metrics.paragraphs.toLocaleString()}\n` +
+      `• Reading Time: ${metrics.readingTimeFormatted}\n` +
+      `• Speaking Time: ${metrics.speakingTimeFormatted}`;
+
+    copyToClipboard(summary, '✓ Copied statistics to clipboard');
+  });
+
+  btnCopyText?.addEventListener('click', () => {
+    if (!textarea.value.trim()) {
+      notify('Editor is empty');
+      return;
+    }
+    copyToClipboard(textarea.value, '✓ Copied text to clipboard');
+  });
+
+  let clearConfirmActive = false;
+  let clearTimer: any = null;
+  btnClearText?.addEventListener('click', () => {
+    if (!textarea.value.trim()) return;
+
+    if (!clearConfirmActive) {
+      clearConfirmActive = true;
+      btnClearText.innerHTML = `<span>Sure? Tap again</span>`;
+      clearTimer = setTimeout(() => {
+        clearConfirmActive = false;
+        btnClearText.innerHTML = `
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          <span>Clear</span>
+        `;
+      }, 3000);
+    } else {
+      clearTimeout(clearTimer);
+      clearConfirmActive = false;
+      textarea.value = '';
+      localStorage.removeItem('wordcountr-draft');
+      updateAll();
+      textarea.focus();
+      btnClearText.innerHTML = `
+        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+        </svg>
+        <span>Clear</span>
+      `;
+      notify('Editor cleared');
+    }
+  });
+
+  // Explicit File Upload Trigger
+  btnTriggerUpload?.addEventListener('click', () => {
+    fileInput?.click();
+  });
+
+  fileInput?.addEventListener('change', async (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    try {
+      notify(`Parsing ${file.name}...`);
+      autosaveLabel.textContent = `Parsing ${file.name}...`;
+      const extracted = await parseUploadedFile(file);
+      textarea.value = extracted;
+      updateAll();
+      autosaveLabel.textContent = `Loaded ${file.name}`;
+      notify(`✓ Loaded ${file.name}`);
+    } catch (err: any) {
+      alert(`File parse error: ${err.message}`);
+      autosaveLabel.textContent = 'File parse error';
+    } finally {
+      fileInput.value = ''; // Reset so the same file can be reloaded if desired
+    }
+  });
+
+  // Drag & drop on container
+  window.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropOverlay?.classList.remove('hidden');
+  });
+  window.addEventListener('dragleave', (e) => {
+    if (e.relatedTarget === null) {
+      dropOverlay?.classList.add('hidden');
+    }
+  });
+  window.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    dropOverlay?.classList.add('hidden');
+    const file = e.dataTransfer?.files?.[0];
+    if (file) {
+      try {
+        notify(`Parsing ${file.name}...`);
+        autosaveLabel.textContent = `Parsing ${file.name}...`;
+        const extracted = await parseUploadedFile(file);
+        textarea.value = extracted;
+        updateAll();
+        autosaveLabel.textContent = `Loaded ${file.name}`;
+        notify(`✓ Loaded ${file.name}`);
+      } catch (err: any) {
+        alert(`File parse error: ${err.message}`);
+        autosaveLabel.textContent = 'File parse error';
+      }
+    }
+  });
+
+  // Initial calculation on mount
+  updateAll();
+</script>

@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Keyword Density Checker — Free SEO Word Frequency Analyzer";
+const pageDescription = "Free online keyword density checker. Analyze 1-word, 2-word, and 3-word phrase frequency and percentages in real time. Optimize for SEO without keyword stuffing. 100% private.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is ideal keyword density for SEO?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For modern Google SEO, the ideal keyword density is typically between 1% and 2.5%. Anything higher than 3% to 4% risks triggering search engine keyword stuffing filters or sounding unnatural to human readers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are 2-word and 3-word n-grams?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An n-gram is a contiguous sequence of n words from a given text. A 2-word n-gram (bigram) represents paired phrases like 'content marketing' or 'search engine', while a 3-word n-gram (trigram) represents three-word phrases like 'online word counter'."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I filter out stop words when checking density?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Common grammatical words like 'the', 'is', 'at', and 'and' occur in high frequency in English text. Filtering out stop words allows you to focus on your actual topical keywords and subject matter terms."
+      }
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalSlug="keyword-density-checker"
+  schema={faqSchema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-4 text-center">
+    <div class="inline-flex items-center gap-1.5 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#1c1c1e] px-3.5 py-1 text-xs font-semibold text-[#0066cc] dark:text-[#2997ff] mb-4">
+      📊 SEO N-Gram Frequency Analyzer
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+      Keyword Density <span class="text-[#0066cc] dark:text-[#2997ff]">Checker</span>
+    </h1>
+    <p class="mt-3 text-sm sm:text-base text-[#86868b] max-w-2xl mx-auto leading-relaxed">
+      Instantly check 1-word, 2-word, and 3-word phrase density to balance keyword optimization and avoid search engine over-optimization penalties.
+    </p>
+  </div>
+
+  <WordCounter initialTab="keywords" showHeroCopy={false} />
+
+  <!-- Below the fold Educational Guide -->
+  <section class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#f5f5f7] dark:bg-[#161617] py-16">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-12">
+      
+      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-2xs">
+        <h2 class="text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7] mb-4">
+          How to Optimize Keyword Density for Modern SEO
+        </h2>
+        <div class="space-y-4 text-xs sm:text-sm text-[#515154] dark:text-[#86868b] leading-relaxed">
+          <p>
+            Keyword density is the percentage of times a specific keyword or phrase appears within an article relative to the total word count. While early search engines rewarded mechanical repetition, modern helpful content algorithms prioritize natural phrasing, topical depth, and semantic variations.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+            <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-5 bg-[#f5f5f7] dark:bg-[#161617]">
+              <div class="font-bold text-[#1d1d1f] dark:text-[#f5f5f7] text-[15px]">Under 1% (Too Low)</div>
+              <p class="mt-1.5 text-xs text-[#86868b]">Google may not fully recognize the primary focal entity of the article.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10 p-5">
+              <div class="font-bold text-emerald-700 dark:text-emerald-400 text-[15px]">1% – 2.5% (The Sweet Spot)</div>
+              <p class="mt-1.5 text-xs text-emerald-600/90 dark:text-emerald-400/90">Balanced, natural, and highly authoritative for search ranking algorithms.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-500/10 p-5">
+              <div class="font-bold text-rose-700 dark:text-rose-400 text-[15px]">Over 3.5% (Stuffing Risk)</div>
+              <p class="mt-1.5 text-xs text-rose-600/90 dark:text-rose-400/90">Triggers repetitive phrasing penalties and impairs reader comprehension.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>

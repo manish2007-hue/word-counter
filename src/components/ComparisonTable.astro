@@ -1,0 +1,172 @@
+---
+// How WordCountr Compares Feature Comparison Table
+const features = [
+  {
+    capability: "Privacy (100% Client-Side)",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Offline & PWA Capability",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Ad-Free Writing Viewport",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: true,
+    semrush: true,
+  },
+  {
+    capability: "Word Budget / Target Bar",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Direct .DOCX File Upload",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Academic Citation Exclusion",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Live Social Limits Dashboard",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+  {
+    capability: "Multi-Formula Readability",
+    wordcountr: true,
+    wordcounterNet: true,
+    quillbot: false,
+    semrush: true,
+  },
+  {
+    capability: "Free Keyword Density Checker",
+    wordcountr: true,
+    wordcounterNet: true,
+    quillbot: false,
+    semrush: true,
+  },
+  {
+    capability: "Auto-Save & Session Recovery",
+    wordcountr: true,
+    wordcounterNet: false,
+    quillbot: false,
+    semrush: false,
+  },
+];
+---
+
+<div class="rounded-3xl border border-[#e5e5ea] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-10 shadow-[0_2px_16px_rgba(0,0,0,0.02)] transition-colors">
+  
+  <div class="mb-6">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight">
+      How WordCountr Compares
+    </h2>
+    <p class="text-sm text-[#86868b] mt-1">
+      Feature comparison against legacy ad-supported tools.
+    </p>
+  </div>
+
+  <div class="overflow-x-auto -mx-2 sm:mx-0">
+    <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[620px]">
+      <thead>
+        <tr class="border-b border-[#e5e5ea] dark:border-[#2c2c2e] text-[#86868b]">
+          <th class="py-3 px-4 font-semibold w-2/5">Capability</th>
+          <th class="py-3 px-5 font-bold text-[#0066cc] dark:text-[#2997ff] bg-blue-50/70 dark:bg-blue-950/40 rounded-t-2xl w-1/5">
+            WordCountr
+          </th>
+          <th class="py-3 px-4 font-semibold text-[#515154] dark:text-[#a1a1a6] text-center w-1/5">WordCounter.net</th>
+          <th class="py-3 px-4 font-semibold text-[#515154] dark:text-[#a1a1a6] text-center w-1/5">QuillBot</th>
+          <th class="py-3 px-4 font-semibold text-[#515154] dark:text-[#a1a1a6] text-center w-1/5">Semrush</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-[#f0f0f2] dark:divide-[#242426]">
+        {features.map((item, idx) => {
+          const isLast = idx === features.length - 1;
+          return (
+            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
+              <td class="py-3.5 px-4 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">
+                {item.capability}
+              </td>
+              
+              {/* WordCountr Highlight Column */}
+              <td class={`py-3.5 px-5 bg-blue-50/70 dark:bg-blue-950/40 font-semibold text-[#34c759] ${isLast ? 'rounded-b-2xl' : ''}`}>
+                <span class="flex items-center gap-1.5">
+                  <svg class="w-4 h-4 text-[#34c759]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span>Yes</span>
+                </span>
+              </td>
+
+              {/* WordCounter.net */}
+              <td class="py-3.5 px-4 text-center">
+                {item.wordcounterNet ? (
+                  <span class="inline-flex items-center justify-center text-[#34c759] font-bold">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center justify-center text-[#ff3b30] font-bold text-sm">
+                    ✕
+                  </span>
+                )}
+              </td>
+
+              {/* QuillBot */}
+              <td class="py-3.5 px-4 text-center">
+                {item.quillbot ? (
+                  <span class="inline-flex items-center justify-center text-[#34c759] font-bold">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center justify-center text-[#ff3b30] font-bold text-sm">
+                    ✕
+                  </span>
+                )}
+              </td>
+
+              {/* Semrush */}
+              <td class="py-3.5 px-4 text-center">
+                {item.semrush ? (
+                  <span class="inline-flex items-center justify-center text-[#34c759] font-bold">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <polyline points="20 6 9 17 4 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                ) : (
+                  <span class="inline-flex items-center justify-center text-[#ff3b30] font-bold text-sm">
+                    ✕
+                  </span>
+                )}
+              </td>
+
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+
+</div>

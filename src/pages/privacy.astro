@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Privacy Policy & Guarantee — 100% Client-Side Text Protection";
+const pageDescription = "WordCountr Privacy Policy. Learn why WordCountr is 100% client-side: your text never leaves your device, is never logged, and is never used to train AI models.";
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalSlug="privacy"
+>
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 py-16">
+    
+    <div class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-4">
+      🔒 Zero-Transmission Architecture
+    </div>
+
+    <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+      Privacy Policy & Guarantee
+    </h1>
+
+    <p class="mt-3 text-sm sm:text-base text-[#86868b] leading-relaxed">
+      Last Updated: November 2026. At WordCountr, we believe writers should never have to surrender their privacy or trade their unpublished manuscripts just to count words.
+    </p>
+
+    <div class="mt-10 space-y-8 text-sm leading-relaxed text-[#515154] dark:text-[#86868b]">
+      
+      <div class="rounded-3xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/10 p-6 sm:p-8">
+        <h2 class="text-lg font-bold text-emerald-800 dark:text-emerald-300 mb-2">The Architectural Rule: 100% Client-Side Execution</h2>
+        <p class="text-[#1d1d1f] dark:text-[#f5f5f7]">
+          Every analytical feature in WordCountr — from real-time word counting and syllable estimation to DOCX parsing, PDF extraction, and keyword density calculations — runs <strong>exclusively inside your browser's JavaScript environment</strong>.
+        </p>
+        <p class="mt-2 font-medium text-emerald-700 dark:text-emerald-400">
+          Zero words, zero characters, and zero file contents are ever sent over the network to any server.
+        </p>
+      </div>
+
+      <div class="rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-8 shadow-2xs space-y-6">
+        <div>
+          <h3 class="text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">1. No AI Scraping on Your Writing</h3>
+          <p>
+            Many online writing tools secretly cache user submissions to fine-tune generative language models. We do not do this. Because your text is never transmitted to a server, it is mathematically impossible for us or any third party to scrape or train AI on your work.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">2. Local Storage Auto-Save Only</h3>
+          <p>
+            To prevent accidental loss when you refresh or close a tab, WordCountr saves your working draft to your browser's native <code>localStorage</code> API. This data resides strictly on your physical machine and can be cleared instantly at any time.
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">3. In-Browser DOCX and PDF Extraction</h3>
+          <p>
+            When you drag and drop a Microsoft Word or PDF document into WordCountr, the document is read into browser RAM using local JavaScript libraries (Mammoth.js and PDF.js). The file is parsed without triggering an HTTP upload request.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] p-5 bg-[#f5f5f7] dark:bg-[#161617]">
+          <h4 class="font-bold text-[#1d1d1f] dark:text-[#f5f5f7] text-[14px] mb-2">How to Verify Zero-Transmission in DevTools</h4>
+          <ol class="list-decimal list-inside space-y-1.5 text-xs">
+            <li>Open Developer Tools in your browser (Press <kbd class="px-1.5 py-0.5 rounded bg-white dark:bg-[#2c2c2e] border border-[#d2d2d7] dark:border-[#3a3a3c] font-mono">F12</kbd>).</li>
+            <li>Switch to the <strong>Network</strong> tab.</li>
+            <li>Type or paste any text into WordCountr, or drop in a file.</li>
+            <li>Notice the network log: <strong>0 network requests are made</strong>.</li>
+            <li>You can even disconnect your Wi-Fi or turn on Airplane mode — the tool will work seamlessly offline.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-[#e5e5e7] dark:border-[#2c2c2e] flex items-center justify-between">
+      <a href="/" class="text-xs font-semibold text-[#0066cc] dark:text-[#2997ff] hover:underline">← Back to Word Counter</a>
+      <span class="text-xs text-[#86868b]">WordCountr Privacy Framework v2.0</span>
+    </div>
+
+  </div>
+</Layout>
