@@ -1,0 +1,15 @@
+# Prevent indexing of all Cloudflare Pages and preview URLs
+https://*.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://wordcountr-5t5.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://*.wordcountr-5t5.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+# Global security headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
