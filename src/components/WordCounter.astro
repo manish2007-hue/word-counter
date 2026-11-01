@@ -2,7 +2,7 @@
 import { SOCIAL_PLATFORMS } from '../lib/socialLimits';
 
 interface Props {
-  initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style';
+  initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style' | 'tokens';
   initialTarget?: number;
   showHeroCopy?: boolean;
 }
@@ -14,38 +14,32 @@ const {
 } = Astro.props;
 ---
 
-<div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
+<div class="mx-auto max-w-7xl px-4 sm:px-6 pt-4 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
   
   {showHeroCopy && (
-    <div class="text-center mb-10 py-6 sm:py-8 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#ebebeb]/60 dark:border-[#222222]/60">
+    <div class="text-center mb-6 py-5 sm:py-6 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#ebebeb]/60 dark:border-[#222222]/60">
       <!-- Vercel Uppercase Technical Eyebrow -->
-      <div class="inline-flex items-center gap-2 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white/80 dark:bg-[#0a0a0a]/80 px-3 py-1 mono-eyebrow text-[#8f8f8f] dark:text-[#707070] shadow-2xs mb-4">
+      <div class="inline-flex items-center gap-2 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white/80 dark:bg-[#0a0a0a]/80 px-3 py-1 mono-eyebrow text-[#8f8f8f] dark:text-[#707070] shadow-2xs mb-3">
         <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
-        <span>Developer-Grade Writing Analytics</span>
+        <span>Developer-Grade Writing &amp; LLM Analytics · 100% Client-Side Privacy</span>
       </div>
       
-      <!-- Vercel Display Heading with Tight Tracking & Gradient Accent -->
-      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] leading-[1.08]">
-        Count smarter. <span class="vercel-gradient-develop">Write with precision.</span>
+      <!-- Exact-Match Search Title & Tagline -->
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] leading-[1.12]">
+        Free Online Word Counter &amp; <span class="vercel-gradient-develop">Readability Engine</span>
       </h1>
       
       <!-- Body Copy -->
-      <p class="mt-3 text-[15px] sm:text-[17px] text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
-        Real-time word, character, and readability analytics computed 100% inside your browser. 
-        <span class="inline-block text-[#171717] dark:text-[#ededed] font-medium">Zero server calls. 100% client-side privacy.</span>
+      <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+        Count words, characters, sentences, LLM tokens, and reading time in real time. In-memory PDF/DOCX parsing with zero server calls.
       </p>
 
-      <!-- Vercel Marketing CTA Buttons (Pill Format) -->
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <a href="#main-workspace" class="vercel-btn-primary">
-          <span>Start Analyzing</span>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
-          </svg>
-        </a>
-        <button id="btn-sample-text" type="button" class="vercel-btn-secondary">
-          <span>Load Sample Essay</span>
+      <!-- Vercel Marketing Action Buttons -->
+      <div class="mt-4 flex flex-wrap items-center justify-center gap-2.5">
+        <button id="btn-sample-text" type="button" class="vercel-btn-secondary text-xs py-1.5 px-3">
+          <span>Load Sample Document</span>
         </button>
+        <span class="text-xs text-[#8f8f8f] font-mono hidden sm:inline">or paste text directly below ↓</span>
       </div>
     </div>
   )}
@@ -133,10 +127,31 @@ const {
   <!-- MAIN WORKSPACE BOX (Vercel Crisp Hairline Editor) -->
   <div id="main-workspace" class="vercel-card overflow-hidden relative">
     
+    <!-- MULTI-DOCUMENT WORKSPACE TABS BAR -->
+    <div id="doc-tabs-bar" class="flex items-center gap-1.5 px-3 py-1.5 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fbfbfb] dark:bg-[#0c0c0c] overflow-x-auto text-xs">
+      <div id="doc-tabs-list" class="flex items-center gap-1 min-w-max">
+        <!-- Populated dynamically via JS -->
+      </div>
+      <button
+        id="btn-add-doc"
+        type="button"
+        class="flex items-center gap-1 px-2.5 py-1 rounded-[4px] text-[11px] font-mono text-[#8f8f8f] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 transition"
+        title="Add new document tab"
+      >
+        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        <span>New Tab</span>
+      </button>
+      <div class="ml-auto flex items-center gap-2 text-[11px] font-mono text-[#8f8f8f] shrink-0 pl-2">
+        <span id="doc-count-badge">Draft 1</span>
+      </div>
+    </div>
+
     <!-- Action Bar / Toolbar (Vercel Inset Tool Strip) -->
     <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] px-4 py-2.5">
       
-      <!-- Left Controls: File Upload, Case Converter -->
+      <!-- Left Controls: File Upload, Case Converter, Highlight Mode -->
       <div class="flex flex-wrap items-center gap-2">
         
         <!-- File Upload Button & Hidden Input (6px Square Button) -->
@@ -173,6 +188,19 @@ const {
             <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="title">Title Case</button>
           </div>
         </div>
+
+        <!-- Hemingway Mode Inline Highlight Toggle -->
+        <button
+          id="btn-toggle-highlight"
+          type="button"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs text-amber-600 dark:text-amber-400 border border-amber-500/25 bg-amber-500/5 hover:bg-amber-500/10"
+          title="Toggle inline color-coded highlights for passive voice, weak fillers, and long sentences"
+        >
+          <svg class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span id="highlight-toggle-label">Inline Highlights</span>
+        </button>
 
       </div>
 
@@ -256,7 +284,7 @@ const {
       <p class="text-xs text-[#8f8f8f] mt-1 font-mono">100% processed in browser. Supports .docx, .pdf, .txt, .md</p>
     </div>
 
-    <!-- MAIN ERGONOMIC TEXTAREA -->
+    <!-- MAIN ERGONOMIC TEXTAREA & INLINE HIGHLIGHT VIEWPORT -->
     <div class="relative p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
       <textarea
         id="main-text-input"
@@ -265,6 +293,12 @@ const {
         placeholder="Type, paste (Ctrl+V), or drag & drop text, docx, or pdf here to begin..."
         spellcheck="true"
       ></textarea>
+
+      <!-- Hemingway Mode Inline Highlight Viewport -->
+      <div
+        id="style-highlight-viewport"
+        class="hidden min-h-[300px] w-full p-4 sm:p-5 bg-[#fafafa] dark:bg-[#0c0c0c] text-[#171717] dark:text-[#ededed] font-normal leading-relaxed text-[15px] sm:text-[16px] whitespace-pre-wrap break-words rounded-[8px] border border-amber-500/30 overflow-y-auto max-h-[460px]"
+      ></div>
     </div>
 
     <!-- Bottom Status Bar: Auto-Save & Reading Grade -->
@@ -320,6 +354,13 @@ const {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
           <span>Style & Quality Audit</span>
+        </button>
+
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="tokens">
+          <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+          </svg>
+          <span>LLM Tokens & Models</span>
         </button>
 
       </div>
@@ -422,20 +463,31 @@ const {
 
     <!-- Tab 3: Social Media Limits Content -->
     <div id="tab-content-social" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
-      <div class="flex items-center justify-between mb-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div>
           <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
             <svg class="w-4 h-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
             </svg>
-            <span>Platform Character Constraints</span>
+            <span>Platform Character Constraints &amp; SERP Previews</span>
           </h2>
           <p class="text-xs text-[#8f8f8f] mt-0.5 font-mono">
             Live limits across 10 publishing channels (<span id="social-live-char-count">0 characters</span>).
           </p>
         </div>
+
+        <!-- Social View Mode Toggle -->
+        <div class="flex items-center gap-1.5 font-mono text-xs">
+          <button id="btn-social-view-grid" type="button" class="px-2.5 py-1 rounded-[6px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer">
+            10 Channels
+          </button>
+          <button id="btn-social-view-previews" type="button" class="px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer">
+            Feed &amp; SERP Previews
+          </button>
+        </div>
       </div>
 
+      <!-- 1. Grid of 10 Platform Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="social-cards-grid">
         {SOCIAL_PLATFORMS.map((platform) => (
           <div class="p-3.5 sm:p-4 rounded-[10px] border transition-all bg-[#fafafa] dark:bg-[#0e0e0e] border-[#ebebeb] dark:border-[#222222]">
@@ -462,6 +514,73 @@ const {
             </div>
           </div>
         ))}
+      </div>
+
+      <!-- 2. Live Visual Feed & SERP Previews Container -->
+      <div id="social-previews-container" class="hidden space-y-5 mt-2">
+        <!-- Google SERP Snippet Preview -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="mono-eyebrow text-[#0070f3] flex items-center gap-1.5">
+              <span>Google SERP Snippet (Desktop &amp; Mobile)</span>
+            </span>
+            <span id="serp-title-char-badge" class="font-mono text-xs text-[#8f8f8f]">0 / 60 chars</span>
+          </div>
+          <div class="bg-white dark:bg-[#121212] rounded-[8px] p-4 border border-[#ebebeb] dark:border-[#262626] font-sans">
+            <div class="text-xs text-[#202124] dark:text-[#bdc1c6] mb-1 flex items-center gap-1.5 font-mono">
+              <span class="inline-block w-4 h-4 rounded-full bg-[#0070f3]/20 text-[#0070f3] text-center text-[10px] leading-4 font-bold">G</span>
+              <span>https://wordcountr.app › blog › draft</span>
+            </div>
+            <div id="serp-preview-title" class="text-base sm:text-lg font-medium text-[#1a0dab] dark:text-[#8ab4f8] hover:underline cursor-pointer leading-snug">
+              Document title appears here...
+            </div>
+            <div id="serp-preview-desc" class="text-xs sm:text-sm text-[#4d5156] dark:text-[#bdc1c6] mt-1.5 leading-relaxed">
+              Meta description snippet appears here (truncated at 155 characters)...
+            </div>
+          </div>
+          <p class="text-[11px] text-[#8f8f8f] mt-2 font-mono">
+            Desktop Google truncates page titles after ~60 characters and meta descriptions after ~155 characters.
+          </p>
+        </div>
+
+        <!-- X (Twitter) Post Simulation Card -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="mono-eyebrow text-[#171717] dark:text-[#ededed]">X / Twitter Post Preview</span>
+            <span id="x-preview-char-badge" class="font-mono text-xs text-[#0070f3] bg-[#0070f3]/10 px-2 py-0.5 rounded-[4px]">0 / 280 chars</span>
+          </div>
+          <div class="bg-white dark:bg-[#121212] rounded-[8px] p-4 border border-[#ebebeb] dark:border-[#262626] font-sans">
+            <div class="flex items-center gap-2.5 mb-2.5">
+              <div class="w-8 h-8 rounded-full bg-[#171717] dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-xs">W</div>
+              <div>
+                <div class="text-xs font-bold text-[#171717] dark:text-[#ededed]">WordCountr Author <span class="font-normal text-[#8f8f8f]">@writer · Now</span></div>
+              </div>
+            </div>
+            <div id="x-preview-content" class="text-sm text-[#171717] dark:text-[#ededed] whitespace-pre-wrap leading-relaxed">
+              Your draft text will preview here inside the standard 280-character post container...
+            </div>
+          </div>
+        </div>
+
+        <!-- LinkedIn Post Truncation Preview -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-4 sm:p-5">
+          <div class="flex items-center justify-between mb-3">
+            <span class="mono-eyebrow text-[#0077b5]">LinkedIn Feed Truncation (140-char "...see more" cutoff)</span>
+            <span id="linkedin-preview-char-badge" class="font-mono text-xs text-[#8f8f8f]">0 / 3,000 chars</span>
+          </div>
+          <div class="bg-white dark:bg-[#121212] rounded-[8px] p-4 border border-[#ebebeb] dark:border-[#262626] font-sans">
+            <div class="flex items-center gap-2.5 mb-2.5">
+              <div class="w-8 h-8 rounded-full bg-[#0077b5] text-white flex items-center justify-center font-bold text-xs">in</div>
+              <div>
+                <div class="text-xs font-bold text-[#171717] dark:text-[#ededed]">Professional Creator <span class="text-[#8f8f8f] font-normal">· 1st</span></div>
+                <div class="text-[10px] text-[#8f8f8f]">Precision Writer &amp; Strategist · 1h</div>
+              </div>
+            </div>
+            <div id="linkedin-preview-content" class="text-sm text-[#171717] dark:text-[#ededed] leading-relaxed">
+              <span>Your headline hook appears here...</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -546,6 +665,103 @@ const {
       </div>
     </div>
 
+    <!-- Tab 6: LLM Tokens & Prompt Cost Content -->
+    <div id="tab-content-tokens" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div>
+          <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
+            <svg class="w-4 h-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            <span>LLM Token &amp; Context Window Estimator</span>
+          </h2>
+          <p class="text-xs text-[#8f8f8f] mt-0.5 font-mono">
+            BPE sub-word token metrics and API prompt cost estimates across leading AI architectures.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-xs text-[#0070f3] bg-[#0070f3]/10 px-3 py-1 rounded-[6px] border border-[#0070f3]/20">
+          <span id="token-ratio-stat">~0 chars/token</span>
+        </div>
+      </div>
+
+      <!-- Token Metric Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-6">
+        <!-- OpenAI GPT-4o -->
+        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed]">OpenAI GPT-4o / o1</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">128k ctx</span>
+          </div>
+          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-gpt4o-count">0</div>
+          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
+            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-gpt4o-cost">$0.0000</strong></span>
+            <span id="token-gpt4o-pct">0.00%</span>
+          </div>
+          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
+            <div id="token-gpt4o-bar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Anthropic Claude 3.5 Sonnet -->
+        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Claude 3.5 Sonnet</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold">200k ctx</span>
+          </div>
+          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-claude-count">0</div>
+          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
+            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-claude-cost">$0.0000</strong></span>
+            <span id="token-claude-pct">0.00%</span>
+          </div>
+          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
+            <div id="token-claude-bar" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Google Gemini 1.5 / 2.0 Flash -->
+        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Gemini 1.5 / 2.0</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#0070f3]/10 text-[#0070f3] font-bold">1M ctx</span>
+          </div>
+          <div class="mt-2 font-mono text-3xl font-bold text-[#0070f3]" id="token-gemini-count">0</div>
+          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
+            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-gemini-cost">$0.0000</strong></span>
+            <span id="token-gemini-pct">0.00%</span>
+          </div>
+          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
+            <div id="token-gemini-bar" class="h-full bg-[#0070f3] transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Meta Llama 3 70B -->
+        <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="flex items-center justify-between text-xs font-mono text-[#8f8f8f]">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed]">Meta Llama 3 70B</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold">128k ctx</span>
+          </div>
+          <div class="mt-2 font-mono text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="token-llama-count">0</div>
+          <div class="mt-2 text-[11px] text-[#8f8f8f] font-mono flex items-center justify-between">
+            <span>Input: <strong class="text-[#171717] dark:text-[#ededed]" id="token-llama-cost">$0.0000</strong></span>
+            <span id="token-llama-pct">0.00%</span>
+          </div>
+          <div class="w-full h-1 bg-[#ebebeb] dark:bg-[#222222] rounded-full overflow-hidden mt-2">
+            <div id="token-llama-bar" class="h-full bg-purple-500 transition-all duration-300" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Token Cost & Pricing Bar -->
+      <div class="p-4 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0c] text-xs font-mono text-[#4d4d4d] dark:text-[#a1a1a1] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div>
+          <span>Calibrated against OpenAI cl100k/o200k &amp; Claude tokenizers. Rates reflect standard input API prompt pricing per 1M tokens.</span>
+        </div>
+        <button id="btn-copy-token-stats" type="button" class="vercel-btn-sm vercel-btn-sm-ghost shrink-0 cursor-pointer">
+          <span>Copy Token Summary</span>
+        </button>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -585,6 +801,7 @@ const {
   import { parseUploadedFile } from '../lib/fileParser';
   import { evaluatePlatformLimits } from '../lib/socialLimits';
   import { analyzeStyle } from '../lib/styleAnalyzer';
+  import { estimateTokens } from '../lib/tokens';
 
   // Container & initial props
   const container = document.getElementById('tool-container') as HTMLElement;
@@ -593,6 +810,15 @@ const {
 
   // DOM elements
   const textarea = document.getElementById('main-text-input') as HTMLTextAreaElement;
+  const styleHighlightViewport = document.getElementById('style-highlight-viewport') as HTMLElement;
+  const btnToggleHighlight = document.getElementById('btn-toggle-highlight');
+  const highlightToggleLabel = document.getElementById('highlight-toggle-label');
+
+  // Multi-document Tabs Elements
+  const docTabsList = document.getElementById('doc-tabs-list');
+  const btnAddDoc = document.getElementById('btn-add-doc');
+  const docCountBadge = document.getElementById('doc-count-badge');
+
   const statWords = document.getElementById('stat-words')!;
   const statLongestWord = document.getElementById('stat-longest-word')!;
   const statChars = document.getElementById('stat-characters')!;
@@ -652,8 +878,18 @@ const {
   const readCli = document.getElementById('read-cli')!;
   const readAri = document.getElementById('read-ari')!;
 
-  // Social Grid
+  // Social Grid & Previews Elements
   const socialGrid = document.getElementById('social-cards-grid')!;
+  const btnSocialViewGrid = document.getElementById('btn-social-view-grid');
+  const btnSocialViewPreviews = document.getElementById('btn-social-view-previews');
+  const socialPreviewsContainer = document.getElementById('social-previews-container');
+  const serpPreviewTitle = document.getElementById('serp-preview-title');
+  const serpPreviewDesc = document.getElementById('serp-preview-desc');
+  const serpTitleCharBadge = document.getElementById('serp-title-char-badge');
+  const xPreviewCharBadge = document.getElementById('x-preview-char-badge');
+  const xPreviewContent = document.getElementById('x-preview-content');
+  const linkedinPreviewCharBadge = document.getElementById('linkedin-preview-char-badge');
+  const linkedinPreviewContent = document.getElementById('linkedin-preview-content');
 
   // Academic Elements
   const toggleAcademic = document.getElementById('toggle-academic-mode') as HTMLInputElement;
@@ -670,19 +906,79 @@ const {
   const stylePassiveDesc = document.getElementById('style-passive-desc')!;
   const stylePassiveList = document.getElementById('style-passive-list')!;
 
+  // LLM Token Elements
+  const tokenRatioStat = document.getElementById('token-ratio-stat');
+  const tokenGpt4oCount = document.getElementById('token-gpt4o-count');
+  const tokenGpt4oCost = document.getElementById('token-gpt4o-cost');
+  const tokenGpt4oPct = document.getElementById('token-gpt4o-pct');
+  const tokenGpt4oBar = document.getElementById('token-gpt4o-bar');
+  const tokenClaudeCount = document.getElementById('token-claude-count');
+  const tokenClaudeCost = document.getElementById('token-claude-cost');
+  const tokenClaudePct = document.getElementById('token-claude-pct');
+  const tokenClaudeBar = document.getElementById('token-claude-bar');
+  const tokenGeminiCount = document.getElementById('token-gemini-count');
+  const tokenGeminiCost = document.getElementById('token-gemini-cost');
+  const tokenGeminiPct = document.getElementById('token-gemini-pct');
+  const tokenGeminiBar = document.getElementById('token-gemini-bar');
+  const tokenLlamaCount = document.getElementById('token-llama-count');
+  const tokenLlamaCost = document.getElementById('token-llama-cost');
+  const tokenLlamaPct = document.getElementById('token-llama-pct');
+  const tokenLlamaBar = document.getElementById('token-llama-bar');
+  const btnCopyTokenStats = document.getElementById('btn-copy-token-stats');
+
   // State variables
   let currentTargetCount = initialTargetVal || 0;
   let currentTargetType: 'words' | 'characters' = 'words';
   let currentNgram = 1;
   let academicModeEnabled = false;
+  let isHighlightMode = false;
 
-  // Restore session from localStorage if available
-  const savedText = localStorage.getItem('wordcountr-draft');
-  let restoredSession = false;
-  if (savedText && textarea && !textarea.value) {
-    textarea.value = savedText;
-    restoredSession = true;
+  // Multi-Document Data Structure
+  interface DocTab {
+    id: string;
+    title: string;
+    content: string;
+    updatedAt: number;
   }
+  const DOCS_STORAGE_KEY = 'wordcountr_documents_v2';
+  let documents: DocTab[] = [];
+  let activeDocId = '';
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function escapeRegExp(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  // Restore session / Initialize multi-document tabs
+  const legacySavedDraft = localStorage.getItem('wordcountr-draft');
+  try {
+    const rawDocs = localStorage.getItem(DOCS_STORAGE_KEY);
+    if (rawDocs) {
+      documents = JSON.parse(rawDocs);
+    }
+  } catch (e) {}
+
+  if (!Array.isArray(documents) || documents.length === 0) {
+    documents = [
+      {
+        id: 'doc-1',
+        title: 'Draft 1',
+        content: legacySavedDraft || '',
+        updatedAt: Date.now()
+      }
+    ];
+  }
+  activeDocId = documents[0].id;
+  if (textarea) textarea.value = documents[0].content;
+
   const savedTarget = localStorage.getItem('wordcountr-target');
   if (savedTarget && !currentTargetCount) {
     currentTargetCount = parseInt(savedTarget, 10) || 0;
@@ -694,6 +990,118 @@ const {
       (window as any).showToast(msg);
     }
   }
+
+  // Multi-Document Tab Actions
+  function saveCurrentDocContent() {
+    const cur = documents.find(d => d.id === activeDocId);
+    if (cur && textarea) {
+      cur.content = textarea.value;
+      cur.updatedAt = Date.now();
+      try {
+        localStorage.setItem(DOCS_STORAGE_KEY, JSON.stringify(documents));
+        localStorage.setItem('wordcountr-draft', textarea.value);
+      } catch (e) {}
+    }
+  }
+
+  function renderDocumentTabs() {
+    if (!docTabsList) return;
+    docTabsList.innerHTML = documents.map(doc => {
+      const isActive = doc.id === activeDocId;
+      const wordCount = doc.content.trim() ? doc.content.trim().split(/\s+/).length : 0;
+      return `
+        <div class="doc-tab-item inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] text-xs font-mono transition cursor-pointer select-none ${
+          isActive 
+            ? 'bg-[#171717] text-white dark:bg-white dark:text-black font-medium shadow-2xs' 
+            : 'bg-[#ebebeb]/60 dark:bg-[#1a1a1a] text-[#8f8f8f] hover:text-[#171717] dark:hover:text-[#ededed]'
+        }" data-id="${doc.id}">
+          <span class="tab-title truncate max-w-[110px]">${escapeHtml(doc.title)}</span>
+          <span class="text-[10px] opacity-70">(${wordCount}w)</span>
+          ${documents.length > 1 ? `<button type="button" class="tab-close hover:text-[#ee0000] ml-0.5 text-xs font-bold leading-none cursor-pointer" data-close-id="${doc.id}" title="Close document">×</button>` : ''}
+        </div>
+      `;
+    }).join('');
+
+    if (docCountBadge) {
+      const activeDoc = documents.find(d => d.id === activeDocId);
+      docCountBadge.textContent = `${activeDoc?.title || 'Draft'} (${documents.length} ${documents.length === 1 ? 'doc' : 'docs'})`;
+    }
+
+    // Attach listeners
+    docTabsList.querySelectorAll('.doc-tab-item').forEach(tabEl => {
+      tabEl.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('tab-close')) return;
+        const targetId = (tabEl as HTMLElement).dataset.id;
+        if (targetId && targetId !== activeDocId) {
+          saveCurrentDocContent();
+          activeDocId = targetId;
+          const doc = documents.find(d => d.id === activeDocId);
+          if (doc) {
+            textarea.value = doc.content;
+            renderDocumentTabs();
+            updateAll();
+            notify(`Switched to "${doc.title}"`);
+          }
+        }
+      });
+
+      // Double-click to rename tab
+      tabEl.addEventListener('dblclick', () => {
+        const docId = (tabEl as HTMLElement).dataset.id;
+        const doc = documents.find(d => d.id === docId);
+        if (doc) {
+          const newName = prompt('Rename document tab:', doc.title);
+          if (newName && newName.trim()) {
+            doc.title = newName.trim();
+            saveCurrentDocContent();
+            renderDocumentTabs();
+            notify(`Renamed tab to "${doc.title}"`);
+          }
+        }
+      });
+    });
+
+    docTabsList.querySelectorAll('.tab-close').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const closeId = (btn as HTMLElement).dataset.closeId;
+        if (closeId && documents.length > 1) {
+          documents = documents.filter(d => d.id !== closeId);
+          if (activeDocId === closeId) {
+            activeDocId = documents[0].id;
+            textarea.value = documents[0].content;
+          }
+          saveCurrentDocContent();
+          renderDocumentTabs();
+          updateAll();
+          notify('Document closed');
+        }
+      });
+    });
+  }
+
+  btnAddDoc?.addEventListener('click', () => {
+    saveCurrentDocContent();
+    const newIndex = documents.length + 1;
+    const newDoc: DocTab = {
+      id: `doc-${Date.now()}`,
+      title: `Draft ${newIndex}`,
+      content: '',
+      updatedAt: Date.now()
+    };
+    documents.push(newDoc);
+    activeDocId = newDoc.id;
+    textarea.value = '';
+    saveCurrentDocContent();
+    renderDocumentTabs();
+    updateAll();
+    textarea.focus();
+    notify(`Created "Draft ${newIndex}"`);
+  });
+
+  // Render initial document tabs
+  renderDocumentTabs();
 
   // Robust Clipboard Helper
   function copyToClipboard(text: string, successMsg: string) {
@@ -722,6 +1130,77 @@ const {
     }
     document.body.removeChild(temp);
   }
+
+  // Hemingway Mode / Style Highlight Renderer
+  function renderInlineHighlights() {
+    if (!styleHighlightViewport) return;
+    const text = textarea.value;
+    if (!text.trim()) {
+      styleHighlightViewport.innerHTML = '<span class="text-[#8f8f8f] font-mono text-xs">Type or paste text in the editor to see live Hemingway-style highlights for filler words, passive voice, and complex sentences. Click here to return to writing.</span>';
+      return;
+    }
+
+    const style = analyzeStyle(text);
+    let html = escapeHtml(text);
+
+    // 1. Highlight passive voice in blue
+    style.passiveMatches.forEach(p => {
+      const phraseEsc = escapeRegExp(p.phrase);
+      const re = new RegExp(`\\b(${phraseEsc})\\b`, 'gi');
+      html = html.replace(re, '<mark class="bg-[#0070f3]/20 dark:bg-[#0070f3]/30 text-[#0070f3] dark:text-[#79b8ff] px-1 py-0.5 rounded font-mono text-xs font-semibold" title="Passive voice phrase">$1</mark>');
+    });
+
+    // 2. Highlight weak filler words in amber
+    style.fillerMatches.forEach(f => {
+      const wordEsc = escapeRegExp(f.word);
+      const re = new RegExp(`\\b(${wordEsc})\\b`, 'gi');
+      html = html.replace(re, '<mark class="bg-amber-400/25 dark:bg-amber-500/25 text-amber-800 dark:text-amber-300 px-1 py-0.5 rounded font-mono text-xs font-semibold" title="Weak filler word">$1</mark>');
+    });
+
+    styleHighlightViewport.innerHTML = html;
+  }
+
+  btnToggleHighlight?.addEventListener('click', () => {
+    isHighlightMode = !isHighlightMode;
+    if (isHighlightMode) {
+      renderInlineHighlights();
+      textarea.classList.add('hidden');
+      styleHighlightViewport.classList.remove('hidden');
+      if (highlightToggleLabel) highlightToggleLabel.textContent = 'Writing Mode';
+      notify('Inline highlights enabled (Hemingway mode)');
+    } else {
+      styleHighlightViewport.classList.add('hidden');
+      textarea.classList.remove('hidden');
+      if (highlightToggleLabel) highlightToggleLabel.textContent = 'Inline Highlights';
+      textarea.focus();
+    }
+  });
+
+  // Clicking viewport returns to writing mode
+  styleHighlightViewport?.addEventListener('click', () => {
+    if (isHighlightMode) {
+      btnToggleHighlight?.click();
+    }
+  });
+
+  // Social view toggle (10 Platform Grid vs Feed & SERP Previews)
+  btnSocialViewGrid?.addEventListener('click', () => {
+    socialGrid.classList.remove('hidden');
+    socialPreviewsContainer?.classList.add('hidden');
+    btnSocialViewGrid.className = 'px-2.5 py-1 rounded-[6px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer';
+    if (btnSocialViewPreviews) {
+      btnSocialViewPreviews.className = 'px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer';
+    }
+  });
+
+  btnSocialViewPreviews?.addEventListener('click', () => {
+    socialGrid.classList.add('hidden');
+    socialPreviewsContainer?.classList.remove('hidden');
+    btnSocialViewPreviews.className = 'px-2.5 py-1 rounded-[6px] bg-[#171717] text-white dark:bg-white dark:text-black font-medium transition cursor-pointer';
+    if (btnSocialViewGrid) {
+      btnSocialViewGrid.className = 'px-2.5 py-1 rounded-[6px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white font-medium transition cursor-pointer';
+    }
+  });
 
   function updateAll() {
     if (!textarea) return;
@@ -944,10 +1423,129 @@ const {
       });
     });
 
-    // Immediate LocalStorage Auto-Save
-    localStorage.setItem('wordcountr-draft', text);
+    // 7. Update Live Feed & SERP Visual Previews
+    try {
+      const cleanText = textToAnalyze.trim();
+      const firstLine = cleanText.split('\n').filter(Boolean)[0] || '';
+      const docTitle = firstLine ? firstLine.slice(0, 70) : 'Precision Writing Analytics & Word Counter';
+      const docDesc = cleanText.length > docTitle.length 
+        ? cleanText.slice(docTitle.length).trim().slice(0, 180) 
+        : cleanText || 'Instant client-side word count, character limits, readability, and LLM token estimator.';
+
+      if (serpPreviewTitle) {
+        serpPreviewTitle.textContent = docTitle.length > 60 ? docTitle.slice(0, 57) + '...' : docTitle;
+      }
+      if (serpPreviewDesc) {
+        serpPreviewDesc.textContent = docDesc.length > 155 ? docDesc.slice(0, 152) + '...' : docDesc;
+      }
+      if (serpTitleCharBadge) {
+        const titleLen = docTitle.length;
+        serpTitleCharBadge.textContent = `${titleLen} / 60 chars`;
+        serpTitleCharBadge.className = titleLen > 60 
+          ? 'font-mono text-xs text-[#ee0000] font-bold' 
+          : 'font-mono text-xs text-[#0070f3]';
+      }
+
+      if (xPreviewContent) {
+        if (!cleanText) {
+          xPreviewContent.innerHTML = '<span class="text-[#8f8f8f]">Your draft text will preview here inside the standard 280-character post container...</span>';
+        } else if (cleanText.length <= 280) {
+          xPreviewContent.textContent = cleanText;
+        } else {
+          const validPart = escapeHtml(cleanText.slice(0, 280));
+          const excessPart = escapeHtml(cleanText.slice(280));
+          xPreviewContent.innerHTML = `${validPart}<mark class="bg-[#ee0000]/20 text-[#ee0000] rounded px-0.5 font-medium" title="Exceeds 280 character limit">${excessPart}</mark>`;
+        }
+      }
+      if (xPreviewCharBadge) {
+        const len = cleanText.length;
+        xPreviewCharBadge.textContent = `${len.toLocaleString()} / 280 chars`;
+        xPreviewCharBadge.className = len > 280 
+          ? 'font-mono text-xs bg-[#ee0000]/15 text-[#ee0000] px-2 py-0.5 rounded-[4px] font-bold' 
+          : 'font-mono text-xs bg-[#0070f3]/10 text-[#0070f3] px-2 py-0.5 rounded-[4px]';
+      }
+
+      if (linkedinPreviewContent) {
+        if (!cleanText) {
+          linkedinPreviewContent.innerHTML = '<span class="text-[#8f8f8f]">Your professional hook appears here...</span>';
+        } else if (cleanText.length <= 140) {
+          linkedinPreviewContent.textContent = cleanText;
+        } else {
+          const hook = escapeHtml(cleanText.slice(0, 140));
+          const remainder = escapeHtml(cleanText.slice(140));
+          linkedinPreviewContent.innerHTML = `
+            <div>
+              <span class="font-medium text-[#171717] dark:text-[#ededed]">${hook}</span>
+              <span class="text-[#0070f3] font-semibold"> ...see more</span>
+            </div>
+            <div class="mt-2 pt-2 border-t border-dashed border-[#ebebeb] dark:border-[#222222] text-[#8f8f8f] text-xs">
+              ${remainder}
+            </div>
+          `;
+        }
+      }
+      if (linkedinPreviewCharBadge) {
+        linkedinPreviewCharBadge.textContent = `${cleanText.length.toLocaleString()} / 3,000 chars`;
+      }
+    } catch (e) {
+      console.error('SERP/Feed preview error:', e);
+    }
+
+    // 8. Calculate LLM Token Metrics
+    try {
+      const tokens = estimateTokens(textToAnalyze);
+      if (tokenRatioStat) tokenRatioStat.textContent = `~${tokens.charToTokenRatio} chars/token`;
+
+      if (tokenGpt4oCount) tokenGpt4oCount.textContent = tokens.gpt4oTokens.toLocaleString();
+      if (tokenGpt4oCost) tokenGpt4oCost.textContent = `$${tokens.costs.gpt4o.toFixed(4)}`;
+      if (tokenGpt4oPct) tokenGpt4oPct.textContent = `${tokens.contextUsage.gpt4o.pct}%`;
+      if (tokenGpt4oBar) tokenGpt4oBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.gpt4o.pct > 0 ? 1 : 0, tokens.contextUsage.gpt4o.pct * 5))}%`;
+
+      if (tokenClaudeCount) tokenClaudeCount.textContent = tokens.claudeTokens.toLocaleString();
+      if (tokenClaudeCost) tokenClaudeCost.textContent = `$${tokens.costs.claudeSonnet.toFixed(4)}`;
+      if (tokenClaudePct) tokenClaudePct.textContent = `${tokens.contextUsage.claude.pct}%`;
+      if (tokenClaudeBar) tokenClaudeBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.claude.pct > 0 ? 1 : 0, tokens.contextUsage.claude.pct * 5))}%`;
+
+      if (tokenGeminiCount) tokenGeminiCount.textContent = tokens.geminiTokens.toLocaleString();
+      if (tokenGeminiCost) tokenGeminiCost.textContent = `$${tokens.costs.geminiFlash.toFixed(4)}`;
+      if (tokenGeminiPct) tokenGeminiPct.textContent = `${tokens.contextUsage.gemini.pct}%`;
+      if (tokenGeminiBar) tokenGeminiBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.gemini.pct > 0 ? 1 : 0, tokens.contextUsage.gemini.pct * 5))}%`;
+
+      if (tokenLlamaCount) tokenLlamaCount.textContent = tokens.llamaTokens.toLocaleString();
+      if (tokenLlamaCost) tokenLlamaCost.textContent = `$${tokens.costs.llama70b.toFixed(4)}`;
+      if (tokenLlamaPct) tokenLlamaPct.textContent = `${tokens.contextUsage.llama.pct}%`;
+      if (tokenLlamaBar) tokenLlamaBar.style.width = `${Math.min(100, Math.max(tokens.contextUsage.llama.pct > 0 ? 1 : 0, tokens.contextUsage.llama.pct * 5))}%`;
+    } catch (e) {
+      console.error('LLM token error:', e);
+    }
+
+    // Refresh inline highlights if visible
+    if (isHighlightMode) {
+      renderInlineHighlights();
+    }
+
+    // Immediate LocalStorage Auto-Save & Multi-Document Sync
+    saveCurrentDocContent();
+    renderDocumentTabs();
     autosaveLabel.textContent = `Saved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
+
+  // Copy LLM token summary button
+  btnCopyTokenStats?.addEventListener('click', () => {
+    const text = textarea.value;
+    if (!text.trim()) {
+      notify('Editor is empty');
+      return;
+    }
+    const t = estimateTokens(text);
+    const summary = `🤖 LLM Token Metrics (via WordCountr):\n` +
+      `• OpenAI GPT-4o / o1: ${t.gpt4oTokens.toLocaleString()} tokens (Input: $${t.costs.gpt4o.toFixed(4)})\n` +
+      `• Claude 3.5 Sonnet: ${t.claudeTokens.toLocaleString()} tokens (Input: $${t.costs.claudeSonnet.toFixed(4)})\n` +
+      `• Google Gemini 1.5/2.0: ${t.geminiTokens.toLocaleString()} tokens (Input: $${t.costs.geminiFlash.toFixed(4)})\n` +
+      `• Meta Llama 3 70B: ${t.llamaTokens.toLocaleString()} tokens (Input: $${t.costs.llama70b.toFixed(4)})\n` +
+      `• Token Density: ${t.charToTokenRatio} characters per token`;
+    copyToClipboard(summary, '✓ Copied LLM token metrics');
+  });
 
   // Event Listeners for Editor
   textarea?.addEventListener('input', updateAll);

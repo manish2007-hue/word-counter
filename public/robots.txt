@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://manish2007-hue.github.io/word-counter/sitemap.xml
-Host: https://manish2007-hue.github.io/word-counter/
+Sitemap: https://wordcountr.app/sitemap.xml
+Host: https://wordcountr.app/

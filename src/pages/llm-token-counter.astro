@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "LLM Token Counter — Count GPT-4o, Claude & Gemini Tokens Online";
+const pageDescription = "Free online LLM token counter and prompt cost calculator. Calculate BPE tokens and context window usage for OpenAI GPT-4o, Anthropic Claude 3.5, Google Gemini 1.5/2.0, and Meta Llama 3.";
+const pageKeywords = "llm token counter, gpt 4o token counter, claude token counter, gemini token counter, prompt cost calculator, tiktoken online, token to word converter";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "LLM Token Counter & Prompt Cost Estimator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many words is 1,000 LLM tokens?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In standard English text, 1,000 tokens corresponds to approximately 750 words (an average ratio of roughly 1.33 tokens per word or ~4 characters per token)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does WordCountr calculate tokens without server calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "WordCountr uses a client-side byte-pair encoding (BPE) regex parser calibrated against OpenAI's cl100k_base and o200k_base vocabularies. It executes 100% locally in your browser with zero network latency and complete privacy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are current LLM prompt input pricing rates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard prompt token rates include: OpenAI GPT-4o at $2.50 per 1M tokens; Claude 3.5 Sonnet at $3.00 per 1M tokens; Google Gemini 1.5 Flash at $0.075 per 1M tokens; and Meta Llama 3 70B at approximately $0.80 per 1M tokens."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="llm-token-counter"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>BPE Sub-Word Tokenizer Engine</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      LLM Token &amp; Prompt <span class="vercel-gradient-develop">Cost Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Estimate exact token counts, context window utilization, and API input costs across GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5/2.0.
+    </p>
+  </div>
+
+  <WordCounter initialTab="tokens" showHeroCopy={false} />
+
+  <!-- Educational Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-8">
+      <div class="vercel-card p-6 sm:p-8 space-y-4">
+        <div class="mono-eyebrow text-[#0070f3]">Developer Benchmarks</div>
+        <h2 class="text-xl sm:text-2xl font-semibold text-[#171717] dark:text-[#ededed]">
+          Understanding Tokens vs. Words for LLM Context Windows
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Large language models (LLMs) do not read text in words or characters; they process sequences of <em>tokens</em>—frequently occurring chunks of characters derived through Byte-Pair Encoding (BPE). While simple English words like "cat" or "the" form a single token, code snippets, JSON objects, URLs, and non-English text frequently split into 2 to 4 tokens per word.
+        </p>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Monitoring prompt token count is critical when engineering RAG (Retrieval-Augmented Generation) pipelines, calibrating system prompts, or budgeting high-volume API automation.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

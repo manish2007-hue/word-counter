@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordsToPages from '../components/WordsToPages.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Words to Pages Converter — Convert Words to Typed Pages";
+const pageDescription = "Free online words to pages calculator. Convert words to single-spaced and double-spaced pages based on standard 12pt fonts (Times New Roman, Arial, Calibri).";
+const pageKeywords = "words to pages, how many pages is 1000 words, words to pages converter, words to pages calculator, 500 words to pages, 2000 words to pages double spaced";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Words to Pages Converter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many words is 1 page?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using standard 12-point font (Times New Roman or Arial) and 1-inch margins, 1 single-spaced page is approximately 500 words, while 1 double-spaced page is approximately 250 words."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many pages is 1,000 words?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1,000 words equals 2 single-spaced pages or 4 double-spaced pages in standard college format."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many pages is 2,500 words?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2,500 words equals 5 single-spaced pages or 10 double-spaced pages."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="words-to-pages-converter"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Publishing Typography Standard</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Words to Pages <span class="vercel-gradient-develop">Converter &amp; Calculator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Convert any word count into exact single-spaced and double-spaced page equivalents in real time.
+    </p>
+  </div>
+
+  <!-- Interactive Quick Calculator Card -->
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 mb-8">
+    <div class="vercel-card p-6 sm:p-8 space-y-5">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+        <div>
+          <label class="block text-xs font-mono text-[#8f8f8f] uppercase mb-1">Enter Word Count</label>
+          <input
+            type="number"
+            id="calc-words-input"
+            value="1000"
+            min="1"
+            class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] px-3.5 py-2 font-mono text-lg font-bold text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-[#0070f3]"
+          />
+        </div>
+
+        <div class="p-3.5 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Single-Spaced</div>
+          <div class="font-mono text-2xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="calc-single-pages">2.0 pages</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">~500 words / page</div>
+        </div>
+
+        <div class="p-3.5 rounded-[8px] border border-[#0070f3]/30 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 text-center">
+          <div class="mono-eyebrow text-[#0070f3]">Double-Spaced (College)</div>
+          <div class="font-mono text-2xl font-bold text-[#0070f3] mt-1" id="calc-double-pages">4.0 pages</div>
+          <div class="text-[10px] text-[#0070f3]/80 font-mono">~250 words / page</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Workspace Counter -->
+  <WordCounter showHeroCopy={false} />
+
+  <!-- Words to Pages Full Reference Matrix Component -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pb-12">
+    <WordsToPages />
+  </div>
+
+  <script>
+    const input = document.getElementById('calc-words-input') as HTMLInputElement;
+    const singleOut = document.getElementById('calc-single-pages');
+    const doubleOut = document.getElementById('calc-double-pages');
+
+    function recompute() {
+      if (!input) return;
+      const words = parseInt(input.value, 10) || 0;
+      const single = (words / 500).toFixed(1);
+      const double = (words / 250).toFixed(1);
+      if (singleOut) singleOut.textContent = `${single} pages`;
+      if (doubleOut) doubleOut.textContent = `${double} pages`;
+    }
+
+    input?.addEventListener('input', recompute);
+    recompute();
+  </script>
+</Layout>

@@ -1,0 +1,99 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Flesch-Kincaid Readability Calculator — Check Reading Ease & Grade Level";
+const pageDescription = "Calculate your Flesch Reading Ease score, Flesch-Kincaid Grade Level, Gunning Fog, and Coleman-Liau indexes in real time. Free client-side readability checker.";
+const pageKeywords = "flesch kincaid readability calculator, flesch reading ease calculator, reading grade level checker, gunning fog calculator, coleman liau index, free readability calculator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Flesch-Kincaid Readability Calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a good Flesch Reading Ease score?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Flesch Reading Ease score between 60 and 70 (approx. 8th to 9th grade) is standard for consumer websites, blogs, and public communications. Scores above 80 indicate very easy reading for middle schoolers, while scores below 50 reflect academic or technical writing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Flesch-Kincaid Grade Level calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The formula is: 0.39 * (total words / total sentences) + 11.8 * (total syllables / total words) - 15.59. It estimates the US school grade required to understand the text."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="flesch-kincaid-readability-calculator"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>4 Standard Consensus Formulas</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Flesch-Kincaid <span class="vercel-gradient-develop">Readability Calculator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Test your copy's reading ease and US school grade level in real time. Instant syllable and sentence density metrics.
+    </p>
+  </div>
+
+  <WordCounter initialTab="readability" showHeroCopy={false} />
+
+  <!-- Educational Formula Deep-Dive -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-8">
+      <div class="vercel-card p-6 sm:p-8 space-y-4">
+        <div class="mono-eyebrow text-[#0070f3]">Readability Benchmarks</div>
+        <h2 class="text-xl sm:text-2xl font-semibold text-[#171717] dark:text-[#ededed]">
+          Flesch Reading Ease Scale Reference
+        </h2>
+        <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222] text-xs font-mono">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="bg-[#fafafa] dark:bg-[#0e0e0e] border-b border-[#ebebeb] dark:border-[#222222] text-[#8f8f8f]">
+                <th class="py-2.5 px-3">SCORE</th>
+                <th class="py-2.5 px-3">GRADE LEVEL</th>
+                <th class="py-2.5 px-3">DIFFICULTY</th>
+                <th class="py-2.5 px-3">TARGET AUDIENCE</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
+              <tr><td class="py-2.5 px-3 font-bold text-[#0070f3]">90–100</td><td class="py-2.5 px-3">5th Grade</td><td class="py-2.5 px-3">Very Easy</td><td class="py-2.5 px-3 font-sans">Children's fiction, simple guides</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-[#0070f3]">80–89</td><td class="py-2.5 px-3">6th Grade</td><td class="py-2.5 px-3">Easy</td><td class="py-2.5 px-3 font-sans">Consumer newsletters, comic books</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-[#0070f3]">70–79</td><td class="py-2.5 px-3">7th Grade</td><td class="py-2.5 px-3">Fairly Easy</td><td class="py-2.5 px-3 font-sans">General public, mainstream news</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-emerald-600 dark:text-emerald-400">60–69</td><td class="py-2.5 px-3">8th–9th Grade</td><td class="py-2.5 px-3 font-bold">Standard</td><td class="py-2.5 px-3 font-sans">SaaS landing pages, blogs, business copy</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-amber-600 dark:text-amber-400">50–59</td><td class="py-2.5 px-3">10th–12th Grade</td><td class="py-2.5 px-3">Fairly Difficult</td><td class="py-2.5 px-3 font-sans">Magazines, policy documents</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-red-600 dark:text-red-400">30–49</td><td class="py-2.5 px-3">College Student</td><td class="py-2.5 px-3">Difficult</td><td class="py-2.5 px-3 font-sans">Academic journals, legal contracts</td></tr>
+              <tr><td class="py-2.5 px-3 font-bold text-red-600 dark:text-red-400">0–29</td><td class="py-2.5 px-3">College Graduate</td><td class="py-2.5 px-3">Very Confusing</td><td class="py-2.5 px-3 font-sans">Scientific papers, medical dissertations</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

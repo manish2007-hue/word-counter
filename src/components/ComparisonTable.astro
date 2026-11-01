@@ -1,75 +1,83 @@
 ---
-// How WordCountr Compares Feature Comparison Table
-const features = [
+// How WordCountr Compares Feature Comparison Table - Nuanced Architectural Benchmark
+interface FeatureRow {
+  capability: string;
+  wordcountr: { text: string; highlight?: boolean };
+  wordcounterNet: { text: string; positive?: boolean };
+  hemingway: { text: string; positive?: boolean };
+  grammarly: { text: string; positive?: boolean };
+}
+
+const features: FeatureRow[] = [
   {
-    capability: "Privacy (100% Client-Side)",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
-  },
-  {
-    capability: "Offline & PWA Capability",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
+    capability: "Data Privacy & Telemetry",
+    wordcountr: { text: "100% Local (Zero Network Calls)", highlight: true },
+    wordcounterNet: { text: "Ad-Tracked & Analytics Cookies", positive: false },
+    hemingway: { text: "Web Cloud / Desktop Local ($)", positive: false },
+    grammarly: { text: "Cloud Storage & AI Training", positive: false },
   },
   {
     capability: "Ad-Free Writing Viewport",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: true,
-    semrush: true,
+    wordcountr: { text: "100% Ad-Free (Zero Popups)", highlight: true },
+    wordcounterNet: { text: "Heavy Banner & Video Ads", positive: false },
+    hemingway: { text: "Ad-Free Interface", positive: true },
+    grammarly: { text: "In-App Upgrade Modals", positive: false },
   },
   {
-    capability: "Word Budget / Target Bar",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
-  },
-  {
-    capability: "Direct .DOCX & .PDF Upload",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
+    capability: "In-Memory .DOCX & .PDF Parsing",
+    wordcountr: { text: "Native Client-Side WebAssembly", highlight: true },
+    wordcounterNet: { text: "Not Supported", positive: false },
+    hemingway: { text: "Plain Text / Markdown Only", positive: false },
+    grammarly: { text: "Server-Side Upload Required", positive: false },
   },
   {
     capability: "Academic Citation Exclusion",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
+    wordcountr: { text: "Auto-Filters APA/MLA Citations", highlight: true },
+    wordcounterNet: { text: "Not Supported", positive: false },
+    hemingway: { text: "Not Supported", positive: false },
+    grammarly: { text: "Plagiarism Suite Only (Paid)", positive: false },
   },
   {
-    capability: "Live Social Limits Dashboard",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
+    capability: "Keyword Density & N-Grams",
+    wordcountr: { text: "1–3 Word N-Grams + Stopwords", highlight: true },
+    wordcounterNet: { text: "1–3 Word N-Grams (Basic)", positive: true },
+    hemingway: { text: "Not Supported", positive: false },
+    grammarly: { text: "Not Supported", positive: false },
   },
   {
     capability: "Multi-Formula Readability",
-    wordcountr: true,
-    wordcounterNet: true,
-    quillbot: false,
-    semrush: true,
+    wordcountr: { text: "4 Standard Consensus Formulas", highlight: true },
+    wordcounterNet: { text: "Flesch Reading Ease Only", positive: false },
+    hemingway: { text: "Automated Readability Index", positive: true },
+    grammarly: { text: "Proprietary Clarity Index", positive: true },
   },
   {
-    capability: "Free Keyword Density Checker",
-    wordcountr: true,
-    wordcounterNet: true,
-    quillbot: false,
-    semrush: true,
+    capability: "Style & Quality Audit",
+    wordcountr: { text: "Passive Voice + Filler Detection", highlight: true },
+    wordcounterNet: { text: "Basic Thesaurus Only", positive: false },
+    hemingway: { text: "Adverbs, Passive, Weak Words", positive: true },
+    grammarly: { text: "Deep Grammar & Tone Checks", positive: true },
   },
   {
-    capability: "Auto-Save & Session Recovery",
-    wordcountr: true,
-    wordcounterNet: false,
-    quillbot: false,
-    semrush: false,
+    capability: "Live Social & SERP Truncation",
+    wordcountr: { text: "10 Channels + SERP Snippet Preview", highlight: true },
+    wordcounterNet: { text: "Character Counter Only", positive: false },
+    hemingway: { text: "Not Supported", positive: false },
+    grammarly: { text: "Character Counter Only", positive: false },
+  },
+  {
+    capability: "Offline PWA Capability",
+    wordcountr: { text: "Full Progressive Web App (Offline)", highlight: true },
+    wordcounterNet: { text: "Online Only (Ad-Dependent)", positive: false },
+    hemingway: { text: "Paid Desktop App ($19.99)", positive: false },
+    grammarly: { text: "Online Only (Requires Cloud)", positive: false },
+  },
+  {
+    capability: "Draft Storage Architecture",
+    wordcountr: { text: "Instant Local Storage / Multi-Tab", highlight: true },
+    wordcounterNet: { text: "Volatile Browser Cookies", positive: false },
+    hemingway: { text: "Local Files (Desktop Version)", positive: true },
+    grammarly: { text: "Cloud Account Sync", positive: true },
   },
 ];
 ---
@@ -82,58 +90,65 @@ const features = [
       How WordCountr Compares
     </h2>
     <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] mt-1 font-mono">
-      Feature matrix versus legacy ad-network word counters.
+      Nuanced technical comparison against popular writing and readability tools.
     </p>
   </div>
 
   <div class="overflow-x-auto -mx-2 sm:mx-0 rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
-    <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[620px]">
+    <table class="w-full text-left text-xs sm:text-sm border-collapse min-w-[700px]">
       <thead>
         <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono">
-          <th class="py-3 px-4 font-medium w-2/5">CAPABILITY</th>
-          <th class="py-3 px-5 font-semibold text-[#0070f3] bg-[#0070f3]/5 dark:bg-[#0070f3]/10 w-1/5">
+          <th class="py-3 px-4 font-medium w-[24%]">CAPABILITY</th>
+          <th class="py-3 px-4 font-semibold text-[#0070f3] bg-[#0070f3]/5 dark:bg-[#0070f3]/10 w-[24%]">
             WordCountr
           </th>
-          <th class="py-3 px-4 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-1/5">WordCounter.net</th>
-          <th class="py-3 px-4 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-1/5">QuillBot</th>
-          <th class="py-3 px-4 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-1/5">Semrush</th>
+          <th class="py-3 px-3 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-[18%]">WordCounter.net</th>
+          <th class="py-3 px-3 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-[17%]">Hemingway Editor</th>
+          <th class="py-3 px-3 font-medium text-[#4d4d4d] dark:text-[#a1a1a1] text-center w-[17%]">Grammarly Free</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
         {features.map((f) => (
           <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
-            <td class="py-3 px-4 font-medium text-[#171717] dark:text-[#ededed]">
+            <td class="py-3 px-4 font-medium text-[#171717] dark:text-[#ededed] text-xs">
               {f.capability}
             </td>
 
-            <td class="py-3 px-5 text-center bg-[#0070f3]/5 dark:bg-[#0070f3]/10 font-bold text-[#0070f3]">
-              <span class="inline-flex items-center justify-center h-5 w-5 rounded-[4px] bg-[#0070f3]/15 text-[#0070f3] font-bold text-xs">
-                ✓
+            <td class="py-3 px-4 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 text-[#0070f3] font-semibold text-xs">
+              <span class="inline-flex items-center gap-1.5">
+                <span class="inline-flex items-center justify-center h-4 w-4 rounded-full bg-[#0070f3]/20 text-[#0070f3] text-[10px]">✓</span>
+                <span>{f.wordcountr.text}</span>
               </span>
             </td>
 
-            <td class="py-3 px-4 text-center">
-              {f.wordcounterNet ? (
-                <span class="text-[#0070f3] font-bold">✓</span>
-              ) : (
-                <span class="text-[#8f8f8f] font-mono">✕</span>
-              )}
+            <td class="py-3 px-3 text-center text-xs">
+              <span class={`inline-block px-2 py-0.5 rounded-[4px] text-[11px] font-mono ${
+                f.wordcounterNet.positive 
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' 
+                  : 'bg-[#fafafa] dark:bg-[#141414] text-[#8f8f8f] border border-[#ebebeb] dark:border-[#222222]'
+              }`}>
+                {f.wordcounterNet.text}
+              </span>
             </td>
 
-            <td class="py-3 px-4 text-center">
-              {f.quillbot ? (
-                <span class="text-[#0070f3] font-bold">✓</span>
-              ) : (
-                <span class="text-[#8f8f8f] font-mono">✕</span>
-              )}
+            <td class="py-3 px-3 text-center text-xs">
+              <span class={`inline-block px-2 py-0.5 rounded-[4px] text-[11px] font-mono ${
+                f.hemingway.positive 
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' 
+                  : 'bg-[#fafafa] dark:bg-[#141414] text-[#8f8f8f] border border-[#ebebeb] dark:border-[#222222]'
+              }`}>
+                {f.hemingway.text}
+              </span>
             </td>
 
-            <td class="py-3 px-4 text-center">
-              {f.semrush ? (
-                <span class="text-[#0070f3] font-bold">✓</span>
-              ) : (
-                <span class="text-[#8f8f8f] font-mono">✕</span>
-              )}
+            <td class="py-3 px-3 text-center text-xs">
+              <span class={`inline-block px-2 py-0.5 rounded-[4px] text-[11px] font-mono ${
+                f.grammarly.positive 
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' 
+                  : 'bg-[#fafafa] dark:bg-[#141414] text-[#8f8f8f] border border-[#ebebeb] dark:border-[#222222]'
+              }`}>
+                {f.grammarly.text}
+              </span>
             </td>
           </tr>
         ))}

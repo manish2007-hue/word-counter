@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Private PDF & DOCX Word Counter — Count Words Without Uploading";
+const pageDescription = "Count words in PDF, Word (.docx), and text documents 100% locally in your browser. Zero file uploads, zero server tracking. Safe for NDAs, legal, and medical documents.";
+const pageKeywords = "pdf word counter, docx word counter, count words in pdf without uploading, private word counter, client side docx word counter, legal document word counter";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "WordCountr Private Document Counter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are my PDF or DOCX files uploaded to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. WordCountr uses in-memory WebAssembly and client-side JavaScript parsers. Your files are decoded directly in your device's RAM and never leave your web browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is WordCountr compliant with NDAs, HIPAA, and confidentiality agreements?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because there is zero data transmission over the network, using WordCountr preserves full confidentiality for legal contracts, medical transcripts, manuscripts, and proprietary code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which file formats can I count words in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can drag and drop or upload PDF (.pdf), Microsoft Word (.docx), Plain Text (.txt), Markdown (.md), and Rich Text (.rtf) files."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="docx-pdf-word-counter-private"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% Client-Side In-Memory Parser</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Count Words in PDF &amp; DOCX <span class="vercel-gradient-develop">Without Uploading</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Drag &amp; drop any document to count words, characters, and reading time instantly in browser memory. Zero server transmission.
+    </p>
+  </div>
+
+  <WordCounter showHeroCopy={false} />
+
+  <!-- Educational & Privacy Architecture Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-8">
+      <div class="vercel-card p-6 sm:p-8 space-y-4">
+        <div class="mono-eyebrow text-[#0070f3]">Security Architecture</div>
+        <h2 class="text-xl sm:text-2xl font-semibold text-[#171717] dark:text-[#ededed]">
+          Why Traditional PDF Word Counters Pose Confidentiality Risks
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Most online word counters require you to upload your PDF or Word documents to their backend cloud servers for OCR or text extraction. If you work in legal defense, medical translation, financial auditing, or corporate journalism, uploading unpublished drafts or client records violates non-disclosure agreements (NDAs) and privacy regulations like GDPR and HIPAA.
+        </p>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          WordCountr executes client-side parsers (Mozilla pdfjs-dist and in-memory Mammoth DOCX pipelines) directly inside your web browser’s JavaScript sandbox. You can even disconnect your Wi-Fi and the tool will continue counting words flawlessly.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

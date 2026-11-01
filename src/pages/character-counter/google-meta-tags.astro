@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "Google Meta Title & Description Character Counter — Live SERP Preview";
+const pageDescription = "Optimize Google SEO meta tags. Live character and pixel width counter for Google Title Tags (60 chars) and Meta Descriptions (155-160 chars) with realistic SERP snippet simulation.";
+const pageKeywords = "google meta title character counter, meta description character counter, google serp snippet preview, seo title tag length checker, meta description length calculator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Google Meta Tags Counter & SERP Preview",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for Google meta titles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Google displays up to 60 characters (or approximately 600 pixels) on desktop search results before truncating the title with an ellipsis (...)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the recommended length for Google meta descriptions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aim for 150 to 160 characters on desktop (around 960 pixels). On mobile devices, Google may truncate descriptions at around 120 characters."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/google-meta-tags"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Google SERP Snippet Optimization</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Google Meta Tag <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Test your 60-character SEO title tags and 155-character meta descriptions with real-time visual SERP preview.
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" showHeroCopy={false} />
+</Layout>

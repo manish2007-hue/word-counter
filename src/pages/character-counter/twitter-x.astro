@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "X / Twitter Character Counter — Free 280 Char Tweet Limit Checker";
+const pageDescription = "Free X (Twitter) character counter with real-time 280-character limit feedback and overflow highlighting. Preview tweet cards before posting.";
+const pageKeywords = "twitter character counter, x character counter, 280 character counter, tweet character count, twitter post length checker";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "X / Twitter Character Counter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for a standard X (Twitter) post?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For standard accounts, the character ceiling is 280 characters. Premium / X Verified subscribers have an extended ceiling of 25,000 characters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do URLs count as 280 characters on Twitter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Twitter uses t.co link wrapping. Every URL counts as 23 characters regardless of its actual character length."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/twitter-x"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#171717] dark:text-[#ededed] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#171717] dark:bg-white"></span>
+      <span>280-Character Microblogging Precision</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      X / Twitter <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Live 280-character count with real-time overflow highlighting and social feed card simulation.
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" initialTarget={280} showHeroCopy={false} />
+</Layout>

@@ -23,7 +23,8 @@ const {
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isHome = canonicalSlug === '';
-const siteUrl = 'https://manish2007-hue.github.io/word-counter';
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://wordcountr.app';
+const siteUrl = base ? `${siteOrigin}${base}` : siteOrigin;
 const cleanSlug = canonicalSlug ? canonicalSlug.replace(/^\/+|\/+$/g, '') : '';
 const canonicalUrl = cleanSlug ? `${siteUrl}/${cleanSlug}/` : `${siteUrl}/`;
 const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
@@ -147,14 +148,17 @@ const finalSchema = schema || defaultSchema;
           <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Social Limits
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'readability-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'readability-checker' || canonicalSlug === 'flesch-kincaid-readability-calculator' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Readability
           </a>
           <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Keyword Density
           </a>
-          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'academic-word-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'academic-word-counter' || canonicalSlug === 'academic-word-counter-without-citations' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
             Academic Mode
+          </a>
+          <a href={isHome ? "#analysis-section" : `${base}/llm-token-counter`} data-nav-tab="tokens" class={`px-2.5 py-1.5 rounded-[6px] transition-colors ${canonicalSlug === 'llm-token-counter' ? 'text-[#171717] dark:text-[#ededed] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5'}`}>
+            LLM Tokens
           </a>
         </nav>
 
@@ -270,24 +274,26 @@ const finalSchema = schema || defaultSchema;
           </div>
 
           <div>
-            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools</h4>
+            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools &amp; Calculators</h4>
             <ul class="space-y-2 text-xs">
               <li><a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Online Word Counter</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Social Character Limits</a></li>
-              <li><a href={`${base}/readability-checker`} class="hover:text-[#171717] dark:hover:text-white transition">Readability & Grade Levels</a></li>
-              <li><a href={`${base}/keyword-density-checker`} class="hover:text-[#171717] dark:hover:text-white transition">Keyword Density & N-Grams</a></li>
-              <li><a href={`${base}/academic-word-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Academic Citation Filter</a></li>
+              <li><a href={`${base}/llm-token-counter`} class="hover:text-[#171717] dark:hover:text-white transition">LLM Token &amp; Cost Counter</a></li>
+              <li><a href={`${base}/docx-pdf-word-counter-private`} class="hover:text-[#171717] dark:hover:text-white transition">Private PDF &amp; DOCX Counter</a></li>
+              <li><a href={`${base}/academic-word-counter-without-citations`} class="hover:text-[#171717] dark:hover:text-white transition">Citation Exclusion Counter</a></li>
+              <li><a href={`${base}/flesch-kincaid-readability-calculator`} class="hover:text-[#171717] dark:hover:text-white transition">Flesch-Kincaid Calculator</a></li>
+              <li><a href={`${base}/words-to-pages-converter`} class="hover:text-[#171717] dark:hover:text-white transition">Words to Pages Converter</a></li>
+              <li><a href={`${base}/words-to-speaking-time`} class="hover:text-[#171717] dark:hover:text-white transition">Words to Speaking Time</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Platforms</h4>
+            <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Character Limits</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">X / Twitter (280 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">LinkedIn (3,000 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Instagram (2,200 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Google Meta Title (60 chars)</a></li>
-              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Google Meta Description (155 chars)</a></li>
+              <li><a href={`${base}/character-counter/twitter-x`} class="hover:text-[#171717] dark:hover:text-white transition">X / Twitter (280 chars)</a></li>
+              <li><a href={`${base}/character-counter/linkedin`} class="hover:text-[#171717] dark:hover:text-white transition">LinkedIn (3,000 chars &amp; cut)</a></li>
+              <li><a href={`${base}/character-counter/google-meta-tags`} class="hover:text-[#171717] dark:hover:text-white transition">Google Meta Title (60 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">Instagram Captions (2,200 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#171717] dark:hover:text-white transition">All 10 Social Limits</a></li>
             </ul>
           </div>
 

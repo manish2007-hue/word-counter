@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Academic Word Counter Without Citations — Exclude APA & MLA References";
+const pageDescription = "Free essay word counter that automatically excludes parenthetical citations (APA, MLA, Harvard, Chicago) and end-of-paper references from your net essay word count.";
+const pageKeywords = "word counter excluding citations, essay word count without references, academic word counter without citations, apa citation word count filter, mla reference exclusion counter";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Academic Word Counter Without Citations",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do in-text citations count in university essay word limits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most academic institutions adhering to APA 7th, MLA 9th, Chicago, and Harvard standards exclude parenthetical citations (e.g. (Author, Year) or [1-4]) and the final References list from official word count caps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does WordCountr detect citations without deleting my text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "WordCountr uses localized natural language regular expressions to identify author-year citation patterns, bracketed reference markers, and trailing bibliography headers, calculating Net Essay Words while preserving your original manuscript."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="academic-word-counter-without-citations"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>University Thesis &amp; Essay Standard</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Academic Word Counter <span class="vercel-gradient-develop">Without Citations</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Deduct parenthetical citations, footnote markers, and bibliography sections automatically to get your official submission word count.
+    </p>
+  </div>
+
+  <WordCounter initialTab="academic" showHeroCopy={false} />
+
+  <!-- Educational Guide -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-8">
+      <div class="vercel-card p-6 sm:p-8 space-y-4">
+        <div class="mono-eyebrow text-[#0070f3]">Academic Style Guidelines</div>
+        <h2 class="text-xl sm:text-2xl font-semibold text-[#171717] dark:text-[#ededed]">
+          Gross Word Count vs. Net Word Count Explained
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Standard word processors like Google Docs and Microsoft Word only calculate <em>Gross Word Count</em>. They have no concept of academic citation syntax and penalize students by counting citations like <code>(Kahneman &amp; Tversky, 1979, pp. 263-291)</code> as 6 words. In a 4,000-word term paper, citations and bibliographies can inflate your count by 500 to 1,000 words.
+        </p>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          WordCountr calculates both Gross Words and official Net Essay Words, giving students and researchers confidence before hitting the university upload portal.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

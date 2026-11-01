@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "LinkedIn Post Character Counter — Live 3,000 Char & '...see more' Preview";
+const pageDescription = "Free LinkedIn character counter with live above-the-fold cutoff simulation. See exactly where your 140-character hook cuts off before readers must click '...see more'.";
+const pageKeywords = "linkedin character counter, linkedin post character limit, linkedin character limit 2025, linkedin see more cutoff, linkedin headline counter";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "LinkedIn Character Counter & Feed Preview",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for a LinkedIn post?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The maximum character limit for regular LinkedIn status posts is 3,000 characters (approximately 450 to 600 words)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does LinkedIn cut off text with '...see more'?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On desktop and mobile feeds, LinkedIn truncates posts after approximately 140 to 210 characters (typically 2 to 3 lines of copy). Your initial hook must convince the reader to click '...see more'."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/linkedin"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0077b5] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0077b5]"></span>
+      <span>LinkedIn Creator Calibration</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      LinkedIn Post <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Track the 3,000 character ceiling and preview your exact 140-character "...see more" mobile feed cutoff in real time.
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" showHeroCopy={false} />
+</Layout>

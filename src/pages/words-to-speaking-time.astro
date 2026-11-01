@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Words to Speaking Time Calculator — Estimate Speech & Presentation Duration";
+const pageDescription = "Free words to speaking time calculator. Convert script word count to speech minutes across slow (100 WPM), conversational (130 WPM), and fast (160 WPM) presentation tempos.";
+const pageKeywords = "words to speaking time, how long to speak 1000 words, speech time calculator, 5 minute speech word count, words to speech converter, presentation duration calculator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Words to Speaking Time Calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many words is a 5-minute speech?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At standard presentation tempo (130 words per minute), a 5-minute speech is approximately 650 words. At a slower keynote pace (100 WPM), it is 500 words."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to speak 1,000 words?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1,000 words takes approximately 7 minutes and 40 seconds at an average conversational tempo of 130 WPM."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="words-to-speaking-time"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Speech &amp; Podcast Pacing Engine</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Words to Speaking Time <span class="vercel-gradient-develop">Calculator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Convert your keynote script, podcast outline, or video voiceover into exact delivery minutes and seconds.
+    </p>
+  </div>
+
+  <!-- Interactive Speech Pacing Calculator -->
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 mb-8">
+    <div class="vercel-card p-6 sm:p-8 space-y-5">
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-center">
+        <div>
+          <label class="block text-xs font-mono text-[#8f8f8f] uppercase mb-1">Script Words</label>
+          <input
+            type="number"
+            id="speech-words-input"
+            value="650"
+            min="1"
+            class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] px-3 py-2 font-mono text-lg font-bold text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-[#0070f3]"
+          />
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Slow Paced</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="speech-slow">6m 30s</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">100 WPM (Keynote)</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#0070f3]/30 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 text-center">
+          <div class="mono-eyebrow text-[#0070f3]">Standard Paced</div>
+          <div class="font-mono text-xl font-bold text-[#0070f3] mt-1" id="speech-std">5m 00s</div>
+          <div class="text-[10px] text-[#0070f3]/80 font-mono">130 WPM (Speech)</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Fast Paced</div>
+          <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="speech-fast">4m 04s</div>
+          <div class="text-[10px] text-[#8f8f8f] font-mono">160 WPM (Podcast)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <WordCounter showHeroCopy={false} />
+
+  <script>
+    const sInput = document.getElementById('speech-words-input') as HTMLInputElement;
+    const slowOut = document.getElementById('speech-slow');
+    const stdOut = document.getElementById('speech-std');
+    const fastOut = document.getElementById('speech-fast');
+
+    function formatDuration(sec: number): string {
+      const m = Math.floor(sec / 60);
+      const s = Math.round(sec % 60);
+      return `${m}m ${s < 10 ? '0' : ''}${s}s`;
+    }
+
+    function computeSpeech() {
+      if (!sInput) return;
+      const w = parseInt(sInput.value, 10) || 0;
+      if (slowOut) slowOut.textContent = formatDuration((w / 100) * 60);
+      if (stdOut) stdOut.textContent = formatDuration((w / 130) * 60);
+      if (fastOut) fastOut.textContent = formatDuration((w / 160) * 60);
+    }
+
+    sInput?.addEventListener('input', computeSpeech);
+    computeSpeech();
+  </script>
+</Layout>
