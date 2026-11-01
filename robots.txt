@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wordcountr.app/sitemap.xml
+Sitemap: https://manish2007-hue.github.io/word-counter/sitemap.xml
