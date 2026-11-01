@@ -35,6 +35,15 @@ assert(res.paragraphs === 2, `Paragraph separation accurate (got ${res.paragraph
 assert(res.readingTimeSec > 0, `Reading time computed (${res.readingTimeFormatted})`);
 assert(res.speakingTimeSec > 0, `Speaking time computed (${res.speakingTimeFormatted})`);
 
+// Edge case tests: Lowercase sentence counting & CJK words
+const lowercaseParagraph = "first sentence is here. second sentence follows! third sentence ends now? fourth is brief. fifth one finishes.";
+const lowerRes = calculateMetrics(lowercaseParagraph.toLowerCase());
+assert(lowerRes.sentences === 5, `Lowercase sentences counted accurately (expected 5, got ${lowerRes.sentences})`);
+
+const cjkSample = "你好世界，今天天气真好。";
+const cjkRes = calculateMetrics(cjkSample);
+assert(cjkRes.words >= 4, `CJK word segmentation via Intl.Segmenter works (got ${cjkRes.words} words)`);
+
 // 2. READABILITY TESTS
 console.log('\n--- Test Group 2: Readability Engine ---');
 assert(countSyllables('the') === 1, 'Syllable: "the" = 1');
@@ -91,6 +100,17 @@ const overTweetStatus = evaluatePlatformLimits(overTweetChars).find(p => p.limit
 assert(overTweetStatus.isOverLimit, '320 chars is over Twitter 280 limit');
 assert(overTweetStatus.remainingChars === -40, 'Remaining chars is -40');
 
+// 6. STYLE & QUALITY ANALYZER TESTS
+console.log('\n--- Test Group 6: Style & Quality Analyzer ---');
+import { analyzeStyle } from '../src/lib/styleAnalyzer';
+
+const styleText = "This is very really cool. The decision was decided yesterday and experiments were conducted.";
+const styleReport = analyzeStyle(styleText);
+assert(styleReport.fillerWordsCount >= 2, `Filler words detected (got ${styleReport.fillerWordsCount})`);
+assert(styleReport.passiveVoiceCount >= 2, `Passive voice detected (got ${styleReport.passiveVoiceCount})`);
+assert(styleReport.fillerMatches.some(f => f.word === 'very'), 'Detected "very" as filler');
+assert(styleReport.passiveMatches.some(p => p.phrase === 'was decided'), 'Detected "was decided" as passive voice');
+
 console.log('\n======================================================');
-console.log('🎉 ALL 20 UNIT AND INTEGRATION TESTS PASSED PERFECTLY!');
+console.log('🎉 ALL UNIT AND INTEGRATION TESTS PASSED PERFECTLY!');
 console.log('======================================================\n');

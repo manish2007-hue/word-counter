@@ -2,29 +2,31 @@
 import '../styles/global.css';
 
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   canonicalSlug?: string;
   schema?: Record<string, any>;
 }
 
 const {
-  title,
-  description,
+  title = "Word Counter Pro – Free Character, Word & Readability Tool",
+  description = "Free, fast, and 100% private online word counter. Track words, characters, reading time, readability scores, social media limits, and academic essay length.",
   canonicalSlug = '',
   schema,
 } = Astro.props;
 
-const siteUrl = 'https://wordcountr.app';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const isHome = canonicalSlug === '';
+const siteUrl = 'https://manish2007-hue.github.io/word-counter';
 const canonicalUrl = canonicalSlug ? `${siteUrl}/${canonicalSlug}` : siteUrl;
 
 const defaultSchema = {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "WordCountr",
+  "@type": ["WebApplication", "SoftwareApplication"],
+  "name": "WordCountr Pro",
   "headline": "Free Online Word Counter & Writing Aid",
   "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web, iOS, macOS, Windows, Android",
+  "operatingSystem": "All",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -47,8 +49,8 @@ const finalSchema = schema || defaultSchema;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="manifest" href={`${base}/manifest.webmanifest`} />
     <meta name="theme-color" content="#0066cc" />
 
     <title>{title}</title>
@@ -60,7 +62,7 @@ const finalSchema = schema || defaultSchema;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:site_name" content="WordCountr" />
+    <meta property="og:site_name" content="WordCountr Pro" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -96,7 +98,7 @@ const finalSchema = schema || defaultSchema;
         
         <!-- Left Brand Logo -->
         <div class="flex items-center gap-3">
-          <a href="/" class="group flex items-center gap-2.5">
+          <a href={`${base}/`} class="group flex items-center gap-2.5">
             <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-[#0066cc] text-white font-semibold shadow-xs transition group-hover:scale-105 active:scale-95">
               <span class="font-mono text-base font-bold">W</span>
             </div>
@@ -109,21 +111,21 @@ const finalSchema = schema || defaultSchema;
           </a>
         </div>
 
-        <!-- Center Desktop Nav Links (Apple Segmented Style) -->
+        <!-- Center Desktop Nav Links (Supports SPA Tab Switch on Home + Static Routing) -->
         <nav class="hidden lg:flex items-center gap-1 text-[13px] font-medium text-[#515154] dark:text-[#a1a1a6]">
-          <a href="/" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === '' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={`${base}/`} class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === '' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
             Word Counter
           </a>
-          <a href="/social-media-counter" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'social-media-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
             Social Limits
           </a>
-          <a href="/readability-checker" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'readability-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'readability-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
             Readability
           </a>
-          <a href="/keyword-density-checker" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'keyword-density-checker' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
             Keyword Density
           </a>
-          <a href="/academic-word-counter" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'academic-word-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
+          <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class={`px-3 py-1.5 rounded-full transition-colors ${canonicalSlug === 'academic-word-counter' ? 'text-[#0066cc] dark:text-[#2997ff] bg-black/5 dark:bg-white/10 font-semibold' : 'hover:text-[#1d1d1f] dark:hover:text-white'}`}>
             Academic Mode
           </a>
         </nav>
@@ -178,6 +180,33 @@ const finalSchema = schema || defaultSchema;
           </button>
 
         </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-nav-drawer" class="lg:hidden hidden border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-white/95 dark:bg-[#161617]/95 backdrop-blur-xl px-4 py-4 space-y-2">
+        <a href={`${base}/`} class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+          Word Counter
+        </a>
+        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+          Social Media Limits
+        </a>
+        <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+          Readability Formulas
+        </a>
+        <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+          Keyword Density
+        </a>
+        <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-xl text-sm font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-black/5 dark:hover:bg-white/5">
+          Academic Mode (Exclude Citations)
+        </a>
+        <div class="pt-3 border-t border-[#e5e5e7] dark:border-[#2c2c2e] flex items-center justify-between text-xs text-[#86868b]">
+          <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> 100% Client-Side Privacy
+          </span>
+          <a href={`${base}/privacy`} class="hover:underline">Privacy Policy</a>
+        </div>
+      </div>
+    </header>
       </div>
 
       <!-- Mobile Dropdown Navigation Drawer -->
@@ -237,22 +266,22 @@ const finalSchema = schema || defaultSchema;
           <div>
             <h4 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">Precision Tools</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href="/" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Online Word Counter</a></li>
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Social Character Limits (X, LinkedIn)</a></li>
-              <li><a href="/readability-checker" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Readability & Flesch Grade Levels</a></li>
-              <li><a href="/keyword-density-checker" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Keyword Density & N-Gram Analyzer</a></li>
-              <li><a href="/academic-word-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Academic Essay Mode (Citation Filter)</a></li>
+              <li><a href={`${base}/`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Online Word Counter</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Social Character Limits (X, LinkedIn)</a></li>
+              <li><a href={`${base}/readability-checker`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Readability & Flesch Grade Levels</a></li>
+              <li><a href={`${base}/keyword-density-checker`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Keyword Density & N-Gram Analyzer</a></li>
+              <li><a href={`${base}/academic-word-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Academic Essay Mode (Citation Filter)</a></li>
             </ul>
           </div>
 
           <div>
             <h4 class="text-xs font-semibold uppercase tracking-wider text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">Platform Specs</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Twitter/X Post (280 chars)</a></li>
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">LinkedIn Post (3,000 chars)</a></li>
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Instagram Caption (2,200 chars)</a></li>
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Meta Title (60 chars)</a></li>
-              <li><a href="/social-media-counter" class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Description (155 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Twitter/X Post (280 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">LinkedIn Post (3,000 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Instagram Caption (2,200 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Meta Title (60 chars)</a></li>
+              <li><a href={`${base}/social-media-counter`} class="hover:text-[#0066cc] dark:hover:text-[#2997ff] transition">Google SEO Description (155 chars)</a></li>
             </ul>
           </div>
 
@@ -272,7 +301,7 @@ const finalSchema = schema || defaultSchema;
                 <span class="text-[#0066cc] dark:text-[#2997ff]">✓</span> Local draft auto-save
               </li>
               <li class="pt-2">
-                <a href="/privacy" class="text-[#0066cc] dark:text-[#2997ff] hover:underline font-medium">Read Privacy Guarantee →</a>
+                <a href={`${base}/privacy`} class="text-[#0066cc] dark:text-[#2997ff] hover:underline font-medium">Read Privacy Guarantee →</a>
               </li>
             </ul>
           </div>
@@ -280,15 +309,15 @@ const finalSchema = schema || defaultSchema;
         </div>
 
         <div class="border-t border-[#e5e5e7] dark:border-[#2c2c2e] pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#86868b]">
-          <p>© {new Date().getFullYear()} WordCountr. Designed with simplicity, precision, and privacy.</p>
+          <p>© {new Date().getFullYear()} WordCountr Pro. Designed with simplicity, precision, and privacy.</p>
           <div class="flex items-center gap-4 mt-3 sm:mt-0">
-            <a href="/privacy" class="hover:text-[#1d1d1f] dark:hover:text-white transition">Privacy Policy</a>
+            <a href={`${base}/privacy`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Privacy Policy</a>
             <span>·</span>
-            <a href="/terms" class="hover:text-[#1d1d1f] dark:hover:text-white transition">Terms</a>
+            <a href={`${base}/terms`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Terms</a>
             <span>·</span>
-            <a href="/about" class="hover:text-[#1d1d1f] dark:hover:text-white transition">About</a>
+            <a href={`${base}/about`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">About</a>
             <span>·</span>
-            <a href="/contact" class="hover:text-[#1d1d1f] dark:hover:text-white transition">Contact</a>
+            <a href={`${base}/contact`} class="hover:text-[#1d1d1f] dark:hover:text-white transition">Contact</a>
           </div>
         </div>
       </div>
@@ -343,6 +372,23 @@ const finalSchema = schema || defaultSchema;
           hamburgerIcon?.classList.add('hidden');
           closeIcon?.classList.remove('hidden');
         }
+      });
+
+      // 2.1 Tab Navigation Event Interceptor (SPA smooth scroll on home page)
+      document.querySelectorAll('[data-nav-tab]').forEach((link) => {
+        link.addEventListener('click', (e) => {
+          const tab = (link as HTMLElement).dataset.navTab;
+          const analysisSection = document.getElementById('analysis-section');
+          if (analysisSection && typeof (window as any).switchAnalysisTab === 'function') {
+            e.preventDefault();
+            (window as any).switchAnalysisTab(tab);
+            analysisSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Close mobile drawer if open
+            mobileDrawer?.classList.add('hidden');
+            hamburgerIcon?.classList.remove('hidden');
+            closeIcon?.classList.add('hidden');
+          }
+        });
       });
 
       // 3. Global Toast Helper

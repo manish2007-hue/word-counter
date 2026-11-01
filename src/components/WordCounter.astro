@@ -185,6 +185,30 @@ const {
           <span class="hidden sm:inline">Copy Text</span>
         </button>
 
+        <!-- Export Dropdown -->
+        <div class="relative">
+          <button
+            id="export-menu-btn"
+            type="button"
+            class="inline-flex items-center gap-1 rounded-full border border-[#d2d2d7] dark:border-[#3a3a3c] bg-white dark:bg-[#2c2c2e] px-3 py-1.5 text-xs font-medium text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#38383a] transition apple-button"
+            title="Export text & report"
+          >
+            <svg class="h-3.5 w-3.5 text-[#86868b]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span class="hidden sm:inline">Export</span>
+          </button>
+          
+          <div
+            id="export-dropdown"
+            class="hidden absolute right-0 mt-1.5 w-44 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-1.5 shadow-xl z-20 text-xs"
+          >
+            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="txt">Download as .TXT</button>
+            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="md">Download as .MD</button>
+            <button class="export-opt w-full rounded-xl px-3 py-2 text-left text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#0066cc]/10 dark:hover:bg-[#2997ff]/15 transition" data-export="report">Copy Full Report</button>
+          </div>
+        </div>
+
         <!-- Clear Text Button -->
         <button
           id="btn-clear-text"
@@ -267,6 +291,13 @@ const {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/>
           </svg>
           <span>Academic Essay Mode</span>
+        </button>
+
+        <button class="analysis-tab-btn flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium text-[#515154] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition apple-button shrink-0" data-tab="style">
+          <svg class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span>Style & Quality Audit</span>
         </button>
 
       </div>
@@ -425,6 +456,50 @@ const {
       </div>
     </div>
 
+    <!-- Tab 5: Style & Quality (Filler Words & Passive Voice) Content -->
+    <div id="tab-content-style" class="analysis-panel hidden p-4 sm:p-6">
+      <div class="mb-5">
+        <h2 class="text-base sm:text-lg font-bold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-2">
+          <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          <span>Style & Quality Audit</span>
+        </h2>
+        <p class="text-xs text-[#86868b] mt-0.5">
+          Detects weak filler words and passive voice constructions to make your copy punchy, direct, and authoritative.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <div class="rounded-2xl border border-amber-200 dark:border-amber-900/40 p-4 bg-amber-500/5 dark:bg-amber-500/10">
+          <div class="text-xs font-semibold text-amber-800 dark:text-amber-400">Filler Words Detected</div>
+          <div class="font-mono-numbers text-3xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="style-filler-count">0</div>
+          <div class="text-[11px] text-[#86868b] mt-1" id="style-filler-desc">No weak fillers found. Your copy is clean.</div>
+        </div>
+
+        <div class="rounded-2xl border border-indigo-200 dark:border-indigo-900/40 p-4 bg-indigo-500/5 dark:bg-indigo-500/10">
+          <div class="text-xs font-semibold text-indigo-800 dark:text-indigo-400">Passive Voice Phrases</div>
+          <div class="font-mono-numbers text-3xl font-bold text-indigo-600 dark:text-indigo-400 mt-1" id="style-passive-count">0</div>
+          <div class="text-[11px] text-[#86868b] mt-1" id="style-passive-desc">No passive voice found. Strong active verbs.</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[#515154] dark:text-[#a1a1a6] mb-3">Filler Words Breakdown</h4>
+          <div id="style-filler-list" class="flex flex-wrap gap-2 text-xs">
+            <span class="text-[#86868b]">No filler words detected.</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-[#515154] dark:text-[#a1a1a6] mb-3">Passive Voice Phrases</h4>
+          <div id="style-passive-list" class="flex flex-wrap gap-2 text-xs">
+            <span class="text-[#86868b]">No passive voice detected.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -463,6 +538,7 @@ const {
   import { filterAcademicText } from '../lib/academic';
   import { parseUploadedFile } from '../lib/fileParser';
   import { evaluatePlatformLimits } from '../lib/socialLimits';
+  import { analyzeStyle } from '../lib/styleAnalyzer';
 
   // Container & initial props
   const container = document.getElementById('tool-container') as HTMLElement;
@@ -539,6 +615,14 @@ const {
   const acadExcludedWords = document.getElementById('acad-excluded-words')!;
   const acadExcludedDesc = document.getElementById('acad-excluded-desc')!;
 
+  // Style Elements
+  const styleFillerCount = document.getElementById('style-filler-count')!;
+  const styleFillerDesc = document.getElementById('style-filler-desc')!;
+  const styleFillerList = document.getElementById('style-filler-list')!;
+  const stylePassiveCount = document.getElementById('style-passive-count')!;
+  const stylePassiveDesc = document.getElementById('style-passive-desc')!;
+  const stylePassiveList = document.getElementById('style-passive-list')!;
+
   // State variables
   let currentTargetCount = initialTargetVal || 0;
   let currentTargetType: 'words' | 'characters' = 'words';
@@ -548,8 +632,10 @@ const {
 
   // Restore session from localStorage if available
   const savedText = localStorage.getItem('wordcountr-draft');
+  let restoredSession = false;
   if (savedText && textarea && !textarea.value) {
     textarea.value = savedText;
+    restoredSession = true;
   }
   const savedTarget = localStorage.getItem('wordcountr-target');
   if (savedTarget && !currentTargetCount) {
@@ -678,8 +764,13 @@ const {
       keywordsTableBody.innerHTML = `<tr><td colspan="3" class="py-8 text-center text-[#86868b]">No matching keyword phrases detected.</td></tr>`;
     } else {
       keywordsTableBody.innerHTML = activeKwList.map((k) => `
-        <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
-          <td class="py-2.5 font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">${k.phrase}</td>
+        <tr class="keyword-row hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer" data-keyword="${k.phrase}" title="Click to highlight in text editor">
+          <td class="py-2.5 font-medium text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-[#0066cc] dark:text-[#2997ff] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span>${k.phrase}</span>
+          </td>
           <td class="py-2.5 text-center font-mono-numbers text-[#515154] dark:text-[#a1a1a6] font-semibold">${k.count}</td>
           <td class="py-2.5 text-right font-mono-numbers">
             <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${k.density > 4 ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-400' : 'bg-[#f5f5f7] text-[#1d1d1f] dark:bg-[#2c2c2e] dark:text-[#f5f5f7]'}">
@@ -688,6 +779,14 @@ const {
           </td>
         </tr>
       `).join('');
+
+      // Attach click-to-highlight listeners
+      keywordsTableBody.querySelectorAll('.keyword-row').forEach((row) => {
+        row.addEventListener('click', () => {
+          const phrase = (row as HTMLElement).dataset.keyword;
+          if (phrase) highlightWordInEditor(phrase);
+        });
+      });
     }
 
     // 5. Social Media Limits
@@ -753,12 +852,46 @@ const {
       `;
     }).join('');
 
-    // Debounced LocalStorage Auto-Save
-    clearTimeout(autoSaveTimeout);
-    autoSaveTimeout = setTimeout(() => {
-      localStorage.setItem('wordcountr-draft', text);
-      autosaveLabel.textContent = `Saved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-    }, 1500);
+    // 6. Style & Quality Audit (Filler Words & Passive Voice)
+    const style = analyzeStyle(textToAnalyze);
+    styleFillerCount.textContent = style.fillerWordsCount.toLocaleString();
+    stylePassiveCount.textContent = style.passiveVoiceCount.toLocaleString();
+    styleFillerDesc.textContent = style.fillerWordsCount > 0 ? `${style.fillerWordsCount} weak qualifiers detected.` : 'No weak fillers found. Your copy is clean.';
+    stylePassiveDesc.textContent = style.passiveVoiceCount > 0 ? `${style.passiveVoiceCount} passive constructions flagged.` : 'No passive voice found. Strong active verbs.';
+
+    if (style.fillerMatches.length === 0) {
+      styleFillerList.innerHTML = `<span class="text-[#86868b]">No filler words detected.</span>`;
+    } else {
+      styleFillerList.innerHTML = style.fillerMatches.map(f => `
+        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-800 dark:text-amber-400 font-medium hover:bg-amber-500/20 transition cursor-pointer" data-phrase="${f.word}">
+          <span>"${f.word}"</span>
+          <span class="text-[10px] bg-amber-500/20 px-1.5 py-0.5 rounded-full font-bold">${f.count}</span>
+        </button>
+      `).join('');
+    }
+
+    if (style.passiveMatches.length === 0) {
+      stylePassiveList.innerHTML = `<span class="text-[#86868b]">No passive voice detected.</span>`;
+    } else {
+      stylePassiveList.innerHTML = style.passiveMatches.map(p => `
+        <button type="button" class="style-match-tag inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-800 dark:text-indigo-400 font-medium hover:bg-indigo-500/20 transition cursor-pointer" data-phrase="${p.phrase}">
+          <span>"${p.phrase}"</span>
+          <span class="text-[10px] bg-indigo-500/20 px-1.5 py-0.5 rounded-full font-bold">${p.count}</span>
+        </button>
+      `).join('');
+    }
+
+    // Attach listeners for style tags
+    document.querySelectorAll('.style-match-tag').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const phrase = (btn as HTMLElement).dataset.phrase;
+        if (phrase) highlightWordInEditor(phrase);
+      });
+    });
+
+    // Immediate LocalStorage Auto-Save
+    localStorage.setItem('wordcountr-draft', text);
+    autosaveLabel.textContent = `Saved locally at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
   }
 
   // Event Listeners for Editor
@@ -904,6 +1037,88 @@ const {
     });
   });
 
+  // Interactive Word Highlighter in Textarea
+  function highlightWordInEditor(phrase: string) {
+    if (!textarea || !phrase) return;
+    const text = textarea.value;
+    const lowerText = text.toLowerCase();
+    const lowerPhrase = phrase.toLowerCase();
+    const idx = lowerText.indexOf(lowerPhrase);
+    if (idx !== -1) {
+      textarea.focus();
+      textarea.setSelectionRange(idx, idx + phrase.length);
+      notify(`✓ Highlighted "${phrase}" in text`);
+    } else {
+      notify(`Word "${phrase}" not found in current text`);
+    }
+  }
+  (window as any).highlightWord = highlightWordInEditor;
+  (window as any).switchAnalysisTab = switchTab;
+
+  // Export Menu (Download TXT, MD, Copy Full Report)
+  const exportBtn = document.getElementById('export-menu-btn');
+  const exportDropdown = document.getElementById('export-dropdown');
+  exportBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    exportDropdown?.classList.toggle('hidden');
+  });
+  window.addEventListener('click', () => exportDropdown?.classList.add('hidden'));
+
+  document.querySelectorAll('.export-opt').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.export;
+      const text = textarea.value;
+      if (!text.trim()) {
+        notify('Editor is empty');
+        return;
+      }
+      if (type === 'txt') {
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `wordcountr-document-${Date.now()}.txt`;
+        a.click();
+        notify('✓ Downloaded document.txt');
+      } else if (type === 'md') {
+        const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `wordcountr-document-${Date.now()}.md`;
+        a.click();
+        notify('✓ Downloaded document.md');
+      } else if (type === 'report') {
+        const m = calculateMetrics(text);
+        const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
+        const s = analyzeStyle(text);
+        const report = `═══════════════════════════════════════\n` +
+          `       WORDCOUNTR PRO ANALYSIS REPORT   \n` +
+          `═══════════════════════════════════════\n\n` +
+          `• Words: ${m.words.toLocaleString()}\n` +
+          `• Characters (with spaces): ${m.characters.toLocaleString()}\n` +
+          `• Characters (no spaces): ${m.charactersNoSpaces.toLocaleString()}\n` +
+          `• Sentences: ${m.sentences.toLocaleString()}\n` +
+          `• Paragraphs: ${m.paragraphs.toLocaleString()}\n` +
+          `• Average Word Length: ${m.averageWordLength} chars\n` +
+          `• Reading Time (225 WPM): ${m.readingTimeFormatted}\n` +
+          `• Speaking Time (130 WPM): ${m.speakingTimeFormatted}\n\n` +
+          `READABILITY & GRADES:\n` +
+          `• Flesch Reading Ease: ${r.fleschReadingEase} (${r.fleschReadingEaseLabel})\n` +
+          `• Average Grade Level: Grade ${r.averageGradeLevel} (${r.gradeLevelSummary})\n` +
+          `• Flesch-Kincaid Grade: ${r.fleschKincaidGrade.toFixed(1)}\n` +
+          `• Gunning Fog Index: ${r.gunningFog.toFixed(1)}\n` +
+          `• Coleman-Liau: ${r.colemanLiau.toFixed(1)}\n` +
+          `• ARI: ${r.automatedReadabilityIndex.toFixed(1)}\n\n` +
+          `STYLE & QUALITY AUDIT:\n` +
+          `• Filler Words Detected: ${s.fillerWordsCount}\n` +
+          `• Passive Voice Phrases: ${s.passiveVoiceCount}\n\n` +
+          `═══════════════════════════════════════\n` +
+          `Generated via WordCountr Pro — 100% Private\n`;
+        copyToClipboard(report, '✓ Copied complete analysis report');
+      }
+      exportDropdown?.classList.add('hidden');
+    });
+  });
+
   // Action Buttons: Copy Stats, Copy Text, Clear
   btnCopyStats?.addEventListener('click', () => {
     if (!textarea.value.trim()) {
@@ -1021,4 +1236,11 @@ const {
 
   // Initial calculation on mount
   updateAll();
+
+  // If restored from saved draft, notify user
+  if (restoredSession && savedText && savedText.trim().length > 0) {
+    setTimeout(() => {
+      notify('✓ Draft restored from previous session');
+    }, 400);
+  }
 </script>

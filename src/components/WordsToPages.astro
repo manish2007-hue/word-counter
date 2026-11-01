@@ -1,0 +1,71 @@
+---
+// Words to Pages Conversion Reference Guide (High-Intent SEO Asset)
+const conversionData = [
+  { words: 250, single: '0.5 page', double: '1 page', readTime: '1.1 min', useCase: 'Abstract, Short Assignment' },
+  { words: 500, single: '1 page', double: '2 pages', readTime: '2.2 min', useCase: 'College Essay, Cover Letter' },
+  { words: 750, single: '1.5 pages', double: '3 pages', readTime: '3.3 min', useCase: 'Standard Blog Post, Opinion Column' },
+  { words: 1000, single: '2 pages', double: '4 pages', readTime: '4.4 min', useCase: 'Term Paper, Editorial Article' },
+  { words: 1500, single: '3 pages', double: '6 pages', readTime: '6.6 min', useCase: 'Comprehensive Guide, Academic Paper' },
+  { words: 2000, single: '4 pages', double: '8 pages', readTime: '8.8 min', useCase: 'Research Report, University Thesis' },
+  { words: 2500, single: '5 pages', double: '10 pages', readTime: '11.1 min', useCase: 'Long-form Case Study, Monograph' },
+  { words: 5000, single: '10 pages', double: '20 pages', readTime: '22.2 min', useCase: 'Dissertation Chapter, Whitepaper' },
+];
+---
+
+<section class="mt-12 rounded-3xl border border-[#e5e5e7] dark:border-[#2c2c2e] bg-white dark:bg-[#1c1c1e] p-6 sm:p-8 shadow-xs" id="words-to-pages">
+  <div class="max-w-3xl mb-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#0066cc]/10 dark:bg-[#2997ff]/15 text-[#0066cc] dark:text-[#2997ff] mb-3">
+      Academic & Publishing Reference
+    </div>
+    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+      Words to Pages Conversion Guide
+    </h2>
+    <p class="text-xs sm:text-sm text-[#86868b] mt-1.5 leading-relaxed">
+      Standard page estimates based on 12pt Times New Roman, Arial, or Calibri with standard 1-inch margins. Academic assignments typically follow the double-spaced standard (250 words/page).
+    </p>
+  </div>
+
+  <div class="overflow-x-auto rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+    <table class="w-full text-left text-xs sm:text-sm">
+      <thead>
+        <tr class="border-b border-[#e5e5e7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#161617] text-[#515154] dark:text-[#a1a1a6] font-semibold">
+          <th class="py-3 px-4">Word Count</th>
+          <th class="py-3 px-4">Single-Spaced</th>
+          <th class="py-3 px-4">Double-Spaced</th>
+          <th class="py-3 px-4">Reading Time</th>
+          <th class="py-3 px-4 hidden md:table-cell">Common Format</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-[#e5e5e7] dark:divide-[#2c2c2e]">
+        {conversionData.map((row) => (
+          <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition font-mono-numbers">
+            <td class="py-3 px-4 font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">
+              {row.words.toLocaleString()} words
+            </td>
+            <td class="py-3 px-4 text-[#515154] dark:text-[#a1a1a6]">
+              {row.single}
+            </td>
+            <td class="py-3 px-4 font-semibold text-[#0066cc] dark:text-[#2997ff]">
+              {row.double}
+            </td>
+            <td class="py-3 px-4 text-[#86868b]">
+              {row.readTime}
+            </td>
+            <td class="py-3 px-4 text-[#86868b] font-sans hidden md:table-cell">
+              {row.useCase}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-[#86868b] bg-[#fafafc] dark:bg-[#161617] p-3.5 rounded-2xl border border-[#e5e5e7] dark:border-[#2c2c2e]">
+    <div>
+      💡 <strong>Quick Formula:</strong> Double-spaced pages ≈ Words ÷ 250 &bull; Single-spaced pages ≈ Words ÷ 500.
+    </div>
+    <div class="text-[11px]">
+      Calculated at average silent reading pace of 225 WPM.
+    </div>
+  </div>
+</section>

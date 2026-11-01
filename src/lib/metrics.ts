@@ -49,8 +49,19 @@ export function calculateMetrics(text: string, readingWpm = 225, speakingWpm = 1
   const characters = text.length;
   const charactersNoSpaces = text.replace(/\s/g, '').length;
 
-  // Words: match alphanumeric sequences including contractions and internal hyphens
-  const wordsArray = text.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu) || [];
+  // Words: Intl.Segmenter support for CJK (Chinese, Japanese, Korean) + Latin fallback
+  let wordsArray: string[] = [];
+  if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
+    try {
+      const segmenter = new (Intl as any).Segmenter(undefined, { granularity: 'word' });
+      const segments = Array.from(segmenter.segment(text)) as Array<{ segment: string; isWordLike?: boolean }>;
+      wordsArray = segments.filter((s) => s.isWordLike).map((s) => s.segment);
+    } catch {
+      wordsArray = text.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu) || [];
+    }
+  } else {
+    wordsArray = text.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu) || [];
+  }
   const words = wordsArray.length;
 
   // Longest word & avg length
@@ -70,9 +81,10 @@ export function calculateMetrics(text: string, readingWpm = 225, speakingWpm = 1
     .map((p) => p.trim())
     .filter((p) => p.length > 0).length;
 
-  // Sentences: heuristic with abbreviation defense
+  // Sentences: Case-independent boundary tokenizer with abbreviation defense
+  // Matches punctuation followed by whitespace (even in all-lowercase text)
   const rawSentences = text
-    .split(/(?<=[.!?])\s+(?=[A-Z0-9"“'‘])/g)
+    .split(/(?<=[.!?]+["”'’]?)\s+/gu)
     .filter((s) => s.trim().length > 0);
 
   let sentenceCount = 0;
