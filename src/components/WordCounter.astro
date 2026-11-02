@@ -17,7 +17,7 @@ const {
 <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-4 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
   
   {showHeroCopy && (
-    <div class="text-center mb-6 py-5 sm:py-6 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#ebebeb]/60 dark:border-[#222222]/60">
+    <div class="hidden md:block text-center mb-6 py-5 sm:py-6 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#ebebeb]/60 dark:border-[#222222]/60">
       <!-- Vercel Uppercase Technical Eyebrow -->
       <div class="inline-flex items-center gap-2 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white/80 dark:bg-[#0a0a0a]/80 px-3 py-1 mono-eyebrow text-[#8f8f8f] dark:text-[#707070] shadow-2xs mb-3">
         <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
@@ -44,8 +44,41 @@ const {
     </div>
   )}
 
+  <!-- MOBILE COMPACT 1-LINE MICRO-BAR (< md screens for instant above-the-fold access) -->
+  <div class="md:hidden mb-2 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0c0c0c] p-2.5 shadow-2xs">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2.5 font-mono">
+        <div class="flex items-baseline gap-1">
+          <span class="text-base font-bold text-[#0070f3]" id="mobile-stat-words">0</span>
+          <span class="text-[9px] text-[#8f8f8f] uppercase font-semibold">words</span>
+        </div>
+        <span class="text-[#ebebeb] dark:text-[#262626]">·</span>
+        <div class="flex items-baseline gap-1">
+          <span class="text-base font-bold text-[#171717] dark:text-[#ededed]" id="mobile-stat-chars">0</span>
+          <span class="text-[9px] text-[#8f8f8f] uppercase font-semibold">chars</span>
+        </div>
+        <span class="text-[#ebebeb] dark:text-[#262626]">·</span>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs font-semibold text-[#0070f3]" id="mobile-stat-reading">0s</span>
+          <span class="text-[9px] text-[#8f8f8f]">read</span>
+        </div>
+      </div>
+      <button
+        id="btn-mobile-toggle-cards"
+        type="button"
+        class="flex items-center gap-1 rounded-[5px] px-2 py-1 text-[11px] font-medium text-[#0070f3] bg-[#0070f3]/10 hover:bg-[#0070f3]/20 transition cursor-pointer"
+        aria-expanded="false"
+      >
+        <span id="mobile-cards-btn-label">More Stats</span>
+        <svg id="mobile-cards-chevron" class="h-3 w-3 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
   <!-- MAIN LIVE METRIC STATS TILES (Vercel Hairline Cards Grid) -->
-  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 mb-5">
+  <div id="main-metric-cards" class="hidden md:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 mb-3.5">
     
     <!-- Words Tile -->
     <div class="vercel-card p-3.5 sm:p-4">
@@ -75,30 +108,167 @@ const {
       <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5" id="stat-sents-per-para">0 sents/para</div>
     </div>
 
-    <!-- Reading Time Tile -->
-    <div class="vercel-card p-3.5 sm:p-4">
+    <!-- Reading Time Tile (Interactive Rate) -->
+    <div class="vercel-card p-3.5 sm:p-4 relative">
       <div class="flex items-center justify-between mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">
         <span>Reading Time</span>
-        <span class="text-[10px] text-[#8f8f8f] font-mono">225 wpm</span>
+        <button
+          id="btn-reading-speed-toggle"
+          type="button"
+          class="flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-mono text-[#0070f3] hover:bg-[#0070f3]/10 transition cursor-pointer"
+          title="Customize reading speed"
+        >
+          <span id="reading-wpm-badge">225 wpm</span>
+          <svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
       </div>
       <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#0070f3]" id="stat-reading-time">0 sec</div>
-      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5">Silent reading</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5 truncate" id="reading-speed-label">Silent reading</div>
+
+      <!-- Reading Speed Popover Dropdown -->
+      <div id="popover-reading-speed" class="hidden absolute left-1 right-1 top-full mt-1.5 z-40 rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0e0e0e] p-2.5 shadow-2xl text-xs">
+        <div class="flex items-center justify-between font-mono text-[10px] text-[#8f8f8f] uppercase font-semibold mb-2">
+          <span>Reading Speed (WPM)</span>
+          <button id="btn-close-reading-popover" type="button" class="text-xs hover:text-[#171717] dark:hover:text-white cursor-pointer">×</button>
+        </div>
+        <div class="grid grid-cols-2 gap-1 mb-2 font-mono text-[11px]">
+          <button type="button" class="opt-reading-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="130" data-label="ESL / Language learner">130 WPM (ESL)</button>
+          <button type="button" class="opt-reading-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="180" data-label="Careful proofreading">180 WPM (Careful)</button>
+          <button type="button" class="opt-reading-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="225" data-label="Silent adult reading">225 WPM (Default)</button>
+          <button type="button" class="opt-reading-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="300" data-label="Speed reading / Skimming">300 WPM (Fast)</button>
+        </div>
+        <div class="flex items-center gap-1.5 pt-1.5 border-t border-[#ebebeb] dark:border-[#222222]">
+          <input id="input-custom-reading-wpm" type="number" min="50" max="1000" placeholder="Custom" class="w-16 px-1.5 py-1 rounded-[4px] border border-[#ebebeb] dark:border-[#333] bg-transparent font-mono text-[11px] text-[#171717] dark:text-[#ededed] focus:outline-hidden" />
+          <button id="btn-save-custom-reading-wpm" type="button" class="px-2.5 py-1 rounded-[4px] bg-[#0070f3] text-white font-mono text-[10px] font-semibold hover:bg-[#0060df] transition cursor-pointer">Set WPM</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Speaking Time Tile -->
-    <div class="vercel-card p-3.5 sm:p-4">
+    <!-- Speaking Time Tile (Interactive Rate) -->
+    <div class="vercel-card p-3.5 sm:p-4 relative">
       <div class="flex items-center justify-between mono-eyebrow text-[#8f8f8f] dark:text-[#707070]">
         <span>Speaking Time</span>
-        <span class="text-[10px] text-[#8f8f8f] font-mono">130 wpm</span>
+        <button
+          id="btn-speaking-speed-toggle"
+          type="button"
+          class="flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-mono text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
+          title="Customize speaking rate"
+        >
+          <span id="speaking-wpm-badge">130 wpm</span>
+          <svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
       </div>
       <div class="mt-1 font-mono text-2xl sm:text-3xl font-bold text-[#171717] dark:text-[#ededed]" id="stat-speaking-time">0 sec</div>
-      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5">Speech / keynote</div>
+      <div class="text-[11px] text-[#8f8f8f] dark:text-[#707070] mt-0.5 truncate" id="speaking-speed-label">Speech / keynote</div>
+
+      <!-- Speaking Speed Popover Dropdown -->
+      <div id="popover-speaking-speed" class="hidden absolute left-1 right-1 top-full mt-1.5 z-40 rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0e0e0e] p-2.5 shadow-2xl text-xs">
+        <div class="flex items-center justify-between font-mono text-[10px] text-[#8f8f8f] uppercase font-semibold mb-2">
+          <span>Speaking Rate (WPM)</span>
+          <button id="btn-close-speaking-popover" type="button" class="text-xs hover:text-[#171717] dark:hover:text-white cursor-pointer">×</button>
+        </div>
+        <div class="grid grid-cols-2 gap-1 mb-2 font-mono text-[11px]">
+          <button type="button" class="opt-speaking-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="100" data-label="Slow / Keynote / Voiceover">100 WPM (Keynote)</button>
+          <button type="button" class="opt-speaking-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="130" data-label="Conversational presentation">130 WPM (Default)</button>
+          <button type="button" class="opt-speaking-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="150" data-label="Podcast / Dynamic pitch">150 WPM (Podcast)</button>
+          <button type="button" class="opt-speaking-wpm px-2 py-1.5 rounded-[5px] bg-[#f5f5f5] dark:bg-[#181818] hover:bg-[#0070f3] hover:text-white transition text-left cursor-pointer" data-wpm="180" data-label="Rapid delivery / Fast pace">180 WPM (Rapid)</button>
+        </div>
+        <div class="flex items-center gap-1.5 pt-1.5 border-t border-[#ebebeb] dark:border-[#222222]">
+          <input id="input-custom-speaking-wpm" type="number" min="50" max="1000" placeholder="Custom" class="w-16 px-1.5 py-1 rounded-[4px] border border-[#ebebeb] dark:border-[#333] bg-transparent font-mono text-[11px] text-[#171717] dark:text-[#ededed] focus:outline-hidden" />
+          <button id="btn-save-custom-speaking-wpm" type="button" class="px-2.5 py-1 rounded-[4px] bg-[#0070f3] text-white font-mono text-[10px] font-semibold hover:bg-[#0060df] transition cursor-pointer">Set WPM</button>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <!-- WORD BUDGET / TARGET CAPSULE (Vercel Hairline Strip) -->
-  <div id="target-budget-container" class="mb-4 vercel-card p-3.5 sm:p-4">
+  <!-- GRANULAR METRICS TOGGLE & EXPANDABLE DRAWER (WordCounter.net Granular Features) -->
+  <div class="mb-3.5">
+    <div class="flex items-center justify-between text-xs font-mono">
+      <button
+        id="btn-toggle-granular"
+        type="button"
+        class="inline-flex items-center gap-1.5 text-[11px] text-[#71717a] dark:text-[#a1a1aa] hover:text-[#0070f3] dark:hover:text-[#0070f3] transition cursor-pointer py-1"
+        aria-expanded="false"
+      >
+        <svg id="chevron-granular" class="h-3 w-3 text-[#0070f3] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+        <span id="label-granular-toggle">+ Granular Metrics (Unique Words, Syllables, Lines, Pages, Handwriting)</span>
+      </button>
+
+      <!-- Streak / Daily Activity Pill -->
+      <div id="streak-badge-container" class="flex items-center gap-1.5 text-[11px] font-mono text-amber-600 dark:text-amber-400">
+        <span>🔥</span>
+        <span id="streak-counter-label" class="font-semibold">0-Day Streak</span>
+      </div>
+    </div>
+
+    <!-- Granular Metrics Drawer Panel -->
+    <div id="drawer-granular-metrics" class="hidden mt-2 p-3 sm:p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fcfcfc] dark:bg-[#0c0c0c] text-xs">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 font-mono">
+        <!-- Unique Words -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Unique Words</div>
+          <div class="text-base font-bold text-[#171717] dark:text-white mt-0.5" id="stat-unique-words">0</div>
+          <div class="text-[10px] text-[#8f8f8f] truncate" id="stat-unique-ratio">0% diversity</div>
+        </div>
+
+        <!-- Syllables -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Syllables</div>
+          <div class="text-base font-bold text-[#171717] dark:text-white mt-0.5" id="stat-syllables">0</div>
+          <div class="text-[10px] text-[#8f8f8f] truncate" id="stat-syllables-avg">0 avg/word</div>
+        </div>
+
+        <!-- Lines -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Lines</div>
+          <div class="text-base font-bold text-[#171717] dark:text-white mt-0.5" id="stat-lines">0</div>
+          <div class="text-[10px] text-[#8f8f8f]">Line count</div>
+        </div>
+
+        <!-- Sentence Extremes -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Sentence Length</div>
+          <div class="text-xs font-bold text-[#171717] dark:text-white mt-1 truncate" id="stat-sentence-extremes">0 min / 0 max</div>
+          <div class="text-[10px] text-[#8f8f8f]">Shortest vs longest</div>
+        </div>
+
+        <!-- Publisher Pages -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Publisher Pages</div>
+          <div class="text-base font-bold text-[#0070f3] mt-0.5" id="stat-publisher-pages">0</div>
+          <div class="text-[10px] text-[#8f8f8f]">250 words / book page</div>
+        </div>
+
+        <!-- Handwriting Time -->
+        <div class="p-2.5 rounded-[6px] bg-white dark:bg-[#141414] border border-[#ebebeb] dark:border-[#222222]">
+          <div class="text-[10px] text-[#8f8f8f] uppercase font-semibold">Handwriting Time</div>
+          <div class="text-base font-bold text-[#171717] dark:text-white mt-0.5" id="stat-handwriting-time">0 sec</div>
+          <div class="text-[10px] text-[#8f8f8f]">At ~13 WPM handwriting</div>
+        </div>
+      </div>
+
+      <!-- 7-Day Activity Streak Chart -->
+      <div class="mt-3 pt-3 border-t border-[#ebebeb] dark:border-[#222222] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px]">
+        <div class="flex items-center gap-2">
+          <span class="font-semibold text-[#171717] dark:text-[#ededed]">7-Day Writing Activity:</span>
+          <span class="text-[10px] text-[#8f8f8f]">Daily words written (100% in browser)</span>
+        </div>
+        <div class="flex items-end gap-2 h-10" id="activity-chart-bars">
+          <!-- 7 day mini bars rendered by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORD BUDGET / TARGET CAPSULE (Desktop only, tucked into mobile icon button) -->
+  <div id="target-budget-container" class="hidden md:block mb-3.5 vercel-card p-3.5 sm:p-4">
     <div class="flex flex-wrap items-center justify-between gap-3 mb-2 text-xs">
       <div class="flex items-center gap-2">
         <span class="font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-1.5 font-mono text-xs">
@@ -135,7 +305,7 @@ const {
       <button
         id="btn-add-doc"
         type="button"
-        class="flex items-center gap-1 px-2.5 py-1 rounded-[4px] text-[11px] font-mono text-[#8f8f8f] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 transition"
+        class="flex items-center gap-1 px-2.5 py-1 rounded-[4px] text-[11px] font-mono text-[#8f8f8f] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
         title="Add new document tab"
       >
         <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,28 +313,103 @@ const {
         </svg>
         <span>New Tab</span>
       </button>
+
+      <!-- Compact Mobile Goal Button (< md screens) -->
+      <button
+        id="btn-mobile-goal"
+        type="button"
+        class="md:hidden flex items-center gap-1 px-2 py-0.5 rounded-[4px] text-[11px] font-mono text-[#0070f3] bg-[#0070f3]/10 hover:bg-[#0070f3]/20 transition shrink-0 cursor-pointer"
+        title="Set writing goal"
+      >
+        <span>🎯</span>
+        <span id="mobile-goal-label">Goal</span>
+      </button>
+
       <div class="ml-auto flex items-center gap-2 text-[11px] font-mono text-[#8f8f8f] shrink-0 pl-2">
         <span id="doc-count-badge">Draft 1</span>
       </div>
     </div>
 
-    <!-- Action Bar / Toolbar (Vercel Inset Tool Strip) -->
-    <div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] px-4 py-2.5">
+    <!-- Action Bar / Toolbar (Horizontally scrollable with micro-tools) -->
+    <div class="flex items-center justify-between gap-2 border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] px-3 sm:px-4 py-2 overflow-x-auto whitespace-nowrap">
       
-      <!-- Left Controls: File Upload, Case Converter, Highlight Mode -->
-      <div class="flex flex-wrap items-center gap-2">
+      <!-- Left Controls: Undo/Redo, Voice, Find, Upload, Case, Highlight -->
+      <div class="flex items-center gap-1.5 shrink-0">
         
-        <!-- File Upload Button & Hidden Input (6px Square Button) -->
+        <!-- Undo & Redo Buttons -->
+        <div class="flex items-center gap-0.5 border-r border-[#ebebeb] dark:border-[#222222] pr-1.5">
+          <button
+            id="btn-undo"
+            type="button"
+            class="vercel-btn-sm vercel-btn-sm-ghost px-1.5 py-1 text-xs cursor-pointer"
+            title="Undo (Ctrl+Z)"
+          >
+            <svg class="h-3.5 w-3.5 text-[#71717a] dark:text-[#a1a1aa]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a5 5 0 015 5v2m0 0l-3-3m3 3l3-3M3 10l3-3m-3 3l3 3"/>
+            </svg>
+          </button>
+          <button
+            id="btn-redo"
+            type="button"
+            class="vercel-btn-sm vercel-btn-sm-ghost px-1.5 py-1 text-xs cursor-pointer"
+            title="Redo (Ctrl+Y)"
+          >
+            <svg class="h-3.5 w-3.5 text-[#71717a] dark:text-[#a1a1aa]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10H11a5 5 0 00-5 5v2m0 0l3-3m-3 3l-3-3m14-4l-3-3m3 3l-3 3"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Talk to Type (Speech-To-Text Dictation) -->
+        <button
+          id="btn-talk-to-type"
+          type="button"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 cursor-pointer"
+          title="Dictate with voice (Speech-to-text)"
+        >
+          <svg id="icon-mic" class="h-3.5 w-3.5 text-[#71717a] dark:text-[#a1a1aa]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+          </svg>
+          <span id="label-talk-to-type" class="hidden sm:inline">Talk to Type</span>
+        </button>
+
+        <!-- Proof Read (SpeechSynthesis Text-To-Speech) -->
+        <button
+          id="btn-proof-read"
+          type="button"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 text-[#0070f3] cursor-pointer"
+          title="Listen to your text (Audio proofreading)"
+        >
+          <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+          </svg>
+          <span class="hidden sm:inline">Proof Read</span>
+        </button>
+
+        <!-- Find & Replace Trigger -->
+        <button
+          id="btn-find-replace-toggle"
+          type="button"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 cursor-pointer"
+          title="Find & Replace text"
+        >
+          <svg class="h-3.5 w-3.5 text-[#71717a] dark:text-[#a1a1aa]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <span class="hidden sm:inline">Find</span>
+        </button>
+
+        <!-- File Upload Button & Hidden Input -->
         <button
           id="btn-trigger-upload"
           type="button"
-          class="vercel-btn-sm vercel-btn-sm-ghost"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs cursor-pointer"
         >
           <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
           </svg>
-          <span>Upload File</span>
-          <span class="text-[10px] text-[#8f8f8f] font-mono hidden sm:inline">(.docx, .pdf, .txt)</span>
+          <span>Upload</span>
+          <span class="text-[10px] text-[#8f8f8f] font-mono hidden md:inline">(.docx, .pdf)</span>
         </button>
         <input type="file" id="file-upload-input" accept=".txt,.md,.rtf,.docx,.pdf" class="hidden" />
 
@@ -173,19 +418,19 @@ const {
           <button
             id="case-menu-btn"
             type="button"
-            class="vercel-btn-sm vercel-btn-sm-ghost"
+            class="vercel-btn-sm vercel-btn-sm-ghost text-xs cursor-pointer"
           >
-            <span>Change Case</span>
+            <span>Case</span>
             <svg class="h-3 w-3 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
             </svg>
           </button>
           
           <div id="case-dropdown" class="hidden absolute left-0 mt-1.5 w-44 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl z-30 text-xs">
-            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="sentence">Sentence case</button>
-            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="lower">lowercase</button>
-            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="upper">UPPERCASE</button>
-            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-case="title">Title Case</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-case="sentence">Sentence case</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-case="lower">lowercase</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-case="upper">UPPERCASE</button>
+            <button class="case-option w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-case="title">Title Case</button>
           </div>
         </div>
 
@@ -193,25 +438,25 @@ const {
         <button
           id="btn-toggle-highlight"
           type="button"
-          class="vercel-btn-sm vercel-btn-sm-ghost text-xs text-amber-600 dark:text-amber-400 border border-amber-500/25 bg-amber-500/5 hover:bg-amber-500/10"
+          class="vercel-btn-sm vercel-btn-sm-ghost text-xs text-amber-600 dark:text-amber-400 border border-amber-500/25 bg-amber-500/5 hover:bg-amber-500/10 cursor-pointer"
           title="Toggle inline color-coded highlights for passive voice, weak fillers, and long sentences"
         >
           <svg class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
-          <span id="highlight-toggle-label">Inline Highlights</span>
+          <span id="highlight-toggle-label">Highlights</span>
         </button>
 
       </div>
 
       <!-- Right Controls: Copy Stats, Copy Text, Export, Clear -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 shrink-0">
         
         <!-- Copy Stats Button -->
         <button
           id="btn-copy-stats"
           type="button"
-          class="vercel-btn-sm vercel-btn-sm-ghost"
+          class="vercel-btn-sm vercel-btn-sm-ghost cursor-pointer"
           title="Copy formatted statistics summary"
         >
           <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,7 +469,7 @@ const {
         <button
           id="btn-copy-text"
           type="button"
-          class="vercel-btn-sm vercel-btn-sm-ghost"
+          class="vercel-btn-sm vercel-btn-sm-ghost cursor-pointer"
           title="Copy editor text to clipboard"
         >
           <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -233,12 +478,12 @@ const {
           <span class="hidden sm:inline">Copy Text</span>
         </button>
 
-        <!-- Export Dropdown -->
+        <!-- Export Dropdown (Expanded) -->
         <div class="relative">
           <button
             id="export-menu-btn"
             type="button"
-            class="vercel-btn-sm vercel-btn-sm-ghost"
+            class="vercel-btn-sm vercel-btn-sm-ghost cursor-pointer"
             title="Export text & report"
           >
             <svg class="h-3.5 w-3.5 text-[#8f8f8f]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -249,11 +494,36 @@ const {
           
           <div
             id="export-dropdown"
-            class="hidden absolute right-0 mt-1.5 w-44 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-xl z-20 text-xs"
+            class="hidden absolute right-0 mt-1.5 w-56 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-1.5 shadow-2xl z-40 text-xs"
           >
-            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="txt">Download as .TXT</button>
-            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="md">Download as .MD</button>
-            <button class="export-opt w-full rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition" data-export="report">Copy Full Report</button>
+            <div class="px-2 py-1 font-mono text-[10px] uppercase text-[#8f8f8f] font-semibold">Document Exports</div>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="txt">
+              <span>Plain Text</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">.txt</span>
+            </button>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="md">
+              <span>Markdown + YAML Stats</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">.md</span>
+            </button>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="docx">
+              <span>Word Document</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">.doc</span>
+            </button>
+
+            <div class="my-1 border-t border-[#ebebeb] dark:border-[#222222]"></div>
+            <div class="px-2 py-1 font-mono text-[10px] uppercase text-[#8f8f8f] font-semibold">Analytics &amp; Data</div>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="csv">
+              <span>Keyword Density Table</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">.csv</span>
+            </button>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="json">
+              <span>Full Analytics JSON</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">.json</span>
+            </button>
+            <button class="export-opt w-full flex items-center justify-between rounded-[4px] px-2.5 py-1.5 text-left text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#171717] transition cursor-pointer" data-export="report">
+              <span>Copy Formatted Report</span>
+              <span class="font-mono text-[10px] text-[#8f8f8f]">Clipboard</span>
+            </button>
           </div>
         </div>
 
@@ -261,15 +531,88 @@ const {
         <button
           id="btn-clear-text"
           type="button"
-          class="vercel-btn-sm text-xs text-[#ee0000] border border-[#ee0000]/20 bg-[#ee0000]/5 hover:bg-[#ee0000]/10 transition"
+          class="vercel-btn-sm text-xs text-[#ee0000] border border-[#ee0000]/20 bg-[#ee0000]/5 hover:bg-[#ee0000]/10 transition cursor-pointer"
           title="Clear editor text"
         >
-          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="h-3.5 w-3.5 fill-none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
           </svg>
           <span>Clear</span>
         </button>
 
+      </div>
+    </div>
+
+    <!-- FIND & REPLACE BAR (Word-Processor Utility) -->
+    <div id="find-replace-bar" class="hidden border-b border-[#ebebeb] dark:border-[#222222] bg-[#f8f8f8] dark:bg-[#121212] px-3 sm:px-4 py-2 text-xs">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex flex-wrap items-center gap-2 flex-1">
+          <div class="relative flex items-center">
+            <input
+              id="input-find"
+              type="text"
+              placeholder="Find..."
+              class="w-32 sm:w-40 px-2 py-1 rounded-[5px] border border-[#ebebeb] dark:border-[#333] bg-white dark:bg-[#1a1a1a] text-[#171717] dark:text-[#ededed] font-mono text-[11px] focus:outline-hidden"
+            />
+            <span id="find-match-count" class="absolute right-2 text-[10px] font-mono text-[#8f8f8f]">0/0</span>
+          </div>
+          <input
+            id="input-replace"
+            type="text"
+            placeholder="Replace with..."
+            class="w-32 sm:w-40 px-2 py-1 rounded-[5px] border border-[#ebebeb] dark:border-[#333] bg-white dark:bg-[#1a1a1a] text-[#171717] dark:text-[#ededed] font-mono text-[11px] focus:outline-hidden"
+          />
+          <div class="flex items-center gap-2 font-mono text-[10px] text-[#71717a] dark:text-[#a1a1aa]">
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="check-find-case" class="accent-[#0070f3] rounded" />
+              <span>Match Case</span>
+            </label>
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="checkbox" id="check-find-whole" class="accent-[#0070f3] rounded" />
+              <span>Whole Word</span>
+            </label>
+          </div>
+          <div class="flex items-center gap-1">
+            <button id="btn-find-prev" type="button" class="px-2 py-1 rounded bg-[#ebebeb] dark:bg-[#222] hover:bg-[#e0e0e0] dark:hover:bg-[#2c2c2c] text-[10px] font-mono cursor-pointer" title="Previous match">▲</button>
+            <button id="btn-find-next" type="button" class="px-2 py-1 rounded bg-[#ebebeb] dark:bg-[#222] hover:bg-[#e0e0e0] dark:hover:bg-[#2c2c2c] text-[10px] font-mono cursor-pointer" title="Next match">▼</button>
+            <button id="btn-replace-one" type="button" class="px-2.5 py-1 rounded bg-[#0070f3] text-white hover:bg-[#0060df] text-[10px] font-mono font-medium cursor-pointer">Replace</button>
+            <button id="btn-replace-all" type="button" class="px-2.5 py-1 rounded bg-[#171717] text-white dark:bg-white dark:text-black hover:opacity-90 text-[10px] font-mono font-medium cursor-pointer">Replace All</button>
+          </div>
+        </div>
+        <button id="btn-close-find-replace" type="button" class="text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white text-sm px-1 cursor-pointer">✕</button>
+      </div>
+    </div>
+
+    <!-- PROOF READ AUDIO CONTROLS BAR (Browser-Native Text-To-Speech) -->
+    <div id="proof-read-bar" class="hidden border-b border-[#ebebeb] dark:border-[#222222] bg-[#f0f9ff] dark:bg-[#081b2e] px-3 sm:px-4 py-2 text-xs">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="flex h-2 w-2 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#0070f3]"></span>
+          </span>
+          <span class="font-mono text-xs font-semibold text-[#0070f3]">Proof Read Audio:</span>
+          <span id="proof-read-status" class="text-xs text-[#52525b] dark:text-[#93c5fd]">Ready to speak text aloud</span>
+        </div>
+        <div class="flex items-center gap-2 font-mono text-xs">
+          <button id="btn-tts-play-pause" type="button" class="px-2.5 py-1 rounded bg-[#0070f3] text-white hover:bg-[#0060df] font-semibold flex items-center gap-1 cursor-pointer">
+            <span id="tts-play-icon">▶</span>
+            <span id="tts-play-label">Play</span>
+          </button>
+          <button id="btn-tts-stop" type="button" class="px-2.5 py-1 rounded bg-[#ebebeb] dark:bg-[#1a2d45] text-[#171717] dark:text-white hover:bg-black/10 cursor-pointer">
+            ⏹ Stop
+          </button>
+          <div class="flex items-center gap-1 text-[11px]">
+            <span>Speed:</span>
+            <select id="select-tts-rate" class="px-1.5 py-1 rounded border border-[#ebebeb] dark:border-[#334155] bg-white dark:bg-[#0f172a] text-[#171717] dark:text-white text-[11px]">
+              <option value="0.75">0.75x</option>
+              <option value="1.0" selected>1.0x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+            </select>
+          </div>
+          <button id="btn-close-tts-bar" type="button" class="text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white text-sm px-1 cursor-pointer">✕</button>
+        </div>
       </div>
     </div>
 
@@ -284,12 +627,12 @@ const {
       <p class="text-xs text-[#8f8f8f] mt-1 font-mono">100% processed in browser. Supports .docx, .pdf, .txt, .md</p>
     </div>
 
-    <!-- MAIN ERGONOMIC TEXTAREA & INLINE HIGHLIGHT VIEWPORT -->
-    <div class="relative p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+    <!-- MAIN ERGONOMIC TEXTAREA & INLINE HIGHLIGHT VIEWPORT (Optimized above-the-fold) -->
+    <div class="relative p-3 sm:p-5 bg-white dark:bg-[#0a0a0a]">
       <textarea
         id="main-text-input"
-        rows="13"
-        class="w-full resize-y bg-transparent text-[#171717] dark:text-[#ededed] placeholder:text-[#8f8f8f] font-normal leading-relaxed text-[15px] sm:text-[16px] focus:outline-hidden"
+        rows="8"
+        class="w-full min-h-[190px] sm:min-h-[290px] resize-y bg-transparent text-[#171717] dark:text-[#ededed] placeholder:text-[#8f8f8f] font-normal leading-relaxed text-[15px] sm:text-[16px] focus:outline-hidden"
         placeholder="Type, paste (Ctrl+V), or drag & drop text, docx, or pdf here to begin..."
         spellcheck="true"
       ></textarea>
@@ -635,18 +978,77 @@ const {
       </div>
     </div>
 
-    <!-- Tab 5: Style & Quality (Filler Words & Passive Voice) Content -->
+    <!-- Tab 5: Style, Flow & Quality (Sentence Rhythm, Fillers, Passive Voice) Content -->
     <div id="tab-content-style" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
-      <div class="mb-5">
-        <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
-          <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-          <span>Style & Quality Audit</span>
-        </h2>
-        <p class="text-xs text-[#8f8f8f] mt-0.5">
-          Detects weak filler words and passive voice constructions to make your copy punchy, direct, and authoritative.
-        </p>
+      <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] flex items-center gap-2 tracking-tight">
+            <svg class="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            <span>Style, Rhythm &amp; Quality Audit</span>
+          </h2>
+          <p class="text-xs text-[#8f8f8f] mt-0.5">
+            Audit sentence length variety (Flow Score), detect weak filler words, and flag passive voice constructions.
+          </p>
+        </div>
+        <button
+          id="btn-flow-highlight-toggle"
+          type="button"
+          class="flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-blue-500/30 bg-blue-500/10 text-[#0070f3] text-xs font-mono font-medium hover:bg-blue-500/20 transition cursor-pointer"
+        >
+          <span>🎨</span>
+          <span id="flow-highlight-btn-label">Highlight Sentence Flow</span>
+        </button>
+      </div>
+
+      <!-- Sentence Length Flow Score Card (WordCounter.net feature) -->
+      <div class="mb-6 rounded-[12px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0c] p-4 sm:p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="mono-eyebrow text-[#0070f3]">Sentence Length Flow Score:</span>
+            <span class="font-mono text-base font-bold text-[#171717] dark:text-white" id="flow-score-val">0 / 100</span>
+          </div>
+          <span class="font-mono text-xs text-[#0070f3] px-2 py-0.5 rounded bg-[#0070f3]/10" id="flow-score-label">Add text to evaluate rhythm</span>
+        </div>
+
+        <!-- 5-Bucket Visual Bar -->
+        <div class="h-2 w-full rounded-full bg-[#ebebeb] dark:bg-[#222222] overflow-hidden flex mb-3.5">
+          <div id="bar-flow-vshort" class="h-full bg-blue-500 transition-all duration-300" style="width: 0%" title="Very Short (1-5 words)"></div>
+          <div id="bar-flow-short" class="h-full bg-emerald-500 transition-all duration-300" style="width: 0%" title="Short (6-14 words)"></div>
+          <div id="bar-flow-medium" class="h-full bg-zinc-400 dark:bg-zinc-600 transition-all duration-300" style="width: 0%" title="Medium (15-25 words)"></div>
+          <div id="bar-flow-long" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%" title="Long (26-39 words)"></div>
+          <div id="bar-flow-marathon" class="h-full bg-rose-500 transition-all duration-300" style="width: 0%" title="Marathon (40+ words)"></div>
+        </div>
+
+        <!-- 5 Bucket Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-mono">
+          <div class="p-2 rounded-[6px] border border-blue-500/20 bg-blue-500/5">
+            <div class="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">Very Short (1–5w)</div>
+            <div class="text-sm font-bold text-[#171717] dark:text-white mt-0.5" id="count-flow-vshort">0 (0%)</div>
+            <div class="text-[9px] text-[#8f8f8f]">Punchy impact</div>
+          </div>
+          <div class="p-2 rounded-[6px] border border-emerald-500/20 bg-emerald-500/5">
+            <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Short (6–14w)</div>
+            <div class="text-sm font-bold text-[#171717] dark:text-white mt-0.5" id="count-flow-short">0 (0%)</div>
+            <div class="text-[9px] text-[#8f8f8f]">Crisp clarity</div>
+          </div>
+          <div class="p-2 rounded-[6px] border border-zinc-500/20 bg-zinc-500/5">
+            <div class="text-[10px] text-zinc-600 dark:text-zinc-400 font-semibold">Medium (15–25w)</div>
+            <div class="text-sm font-bold text-[#171717] dark:text-white mt-0.5" id="count-flow-medium">0 (0%)</div>
+            <div class="text-[9px] text-[#8f8f8f]">Standard cadence</div>
+          </div>
+          <div class="p-2 rounded-[6px] border border-amber-500/20 bg-amber-500/5">
+            <div class="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">Long (26–39w)</div>
+            <div class="text-sm font-bold text-[#171717] dark:text-white mt-0.5" id="count-flow-long">0 (0%)</div>
+            <div class="text-[9px] text-[#8f8f8f]">Complex ideas</div>
+          </div>
+          <div class="p-2 rounded-[6px] border border-rose-500/20 bg-rose-500/5">
+            <div class="text-[10px] text-rose-600 dark:text-rose-400 font-semibold">Marathon (40+w)</div>
+            <div class="text-sm font-bold text-[#171717] dark:text-white mt-0.5" id="count-flow-marathon">0 (0%)</div>
+            <div class="text-[9px] text-[#8f8f8f]">Potential run-on</div>
+          </div>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
@@ -967,6 +1369,23 @@ const {
   const statReadingTime = document.getElementById('stat-reading-time')!;
   const statSpeakingTime = document.getElementById('stat-speaking-time')!;
 
+  // Reading & Speaking Speed Customization Elements
+  const btnReadingSpeedToggle = document.getElementById('btn-reading-speed-toggle');
+  const popoverReadingSpeed = document.getElementById('popover-reading-speed');
+  const readingWpmBadge = document.getElementById('reading-wpm-badge');
+  const readingSpeedLabel = document.getElementById('reading-speed-label');
+  const inputCustomReadingWpm = document.getElementById('input-custom-reading-wpm') as HTMLInputElement | null;
+  const btnSaveCustomReadingWpm = document.getElementById('btn-save-custom-reading-wpm');
+  const btnCloseReadingPopover = document.getElementById('btn-close-reading-popover');
+
+  const btnSpeakingSpeedToggle = document.getElementById('btn-speaking-speed-toggle');
+  const popoverSpeakingSpeed = document.getElementById('popover-speaking-speed');
+  const speakingWpmBadge = document.getElementById('speaking-wpm-badge');
+  const speakingSpeedLabel = document.getElementById('speaking-speed-label');
+  const inputCustomSpeakingWpm = document.getElementById('input-custom-speaking-wpm') as HTMLInputElement | null;
+  const btnSaveCustomSpeakingWpm = document.getElementById('btn-save-custom-speaking-wpm');
+  const btnCloseSpeakingPopover = document.getElementById('btn-close-speaking-popover');
+
   const targetTextStatus = document.getElementById('target-text-status')!;
   const targetProgressFill = document.getElementById('target-progress-fill')!;
   const autosaveLabel = document.getElementById('autosave-label')!;
@@ -1092,12 +1511,114 @@ const {
   let currentProviderFilter = 'all';
   let currentSearchQuery = '';
 
+  // Mobile Top Micro-Bar Elements
+  const btnMobileToggleCards = document.getElementById('btn-mobile-toggle-cards');
+  const mainMetricCards = document.getElementById('main-metric-cards');
+  const mobileCardsChevron = document.getElementById('mobile-cards-chevron');
+  const mobileCardsBtnLabel = document.getElementById('mobile-cards-btn-label');
+  const mobileStatWords = document.getElementById('mobile-stat-words');
+  const mobileStatChars = document.getElementById('mobile-stat-chars');
+  const mobileStatReading = document.getElementById('mobile-stat-reading');
+  const btnMobileGoal = document.getElementById('btn-mobile-goal');
+
+  // Granular Metrics Elements (WordCounter.net feature)
+  const btnToggleGranular = document.getElementById('btn-toggle-granular');
+  const drawerGranular = document.getElementById('drawer-granular-metrics');
+  const chevronGranular = document.getElementById('chevron-granular');
+  const labelGranularToggle = document.getElementById('label-granular-toggle');
+  const statUniqueWords = document.getElementById('stat-unique-words');
+  const statUniqueRatio = document.getElementById('stat-unique-ratio');
+  const statSyllables = document.getElementById('stat-syllables');
+  const statSyllablesAvg = document.getElementById('stat-syllables-avg');
+  const statLines = document.getElementById('stat-lines');
+  const statSentenceExtremes = document.getElementById('stat-sentence-extremes');
+  const statPublisherPages = document.getElementById('stat-publisher-pages');
+  const statHandwritingTime = document.getElementById('stat-handwriting-time');
+  const streakCounterLabel = document.getElementById('streak-counter-label');
+  const activityChartBars = document.getElementById('activity-chart-bars');
+
+  // Undo / Redo Elements & State
+  const btnUndo = document.getElementById('btn-undo');
+  const btnRedo = document.getElementById('btn-redo');
+  let undoHistory: string[] = [];
+  let redoHistory: string[] = [];
+  let isUndoRedoRunning = false;
+
+  // Find & Replace Elements & State
+  const btnFindReplaceToggle = document.getElementById('btn-find-replace-toggle');
+  const findReplaceBar = document.getElementById('find-replace-bar');
+  const inputFind = document.getElementById('input-find') as HTMLInputElement | null;
+  const inputReplace = document.getElementById('input-replace') as HTMLInputElement | null;
+  const checkFindCase = document.getElementById('check-find-case') as HTMLInputElement | null;
+  const checkFindWhole = document.getElementById('check-find-whole') as HTMLInputElement | null;
+  const btnFindPrev = document.getElementById('btn-find-prev');
+  const btnFindNext = document.getElementById('btn-find-next');
+  const btnReplaceOne = document.getElementById('btn-replace-one');
+  const btnReplaceAll = document.getElementById('btn-replace-all');
+  const btnCloseFindReplace = document.getElementById('btn-close-find-replace');
+  const findMatchCount = document.getElementById('find-match-count');
+  let findIndices: number[] = [];
+  let activeFindMatchIndex = -1;
+
+  // Voice Dictation (Talk to Type) Elements & State
+  const btnTalkToType = document.getElementById('btn-talk-to-type');
+  const iconMic = document.getElementById('icon-mic');
+  const labelTalkToType = document.getElementById('label-talk-to-type');
+  let recognition: any = null;
+  let isListeningSpeech = false;
+
+  // Proof Read (Audio Text-to-Speech) Elements & State
+  const btnProofRead = document.getElementById('btn-proof-read');
+  const proofReadBar = document.getElementById('proof-read-bar');
+  const proofReadStatus = document.getElementById('proof-read-status');
+  const btnTtsPlayPause = document.getElementById('btn-tts-play-pause');
+  const btnTtsStop = document.getElementById('btn-tts-stop');
+  const selectTtsRate = document.getElementById('select-tts-rate') as HTMLSelectElement | null;
+  const btnCloseTtsBar = document.getElementById('btn-close-tts-bar');
+  const ttsPlayIcon = document.getElementById('tts-play-icon');
+  const ttsPlayLabel = document.getElementById('tts-play-label');
+  let ttsUtterance: SpeechSynthesisUtterance | null = null;
+  let isTtsPlaying = false;
+
+  // Sentence Flow & Rhythm Elements & State
+  const flowScoreVal = document.getElementById('flow-score-val');
+  const flowScoreLabel = document.getElementById('flow-score-label');
+  const barFlowVshort = document.getElementById('bar-flow-vshort');
+  const barFlowShort = document.getElementById('bar-flow-short');
+  const barFlowMedium = document.getElementById('bar-flow-medium');
+  const barFlowLong = document.getElementById('bar-flow-long');
+  const barFlowMarathon = document.getElementById('bar-flow-marathon');
+  const countFlowVshort = document.getElementById('count-flow-vshort');
+  const countFlowShort = document.getElementById('count-flow-short');
+  const countFlowMedium = document.getElementById('count-flow-medium');
+  const countFlowLong = document.getElementById('count-flow-long');
+  const countFlowMarathon = document.getElementById('count-flow-marathon');
+  const btnFlowHighlightToggle = document.getElementById('btn-flow-highlight-toggle');
+  const flowHighlightBtnLabel = document.getElementById('flow-highlight-btn-label');
+  let isFlowHighlightActive = false;
+
   // State variables
   let currentTargetCount = initialTargetVal || 0;
   let currentTargetType: 'words' | 'characters' = 'words';
   let currentNgram = 1;
   let academicModeEnabled = false;
   let isHighlightMode = false;
+
+  // Reading & Speaking Speed Customization State
+  let userReadingWpm = 225;
+  try {
+    const savedR = localStorage.getItem('cwc-reading-wpm');
+    if (savedR) userReadingWpm = parseInt(savedR, 10) || 225;
+  } catch (e) {}
+
+  let userSpeakingWpm = 130;
+  try {
+    const savedS = localStorage.getItem('cwc-speaking-wpm');
+    if (savedS) userSpeakingWpm = parseInt(savedS, 10) || 130;
+  } catch (e) {}
+
+  if (readingWpmBadge) readingWpmBadge.textContent = `${userReadingWpm} wpm`;
+  if (speakingWpmBadge) speakingWpmBadge.textContent = `${userSpeakingWpm} wpm`;
 
   // Multi-Document Data Structure
   interface DocTab {
@@ -1297,26 +1818,53 @@ const {
     document.body.removeChild(temp);
   }
 
-  // Hemingway Mode / Style Highlight Renderer
+  // Hemingway Mode & Sentence Flow Highlight Renderer
   function renderInlineHighlights() {
     if (!styleHighlightViewport) return;
     const text = textarea.value;
     if (!text.trim()) {
-      styleHighlightViewport.innerHTML = '<span class="text-[#8f8f8f] font-mono text-xs">Type or paste text in the editor to see live Hemingway-style highlights for filler words, passive voice, and complex sentences. Click here to return to writing.</span>';
+      styleHighlightViewport.innerHTML = '<span class="text-[#8f8f8f] font-mono text-xs">Type or paste text in the editor to see live color-coded highlights for rhythm flow, weak fillers, and passive voice. Click here to return to writing.</span>';
+      return;
+    }
+
+    // 1. Flow Rhythm Mode (WordCounter.net Sentence Length Highlighting)
+    if (isFlowHighlightActive) {
+      const rawSentences = text.split(/(?<=[.!?]+["”'’]?\s+)/gu);
+      let flowHtml = '';
+      for (const sent of rawSentences) {
+        if (!sent.trim()) {
+          flowHtml += escapeHtml(sent);
+          continue;
+        }
+        const wCount = (sent.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu) || []).length;
+        const escapedSent = escapeHtml(sent);
+        if (wCount <= 5) {
+          flowHtml += `<mark class="bg-blue-500/20 text-blue-800 dark:text-blue-300 rounded px-1 py-0.5" title="Very Short (${wCount} words)">${escapedSent}</mark>`;
+        } else if (wCount <= 14) {
+          flowHtml += `<mark class="bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 rounded px-1 py-0.5" title="Short (${wCount} words)">${escapedSent}</mark>`;
+        } else if (wCount <= 25) {
+          flowHtml += `<span>${escapedSent}</span>`;
+        } else if (wCount <= 39) {
+          flowHtml += `<mark class="bg-amber-500/20 text-amber-800 dark:text-amber-300 rounded px-1 py-0.5" title="Long (${wCount} words)">${escapedSent}</mark>`;
+        } else {
+          flowHtml += `<mark class="bg-rose-500/25 text-rose-800 dark:text-rose-300 rounded px-1 py-0.5 border-b-2 border-rose-500" title="Marathon Run-On (${wCount} words)">${escapedSent}</mark>`;
+        }
+      }
+      styleHighlightViewport.innerHTML = flowHtml;
       return;
     }
 
     const style = analyzeStyle(text);
     let html = escapeHtml(text);
 
-    // 1. Highlight passive voice in blue
+    // 2. Highlight passive voice in blue
     style.passiveMatches.forEach(p => {
       const phraseEsc = escapeRegExp(p.phrase);
       const re = new RegExp(`\\b(${phraseEsc})\\b`, 'gi');
       html = html.replace(re, '<mark class="bg-[#0070f3]/20 dark:bg-[#0070f3]/30 text-[#0070f3] dark:text-[#79b8ff] px-1 py-0.5 rounded font-mono text-xs font-semibold" title="Passive voice phrase">$1</mark>');
     });
 
-    // 2. Highlight weak filler words in amber
+    // 3. Highlight weak filler words in amber
     style.fillerMatches.forEach(f => {
       const wordEsc = escapeRegExp(f.word);
       const re = new RegExp(`\\b(${wordEsc})\\b`, 'gi');
@@ -1389,8 +1937,8 @@ const {
       acadExcludedDesc.textContent = `Found ${acad.inTextCitationsCount} in-text citations · ${acad.referencesWordCount} ref words`;
     }
 
-    // 1. Calculate Core Metrics
-    const metrics = calculateMetrics(textToAnalyze);
+    // 1. Calculate Core Metrics with Customizable WPM
+    const metrics = calculateMetrics(textToAnalyze, userReadingWpm, userSpeakingWpm);
 
     statWords.textContent = metrics.words.toLocaleString();
     statLongestWord.textContent = metrics.words > 0 ? `Avg ${metrics.averageWordLength} chars/word` : 'Avg 0 chars/word';
@@ -1404,6 +1952,39 @@ const {
     statSentsPerPara.textContent = `${sentsPerPara} sents/para`;
     statReadingTime.textContent = metrics.readingTimeFormatted;
     statSpeakingTime.textContent = metrics.speakingTimeFormatted;
+
+    // Mobile Top Micro-Bar Stats
+    if (mobileStatWords) mobileStatWords.textContent = `${metrics.words.toLocaleString()} Words`;
+    if (mobileStatChars) mobileStatChars.textContent = `${metrics.characters.toLocaleString()} Chars`;
+    if (mobileStatReading) mobileStatReading.textContent = `${metrics.readingTimeFormatted} Read`;
+
+    // WordCounter.net Granular Drawer Stats
+    if (statUniqueWords) statUniqueWords.textContent = metrics.uniqueWords.toLocaleString();
+    if (statUniqueRatio) statUniqueRatio.textContent = `${metrics.uniqueWordsPercent}% vocabulary richness`;
+    if (statSyllables) statSyllables.textContent = metrics.totalSyllables.toLocaleString();
+    if (statSyllablesAvg) statSyllablesAvg.textContent = `~${metrics.syllablesPerWord} syllables/word`;
+    if (statLines) statLines.textContent = metrics.lines.toLocaleString();
+    if (statSentenceExtremes) statSentenceExtremes.textContent = `${metrics.shortestSentenceWords}w min · ${metrics.longestSentenceWords}w max`;
+    if (statPublisherPages) statPublisherPages.textContent = `${metrics.publisherPages} book · ${metrics.standardPages} standard`;
+    if (statHandwritingTime) statHandwritingTime.textContent = metrics.handwritingTimeFormatted;
+
+    // Daily Activity & Streak Recording
+    recordDailyActivity(metrics.words);
+
+    // Sentence Flow Rhythm & Length Distribution (Tab 5)
+    if (flowScoreVal) flowScoreVal.textContent = metrics.flow.flowScore.toString();
+    if (flowScoreLabel) flowScoreLabel.textContent = metrics.flow.flowLabel;
+    const sentTotal = Math.max(1, metrics.sentences);
+    if (barFlowVshort) barFlowVshort.style.width = `${Math.min(100, Math.round((metrics.flow.veryShort / sentTotal) * 100))}%`;
+    if (barFlowShort) barFlowShort.style.width = `${Math.min(100, Math.round((metrics.flow.short / sentTotal) * 100))}%`;
+    if (barFlowMedium) barFlowMedium.style.width = `${Math.min(100, Math.round((metrics.flow.medium / sentTotal) * 100))}%`;
+    if (barFlowLong) barFlowLong.style.width = `${Math.min(100, Math.round((metrics.flow.long / sentTotal) * 100))}%`;
+    if (barFlowMarathon) barFlowMarathon.style.width = `${Math.min(100, Math.round((metrics.flow.marathon / sentTotal) * 100))}%`;
+    if (countFlowVshort) countFlowVshort.textContent = metrics.flow.veryShort.toString();
+    if (countFlowShort) countFlowShort.textContent = metrics.flow.short.toString();
+    if (countFlowMedium) countFlowMedium.textContent = metrics.flow.medium.toString();
+    if (countFlowLong) countFlowLong.textContent = metrics.flow.long.toString();
+    if (countFlowMarathon) countFlowMarathon.textContent = metrics.flow.marathon.toString();
 
     // 2. Target Goal Progress Tracking
     if (currentTargetCount > 0) {
@@ -2024,9 +2605,436 @@ const {
   // Populate model dropdown on initial script boot
   populateModelSelect();
 
+  // ─── LOCAL WRITING ACTIVITY & STREAK TRACKER (WordCounter.net feature) ───
+  interface DayActivity {
+    date: string; // YYYY-MM-DD
+    words: number;
+  }
+  const ACTIVITY_STORAGE_KEY = 'cleanwordcounter-activity';
+  function getDailyActivity(): DayActivity[] {
+    try {
+      const raw = localStorage.getItem(ACTIVITY_STORAGE_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    return [];
+  }
+
+  function recordDailyActivity(currentDocWords: number) {
+    if (currentDocWords <= 0) {
+      renderActivityStreak(getDailyActivity());
+      return;
+    }
+    const todayStr = new Date().toISOString().slice(0, 10);
+    let activities = getDailyActivity();
+    let todayEntry = activities.find(a => a.date === todayStr);
+    if (todayEntry) {
+      todayEntry.words = Math.max(todayEntry.words, currentDocWords);
+    } else {
+      activities.push({ date: todayStr, words: currentDocWords });
+    }
+    activities = activities.slice(-30);
+    try {
+      localStorage.setItem(ACTIVITY_STORAGE_KEY, JSON.stringify(activities));
+    } catch (e) {}
+    renderActivityStreak(activities);
+  }
+
+  function renderActivityStreak(activities: DayActivity[]) {
+    if (!activityChartBars) return;
+    const days: { dateStr: string; dayLabel: string; words: number }[] = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().slice(0, 10);
+      const dayLabel = d.toLocaleDateString([], { weekday: 'narrow' });
+      const found = activities.find(a => a.date === dateStr);
+      days.push({ dateStr, dayLabel, words: found ? found.words : 0 });
+    }
+    const maxWords = Math.max(300, ...days.map(d => d.words));
+    activityChartBars.innerHTML = days.map(d => {
+      const heightPct = Math.min(100, Math.max(8, Math.round((d.words / maxWords) * 100)));
+      const isToday = d.dateStr === new Date().toISOString().slice(0, 10);
+      return `
+        <div class="flex-1 flex flex-col items-center gap-1 group relative">
+          <div class="w-full h-8 bg-black/5 dark:bg-white/5 rounded-[2px] flex items-end overflow-hidden" title="${d.dateStr}: ${d.words.toLocaleString()} words">
+            <div class="w-full ${isToday ? 'bg-[#0070f3]' : 'bg-[#171717]/40 dark:bg-white/40'} rounded-t-[2px] transition-all" style="height: ${d.words > 0 ? heightPct : 0}%"></div>
+          </div>
+          <span class="text-[9px] font-mono ${isToday ? 'text-[#0070f3] font-bold' : 'text-[#8f8f8f]'}">${d.dayLabel}</span>
+        </div>
+      `;
+    }).join('');
+
+    let streak = 0;
+    const todayStr = new Date().toISOString().slice(0, 10);
+    for (let i = 0; i < 30; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().slice(0, 10);
+      const found = activities.find(a => a.date === dateStr && a.words > 0);
+      if (found) {
+        streak++;
+      } else if (i === 0 && dateStr === todayStr) {
+        continue;
+      } else {
+        break;
+      }
+    }
+    if (streakCounterLabel) {
+      streakCounterLabel.textContent = streak > 0 ? `${streak} day streak` : '0 days';
+    }
+  }
+
+  // ─── UNDO / REDO STATE MACHINE ───
+  function pushUndoState() {
+    if (isUndoRedoRunning || !textarea) return;
+    const val = textarea.value;
+    if (undoHistory.length === 0 || undoHistory[undoHistory.length - 1] !== val) {
+      undoHistory.push(val);
+      if (undoHistory.length > 50) undoHistory.shift();
+      redoHistory = [];
+    }
+  }
+  if (textarea && textarea.value) {
+    undoHistory.push(textarea.value);
+  }
+
+  btnUndo?.addEventListener('click', () => {
+    if (undoHistory.length > 1) {
+      isUndoRedoRunning = true;
+      const current = undoHistory.pop()!;
+      redoHistory.push(current);
+      const prev = undoHistory[undoHistory.length - 1];
+      textarea.value = prev;
+      updateAll();
+      updateFindMatches();
+      isUndoRedoRunning = false;
+      notify('Undo');
+    } else {
+      notify('Nothing to undo');
+    }
+  });
+
+  btnRedo?.addEventListener('click', () => {
+    if (redoHistory.length > 0) {
+      isUndoRedoRunning = true;
+      const next = redoHistory.pop()!;
+      undoHistory.push(next);
+      textarea.value = next;
+      updateAll();
+      updateFindMatches();
+      isUndoRedoRunning = false;
+      notify('Redo');
+    } else {
+      notify('Nothing to redo');
+    }
+  });
+
+  // ─── FIND & REPLACE MICRO-TOOL ───
+  btnFindReplaceToggle?.addEventListener('click', () => {
+    if (findReplaceBar) {
+      findReplaceBar.classList.toggle('hidden');
+      if (!findReplaceBar.classList.contains('hidden')) {
+        inputFind?.focus();
+        updateFindMatches();
+      }
+    }
+  });
+
+  btnCloseFindReplace?.addEventListener('click', () => {
+    findReplaceBar?.classList.add('hidden');
+    textarea?.focus();
+  });
+
+  function updateFindMatches() {
+    if (!inputFind || !textarea) return;
+    const term = inputFind.value;
+    if (!term) {
+      if (findMatchCount) findMatchCount.textContent = '0 matches';
+      findIndices = [];
+      activeFindMatchIndex = -1;
+      return;
+    }
+    const matchCase = checkFindCase?.checked || false;
+    const wholeWord = checkFindWhole?.checked || false;
+    const text = textarea.value;
+    let regexStr = escapeRegExp(term);
+    if (wholeWord) regexStr = `\\b${regexStr}\\b`;
+    const flags = matchCase ? 'g' : 'gi';
+    try {
+      const regex = new RegExp(regexStr, flags);
+      findIndices = [];
+      let match;
+      while ((match = regex.exec(text)) !== null) {
+        findIndices.push(match.index);
+        if (!regex.global) break;
+      }
+      if (findIndices.length > 0) {
+        if (activeFindMatchIndex < 0 || activeFindMatchIndex >= findIndices.length) {
+          activeFindMatchIndex = 0;
+        }
+        highlightCurrentFindMatch();
+      } else {
+        activeFindMatchIndex = -1;
+        if (findMatchCount) findMatchCount.textContent = '0 matches';
+      }
+    } catch (e) {}
+  }
+
+  function highlightCurrentFindMatch() {
+    if (activeFindMatchIndex < 0 || activeFindMatchIndex >= findIndices.length || !inputFind) return;
+    const start = findIndices[activeFindMatchIndex];
+    const len = inputFind.value.length;
+    textarea.focus();
+    textarea.setSelectionRange(start, start + len);
+    if (findMatchCount) {
+      findMatchCount.textContent = `${activeFindMatchIndex + 1} of ${findIndices.length}`;
+    }
+  }
+
+  btnFindNext?.addEventListener('click', () => {
+    if (findIndices.length === 0) return;
+    activeFindMatchIndex = (activeFindMatchIndex + 1) % findIndices.length;
+    highlightCurrentFindMatch();
+  });
+
+  btnFindPrev?.addEventListener('click', () => {
+    if (findIndices.length === 0) return;
+    activeFindMatchIndex = (activeFindMatchIndex - 1 + findIndices.length) % findIndices.length;
+    highlightCurrentFindMatch();
+  });
+
+  inputFind?.addEventListener('input', updateFindMatches);
+  checkFindCase?.addEventListener('change', updateFindMatches);
+  checkFindWhole?.addEventListener('change', updateFindMatches);
+
+  btnReplaceOne?.addEventListener('click', () => {
+    if (!inputFind || !inputReplace || activeFindMatchIndex < 0 || activeFindMatchIndex >= findIndices.length) return;
+    pushUndoState();
+    const start = findIndices[activeFindMatchIndex];
+    const term = inputFind.value;
+    const replaceWith = inputReplace.value || '';
+    const text = textarea.value;
+    textarea.value = text.slice(0, start) + replaceWith + text.slice(start + term.length);
+    updateAll();
+    updateFindMatches();
+    notify('Replaced 1 match');
+  });
+
+  btnReplaceAll?.addEventListener('click', () => {
+    if (!inputFind || !inputReplace) return;
+    const term = inputFind.value;
+    if (!term) return;
+    pushUndoState();
+    const matchCase = checkFindCase?.checked || false;
+    const wholeWord = checkFindWhole?.checked || false;
+    let regexStr = escapeRegExp(term);
+    if (wholeWord) regexStr = `\\b${regexStr}\\b`;
+    const flags = matchCase ? 'g' : 'gi';
+    const regex = new RegExp(regexStr, flags);
+    const count = findIndices.length;
+    textarea.value = textarea.value.replace(regex, inputReplace.value || '');
+    updateAll();
+    updateFindMatches();
+    notify(`Replaced all ${count} matches`);
+  });
+
+  // ─── TALK TO TYPE (Web Speech API SpeechRecognition) ───
+  const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+  btnTalkToType?.addEventListener('click', () => {
+    if (!SpeechRecognition) {
+      alert('Speech recognition is supported in modern Chrome, Edge, and Safari browsers. Please check your browser settings.');
+      return;
+    }
+    if (isListeningSpeech) {
+      recognition?.stop();
+      isListeningSpeech = false;
+      if (btnTalkToType) {
+        btnTalkToType.className = 'vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 cursor-pointer';
+      }
+      if (labelTalkToType) labelTalkToType.textContent = 'Talk to Type';
+      notify('Voice dictation stopped');
+    } else {
+      try {
+        recognition = new SpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+        recognition.onstart = () => {
+          isListeningSpeech = true;
+          if (btnTalkToType) {
+            btnTalkToType.className = 'vercel-btn-sm text-xs flex items-center gap-1.5 border border-rose-500 bg-rose-500/10 text-rose-600 dark:text-rose-400 font-semibold cursor-pointer animate-pulse';
+          }
+          if (labelTalkToType) labelTalkToType.textContent = 'Listening...';
+          notify('Microphone active — start speaking');
+        };
+        recognition.onresult = (event: any) => {
+          let final = '';
+          for (let i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+              final += event.results[i][0].transcript;
+            }
+          }
+          if (final) {
+            pushUndoState();
+            const spacer = textarea.value.length > 0 && !textarea.value.endsWith(' ') ? ' ' : '';
+            textarea.value += spacer + final;
+            updateAll();
+          }
+        };
+        recognition.onerror = (err: any) => {
+          console.error('Dictation error:', err);
+          isListeningSpeech = false;
+          if (btnTalkToType) {
+            btnTalkToType.className = 'vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 cursor-pointer';
+          }
+          if (labelTalkToType) labelTalkToType.textContent = 'Talk to Type';
+          notify(`Dictation: ${err.error || 'microphone error'}`);
+        };
+        recognition.onend = () => {
+          isListeningSpeech = false;
+          if (btnTalkToType) {
+            btnTalkToType.className = 'vercel-btn-sm vercel-btn-sm-ghost text-xs flex items-center gap-1.5 cursor-pointer';
+          }
+          if (labelTalkToType) labelTalkToType.textContent = 'Talk to Type';
+        };
+        recognition.start();
+      } catch (e: any) {
+        alert('Could not start microphone dictation.');
+      }
+    }
+  });
+
+  // ─── PROOF READ (SpeechSynthesis Audio Player) ───
+  btnProofRead?.addEventListener('click', () => {
+    if (!('speechSynthesis' in window)) {
+      alert('Audio proofreading requires SpeechSynthesis, available in all modern browsers.');
+      return;
+    }
+    proofReadBar?.classList.toggle('hidden');
+  });
+
+  btnCloseTtsBar?.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isTtsPlaying = false;
+    proofReadBar?.classList.add('hidden');
+    if (ttsPlayLabel) ttsPlayLabel.textContent = 'Play';
+  });
+
+  btnTtsPlayPause?.addEventListener('click', () => {
+    if (!textarea.value.trim()) {
+      notify('Editor is empty');
+      return;
+    }
+    if (window.speechSynthesis.speaking) {
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+        isTtsPlaying = true;
+        if (ttsPlayLabel) ttsPlayLabel.textContent = 'Pause';
+        if (proofReadStatus) proofReadStatus.textContent = 'Playing audio proofread...';
+      } else {
+        window.speechSynthesis.pause();
+        isTtsPlaying = false;
+        if (ttsPlayLabel) ttsPlayLabel.textContent = 'Resume';
+        if (proofReadStatus) proofReadStatus.textContent = 'Paused audio proofread';
+      }
+    } else {
+      window.speechSynthesis.cancel();
+      const ut = new SpeechSynthesisUtterance(textarea.value);
+      ut.rate = parseFloat(selectTtsRate?.value || '1.0');
+      ut.onstart = () => {
+        isTtsPlaying = true;
+        if (ttsPlayLabel) ttsPlayLabel.textContent = 'Pause';
+        if (proofReadStatus) proofReadStatus.textContent = 'Playing audio proofread...';
+      };
+      ut.onend = () => {
+        isTtsPlaying = false;
+        if (ttsPlayLabel) ttsPlayLabel.textContent = 'Play';
+        if (proofReadStatus) proofReadStatus.textContent = 'Completed proofread';
+      };
+      ut.onerror = () => {
+        isTtsPlaying = false;
+        if (ttsPlayLabel) ttsPlayLabel.textContent = 'Play';
+        if (proofReadStatus) proofReadStatus.textContent = 'Audio playback error';
+      };
+      window.speechSynthesis.speak(ut);
+    }
+  });
+
+  btnTtsStop?.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    isTtsPlaying = false;
+    if (ttsPlayLabel) ttsPlayLabel.textContent = 'Play';
+    if (proofReadStatus) proofReadStatus.textContent = 'Stopped';
+  });
+
+  // ─── MOBILE CONTROLS & GRANULAR DRAWER ───
+  btnMobileToggleCards?.addEventListener('click', () => {
+    if (mainMetricCards) {
+      const isHidden = mainMetricCards.classList.contains('hidden');
+      if (isHidden) {
+        mainMetricCards.classList.remove('hidden');
+        if (mobileCardsChevron) mobileCardsChevron.classList.add('rotate-180');
+        if (mobileCardsBtnLabel) mobileCardsBtnLabel.textContent = 'Hide';
+      } else {
+        mainMetricCards.classList.add('hidden');
+        if (mobileCardsChevron) mobileCardsChevron.classList.remove('rotate-180');
+        if (mobileCardsBtnLabel) mobileCardsBtnLabel.textContent = 'Stats';
+      }
+    }
+  });
+
+  btnMobileGoal?.addEventListener('click', () => {
+    btnSetCustomTarget?.click();
+  });
+
+  btnToggleGranular?.addEventListener('click', () => {
+    if (drawerGranular) {
+      const isHidden = drawerGranular.classList.contains('hidden');
+      if (isHidden) {
+        drawerGranular.classList.remove('hidden');
+        if (chevronGranular) chevronGranular.classList.add('rotate-180');
+        if (labelGranularToggle) labelGranularToggle.textContent = 'Hide Details';
+      } else {
+        drawerGranular.classList.add('hidden');
+        if (chevronGranular) chevronGranular.classList.remove('rotate-180');
+        if (labelGranularToggle) labelGranularToggle.textContent = 'More Details';
+      }
+    }
+  });
+
+  // ─── SENTENCE FLOW RHYTHM HIGHLIGHT TOGGLE ───
+  btnFlowHighlightToggle?.addEventListener('click', () => {
+    isFlowHighlightActive = !isFlowHighlightActive;
+    if (isFlowHighlightActive) {
+      if (!isHighlightMode) {
+        btnToggleHighlight?.click();
+      } else {
+        renderInlineHighlights();
+      }
+      if (flowHighlightBtnLabel) flowHighlightBtnLabel.textContent = 'Disable Flow Highlight';
+      btnFlowHighlightToggle.className = 'vercel-btn-sm bg-[#0070f3] text-white cursor-pointer';
+      notify('Sentence rhythm flow highlights enabled in editor');
+    } else {
+      if (flowHighlightBtnLabel) flowHighlightBtnLabel.textContent = 'Highlight Sentence Flow';
+      btnFlowHighlightToggle.className = 'vercel-btn-sm vercel-btn-sm-ghost cursor-pointer';
+      if (isHighlightMode) {
+        renderInlineHighlights();
+      }
+      notify('Sentence rhythm flow highlights disabled');
+    }
+  });
+
   // Event Listeners for Editor
-  textarea?.addEventListener('input', updateAll);
-  textarea?.addEventListener('paste', () => setTimeout(updateAll, 50));
+  textarea?.addEventListener('input', () => {
+    pushUndoState();
+    updateAll();
+    updateFindMatches();
+  });
+  textarea?.addEventListener('paste', () => setTimeout(() => {
+    pushUndoState();
+    updateAll();
+    updateFindMatches();
+  }, 50));
   checkStopwords?.addEventListener('change', updateAll);
   toggleAcademic?.addEventListener('change', (e) => {
     academicModeEnabled = (e.target as HTMLInputElement).checked;
@@ -2192,8 +3200,108 @@ const {
   }
   (window as any).highlightWord = highlightWordInEditor;
   (window as any).switchAnalysisTab = switchTab;
+  (window as any).addNewDocTab = () => {
+    btnAddDoc?.click();
+  };
+  (window as any).closeActiveDocTab = () => {
+    if (documents.length > 1) {
+      const closeId = activeDocId;
+      documents = documents.filter(d => d.id !== closeId);
+      activeDocId = documents[0].id;
+      textarea.value = documents[0].content;
+      saveCurrentDocContent();
+      renderDocumentTabs();
+      updateAll();
+      notify('Document tab closed');
+    } else {
+      notify('At least one tab must remain open');
+    }
+  };
 
-  // Export Menu (Download TXT, MD, Copy Full Report)
+  // Reading & Speaking Speed Popovers
+  btnReadingSpeedToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    popoverSpeakingSpeed?.classList.add('hidden');
+    popoverReadingSpeed?.classList.toggle('hidden');
+  });
+
+  btnSpeakingSpeedToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    popoverReadingSpeed?.classList.add('hidden');
+    popoverSpeakingSpeed?.classList.toggle('hidden');
+  });
+
+  btnCloseReadingPopover?.addEventListener('click', () => popoverReadingSpeed?.classList.add('hidden'));
+  btnCloseSpeakingPopover?.addEventListener('click', () => popoverSpeakingSpeed?.classList.add('hidden'));
+
+  document.querySelectorAll('.opt-reading-wpm').forEach(b => {
+    b.addEventListener('click', () => {
+      const wpm = parseInt((b as HTMLElement).dataset.wpm || '225', 10);
+      const label = (b as HTMLElement).dataset.label || 'Silent reading';
+      userReadingWpm = wpm;
+      try { localStorage.setItem('cwc-reading-wpm', wpm.toString()); } catch (e) {}
+      if (readingWpmBadge) readingWpmBadge.textContent = `${wpm} wpm`;
+      if (readingSpeedLabel) readingSpeedLabel.textContent = label;
+      popoverReadingSpeed?.classList.add('hidden');
+      updateAll();
+      notify(`Reading speed set to ${wpm} WPM`);
+    });
+  });
+
+  btnSaveCustomReadingWpm?.addEventListener('click', () => {
+    const customVal = parseInt(inputCustomReadingWpm?.value || '0', 10);
+    if (customVal >= 40 && customVal <= 1200) {
+      userReadingWpm = customVal;
+      try { localStorage.setItem('cwc-reading-wpm', customVal.toString()); } catch (e) {}
+      if (readingWpmBadge) readingWpmBadge.textContent = `${customVal} wpm`;
+      if (readingSpeedLabel) readingSpeedLabel.textContent = `Custom (${customVal} WPM)`;
+      popoverReadingSpeed?.classList.add('hidden');
+      updateAll();
+      notify(`Custom reading speed set to ${customVal} WPM`);
+    } else {
+      notify('Please enter a valid WPM between 40 and 1200');
+    }
+  });
+
+  document.querySelectorAll('.opt-speaking-wpm').forEach(b => {
+    b.addEventListener('click', () => {
+      const wpm = parseInt((b as HTMLElement).dataset.wpm || '130', 10);
+      const label = (b as HTMLElement).dataset.label || 'Speech / keynote';
+      userSpeakingWpm = wpm;
+      try { localStorage.setItem('cwc-speaking-wpm', wpm.toString()); } catch (e) {}
+      if (speakingWpmBadge) speakingWpmBadge.textContent = `${wpm} wpm`;
+      if (speakingSpeedLabel) speakingSpeedLabel.textContent = label;
+      popoverSpeakingSpeed?.classList.add('hidden');
+      updateAll();
+      notify(`Speaking rate set to ${wpm} WPM`);
+    });
+  });
+
+  btnSaveCustomSpeakingWpm?.addEventListener('click', () => {
+    const customVal = parseInt(inputCustomSpeakingWpm?.value || '0', 10);
+    if (customVal >= 40 && customVal <= 1200) {
+      userSpeakingWpm = customVal;
+      try { localStorage.setItem('cwc-speaking-wpm', customVal.toString()); } catch (e) {}
+      if (speakingWpmBadge) speakingWpmBadge.textContent = `${customVal} wpm`;
+      if (speakingSpeedLabel) speakingSpeedLabel.textContent = `Custom (${customVal} WPM)`;
+      popoverSpeakingSpeed?.classList.add('hidden');
+      updateAll();
+      notify(`Custom speaking rate set to ${customVal} WPM`);
+    } else {
+      notify('Please enter a valid WPM between 40 and 1200');
+    }
+  });
+
+  window.addEventListener('click', (e) => {
+    if (!popoverReadingSpeed?.contains(e.target as Node) && e.target !== btnReadingSpeedToggle) {
+      popoverReadingSpeed?.classList.add('hidden');
+    }
+    if (!popoverSpeakingSpeed?.contains(e.target as Node) && e.target !== btnSpeakingSpeedToggle) {
+      popoverSpeakingSpeed?.classList.add('hidden');
+    }
+  });
+
+  // Export Menu (Download TXT, MD, DOC, CSV, JSON, Copy Full Report)
   const exportBtn = document.getElementById('export-menu-btn');
   const exportDropdown = document.getElementById('export-dropdown');
   exportBtn?.addEventListener('click', (e) => {
@@ -2218,14 +3326,77 @@ const {
         a.click();
         notify('✓ Downloaded document.txt');
       } else if (type === 'md') {
-        const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+        const m = calculateMetrics(text, userReadingWpm, userSpeakingWpm);
+        const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
+        const md = `---\ntitle: "CleanWordCounter Document"\ndate: "${new Date().toISOString()}"\nwords: ${m.words}\ncharacters: ${m.characters}\ncharacters_excluding_spaces: ${m.charactersNoSpaces}\nsentences: ${m.sentences}\nparagraphs: ${m.paragraphs}\nreading_time: "${m.readingTimeFormatted} (${userReadingWpm} WPM)"\nspeaking_time: "${m.speakingTimeFormatted} (${userSpeakingWpm} WPM)"\nflesch_reading_ease: ${r.fleschReadingEase} (${r.fleschReadingEaseLabel})\naverage_grade_level: "Grade ${r.averageGradeLevel} (${r.gradeLevelSummary})"\ngenerator: "CleanWordCounter (100% Client-Side Privacy)"\n---\n\n${text}`;
+        const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `cleanwordcounter-document-${Date.now()}.md`;
         a.click();
-        notify('✓ Downloaded document.md');
+        notify('✓ Downloaded document.md with YAML metadata');
+      } else if (type === 'docx') {
+        const m = calculateMetrics(text, userReadingWpm, userSpeakingWpm);
+        const docHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Document Export</title><style>body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; line-height: 1.5; color: #111; margin: 1in; } .meta-box { border-bottom: 2px solid #0070f3; padding-bottom: 8px; margin-bottom: 20px; font-size: 9pt; color: #666; font-family: monospace; } p { margin: 0 0 1em 0; }</style></head><body><div class="meta-box"><strong style="color:#0070f3; font-size:12pt;">CleanWordCounter Document Export</strong><br/>Words: ${m.words.toLocaleString()} | Characters: ${m.characters.toLocaleString()} | Reading Time (${userReadingWpm} WPM): ${m.readingTimeFormatted} | Speaking Time (${userSpeakingWpm} WPM): ${m.speakingTimeFormatted}</div>${text.split('\n').map(p => p.trim() ? `<p>${escapeHtml(p)}</p>` : '<p>&nbsp;</p>').join('')}</body></html>`;
+        const blob = new Blob(['\ufeff' + docHtml], { type: 'application/msword;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `cleanwordcounter-document-${Date.now()}.doc`;
+        a.click();
+        notify('✓ Downloaded Word document (.doc)');
+      } else if (type === 'csv') {
+        const m = calculateMetrics(text, userReadingWpm, userSpeakingWpm);
+        const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
+        const kd = calculateKeywordDensity(text, true, 30);
+        let csv = `Category,Metric,Value\n`;
+        csv += `Summary,Words,${m.words}\n`;
+        csv += `Summary,Characters (with spaces),${m.characters}\n`;
+        csv += `Summary,Characters (no spaces),${m.charactersNoSpaces}\n`;
+        csv += `Summary,Sentences,${m.sentences}\n`;
+        csv += `Summary,Paragraphs,${m.paragraphs}\n`;
+        csv += `Summary,Reading Speed (WPM),${userReadingWpm}\n`;
+        csv += `Summary,Reading Time,${m.readingTimeFormatted}\n`;
+        csv += `Summary,Speaking Speed (WPM),${userSpeakingWpm}\n`;
+        csv += `Summary,Speaking Time,${m.speakingTimeFormatted}\n`;
+        csv += `Summary,Flesch Reading Ease,${r.fleschReadingEase}\n`;
+        csv += `Summary,Average Grade Level,${r.averageGradeLevel}\n`;
+        csv += `Summary,Gunning Fog Index,${r.gunningFog.toFixed(1)}\n`;
+        csv += `Summary,Coleman-Liau Index,${r.colemanLiau.toFixed(1)}\n`;
+        csv += `\nPhrase Type,Keyword Phrase,Occurrences,Density Percentage\n`;
+        kd.oneWord.forEach(k => { csv += `1-Word,"${k.phrase.replace(/"/g, '""')}",${k.count},${k.density}%\n`; });
+        kd.twoWord.forEach(k => { csv += `2-Word,"${k.phrase.replace(/"/g, '""')}",${k.count},${k.density}%\n`; });
+        kd.threeWord.forEach(k => { csv += `3-Word,"${k.phrase.replace(/"/g, '""')}",${k.count},${k.density}%\n`; });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `cleanwordcounter-keywords-${Date.now()}.csv`;
+        a.click();
+        notify('✓ Downloaded keyword density breakdown (.csv)');
+      } else if (type === 'json') {
+        const m = calculateMetrics(text, userReadingWpm, userSpeakingWpm);
+        const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
+        const s = analyzeStyle(text);
+        const kd = calculateKeywordDensity(text, true, 30);
+        const payload = {
+          exportedAt: new Date().toISOString(),
+          settings: {
+            readingWpm: userReadingWpm,
+            speakingWpm: userSpeakingWpm
+          },
+          metrics: m,
+          readability: r,
+          styleAnalysis: s,
+          keywordDensity: kd,
+          content: text
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `cleanwordcounter-analytics-${Date.now()}.json`;
+        a.click();
+        notify('✓ Downloaded full analytics payload (.json)');
       } else if (type === 'report') {
-        const m = calculateMetrics(text);
+        const m = calculateMetrics(text, userReadingWpm, userSpeakingWpm);
         const r = calculateReadability(text, m.words, m.sentences, m.charactersNoSpaces);
         const s = analyzeStyle(text);
         const report = `═══════════════════════════════════════\n` +
@@ -2237,8 +3408,8 @@ const {
           `• Sentences: ${m.sentences.toLocaleString()}\n` +
           `• Paragraphs: ${m.paragraphs.toLocaleString()}\n` +
           `• Average Word Length: ${m.averageWordLength} chars\n` +
-          `• Reading Time (225 WPM): ${m.readingTimeFormatted}\n` +
-          `• Speaking Time (130 WPM): ${m.speakingTimeFormatted}\n\n` +
+          `• Reading Time (${userReadingWpm} WPM): ${m.readingTimeFormatted}\n` +
+          `• Speaking Time (${userSpeakingWpm} WPM): ${m.speakingTimeFormatted}\n\n` +
           `READABILITY & GRADES:\n` +
           `• Flesch Reading Ease: ${r.fleschReadingEase} (${r.fleschReadingEaseLabel})\n` +
           `• Average Grade Level: Grade ${r.averageGradeLevel} (${r.gradeLevelSummary})\n` +

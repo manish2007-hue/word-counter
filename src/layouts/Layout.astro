@@ -47,7 +47,8 @@ const isTool = [
   'academic-word-counter-without-citations',
   'keyword-density-checker',
   'docx-pdf-word-counter-private',
-  'words-to-speaking-time'
+  'words-to-speaking-time',
+  'website-word-counter'
 ].some(slug => canonicalSlug === slug || canonicalSlug.startsWith('character-counter'));
 
 const defaultSchema = {
@@ -287,7 +288,7 @@ const finalSchema = schema || defaultSchema;
 
                     <!-- Keyword Density -->
                     <a
-                      href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`}
+                      href={`${base}/keyword-density-checker`}
                       data-nav-tab="keywords"
                       class="flex items-start gap-2.5 rounded-[8px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
                     >
@@ -343,7 +344,7 @@ const finalSchema = schema || defaultSchema;
 
                     <!-- Readability Formulas -->
                     <a
-                      href={isHome ? "#analysis-section" : `${base}/readability-checker`}
+                      href={`${base}/readability-checker`}
                       data-nav-tab="readability"
                       class="flex items-start gap-2.5 rounded-[8px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
                     >
@@ -360,7 +361,7 @@ const finalSchema = schema || defaultSchema;
 
                     <!-- Social Media Limits -->
                     <a
-                      href={isHome ? "#analysis-section" : `${base}/social-media-counter`}
+                      href={`${base}/social-media-counter`}
                       data-nav-tab="social"
                       class="flex items-start gap-2.5 rounded-[8px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
                     >
@@ -377,7 +378,7 @@ const finalSchema = schema || defaultSchema;
 
                     <!-- Academic Mode -->
                     <a
-                      href={isHome ? "#analysis-section" : `${base}/academic-word-counter`}
+                      href={`${base}/academic-word-counter`}
                       data-nav-tab="academic"
                       class="flex items-start gap-2.5 rounded-[8px] p-2 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition"
                     >
@@ -403,6 +404,17 @@ const finalSchema = schema || defaultSchema;
           <span class="h-4 w-px bg-[#e4e4e7] dark:bg-[#27272a] mx-1 shrink-0" aria-hidden="true"></span>
 
           <!-- Direct Company & SEO Policy Pages: ALWAYS VISIBLE, NEVER CUT OFF -->
+          <a
+            href={`${base}/blog`}
+            class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
+              canonicalSlug === 'blog' || canonicalSlug.startsWith('blog/')
+                ? 'text-[#111111] dark:text-white bg-[#ececee] dark:bg-[#202022] font-semibold shadow-2xs'
+                : 'text-[#71717a] dark:text-[#a1a1aa] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+            }`}
+          >
+            Blog
+          </a>
+
           <a
             href={`${base}/about`}
             class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
@@ -457,6 +469,21 @@ const finalSchema = schema || defaultSchema;
             <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
             <span>100% Local</span>
           </div>
+
+          <!-- Keyboard Shortcuts Trigger Button -->
+          <button
+            id="shortcuts-toggle-btn"
+            type="button"
+            aria-label="Keyboard Shortcuts (? or Ctrl+/)"
+            title="Keyboard shortcuts (? or Ctrl+/)"
+            class="hidden sm:flex h-8 items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-2 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-[#f2f2f2] dark:hover:bg-[#141414] transition cursor-pointer text-xs font-mono"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7zm3 4h.01M10 11h.01M14 11h.01M18 11h.01M7 15h10" />
+            </svg>
+            <span class="text-[10px] hidden md:inline">Shortcuts</span>
+            <kbd class="text-[9px] px-1 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1f1f1f] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#333]">?</kbd>
+          </button>
 
           <!-- Theme Toggle Button (Vercel 6px Square Icon Button) -->
           <button
@@ -513,22 +540,23 @@ const finalSchema = schema || defaultSchema;
         <a href={`${base}/ai-token-counter`} data-nav-tab="tokens" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           AI Token Counter (2020–2026 Models)
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={`${base}/readability-checker`} data-nav-tab="readability" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Readability Formulas (Flesch-Kincaid)
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={`${base}/social-media-counter`} data-nav-tab="social" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Social Media Limits &amp; SERP
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={`${base}/keyword-density-checker`} data-nav-tab="keywords" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Keyword Density &amp; N-Grams
         </a>
-        <a href={isHome ? "#analysis-section" : `${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
+        <a href={`${base}/academic-word-counter`} data-nav-tab="academic" class="block px-3 py-2 rounded-[6px] text-sm font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Academic Mode (Exclude Citations)
         </a>
 
         <!-- Mobile Top SEO & Authority Links (About, Contact, Privacy, Terms) -->
         <div class="pt-2 border-t border-[#ebebeb] dark:border-[#222222] my-2"></div>
         <div class="grid grid-cols-2 gap-1 text-xs font-mono text-[#8f8f8f]">
+          <a href={`${base}/blog`} class="px-3 py-1.5 rounded-[4px] text-[#0070f3] font-medium hover:bg-black/5 dark:hover:bg-white/5">Blog & Guides</a>
           <a href={`${base}/about`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">About</a>
           <a href={`${base}/contact`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">Contact</a>
           <a href={`${base}/privacy`} class="px-3 py-1.5 rounded-[4px] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">Privacy</a>
@@ -554,6 +582,104 @@ const finalSchema = schema || defaultSchema;
       <span id="toast-message">✓ Copied to clipboard</span>
     </div>
 
+    <!-- Keyboard Shortcuts Cheat Sheet Modal (Vercel Spec Sheet) -->
+    <div id="shortcuts-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
+      <div class="relative w-full max-w-xl rounded-[12px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0e0e0e] shadow-2xl p-5 sm:p-6 transition-all duration-150">
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-[#ebebeb] dark:border-[#222222]">
+          <div class="flex items-center gap-2">
+            <svg class="h-5 w-5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7zm3 4h.01M10 11h.01M14 11h.01M18 11h.01M7 15h10" />
+            </svg>
+            <h3 class="text-base font-semibold text-[#171717] dark:text-[#ededed]">Keyboard Shortcuts</h3>
+            <span class="rounded-[4px] bg-[#0070f3]/10 text-[#0070f3] px-1.5 py-0.5 font-mono text-[10px] font-semibold">Cheat Sheet</span>
+          </div>
+          <button id="btn-close-shortcuts-modal" type="button" class="h-7 w-7 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] flex items-center justify-center text-sm text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer" aria-label="Close shortcuts">
+            ✕
+          </button>
+        </div>
+
+        <!-- Shortcut Sections -->
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <!-- Group 1: Document & Editor -->
+          <div class="space-y-2">
+            <div class="font-mono text-[10px] uppercase tracking-wider text-[#8f8f8f] font-semibold">Document &amp; Editor</div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">New draft tab</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">T</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Close active tab</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">W</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Clear editor text</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">C</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Copy stats summary</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">S</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Export menu (.md, docx, csv)</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">E</kbd></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2: Analysis Tabs Switcher -->
+          <div class="space-y-2">
+            <div class="font-mono text-[10px] uppercase tracking-wider text-[#8f8f8f] font-semibold">Analysis Tabs</div>
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Keyword Density</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">1</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Readability &amp; Grades</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">2</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Social Media Limits</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">3</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Academic Mode</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">4</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">Style &amp; Hemingway Audit</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">5</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1">
+                <span class="text-[#52525b] dark:text-[#a1a1aa]">AI Token Counter</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">6</kbd></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 3: Global System Controls -->
+        <div class="mt-4 pt-3 border-t border-[#ebebeb] dark:border-[#222222] flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[#71717a] dark:text-[#a1a1aa]">
+          <div class="flex items-center gap-2">
+            <span>Toggle Theme:</span>
+            <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">D</kbd></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Toggle Cheat Sheet:</span>
+            <span class="flex items-center gap-1"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Ctrl</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">/</kbd></span>
+            <span>or</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">?</kbd>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Dismiss / Close:</span>
+            <kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Esc</kbd>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Vercel Geist Footer (Hairline-bordered, clean multi-column spec layout) -->
     <footer class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-14 text-[13px] text-[#8f8f8f] transition-colors duration-200">
       <div class="mx-auto max-w-7xl px-4 sm:px-6">
@@ -577,6 +703,7 @@ const finalSchema = schema || defaultSchema;
             <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools &amp; Calculators</h4>
             <ul class="space-y-2 text-xs">
               <li><a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Online Word Counter</a></li>
+              <li><a href={`${base}/website-word-counter`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-[#0070f3]">Website Word Counter (URL Extractor)</a></li>
               <li><a href={`${base}/clean-text`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-[#0070f3]">Clean Text &amp; Line Breaks</a></li>
               <li><a href={`${base}/case-converter`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-[#0070f3]">Case Converter Tool</a></li>
               <li><a href={`${base}/diff-checker`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-[#0070f3]">Private Text Diff Checker</a></li>
@@ -616,6 +743,9 @@ const finalSchema = schema || defaultSchema;
                 <span class="text-[#0070f3]">✓</span> LocalStorage Auto-Draft
               </li>
               <li class="pt-2">
+                <a href={`${base}/blog`} class="text-[#0070f3] hover:underline font-medium">Writing Guides &amp; Blog →</a>
+              </li>
+              <li>
                 <a href={`${base}/privacy`} class="text-[#0070f3] hover:underline font-medium">Privacy Architecture →</a>
               </li>
             </ul>
@@ -626,6 +756,8 @@ const finalSchema = schema || defaultSchema;
         <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8f8f8f]">
           <p>© {new Date().getFullYear()} CleanWordCounter. Inspired by the Vercel Geist design system.</p>
           <div class="flex items-center gap-4 mt-3 sm:mt-0 font-mono text-[11px]">
+            <a href={`${base}/blog`} class="text-[#0070f3] hover:underline font-medium">Blog</a>
+            <span>·</span>
             <a href={`${base}/privacy`} class="hover:text-[#171717] dark:hover:text-white transition">Privacy</a>
             <span>·</span>
             <a href={`${base}/terms`} class="hover:text-[#171717] dark:hover:text-white transition">Terms</a>
@@ -737,6 +869,131 @@ const finalSchema = schema || defaultSchema;
           setTimeout(() => toast.classList.add('hidden'), 180);
         }, 2200);
       };
+
+      // 3.1 Keyboard Shortcuts & Modal Controller
+      const shortcutsModal = document.getElementById('shortcuts-modal');
+      const shortcutsBtn = document.getElementById('shortcuts-toggle-btn');
+      const shortcutsCloseBtn = document.getElementById('btn-close-shortcuts-modal');
+
+      function toggleShortcutsModal(forceState?: boolean) {
+        if (!shortcutsModal) return;
+        const isHidden = shortcutsModal.classList.contains('hidden');
+        const shouldShow = typeof forceState === 'boolean' ? forceState : isHidden;
+        if (shouldShow) {
+          shortcutsModal.classList.remove('hidden');
+        } else {
+          shortcutsModal.classList.add('hidden');
+        }
+      }
+
+      shortcutsBtn?.addEventListener('click', () => toggleShortcutsModal());
+      shortcutsCloseBtn?.addEventListener('click', () => toggleShortcutsModal(false));
+      shortcutsModal?.addEventListener('click', (e) => {
+        if (e.target === shortcutsModal) toggleShortcutsModal(false);
+      });
+
+      window.addEventListener('keydown', (e) => {
+        const activeEl = document.activeElement;
+        const isEditing = activeEl && (
+          activeEl.tagName === 'INPUT' ||
+          activeEl.tagName === 'TEXTAREA' ||
+          (activeEl as HTMLElement).isContentEditable
+        );
+
+        // Escape always closes any open modal/popover
+        if (e.key === 'Escape') {
+          if (shortcutsModal && !shortcutsModal.classList.contains('hidden')) {
+            toggleShortcutsModal(false);
+            return;
+          }
+          document.getElementById('popover-reading-speed')?.classList.add('hidden');
+          document.getElementById('popover-speaking-speed')?.classList.add('hidden');
+          document.getElementById('export-dropdown')?.classList.add('hidden');
+          document.getElementById('target-modal')?.classList.add('hidden');
+          return;
+        }
+
+        // Toggle shortcuts modal: ? (when not typing) or Ctrl+/ / Cmd+/ (anywhere)
+        if ((e.key === '?' && !isEditing) || (e.key === '/' && (e.ctrlKey || e.metaKey))) {
+          e.preventDefault();
+          toggleShortcutsModal();
+          return;
+        }
+
+        // Alt + D: Toggle theme
+        if (e.altKey && e.key.toLowerCase() === 'd') {
+          e.preventDefault();
+          themeBtn?.click();
+          return;
+        }
+
+        // Alt + 1..6: Switch analysis tabs
+        const tabMap: Record<string, string> = {
+          '1': 'keywords',
+          '2': 'readability',
+          '3': 'social',
+          '4': 'academic',
+          '5': 'style',
+          '6': 'tokens'
+        };
+        if (e.altKey && tabMap[e.key]) {
+          e.preventDefault();
+          const tabName = tabMap[e.key];
+          if (typeof (window as any).switchAnalysisTab === 'function') {
+            (window as any).switchAnalysisTab(tabName);
+            const analysisSec = document.getElementById('analysis-section');
+            if (analysisSec) {
+              analysisSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+          return;
+        }
+
+        // Alt + T: New draft tab
+        if (e.altKey && e.key.toLowerCase() === 't') {
+          e.preventDefault();
+          if (typeof (window as any).addNewDocTab === 'function') {
+            (window as any).addNewDocTab();
+          } else {
+            const btnAddDoc = document.getElementById('btn-add-doc');
+            btnAddDoc?.click();
+          }
+          return;
+        }
+
+        // Alt + W: Close active draft tab
+        if (e.altKey && e.key.toLowerCase() === 'w') {
+          e.preventDefault();
+          if (typeof (window as any).closeActiveDocTab === 'function') {
+            (window as any).closeActiveDocTab();
+          }
+          return;
+        }
+
+        // Alt + C: Clear editor text
+        if (e.altKey && e.key.toLowerCase() === 'c') {
+          e.preventDefault();
+          const btnClear = document.getElementById('btn-clear-text');
+          btnClear?.click();
+          return;
+        }
+
+        // Alt + S: Copy stats
+        if (e.altKey && e.key.toLowerCase() === 's') {
+          e.preventDefault();
+          const btnCopyStats = document.getElementById('btn-copy-stats');
+          btnCopyStats?.click();
+          return;
+        }
+
+        // Alt + E: Toggle export menu
+        if (e.altKey && e.key.toLowerCase() === 'e') {
+          e.preventDefault();
+          const exportBtn = document.getElementById('export-menu-btn');
+          exportBtn?.click();
+          return;
+        }
+      });
 
       // 4. PWA Service Worker Registration
       if ('serviceWorker' in navigator) {

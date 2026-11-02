@@ -1,0 +1,301 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const allPosts = await getCollection('blog');
+const otherPosts = allPosts.filter(p => p.id !== post.id).slice(0, 2);
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pageTitle = `${post.data.title} – CleanWordCounter`;
+const pageDescription = post.data.description;
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(new Date(date));
+}
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": post.data.updatedDate ? post.data.updatedDate.toISOString() : post.data.pubDate.toISOString(),
+  "author": {
+    "@type": "Organization",
+    "name": post.data.author,
+    "url": "https://cleanwordcounter.com/about"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CleanWordCounter",
+    "url": "https://cleanwordcounter.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cleanwordcounter.com/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://cleanwordcounter.com/blog/${post.id}/`
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalSlug={`blog/${post.id}`}
+  ogType="article"
+  schema={schema}
+>
+  <article class="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-16">
+    
+    <!-- Breadcrumb Nav -->
+    <nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-2 text-xs font-mono text-[#8f8f8f]">
+      <a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Home</a>
+      <span>/</span>
+      <a href={`${base}/blog`} class="hover:text-[#171717] dark:hover:text-white transition">Blog</a>
+      <span>/</span>
+      <span class="text-[#171717] dark:text-[#ededed] truncate max-w-[260px] sm:max-w-none">{post.data.title}</span>
+    </nav>
+
+    <!-- Header / Meta -->
+    <header class="mb-10 pb-8 border-b border-[#ebebeb] dark:border-[#222222]">
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <span class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-[#0070f3]/10 text-[#0070f3] border border-[#0070f3]/20">
+          {post.data.category}
+        </span>
+        <span class="text-xs font-mono text-[#8f8f8f]">•</span>
+        <span class="text-xs font-mono text-[#8f8f8f]">{post.data.readTime}</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-4xl lg:text-[42px] font-semibold tracking-[-0.035em] text-[#171717] dark:text-[#ededed] leading-[1.2] mb-4">
+        {post.data.title}
+      </h1>
+
+      <p class="text-sm sm:text-base text-[#666666] dark:text-[#a1a1a1] leading-relaxed mb-6">
+        {post.data.description}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#f0f0f0] dark:border-[#1a1a1a] text-xs font-mono text-[#8f8f8f]">
+        <div class="flex items-center gap-2">
+          <div class="h-6 w-6 rounded-full bg-[#171717] dark:bg-white text-white dark:text-[#171717] flex items-center justify-center font-bold text-[10px]">
+            CW
+          </div>
+          <span>{post.data.author}</span>
+        </div>
+        <time datetime={post.data.pubDate.toISOString()}>
+          Published {formatDate(post.data.pubDate)}
+        </time>
+      </div>
+    </header>
+
+    <!-- High-CTR Interactive Tool Callout -->
+    <aside class="mb-10 rounded-[10px] border border-[#0070f3]/30 bg-[#0070f3]/5 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="text-xs font-mono font-semibold text-[#0070f3] uppercase tracking-wider">Interactive Utility</div>
+        <div class="text-sm font-semibold text-[#171717] dark:text-[#ededed]">Check your essay word &amp; page counts right now</div>
+        <p class="text-xs text-[#666666] dark:text-[#a1a1a1]">Instant calculations with 100% private in-browser analysis.</p>
+      </div>
+      <a
+        href={`${base}/`}
+        class="inline-flex h-8 items-center justify-center rounded-[6px] bg-[#0070f3] px-3.5 text-xs font-medium text-white hover:bg-[#0060df] transition shrink-0"
+      >
+        Open Word Counter &rarr;
+      </a>
+    </aside>
+
+    <!-- Main Markdown Prose Container -->
+    <div class="blog-prose text-[#333333] dark:text-[#d1d1d6] leading-[1.75] text-[15px] sm:text-[16px] space-y-6">
+      <Content />
+    </div>
+
+    <!-- Tags Strip -->
+    {post.data.tags.length > 0 && (
+      <div class="mt-12 pt-6 border-t border-[#ebebeb] dark:border-[#222222] flex flex-wrap items-center gap-2">
+        <span class="text-xs font-mono text-[#8f8f8f] mr-1">Tags:</span>
+        {post.data.tags.map((tag) => (
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-[#f4f4f5] dark:bg-[#1a1a1a] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#27272a]">
+            #{tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Editorial Trust & Fact-Check Card -->
+    <div class="mt-10 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] p-5 text-xs text-[#666666] dark:text-[#8f8f8f] leading-relaxed">
+      <div class="flex items-center gap-2 font-semibold text-[#171717] dark:text-[#ededed] mb-1.5 font-mono">
+        <svg class="h-4 w-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span>Editorial Integrity &amp; Standards</span>
+      </div>
+      <p>
+        Every guide published on CleanWordCounter is fact-checked against authoritative academic manuals (including APA 7th Edition, MLA 9th Edition, and The Chicago Manual of Style 17th Edition). Our writing tools calculate text metrics 100% inside your browser runtime—no text is ever logged, cached, or uploaded to any cloud server.
+      </p>
+    </div>
+
+    <!-- More Articles Strip -->
+    {otherPosts.length > 0 && (
+      <div class="mt-14 pt-8 border-t border-[#ebebeb] dark:border-[#222222]">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-lg font-semibold text-[#171717] dark:text-[#ededed] tracking-tight">
+            Related Guides &amp; Insights
+          </h2>
+          <a href={`${base}/blog`} class="text-xs font-mono text-[#0070f3] hover:underline">
+            View all guides &rarr;
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {otherPosts.map((other) => (
+            <a
+              href={`${base}/blog/${other.id}`}
+              class="group block p-4 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] hover:border-[#0070f3] transition"
+            >
+              <div class="text-[10px] font-mono text-[#0070f3] mb-1">{other.data.category}</div>
+              <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors line-clamp-2">
+                {other.data.title}
+              </h3>
+              <div class="text-[11px] font-mono text-[#8f8f8f] mt-2">{other.data.readTime}</div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </article>
+</Layout>
+
+<style is:global>
+  /* Blog Prose Typography Styles */
+  .blog-prose h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #171717;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.35rem;
+  }
+  :global(.dark) .blog-prose h2 {
+    color: #ededed;
+    border-bottom-color: #222222;
+  }
+  .blog-prose h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #171717;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.015em;
+  }
+  :global(.dark) .blog-prose h3 {
+    color: #ededed;
+  }
+  .blog-prose p {
+    margin-bottom: 1.25rem;
+  }
+  .blog-prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    space-y: 0.5rem;
+  }
+  .blog-prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    space-y: 0.5rem;
+  }
+  .blog-prose li {
+    margin-bottom: 0.5rem;
+  }
+  .blog-prose blockquote {
+    border-left: 3px solid #0070f3;
+    background: rgba(0, 112, 243, 0.05);
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+    font-style: normal;
+  }
+  .blog-prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .blog-prose th {
+    background: #f4f4f5;
+    color: #171717;
+    font-weight: 600;
+    padding: 0.6rem 0.85rem;
+    text-align: left;
+    border: 1px solid #e4e4e7;
+    font-family: monospace;
+    font-size: 0.8rem;
+  }
+  :global(.dark) .blog-prose th {
+    background: #18181b;
+    color: #ededed;
+    border-color: #27272a;
+  }
+  .blog-prose td {
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #e4e4e7;
+  }
+  :global(.dark) .blog-prose td {
+    border-color: #27272a;
+  }
+  .blog-prose tr:nth-child(even) {
+    background: #fafafa;
+  }
+  :global(.dark) .blog-prose tr:nth-child(even) {
+    background: #0f0f11;
+  }
+  .blog-prose a {
+    color: #0070f3;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .blog-prose a:hover {
+    color: #0761d1;
+  }
+  .blog-prose code {
+    background: #f4f4f5;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-family: monospace;
+    border: 1px solid #e4e4e7;
+  }
+  :global(.dark) .blog-prose code {
+    background: #1f1f23;
+    border-color: #2e2e33;
+    color: #ededed;
+  }
+  .blog-prose strong {
+    color: #171717;
+  }
+  :global(.dark) .blog-prose strong {
+    color: #ffffff;
+  }
+</style>

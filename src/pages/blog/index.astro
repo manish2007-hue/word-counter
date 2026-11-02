@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+posts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const featuredPost = posts.find(p => p.data.featured) || posts[0];
+const regularPosts = posts.filter(p => p !== featuredPost);
+
+const pageTitle = "Writing Guides & Word Count Resources – CleanWordCounter Blog";
+const pageDescription = "Authoritative writing guides, academic word count standards, essay pacing formulas, and privacy-first text insights for authors and students.";
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  }).format(new Date(date));
+}
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "CleanWordCounter Blog",
+  "description": pageDescription,
+  "url": "https://cleanwordcounter.com/blog/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CleanWordCounter",
+    "url": "https://cleanwordcounter.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cleanwordcounter.com/favicon.svg"
+    }
+  }
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalSlug="blog"
+  schema={schema}
+>
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 py-12 sm:py-16">
+    
+    <!-- Hero Header -->
+    <div class="mb-12">
+      <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#0070f3]/25 bg-[#0070f3]/10 px-3 py-1 text-[#0070f3] mb-4">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+        <span>Editorial &amp; Guides</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+        Writing Guides &amp; Word Count Insights
+      </h1>
+
+      <p class="mt-3 text-sm sm:text-base text-[#8f8f8f] max-w-2xl leading-relaxed">
+        Practical, research-backed guides on academic word counts, essay formatting, readability indexes, and zero-compromise writing privacy.
+      </p>
+
+      <!-- Category Filter Chips -->
+      <div class="flex flex-wrap items-center gap-2 mt-6 pt-6 border-t border-[#ebebeb] dark:border-[#222222]">
+        <span class="text-xs font-mono text-[#8f8f8f] mr-1">Categories:</span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-[#171717]">
+          All Articles ({posts.length})
+        </span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#f4f4f5] dark:bg-[#1a1a1a] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#27272a]">
+          Academic &amp; Essays
+        </span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#f4f4f5] dark:bg-[#1a1a1a] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#27272a]">
+          Formatting &amp; Standards
+        </span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#f4f4f5] dark:bg-[#1a1a1a] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#27272a]">
+          Tool Guides
+        </span>
+      </div>
+    </div>
+
+    {featuredPost && (
+      <!-- Featured Post Banner Card -->
+      <div class="mb-12">
+        <a
+          href={`${base}/blog/${featuredPost.id}`}
+          class="group block relative overflow-hidden rounded-[12px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#0d0d0d] p-6 sm:p-8 transition-all hover:border-[#0070f3] dark:hover:border-[#0070f3] hover:shadow-lg"
+        >
+          <div class="flex flex-wrap items-center gap-2 mb-3">
+            <span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#0070f3]/10 text-[#0070f3] border border-[#0070f3]/20">
+              FEATURED GUIDE
+            </span>
+            <span class="text-xs font-mono text-[#8f8f8f]">
+              {featuredPost.data.category}
+            </span>
+            <span class="text-xs text-[#8f8f8f]">•</span>
+            <span class="text-xs font-mono text-[#8f8f8f]">
+              {featuredPost.data.readTime}
+            </span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors tracking-tight mb-3">
+            {featuredPost.data.title}
+          </h2>
+
+          <p class="text-xs sm:text-sm text-[#666666] dark:text-[#999999] leading-relaxed max-w-3xl mb-5">
+            {featuredPost.data.description}
+          </p>
+
+          <div class="flex items-center justify-between pt-4 border-t border-[#eaeaea] dark:border-[#1e1e1e]">
+            <div class="flex items-center gap-2 text-xs font-mono text-[#8f8f8f]">
+              <span>By {featuredPost.data.author}</span>
+              <span>•</span>
+              <time datetime={featuredPost.data.pubDate.toISOString()}>
+                {formatDate(featuredPost.data.pubDate)}
+              </time>
+            </div>
+            <div class="inline-flex items-center gap-1 text-xs font-semibold text-[#0070f3] group-hover:translate-x-0.5 transition-transform">
+              <span>Read article</span>
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    )}
+
+    <!-- Regular Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+      {regularPosts.map((post) => (
+        <a
+          href={`${base}/blog/${post.id}`}
+          class="group flex flex-col justify-between rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 transition-all hover:border-[#0070f3] dark:hover:border-[#0070f3] hover:shadow-md"
+        >
+          <div>
+            <div class="flex items-center justify-between text-[11px] font-mono text-[#8f8f8f] mb-3">
+              <span class="text-[#0070f3] font-medium">{post.data.category}</span>
+              <span>{post.data.readTime}</span>
+            </div>
+
+            <h3 class="text-lg font-semibold text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors tracking-tight mb-2.5 leading-snug">
+              {post.data.title}
+            </h3>
+
+            <p class="text-xs text-[#666666] dark:text-[#999999] leading-relaxed line-clamp-3 mb-4">
+              {post.data.description}
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-[#f0f0f0] dark:border-[#1f1f1f] flex items-center justify-between text-xs text-[#8f8f8f] font-mono">
+            <time datetime={post.data.pubDate.toISOString()}>
+              {formatDate(post.data.pubDate)}
+            </time>
+            <span class="text-[#0070f3] font-medium group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-0.5">
+              Read &rarr;
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Interactive Free Tools Promo Banner -->
+    <div class="rounded-[12px] border border-[#0070f3]/30 bg-gradient-to-br from-[#0070f3]/5 via-transparent to-transparent p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div>
+          <div class="font-mono text-xs font-semibold text-[#0070f3] uppercase tracking-wider mb-1">
+            Free Utility Suite
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed]">
+            Try CleanWordCounter with Zero Ads
+          </h3>
+          <p class="text-xs sm:text-sm text-[#71717a] dark:text-[#a1a1aa] mt-1 max-w-xl">
+            Count words, calculate reading time, analyze sentence rhythm, and strip citations in real-time. 100% private in-browser engine.
+          </p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <a
+            href={`${base}/`}
+            class="inline-flex h-9 items-center justify-center rounded-[6px] bg-[#171717] dark:bg-white px-4 text-xs font-medium text-white dark:text-[#171717] hover:bg-black/85 dark:hover:bg-white/90 transition shadow-xs"
+          >
+            Launch Word Counter
+          </a>
+          <a
+            href={`${base}/words-to-pages`}
+            class="inline-flex h-9 items-center justify-center rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-[#f4f4f5] dark:hover:bg-[#171717] transition"
+          >
+            Words to Pages
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</Layout>

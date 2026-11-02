@@ -1,0 +1,630 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Website Word Counter – Count Webpage Words Online Free";
+const pageDescription = "Free online website word counter. Count words, characters, headings & reading time on any webpage URL or raw HTML. 100% private, instant & ad-free!";
+const pageKeywords = "website word counter, count words on webpage, webpage word count, url word counter, scrape website word count, website word checker online";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Website Word Counter Online",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/website-word-counter/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the Website Word Counter extract words from a URL?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool retrieves the webpage HTML and uses a client-side DOM parser to isolate the true editorial content. It strips non-content tags including navigation headers, footers, scripts, styles, and ads, providing an accurate count of visible body text."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What if a website blocks automated fetching or CORS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If a website has strict CORS headers or requires authentication, you can simply click the 'Paste Raw HTML' tab, right-click the webpage to 'View Source' (Ctrl+U), copy the code, and paste it directly for instant offline parsing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many words should a webpage or blog post have for SEO?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For organic search ranking, standard informational blog articles typically perform best between 1,200 and 2,500 words. Comprehensive pillar pages often exceed 3,000 words, while e-commerce product pages and landing pages typically range from 300 to 800 words."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="website-word-counter"
+  schema={schema}
+>
+  <!-- Hero Section -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Webpage SEO Content &amp; Word Count Extractor</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Website <span class="vercel-gradient-develop">Word Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Analyze the word count, reading time, heading hierarchy, and keyword frequency of any public webpage or raw HTML code in real time.
+    </p>
+  </div>
+
+  <main class="mx-auto max-w-5xl px-3 sm:px-6 pb-16">
+    <!-- Main Interactive Card -->
+    <div class="rounded-[12px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] shadow-sm overflow-hidden mb-8">
+      
+      <!-- Top Input Mode Selector -->
+      <div class="flex items-center justify-between border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] px-4 py-3">
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="tab-btn-url"
+            class="px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium bg-[#171717] text-white dark:bg-white dark:text-black cursor-pointer transition"
+          >
+            Webpage URL
+          </button>
+          <button
+            type="button"
+            id="tab-btn-html"
+            class="px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white cursor-pointer transition"
+          >
+            Paste Raw HTML
+          </button>
+        </div>
+        <span class="text-[11px] font-mono text-[#8f8f8f] hidden sm:inline">100% Client-Side Extraction</span>
+      </div>
+
+      <!-- Mode 1: URL Input -->
+      <div id="mode-url-container" class="p-4 sm:p-6 space-y-4">
+        <div>
+          <label for="input-webpage-url" class="block text-xs font-mono font-medium text-[#171717] dark:text-[#ededed] mb-1.5">
+            Enter Webpage Address:
+          </label>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input
+              type="url"
+              id="input-webpage-url"
+              placeholder="https://example.com/blog-post"
+              class="flex-1 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] px-3.5 py-2.5 text-xs sm:text-sm font-mono text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-[#0070f3]"
+            />
+            <button
+              type="button"
+              id="btn-fetch-webpage"
+              class="vercel-btn-sm bg-[#0070f3] text-white px-5 py-2.5 rounded-[6px] font-medium text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer hover:bg-[#0060df] transition shrink-0"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <span>Count Words</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sample URLs -->
+        <div class="flex flex-wrap items-center gap-2 text-xs font-mono text-[#8f8f8f]">
+          <span>Try quick sample:</span>
+          <button type="button" class="btn-sample-url text-[#0070f3] hover:underline cursor-pointer" data-url="https://en.wikipedia.org/wiki/Word_count">Wikipedia: Word count</button>
+          <span>·</span>
+          <button type="button" class="btn-sample-url text-[#0070f3] hover:underline cursor-pointer" data-url="https://cleanwordcounter.com/about">CleanWordCounter About</button>
+        </div>
+      </div>
+
+      <!-- Mode 2: HTML Paste Input (Hidden by default) -->
+      <div id="mode-html-container" class="hidden p-4 sm:p-6 space-y-4">
+        <div>
+          <label for="input-raw-html" class="block text-xs font-mono font-medium text-[#171717] dark:text-[#ededed] mb-1.5">
+            Paste Webpage Source HTML (Ctrl+U):
+          </label>
+          <textarea
+            id="input-raw-html"
+            rows="6"
+            placeholder="<html><head><title>Example</title></head><body><h1>Hello World</h1><p>Paste page markup here...</p></body></html>"
+            class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] p-3 text-xs font-mono text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-[#0070f3]"
+          ></textarea>
+        </div>
+        <button
+          type="button"
+          id="btn-parse-html"
+          class="vercel-btn-sm bg-[#0070f3] text-white px-5 py-2.5 rounded-[6px] font-medium text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer hover:bg-[#0060df] transition"
+        >
+          <span>Parse HTML &amp; Count Words</span>
+        </button>
+      </div>
+
+      <!-- Fetching Status / Progress Alert -->
+      <div id="fetch-status-bar" class="hidden px-6 py-3 bg-[#0070f3]/5 dark:bg-[#0070f3]/10 border-t border-[#0070f3]/20 flex items-center justify-between text-xs font-mono text-[#0070f3]">
+        <div class="flex items-center gap-2">
+          <svg class="animate-spin h-4 w-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <span id="fetch-status-text">Fetching webpage content...</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Results Section (Hidden until parsed) -->
+    <div id="results-container" class="hidden space-y-6">
+      
+      <!-- Meta & URL Banner -->
+      <div class="p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] font-mono text-xs space-y-1">
+        <div class="flex items-center justify-between text-[#8f8f8f]">
+          <span>SOURCE URL:</span>
+          <span id="result-resolved-url" class="truncate max-w-[280px] sm:max-w-md text-[#171717] dark:text-[#ededed]">https://...</span>
+        </div>
+        <div class="text-[#171717] dark:text-[#ededed] font-semibold text-sm pt-1" id="result-page-title">
+          Page Title Here
+        </div>
+        <div class="text-[#8f8f8f] text-[11px] line-clamp-2" id="result-page-desc">
+          Meta description will appear here...
+        </div>
+      </div>
+
+      <!-- Primary 4 Metric Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4 text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Total Words</div>
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="res-stat-words">0</div>
+          <div class="text-[11px] font-mono text-[#8f8f8f] mt-1" id="res-stat-unique">0 unique words</div>
+        </div>
+
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4 text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Characters</div>
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-[#171717] dark:text-[#ededed] mt-1" id="res-stat-chars">0</div>
+          <div class="text-[11px] font-mono text-[#8f8f8f] mt-1" id="res-stat-chars-nospace">0 without spaces</div>
+        </div>
+
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4 text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Reading Time</div>
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-[#0070f3] mt-1" id="res-stat-reading">0s</div>
+          <div class="text-[11px] font-mono text-[#8f8f8f] mt-1">@ 225 WPM average</div>
+        </div>
+
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4 text-center">
+          <div class="mono-eyebrow text-[#8f8f8f]">Speaking Time</div>
+          <div class="font-mono text-3xl sm:text-4xl font-bold text-amber-600 dark:text-amber-400 mt-1" id="res-stat-speaking">0s</div>
+          <div class="text-[11px] font-mono text-[#8f8f8f] mt-1">@ 130 WPM speech</div>
+        </div>
+      </div>
+
+      <!-- SEO Structure & Headings Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 p-4 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] text-center font-mono">
+        <div>
+          <span class="text-[10px] uppercase text-[#8f8f8f]">H1 Headers</span>
+          <p class="text-xl font-bold text-[#171717] dark:text-[#ededed]" id="res-count-h1">0</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase text-[#8f8f8f]">H2 Headers</span>
+          <p class="text-xl font-bold text-[#171717] dark:text-[#ededed]" id="res-count-h2">0</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase text-[#8f8f8f]">H3 Headers</span>
+          <p class="text-xl font-bold text-[#171717] dark:text-[#ededed]" id="res-count-h3">0</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase text-[#8f8f8f]">Total Links</span>
+          <p class="text-xl font-bold text-[#0070f3]" id="res-count-links">0</p>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <span class="text-[10px] uppercase text-[#8f8f8f]">Total Images</span>
+          <p class="text-xl font-bold text-[#171717] dark:text-[#ededed]" id="res-count-images">0</p>
+        </div>
+      </div>
+
+      <!-- Keyword Density & Text Action Buttons -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Keyword Frequency Table -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4">
+          <h3 class="mono-eyebrow text-[#171717] dark:text-[#ededed] mb-3">Top Keyword Frequencies</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs font-mono">
+              <thead>
+                <tr class="border-b border-[#ebebeb] dark:border-[#222222] text-[#8f8f8f] text-left">
+                  <th class="pb-2">Keyword Phrase</th>
+                  <th class="pb-2 text-center">Count</th>
+                  <th class="pb-2 text-right">Density</th>
+                </tr>
+              </thead>
+              <tbody id="res-keywords-tbody" class="divide-y divide-[#ebebeb] dark:divide-[#222222]">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Extracted Text Preview & Export -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a] p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="mono-eyebrow text-[#171717] dark:text-[#ededed]">Extracted Body Text</h3>
+              <span class="text-[10px] font-mono text-[#8f8f8f]" id="res-para-count">0 paragraphs</span>
+            </div>
+            <textarea
+              id="res-extracted-text"
+              readonly
+              rows="9"
+              class="w-full rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] p-2.5 text-xs font-mono text-[#4d4d4d] dark:text-[#a1a1a1] resize-none focus:outline-hidden"
+            ></textarea>
+          </div>
+
+          <div class="pt-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              id="btn-open-in-editor"
+              class="vercel-btn-sm bg-[#0070f3] text-white px-3 py-1.5 rounded-[6px] font-medium text-xs flex items-center gap-1.5 cursor-pointer hover:bg-[#0060df] transition"
+            >
+              <span>Open in CleanWordCounter Workspace →</span>
+            </button>
+            <button
+              type="button"
+              id="btn-copy-extracted"
+              class="vercel-btn-sm vercel-btn-sm-ghost text-xs cursor-pointer"
+            >
+              <span>Copy Clean Text</span>
+            </button>
+            <button
+              type="button"
+              id="btn-copy-seo-report"
+              class="vercel-btn-sm vercel-btn-sm-ghost text-xs cursor-pointer"
+            >
+              <span>Copy SEO Report</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- SEO Educational Guide & Best Practices -->
+    <section class="mt-16 pt-10 border-t border-[#ebebeb] dark:border-[#222222] space-y-10">
+      
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#171717] dark:text-[#ededed] mb-3">
+          How to Count Words on Any Website
+        </h2>
+        <p class="text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Counting words on a webpage manually is tricky because modern websites are filled with code wrappers, navigation bars, cookie banners, and sidebar links. The <strong>CleanWordCounter Website Word Counter</strong> extracts pure editorial body text using client-side DOM processing.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="font-mono text-xs text-[#0070f3] font-bold uppercase mb-1">Step 1: Enter URL</div>
+          <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2">Input or Paste HTML</h3>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Enter any public web address or paste source code directly. The engine parses the DOM without installing extensions.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="font-mono text-xs text-[#0070f3] font-bold uppercase mb-1">Step 2: Strip Bloat</div>
+          <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2">Automated Sanitization</h3>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Scripts, style sheets, tracking pixels, headers, and footers are safely removed to isolate genuine readable copy.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="font-mono text-xs text-[#0070f3] font-bold uppercase mb-1">Step 3: Analyze SEO</div>
+          <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2">Metrics &amp; Frequency</h3>
+          <p class="text-xs text-[#8f8f8f] leading-relaxed">
+            Review total word count, reading pace, H1–H3 headers, and keyword densities to calibrate competitive content depth.
+          </p>
+        </div>
+      </div>
+
+      <!-- Recommended Word Counts Table -->
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#171717] dark:text-[#ededed] mb-4">
+          Recommended Word Counts by Page Type
+        </h2>
+        <div class="overflow-x-auto rounded-[10px] border border-[#ebebeb] dark:border-[#222222]">
+          <table class="w-full text-xs font-mono text-left">
+            <thead class="bg-[#fafafa] dark:bg-[#141414] border-b border-[#ebebeb] dark:border-[#222222] text-[#8f8f8f]">
+              <tr>
+                <th class="py-3 px-4">PAGE TYPE</th>
+                <th class="py-3 px-4">TYPICAL WORD COUNT</th>
+                <th class="py-3 px-4">PRIMARY SEO GOAL</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222] bg-white dark:bg-[#0a0a0a]">
+              <tr>
+                <td class="py-3 px-4 font-bold text-[#171717] dark:text-[#ededed]">Informational Blog Post</td>
+                <td class="py-3 px-4 text-[#0070f3] font-bold">1,200 – 2,500 words</td>
+                <td class="py-3 px-4 text-[#8f8f8f]">Answer search queries comprehensively; rank for long-tail keywords</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-bold text-[#171717] dark:text-[#ededed]">Pillar Page / Deep Guide</td>
+                <td class="py-3 px-4 text-[#0070f3] font-bold">3,000 – 5,000+ words</td>
+                <td class="py-3 px-4 text-[#8f8f8f]">Establish topical authority across competitive primary search terms</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-bold text-[#171717] dark:text-[#ededed]">Homepage</td>
+                <td class="py-3 px-4 text-[#0070f3] font-bold">400 – 1,000 words</td>
+                <td class="py-3 px-4 text-[#8f8f8f]">Communicate core value proposition, brand identity, and key features</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-bold text-[#171717] dark:text-[#ededed]">E-Commerce Product Page</td>
+                <td class="py-3 px-4 text-[#0070f3] font-bold">300 – 800 words</td>
+                <td class="py-3 px-4 text-[#8f8f8f]">Explain specifications, benefits, FAQs, and conversion incentives</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-bold text-[#171717] dark:text-[#ededed]">Lead Generation Landing Page</td>
+                <td class="py-3 px-4 text-[#0070f3] font-bold">300 – 600 words</td>
+                <td class="py-3 px-4 text-[#8f8f8f]">Maximize sign-up conversion rate with concise, persuasive messaging</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    import { calculateMetrics } from '../lib/metrics';
+    import { calculateKeywordDensity } from '../lib/keywords';
+
+    const tabBtnUrl = document.getElementById('tab-btn-url');
+    const tabBtnHtml = document.getElementById('tab-btn-html');
+    const modeUrlContainer = document.getElementById('mode-url-container');
+    const modeHtmlContainer = document.getElementById('mode-html-container');
+
+    const inputUrl = document.getElementById('input-webpage-url') as HTMLInputElement;
+    const inputHtml = document.getElementById('input-raw-html') as HTMLTextAreaElement;
+    const btnFetch = document.getElementById('btn-fetch-webpage');
+    const btnParseHtml = document.getElementById('btn-parse-html');
+
+    const statusBar = document.getElementById('fetch-status-bar');
+    const statusText = document.getElementById('fetch-status-text');
+    const resultsContainer = document.getElementById('results-container');
+
+    // Result elements
+    const resResolvedUrl = document.getElementById('result-resolved-url')!;
+    const resPageTitle = document.getElementById('result-page-title')!;
+    const resPageDesc = document.getElementById('result-page-desc')!;
+    const resStatWords = document.getElementById('res-stat-words')!;
+    const resStatUnique = document.getElementById('res-stat-unique')!;
+    const resStatChars = document.getElementById('res-stat-chars')!;
+    const resStatCharsNoSpace = document.getElementById('res-stat-chars-nospace')!;
+    const resStatReading = document.getElementById('res-stat-reading')!;
+    const resStatSpeaking = document.getElementById('res-stat-speaking')!;
+    const resCountH1 = document.getElementById('res-count-h1')!;
+    const resCountH2 = document.getElementById('res-count-h2')!;
+    const resCountH3 = document.getElementById('res-count-h3')!;
+    const resCountLinks = document.getElementById('res-count-links')!;
+    const resCountImages = document.getElementById('res-count-images')!;
+    const resKeywordsTbody = document.getElementById('res-keywords-tbody')!;
+    const resExtractedText = document.getElementById('res-extracted-text') as HTMLTextAreaElement;
+    const resParaCount = document.getElementById('res-para-count')!;
+
+    const btnOpenInEditor = document.getElementById('btn-open-in-editor');
+    const btnCopyExtracted = document.getElementById('btn-copy-extracted');
+    const btnCopySeoReport = document.getElementById('btn-copy-seo-report');
+
+    // Tab switcher
+    tabBtnUrl?.addEventListener('click', () => {
+      tabBtnUrl.className = 'px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium bg-[#171717] text-white dark:bg-white dark:text-black cursor-pointer transition';
+      tabBtnHtml!.className = 'px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white cursor-pointer transition';
+      modeUrlContainer?.classList.remove('hidden');
+      modeHtmlContainer?.classList.add('hidden');
+    });
+
+    tabBtnHtml?.addEventListener('click', () => {
+      tabBtnHtml.className = 'px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium bg-[#171717] text-white dark:bg-white dark:text-black cursor-pointer transition';
+      tabBtnUrl!.className = 'px-3 py-1.5 rounded-[6px] text-xs font-mono font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white cursor-pointer transition';
+      modeHtmlContainer?.classList.remove('hidden');
+      modeUrlContainer?.classList.add('hidden');
+    });
+
+    // Sample URLs
+    document.querySelectorAll('.btn-sample-url').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const u = (btn as HTMLElement).dataset.url;
+        if (u && inputUrl) {
+          inputUrl.value = u;
+          btnFetch?.click();
+        }
+      });
+    });
+
+    function cleanHtmlToText(rawHtml: string): { title: string; desc: string; text: string; h1: number; h2: number; h3: number; links: number; images: number } {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(rawHtml, 'text/html');
+
+      const title = doc.querySelector('title')?.innerText?.trim() || 'Untitled Page';
+      const desc = doc.querySelector('meta[name="description"]')?.getAttribute('content')?.trim() || 
+                   doc.querySelector('meta[property="og:description"]')?.getAttribute('content')?.trim() || 
+                   'No meta description detected.';
+
+      const h1Count = doc.querySelectorAll('h1').length;
+      const h2Count = doc.querySelectorAll('h2').length;
+      const h3Count = doc.querySelectorAll('h3').length;
+      const linkCount = doc.querySelectorAll('a').length;
+      const imgCount = doc.querySelectorAll('img').length;
+
+      // Remove non-content elements
+      const elementsToRemove = ['script', 'style', 'noscript', 'nav', 'footer', 'header', 'aside', 'svg', 'iframe', 'canvas'];
+      elementsToRemove.forEach(tag => {
+        doc.querySelectorAll(tag).forEach(el => el.remove());
+      });
+
+      // Extract body text
+      const body = doc.body;
+      const text = body ? (body.innerText || body.textContent || '') : '';
+      const cleaned = text
+        .split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0)
+        .join('\n\n');
+
+      return {
+        title,
+        desc,
+        text: cleaned,
+        h1: h1Count,
+        h2: h2Count,
+        h3: h3Count,
+        links: linkCount,
+        images: imgCount
+      };
+    }
+
+    function displayResults(data: ReturnType<typeof cleanHtmlToText>, sourceLabel: string) {
+      const metrics = calculateMetrics(data.text);
+      const kw = calculateKeywordDensity(data.text, true, 10);
+
+      resResolvedUrl.textContent = sourceLabel;
+      resPageTitle.textContent = data.title;
+      resPageDesc.textContent = data.desc;
+
+      resStatWords.textContent = metrics.words.toLocaleString();
+      resStatUnique.textContent = `${metrics.uniqueWords.toLocaleString()} unique words (${metrics.uniqueWordsPercent}%)`;
+      resStatChars.textContent = metrics.characters.toLocaleString();
+      resStatCharsNoSpace.textContent = `${metrics.charactersNoSpaces.toLocaleString()} no spaces`;
+      resStatReading.textContent = metrics.readingTimeFormatted;
+      resStatSpeaking.textContent = metrics.speakingTimeFormatted;
+
+      resCountH1.textContent = data.h1.toString();
+      resCountH2.textContent = data.h2.toString();
+      resCountH3.textContent = data.h3.toString();
+      resCountLinks.textContent = data.links.toString();
+      resCountImages.textContent = data.images.toString();
+
+      resExtractedText.value = data.text;
+      resParaCount.textContent = `${metrics.paragraphs.toLocaleString()} paragraphs`;
+
+      if (kw.oneWord.length === 0) {
+        resKeywordsTbody.innerHTML = `<tr><td colspan="3" class="py-4 text-center text-[#8f8f8f]">No keywords found</td></tr>`;
+      } else {
+        resKeywordsTbody.innerHTML = kw.oneWord.slice(0, 10).map(k => `
+          <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+            <td class="py-1.5 font-medium text-[#171717] dark:text-[#ededed]">${k.phrase}</td>
+            <td class="py-1.5 text-center text-[#8f8f8f]">${k.count}</td>
+            <td class="py-1.5 text-right font-semibold text-[#0070f3]">${k.density}%</td>
+          </tr>
+        `).join('');
+      }
+
+      resultsContainer?.classList.remove('hidden');
+      resultsContainer?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Action: Fetch URL
+    btnFetch?.addEventListener('click', async () => {
+      let url = inputUrl?.value.trim();
+      if (!url) {
+        alert('Please enter a valid website URL.');
+        return;
+      }
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+        inputUrl.value = url;
+      }
+
+      statusBar?.classList.remove('hidden');
+      if (statusText) statusText.textContent = `Fetching ${url}...`;
+
+      try {
+        let html = '';
+        // Try direct fetch first (for same-origin or CORS-enabled pages)
+        try {
+          const directRes = await fetch(url, { headers: { 'Accept': 'text/html' } });
+          if (directRes.ok) html = await directRes.text();
+        } catch (e) {}
+
+        // Fallback to client-side CORS proxy
+        if (!html) {
+          if (statusText) statusText.textContent = `Connecting via secure reader proxy...`;
+          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+          const proxyRes = await fetch(proxyUrl);
+          if (proxyRes.ok) {
+            html = await proxyRes.text();
+          } else {
+            throw new Error(`Failed to retrieve webpage (HTTP ${proxyRes.status})`);
+          }
+        }
+
+        const parsed = cleanHtmlToText(html);
+        displayResults(parsed, url);
+        statusBar?.classList.add('hidden');
+      } catch (err: any) {
+        statusBar?.classList.add('hidden');
+        alert(`Could not fetch webpage automatically due to strict CORS or firewall.\n\nTip: You can switch to the "Paste Raw HTML" tab, press Ctrl+U on the website, and paste the code directly!`);
+      }
+    });
+
+    // Action: Parse HTML
+    btnParseHtml?.addEventListener('click', () => {
+      const code = inputHtml?.value.trim();
+      if (!code) {
+        alert('Please paste some HTML code.');
+        return;
+      }
+      const parsed = cleanHtmlToText(code);
+      displayResults(parsed, 'Direct HTML Paste');
+    });
+
+    // Action: Open in main editor
+    btnOpenInEditor?.addEventListener('click', () => {
+      const text = resExtractedText.value;
+      if (!text) return;
+      localStorage.setItem('cleanwordcounter-draft', text);
+      window.location.href = '/';
+    });
+
+    // Action: Copy Extracted Text
+    btnCopyExtracted?.addEventListener('click', () => {
+      const text = resExtractedText.value;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('✓ Copied extracted webpage text to clipboard');
+      });
+    });
+
+    // Action: Copy SEO Report
+    btnCopySeoReport?.addEventListener('click', () => {
+      const words = resStatWords.textContent;
+      const chars = resStatChars.textContent;
+      const read = resStatReading.textContent;
+      const title = resPageTitle.textContent;
+      const url = resResolvedUrl.textContent;
+      const report = `📊 Webpage Word Count & SEO Report (via CleanWordCounter):\n` +
+        `• URL: ${url}\n` +
+        `• Title: ${title}\n` +
+        `• Words: ${words}\n` +
+        `• Characters: ${chars}\n` +
+        `• Reading Time: ${read}\n` +
+        `• Headings: ${resCountH1.textContent} H1 · ${resCountH2.textContent} H2 · ${resCountH3.textContent} H3\n` +
+        `• Links: ${resCountLinks.textContent} · Images: ${resCountImages.textContent}`;
+      navigator.clipboard.writeText(report).then(() => {
+        alert('✓ Copied SEO word report to clipboard');
+      });
+    });
+  </script>
+</Layout>
