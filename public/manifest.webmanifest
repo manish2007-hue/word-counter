@@ -1,5 +1,5 @@
 {
-  "name": "CleanWordCounter - Online Word Counter & Writing Aid",
+  "name": "CleanWordCounter - Free Online Word Counter & Writing Aid",
   "short_name": "CleanWordCounter",
   "description": "100% private, instant word and character counter with reading time, keyword density, readability scores, and offline support.",
   "start_url": "/",
@@ -8,10 +8,25 @@
   "theme_color": "#0070f3",
   "icons": [
     {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

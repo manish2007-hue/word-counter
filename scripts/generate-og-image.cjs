@@ -33,9 +33,13 @@ const svg = `
   <circle cx="120" cy="118" r="5" fill="#0070f3" />
   <text x="136" y="123" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#a1a1a1" letter-spacing="1.5">100% CLIENT-SIDE • ZERO ADS • PWA</text>
 
-  <!-- Logo Triangle -->
-  <polygon points="100,165 116,195 84,195" fill="#ffffff" />
-  <text x="130" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#ffffff" letter-spacing="-0.5">WordCountr <tspan fill="#0070f3">Pro</tspan></text>
+  <!-- Brand Logo & Name -->
+  <g transform="translate(100, 165) scale(1.1)">
+    <path d="M4 8.5L10 24L16 13.5" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 13.5L22 24L28 8.5" stroke="#0070f3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="28" cy="8.5" r="2.2" fill="#00dfd8"/>
+  </g>
+  <text x="142" y="190" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="700" fill="#ffffff" letter-spacing="-0.5">CleanWord<tspan fill="#0070f3">Counter</tspan></text>
 
   <!-- Main Headline -->
   <text x="100" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="46" font-weight="800" fill="#ffffff" letter-spacing="-1.5">Free Online Word Counter</text>

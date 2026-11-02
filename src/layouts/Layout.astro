@@ -13,9 +13,9 @@ interface Props {
 }
 
 const {
-  title = "Word Counter – Free Online Word Counter Tool & Word Count Checker",
-  description = "Free online word counter tool and word count checker. Count words, characters, sentences, PDF word count, essay citations, and Google Docs limits in real time.",
-  keywords = "word counter, word counter online, word counter free, word counter tool, free word counter, online word counter, essay word counter, word counter google docs, pdf word counter, word counter calculator, word count, word count checker, how to check word count on google docs, word count on google docs, how to see word count on google docs",
+  title = "Free Word Counter – 100% Private, Instant & No Ads",
+  description = "Count words, characters, sentences & reading time in real time with zero ads. 100% private in-browser text tool for writers & students. Try it free!",
+  keywords = "word counter, free word counter, word count checker, online word counter, private word counter, word counter no ads, essay word counter",
   canonicalSlug = '',
   ogImage,
   ogType = 'website',
@@ -88,8 +88,14 @@ const finalSchema = schema || defaultSchema;
       gtag('config', 'G-7HRF4LDK6M');
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <!-- Favicon & Search Engine App Icons (Googlebot & Browser Standards) -->
+    <link rel="icon" href={`${base}/favicon.ico`} sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
-    <link rel="apple-touch-icon" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/png" sizes="48x48" href={`${base}/favicon-48x48.png`} />
+    <link rel="icon" type="image/png" sizes="96x96" href={`${base}/favicon-96x96.png`} />
+    <link rel="icon" type="image/png" sizes="192x192" href={`${base}/favicon-192x192.png`} />
+    <link rel="shortcut icon" href={`${base}/favicon.ico`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}/apple-touch-icon.png`} />
     <link rel="manifest" href={`${base}/manifest.webmanifest`} />
     <meta name="theme-color" content="#171717" />
     <meta name="author" content="CleanWordCounter" />
