@@ -1,0 +1,404 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  const counts = [
+    100, 200, 250, 300, 400, 500, 600, 750, 800, 1000,
+    1200, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000
+  ];
+
+  return counts.map((words) => ({
+    params: { words: words.toString() },
+    props: { count: words }
+  }));
+}
+
+const { count } = Astro.props;
+const words = count;
+
+// Calculations
+const singleSpaced = (words / 500).toFixed(words % 500 === 0 ? 0 : 1);
+const doubleSpaced = (words / 250).toFixed(words % 250 === 0 ? 0 : 1);
+const oneAndHalfSpaced = (words / 375).toFixed(1);
+const handwrittenPages = (words / 160).toFixed(1);
+
+const readMinutes = (words / 225).toFixed(1);
+const speechMinutes = (words / 130).toFixed(1);
+const paragraphs = Math.max(1, Math.round(words / 150));
+const sentences = Math.max(1, Math.round(words / 18));
+const charWithSpaces = Math.round(words * 5.5).toLocaleString();
+const charNoSpaces = Math.round(words * 4.5).toLocaleString();
+
+// Font breakdown (Double spaced)
+const fontTimes = (words / 250).toFixed(1);
+const fontArial = (words / 225).toFixed(1);
+const fontCalibri = (words / 265).toFixed(1);
+const fontGeorgia = (words / 215).toFixed(1);
+const fontCourier = (words / 175).toFixed(1);
+
+const pageTitle = `How Many Pages is ${words.toLocaleString()} Words? (Single & Double Spaced)`;
+const pageDescription = `${words.toLocaleString()} words equals ${singleSpaced} single-spaced page${singleSpaced === '1' ? '' : 's'} or ${doubleSpaced} double-spaced page${doubleSpaced === '1' ? '' : 's'} in standard 12pt Times New Roman. See exact font breakdowns, reading time & speech duration.`;
+const pageKeywords = `${words} words to pages, how many pages is ${words} words, ${words} words double spaced, ${words} words single spaced, ${words} words reading time, how long is a ${words} word speech`;
+
+const allCounts = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 10000];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": `${words.toLocaleString()} Words to Pages Calculator`,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": `https://cleanwordcounter.com/words-to-pages/${words}-words/`
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cleanwordcounter.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Words to Pages",
+          "item": "https://cleanwordcounter.com/words-to-pages/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": `${words.toLocaleString()} Words`,
+          "item": `https://cleanwordcounter.com/words-to-pages/${words}-words/`
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How many pages is ${words.toLocaleString()} words double-spaced?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `${words.toLocaleString()} words double-spaced is approximately ${doubleSpaced} pages when formatted with 1-inch margins and standard 12pt font such as Times New Roman or Arial.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How many pages is ${words.toLocaleString()} words single-spaced?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `${words.toLocaleString()} words single-spaced is approximately ${singleSpaced} pages using standard 12pt typography and 1-inch margins.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How long does it take to read ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `At the standard adult silent reading speed of 225 words per minute (WPM), it takes approximately ${readMinutes} minutes to read ${words.toLocaleString()} words.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How long is a speech of ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `At a typical keynote or presentation speaking pace of 130 words per minute, delivering a speech of ${words.toLocaleString()} words takes about ${speechMinutes} minutes.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How many paragraphs is ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `A well-structured document of ${words.toLocaleString()} words typically contains about ${paragraphs} paragraphs, assuming an average academic paragraph length of 100 to 200 words.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug={`words-to-pages/${words}-words`}
+  schema={schema}
+>
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="Breadcrumb" class="mx-auto max-w-5xl px-4 sm:px-6 pt-6">
+    <ol class="flex items-center gap-2 text-xs font-mono text-[#8f8f8f]">
+      <li><a href="/" class="hover:text-[#0070f3] transition">Home</a></li>
+      <li>/</li>
+      <li><a href="/words-to-pages" class="hover:text-[#0070f3] transition">Words to Pages</a></li>
+      <li>/</li>
+      <li class="text-[#171717] dark:text-white font-semibold">{words.toLocaleString()} Words</li>
+    </ol>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="mx-auto max-w-5xl px-4 sm:px-6 pt-6 pb-6 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Verified Typography Calibration</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      How Many Pages is <span class="vercel-gradient-develop">{words.toLocaleString()} Words</span>?
+    </h1>
+    <p class="mt-3 text-sm sm:text-base text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      In standard 12pt Times New Roman with 1-inch margins, <strong>{words.toLocaleString()} words</strong> equals <strong>{doubleSpaced} pages double-spaced</strong> or <strong>{singleSpaced} pages single-spaced</strong>.
+    </p>
+  </header>
+
+  <!-- Featured Answer Hero Cards (Targeting Google Featured Snippets) -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- Double Spaced -->
+      <div class="vercel-card p-5 text-center relative overflow-hidden border-[#0070f3]/40">
+        <div class="mono-eyebrow text-[#0070f3] mb-1">Double Spaced</div>
+        <div class="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-[#171717] dark:text-white">
+          {doubleSpaced}
+        </div>
+        <div class="text-xs text-[#8f8f8f] mt-1">pages (College / APA / MLA)</div>
+      </div>
+
+      <!-- Single Spaced -->
+      <div class="vercel-card p-5 text-center">
+        <div class="mono-eyebrow text-[#8f8f8f] mb-1">Single Spaced</div>
+        <div class="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-[#171717] dark:text-white">
+          {singleSpaced}
+        </div>
+        <div class="text-xs text-[#8f8f8f] mt-1">pages (Business / Articles)</div>
+      </div>
+
+      <!-- Reading Time -->
+      <div class="vercel-card p-5 text-center">
+        <div class="mono-eyebrow text-[#8f8f8f] mb-1">Reading Time</div>
+        <div class="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-[#171717] dark:text-white">
+          {readMinutes}
+        </div>
+        <div class="text-xs text-[#8f8f8f] mt-1">minutes (at 225 WPM)</div>
+      </div>
+
+      <!-- Speaking Time -->
+      <div class="vercel-card p-5 text-center">
+        <div class="mono-eyebrow text-[#8f8f8f] mb-1">Speaking Time</div>
+        <div class="text-3xl sm:text-4xl font-bold font-mono tracking-tight text-[#171717] dark:text-white">
+          {speechMinutes}
+        </div>
+        <div class="text-xs text-[#8f8f8f] mt-1">minutes (at 130 WPM speech)</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Key Metrics Matrix -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="vercel-card p-6 sm:p-8">
+      <div class="mono-eyebrow text-[#0070f3] mb-2">Detailed Document Metrics</div>
+      <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-6">
+        Full Breakdown for {words.toLocaleString()} Words
+      </h2>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">1.5 Line Spacing</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">{oneAndHalfSpaced}</div>
+          <div class="text-[10px] text-[#8f8f8f]">pages</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Handwritten</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">{handwrittenPages}</div>
+          <div class="text-[10px] text-[#8f8f8f]">ruled pages</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Paragraphs</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">~{paragraphs}</div>
+          <div class="text-[10px] text-[#8f8f8f]">standard</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Sentences</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">~{sentences}</div>
+          <div class="text-[10px] text-[#8f8f8f]">sentences</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Chars (w/ spaces)</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">{charWithSpaces}</div>
+          <div class="text-[10px] text-[#8f8f8f]">keystrokes</div>
+        </div>
+
+        <div class="p-3 rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e]">
+          <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Chars (no spaces)</div>
+          <div class="text-lg font-bold font-mono text-[#171717] dark:text-white mt-1">{charNoSpaces}</div>
+          <div class="text-[10px] text-[#8f8f8f]">letters/symbols</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Font Family Comparison Table -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="vercel-card p-6 sm:p-8">
+      <div class="mono-eyebrow text-[#0070f3] mb-2">Typography Impact</div>
+      <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed] mb-2">
+        How Font Selection Changes {words.toLocaleString()} Words
+      </h2>
+      <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] mb-6 leading-relaxed">
+        Different fonts have different character widths and leading heights. Here is how {words.toLocaleString()} words double-spaced formats across standard typefaces:
+      </p>
+
+      <div class="overflow-x-auto rounded-[8px] border border-[#ebebeb] dark:border-[#222222]">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0e0e0e] text-[#8f8f8f] font-mono">
+              <th class="py-2.5 px-4 font-medium">FONT FAMILY</th>
+              <th class="py-2.5 px-4 font-medium">SIZE</th>
+              <th class="py-2.5 px-4 font-medium text-[#0070f3]">DOUBLE SPACED</th>
+              <th class="py-2.5 px-4 font-medium">SINGLE SPACED</th>
+              <th class="py-2.5 px-4 font-medium hidden md:table-cell">BEST FOR</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#ebebeb] dark:divide-[#222222] font-mono">
+            <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+              <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-white">Times New Roman</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f]">12 pt</td>
+              <td class="py-2.5 px-4 font-bold text-[#0070f3]">{fontTimes} pages</td>
+              <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">{(words / 500).toFixed(1)} pages</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">APA, MLA, Academic Standard</td>
+            </tr>
+            <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+              <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-white">Arial</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f]">12 pt</td>
+              <td class="py-2.5 px-4 font-bold text-[#0070f3]">{fontArial} pages</td>
+              <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">{(words / 450).toFixed(1)} pages</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">Clean Modern / Corporate</td>
+            </tr>
+            <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+              <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-white">Calibri</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f]">11 pt</td>
+              <td class="py-2.5 px-4 font-bold text-[#0070f3]">{fontCalibri} pages</td>
+              <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">{(words / 530).toFixed(1)} pages</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">Microsoft Word Default</td>
+            </tr>
+            <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+              <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-white">Georgia</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f]">12 pt</td>
+              <td class="py-2.5 px-4 font-bold text-[#0070f3]">{fontGeorgia} pages</td>
+              <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">{(words / 430).toFixed(1)} pages</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">Literary &amp; Long-Form Reading</td>
+            </tr>
+            <tr class="hover:bg-black/5 dark:hover:bg-white/5 transition">
+              <td class="py-2.5 px-4 font-semibold text-[#171717] dark:text-white">Courier New</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f]">12 pt</td>
+              <td class="py-2.5 px-4 font-bold text-[#0070f3]">{fontCourier} pages</td>
+              <td class="py-2.5 px-4 text-[#4d4d4d] dark:text-[#a1a1a1]">{(words / 350).toFixed(1)} pages</td>
+              <td class="py-2.5 px-4 text-[#8f8f8f] font-sans hidden md:table-cell">Screenplays &amp; Monospaced Drafts</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Test Workspace Callout -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="vercel-card p-6 sm:p-8 bg-gradient-to-r from-[#0070f3]/5 via-transparent to-[#7928ca]/5 border-[#0070f3]/25 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center sm:text-left">
+        <h3 class="text-lg sm:text-xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-white">
+          Want to test your exact draft?
+        </h3>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-xl">
+          Paste your text or adjust the slider live with custom margins, font sizes, and line heights in our free interactive calculator.
+        </p>
+      </div>
+      <a
+        href="/words-to-pages"
+        class="shrink-0 px-5 py-2.5 rounded-[8px] bg-[#0070f3] hover:bg-[#0060df] text-white font-semibold text-xs sm:text-sm transition shadow-sm"
+      >
+        Open Live Calculator →
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ Section (Rankable for Long-Tail Queries) -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="vercel-card p-6 sm:p-8 space-y-6">
+      <div class="mono-eyebrow text-[#0070f3]">Frequently Asked Questions</div>
+      <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+        Questions About {words.toLocaleString()}-Word Documents
+      </h2>
+
+      <div class="space-y-4 divide-y divide-[#ebebeb] dark:divide-[#222222]">
+        <div class="pt-4 first:pt-0">
+          <h3 class="text-sm sm:text-base font-semibold text-[#171717] dark:text-white mb-1.5">
+            How many pages is {words.toLocaleString()} words double-spaced?
+          </h3>
+          <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+            In standard college and university format (12pt Times New Roman, 1-inch margins), {words.toLocaleString()} words double-spaced is exactly <strong>{doubleSpaced} pages</strong>.
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <h3 class="text-sm sm:text-base font-semibold text-[#171717] dark:text-white mb-1.5">
+            How many pages is {words.toLocaleString()} words single-spaced?
+          </h3>
+          <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+            Single-spaced documents fit approximately 500 words per page. Therefore, {words.toLocaleString()} words equals <strong>{singleSpaced} pages single-spaced</strong>.
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <h3 class="text-sm sm:text-base font-semibold text-[#171717] dark:text-white mb-1.5">
+            How long does it take to deliver a speech of {words.toLocaleString()} words?
+          </h3>
+          <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+            Speaking at an average presentation pace of 130 words per minute, an oral delivery of {words.toLocaleString()} words takes approximately <strong>{speechMinutes} minutes</strong>. If you speak quickly (150 WPM), it will take {(words / 150).toFixed(1)} minutes; at a slow, deliberate pace (110 WPM), it takes {(words / 110).toFixed(1)} minutes.
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <h3 class="text-sm sm:text-base font-semibold text-[#171717] dark:text-white mb-1.5">
+            How many paragraphs is a {words.toLocaleString()}-word essay?
+          </h3>
+          <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+            An average academic paragraph is 100 to 200 words long. A {words.toLocaleString()}-word document typically contains <strong>{paragraphs} paragraphs</strong>, including an introductory paragraph, body paragraphs with topic sentences and evidence, and a concluding synthesis.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-Linking Matrix (Passing Internal PageRank) -->
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 mb-16">
+    <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-8">
+      <div class="mono-eyebrow text-[#8f8f8f] mb-4">Explore Other Word Counts to Pages</div>
+      <div class="flex flex-wrap gap-2">
+        {allCounts.map((c) => (
+          <a
+            href={`/words-to-pages/${c}-words`}
+            class={`px-3 py-1.5 rounded-[6px] text-xs font-mono transition ${
+              c === words
+                ? 'bg-[#0070f3] text-white font-bold'
+                : 'border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] text-[#4d4d4d] dark:text-[#a1a1a1] hover:border-[#0070f3] hover:text-[#0070f3]'
+            }`}
+          >
+            {c.toLocaleString()} words
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

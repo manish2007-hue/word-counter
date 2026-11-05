@@ -366,6 +366,22 @@ const schema = {
             </tr>
           </tbody>
         </table>
+      <!-- Dedicated Word Count Guides Hub -->
+      <div class="mt-8 border-t border-[#ebebeb] dark:border-[#222222] pt-6">
+        <div class="mono-eyebrow text-[#0070f3] mb-3">Targeted Word Count Calculators &amp; Specs</div>
+        <p class="text-xs text-[#8f8f8f] mb-4">
+          Select your target essay or paper length for an instant breakdown of margins, fonts, speaking duration, and paragraph structures:
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {[100, 200, 250, 300, 400, 500, 600, 750, 800, 1000, 1200, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000].map((num) => (
+            <a
+              href={`/words-to-pages/${num}-words`}
+              class="px-2.5 py-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] text-xs font-mono text-[#171717] dark:text-[#ededed] hover:border-[#0070f3] hover:text-[#0070f3] transition"
+            >
+              {num.toLocaleString()} words →
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   </div>

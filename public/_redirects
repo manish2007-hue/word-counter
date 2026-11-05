@@ -1,0 +1,11 @@
+# Cloudflare Pages 301 Permanent Redirects for SEO consolidation
+/words-to-pages-converter https://cleanwordcounter.com/words-to-pages 301
+/words-to-pages-converter/* https://cleanwordcounter.com/words-to-pages 301
+/academic-word-counter-without-citations https://cleanwordcounter.com/academic-word-counter 301
+/academic-word-counter-without-citations/* https://cleanwordcounter.com/academic-word-counter 301
+/llm-token-counter https://cleanwordcounter.com/ai-token-counter 301
+/llm-token-counter/* https://cleanwordcounter.com/ai-token-counter 301
+/text-diff-checker https://cleanwordcounter.com/diff-checker 301
+/text-diff-checker/* https://cleanwordcounter.com/diff-checker 301
+/privacy-policy https://cleanwordcounter.com/privacy 301
+/privacy-policy/* https://cleanwordcounter.com/privacy 301

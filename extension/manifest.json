@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Clean Word Counter: Ad-Free Word & Character Count",
+  "short_name": "CleanWordCounter",
+  "version": "1.0.0",
+  "description": "Instant, 100% private word counter and character counter. Count words on any webpage with zero ads and complete privacy.",
+  "icons": {
+    "48": "icon48.png",
+    "96": "icon96.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "Clean Word Counter",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon48.png"
+    }
+  },
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
