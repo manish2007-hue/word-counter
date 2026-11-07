@@ -995,10 +995,12 @@ const finalSchema = schema || defaultSchema;
         }
       });
 
-      // 4. PWA Service Worker Registration
+      // 4. PWA Service Worker Registration with automatic update check
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch((err) => {
+          navigator.serviceWorker.register('/sw.js').then((registration) => {
+            registration.update();
+          }).catch((err) => {
             console.log('SW registration note:', err);
           });
         });
