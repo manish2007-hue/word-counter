@@ -58,8 +58,8 @@
   }
 
   .dark {
-    /* Vercel Polarity-Flipped Dark Canvas */
-    --canvas: #000000;
+    /* Polarity-Flipped Dark Canvas */
+    --canvas: #1c1c1c;
     --canvas-card: #0a0a0a;
     --canvas-soft-2: #141414;
     --canvas-elevated: #0f0f10;
