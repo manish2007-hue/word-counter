@@ -13,9 +13,9 @@ export interface ToolItem {
 }
 
 export const CATEGORIES = [
-  { id: 'all', label: 'All Tools', count: 24 },
+  { id: 'all', label: 'All Tools', count: 25 },
   { id: 'writing', label: 'Writing & Analysis', count: 7 },
-  { id: 'image', label: 'Image Tools', count: 4 },
+  { id: 'image', label: 'Image Tools', count: 5 },
   { id: 'cleaning', label: 'Formatting & Cleaning', count: 4 },
   { id: 'generators', label: 'Text Generators', count: 3 },
   { id: 'developer', label: 'Developer & Code', count: 2 },
@@ -330,5 +330,18 @@ export const TOOLS_LIST: ToolItem[] = [
     badgeColor: 'emerald',
     tags: ['image to pdf', 'jpg to pdf', 'png to pdf', 'photo to pdf', 'convert photos to pdf', 'merge to pdf', 'exam pdf upload'],
     icon: 'document'
+  },
+  {
+    id: 'pdf-to-jpg',
+    slug: 'pdf-to-jpg',
+    href: '/pdf-to-jpg',
+    name: 'PDF to JPG Converter',
+    shortDesc: 'Convert PDF document pages into high-resolution JPG or PNG images with 300 DPI support and zero file uploads.',
+    category: 'image',
+    categoryLabel: 'Image Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['pdf to jpg', 'convert pdf to image', 'pdf to png', 'extract pages from pdf', 'pdf to jpeg online', 'convert pdf offline'],
+    icon: 'image'
   }
 ];

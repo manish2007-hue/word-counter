@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  const counts = [
+    100, 200, 250, 300, 400, 500, 600, 750, 800, 1000,
+    1200, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000
+  ];
+
+  return counts.map((words) => ({
+    params: { words: words.toString() },
+    props: { count: words }
+  }));
+}
+
+const { count } = Astro.props;
+const words = count;
+
+function formatMinutesAndSeconds(totalMinutes: number): string {
+  const mins = Math.floor(totalMinutes);
+  const secs = Math.round((totalMinutes - mins) * 60);
+  if (mins === 0) return `${secs} seconds`;
+  if (secs === 0) return `${mins} minute${mins === 1 ? '' : 's'}`;
+  return `${mins} min ${secs} sec`;
+}
+
+// Reading velocities
+const avgSilentMinutes = words / 238; // standard adult non-fiction
+const slowReaderMinutes = words / 150; // learning / non-native
+const speedReaderMinutes = words / 350; // skim / fast scan
+const readAloudMinutes = words / 130; // spoken aloud / podcast
+
+const avgDuration = formatMinutesAndSeconds(avgSilentMinutes);
+const slowDuration = formatMinutesAndSeconds(slowReaderMinutes);
+const speedDuration = formatMinutesAndSeconds(speedReaderMinutes);
+const aloudDuration = formatMinutesAndSeconds(readAloudMinutes);
+
+const pageTitle = `How Long Does It Take to Read ${words.toLocaleString()} Words? (Minutes & Seconds)`;
+const pageDescription = `Reading ${words.toLocaleString()} words takes ${avgDuration} at standard adult silent speed (238 WPM). See slow, average, and speed-reading breakdowns, plus spoken audio duration.`;
+const pageKeywords = `${words} words reading time, how long to read ${words} words, reading time for ${words} words, how many minutes to read ${words} words, ${words} words how long`;
+
+const allCounts = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 10000];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": `${words.toLocaleString()} Words Reading Time Calculator`,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": `https://cleanwordcounter.com/words-to-reading-time/${words}-words/`
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How long does it take to read ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `An average adult reads ${words.toLocaleString()} words silently in ${avgDuration} (at 238 words per minute). Reading aloud takes approximately ${aloudDuration}.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How many book pages is ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `${words.toLocaleString()} words is approximately ${(words / 250).toFixed(1)} standard double-spaced pages or ${(words / 500).toFixed(1)} single-spaced pages.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug={`words-to-reading-time/${words}-words`}
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <nav class="flex items-center justify-center gap-2 text-xs text-[#888888] font-mono mb-4">
+      <a href="/" class="hover:text-[#0070f3]">Home</a>
+      <span>/</span>
+      <a href="/words-to-reading-time" class="hover:text-[#0070f3]">Reading Time</a>
+      <span>/</span>
+      <span class="text-[#171717] dark:text-[#ededed] font-semibold">{words.toLocaleString()} Words</span>
+    </nav>
+
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Cognitive Reading Velocity (238 WPM)</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      How Long to Read <span class="vercel-gradient-develop">{words.toLocaleString()} Words</span>?
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Reading {words.toLocaleString()} words takes an average adult <strong class="text-[#0070f3] font-mono">{avgDuration}</strong> of silent reading.
+    </p>
+
+    <!-- Word Count Switcher -->
+    <div class="mt-6 flex flex-wrap justify-center items-center gap-2">
+      <span class="text-xs text-[#888888] font-mono mr-1">Other Word Counts:</span>
+      {allCounts.map((c) => (
+        <a
+          href={`/words-to-reading-time/${c}-words/`}
+          class={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-mono transition-colors ${
+            c === words
+              ? 'bg-[#171717] dark:bg-white text-white dark:text-[#171717] font-semibold'
+              : 'border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#121212] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3]'
+          }`}
+        >
+          {c.toLocaleString()}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div class="max-w-4xl mx-auto space-y-10">
+      <!-- Speed Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Average Silent -->
+        <div class="rounded-2xl border-2 border-[#0070f3] bg-white dark:bg-[#0a0a0a] p-6 shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-[#0070f3] text-white text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-bl-lg uppercase tracking-wider">
+            Standard
+          </div>
+          <span class="text-xs font-semibold text-[#0070f3] uppercase tracking-wider block mb-1">
+            Average Reader (238 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {avgDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            Standard silent reading speed for adults reading articles, essays, and news online.
+          </p>
+        </div>
+
+        <!-- Slow / Studying -->
+        <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xs">
+          <span class="text-xs font-semibold text-[#888888] uppercase tracking-wider block mb-1">
+            Careful / Study (150 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {slowDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            Deep technical papers, textbooks, legal briefs, and language learning with note-taking.
+          </p>
+        </div>
+
+        <!-- Speed Reader -->
+        <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xs">
+          <span class="text-xs font-semibold text-[#888888] uppercase tracking-wider block mb-1">
+            Speed Reader (350 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {speedDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            Skimming, fast reading, light fiction, and executive summaries.
+          </p>
+        </div>
+      </div>
+
+      <!-- Additional Context Grid -->
+      <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          Complete {words.toLocaleString()} Word Reading Equivalents
+        </h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Spoken Aloud</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {aloudDuration}
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">at 130 WPM</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Double Spaced</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#0070f3]">
+              {(words / 250).toFixed(1)} Pages
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">12pt Times New Roman</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Single Spaced</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {(words / 500).toFixed(1)} Pages
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">500 words/page</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Paragraphs</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              ~{Math.max(1, Math.round(words / 150))}
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">at 150 words/para</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Internal Cross-Linking -->
+      <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-4">
+          Related Calculators for {words.toLocaleString()} Words
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <a href={`/words-to-pages/${words}-words/`} class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">{words.toLocaleString()} Words to Pages</span>
+            <span class="text-[11px] text-[#888888]">Single &amp; double spaced page count</span>
+          </a>
+          <a href={`/words-to-speaking-time/${words}-words/`} class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">{words.toLocaleString()} Words to Speech</span>
+            <span class="text-[11px] text-[#888888]">Speech &amp; presentation duration</span>
+          </a>
+          <a href="/tools/" class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">All 25 Tools Directory</span>
+            <span class="text-[11px] text-[#888888]">Browse full utility suite</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

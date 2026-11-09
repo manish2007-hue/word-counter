@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WordCounter from '../components/WordCounter.astro';
+
+const pageTitle = "Words to Reading Time – Read Time Calculator for Articles & Books";
+const pageDescription = "Calculate exact reading time for any word count. Accurate estimates for average readers (238 WPM), slow reading (150 WPM), and speed reading (350 WPM). 100% free.";
+const pageKeywords = "words to reading time, reading time calculator, how long to read 1000 words, article reading time, read time estimation";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Words to Reading Time Calculator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/words-to-reading-time/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How fast does an average adult read?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scientific research shows average adult silent reading speed for non-fiction prose is 238 words per minute (WPM). Fiction reading ranges between 250 to 300 WPM."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to read 1,000 words?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1,000 words takes approximately 4 minutes and 12 seconds to read silently at standard adult speed."
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const popularCounts = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 10000];
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="words-to-reading-time"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Cognitive Reading Velocity Standard (238 WPM)</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Words to Reading Time <span class="vercel-gradient-develop">Calculator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Paste your article, book chapter, or essay to calculate exact silent reading time, audio narration length, and comprehension benchmarks.
+    </p>
+
+    <!-- Quick Target Links -->
+    <div class="mt-4 flex flex-wrap justify-center items-center gap-2">
+      <span class="text-xs text-[#888888] font-mono mr-1">Browse Word Counts:</span>
+      {popularCounts.map((count) => (
+        <a
+          href={`/words-to-reading-time/${count}-words/`}
+          class="inline-flex items-center gap-1 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#121212] px-3 py-1 text-[11px] font-mono text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors"
+        >
+          <span>{count.toLocaleString()} Words</span>
+          <span class="text-[#0070f3]">&rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <WordCounter initialTab="stats" showHeroCopy={false} />
+</Layout>

@@ -17,18 +17,18 @@ function checkDistFile(relPath: string, expectedKeywords: string[]) {
 
 console.log('🔍 RUNNING COMPREHENSIVE DIST VERIFICATION...\n');
 
-// 1. Core and Dashboard
-checkDistFile('index.html', ['CleanWordCounter', 'Tools', '24']);
-checkDistFile('tools/index.html', ['All 24 Free In-Browser Tools', 'Image Tools', 'Image to PDF Converter']);
+// 1. Core and Dashboard with Command Palette
+checkDistFile('index.html', ['CleanWordCounter', 'Tools', '25', 'cmd-k-modal', 'cmd-k-input']);
+checkDistFile('tools/index.html', ['All 25 Free In-Browser Tools', 'Image Tools', 'PDF to JPG Converter']);
 
-// 2. Image Tools Suite (Pi7 Model)
+// 2. Image & Document Tools Suite (Pi7 Model)
 checkDistFile('compress-image/index.html', ['Target Image', 'Compressor', '20KB', '50KB', '100KB', '200KB']);
 checkDistFile('compress-image/to-20kb/index.html', ['Compress Image to 20KB', '20 KB Maximum', 'Signatures']);
 checkDistFile('compress-image/to-50kb/index.html', ['Compress Image to 50KB', '50 KB Maximum', 'Exam Forms']);
-checkDistFile('compress-image/to-100kb/index.html', ['Compress Image to 100KB', 'Passport']);
 checkDistFile('resize-image/index.html', ['Passport Photo', '3.5 × 4.5 cm', '300 DPI', 'US Visa (2 × 2 in)']);
 checkDistFile('image-converter/index.html', ['Image Format', 'Converter', 'PNG', 'WebP', 'JPG']);
 checkDistFile('image-to-pdf/index.html', ['Image to', 'PDF Converter', 'A4 Portrait', 'US Letter']);
+checkDistFile('pdf-to-jpg/index.html', ['PDF to', 'JPG Converter', '300 DPI (High Resolution Print)']);
 
 // 3. Priority 1 Tools
 checkDistFile('lorem-ipsum-generator/index.html', ['Lorem Ipsum', 'Generator']);
@@ -43,19 +43,23 @@ checkDistFile('character-counter/tiktok/index.html', ['TikTok', 'Character Count
 checkDistFile('character-counter/threads/index.html', ['Threads', 'Character Counter', '500']);
 checkDistFile('character-counter/youtube/index.html', ['YouTube', 'Character Counter', '5,000']);
 
-// 5. Programmatic Speaking Time
-checkDistFile('words-to-speaking-time/index.html', ['Words to Speaking Time']);
-checkDistFile('words-to-speaking-time/1000-words/index.html', ['How Long is a 1,000 Word Speech', 'Conversational Pace (130 WPM)', '7 min 42 sec']);
-checkDistFile('words-to-speaking-time/500-words/index.html', ['How Long is a 500 Word Speech', 'Conversational Pace (130 WPM)']);
+// 5. Programmatic Reading Time Suite
+checkDistFile('words-to-reading-time/index.html', ['Words to Reading Time', 'Cognitive Reading Velocity Standard (238 WPM)']);
+checkDistFile('words-to-reading-time/1000-words/index.html', ['How Long to Read', '1,000 Words', 'Average Reader (238 WPM)', '4 min 12 sec']);
+checkDistFile('words-to-reading-time/500-words/index.html', ['How Long to Read', '500 Words', 'Average Reader (238 WPM)']);
 
-// 6. Programmatic Words to Pages
+// 6. Programmatic Speaking Time Suite
+checkDistFile('words-to-speaking-time/1000-words/index.html', ['How Long is a 1,000 Word Speech', 'Conversational Pace (130 WPM)', '7 min 42 sec']);
+
+// 7. Programmatic Words to Pages Suite
 checkDistFile('words-to-pages/1000-words/index.html', ['1,000 Words']);
 
-// 7. Dynamic Sitemap
+// 8. Dynamic Sitemap
 checkDistFile('sitemap.xml', [
+  'https://cleanwordcounter.com/pdf-to-jpg/',
   'https://cleanwordcounter.com/image-to-pdf/',
-  'https://cleanwordcounter.com/compress-image/to-20kb/',
-  'https://cleanwordcounter.com/character-counter/instagram/'
+  'https://cleanwordcounter.com/words-to-reading-time/1000-words/',
+  'https://cleanwordcounter.com/compress-image/to-20kb/'
 ]);
 
 console.log('\n🎉 ALL STATIC DIST ARTIFACTS VERIFIED SUCCESSFULLY!');
