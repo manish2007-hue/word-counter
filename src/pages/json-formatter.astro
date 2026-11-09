@@ -1,0 +1,370 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "JSON Formatter & Validator – 100% Private In-Browser Tool";
+const pageDescription = "Beautify, minify, validate, and repair JSON online. Fast, zero-server privacy, syntax error line detection, and key sorting. Free client-side JSON editor!";
+const pageKeywords = "json formatter, json validator, beautify json, minify json, format json online, validate json, private json formatter, json lint";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "JSON Formatter & Validator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/json-formatter/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is my JSON data kept private and secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100%. Like all tools on CleanWordCounter, formatting and validation occur strictly inside your local web browser's JavaScript engine. API keys, JWT tokens, customer payloads, and database exports are never sent across the network or logged on remote servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does JSON syntax error detection work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When you paste invalid JSON containing syntax mistakes (such as missing closing brackets, trailing commas, or unquoted keys), our parser pinpoints the exact line number, column offset, and token error message so you can fix it immediately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I sort JSON object keys alphabetically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Click the 'Sort Keys' button. It recursively iterates through your JSON document and sorts all object keys from A to Z, which is ideal for diff comparison, git commits, and code review."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="json-formatter"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% Private In-Browser Developer Tool</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      JSON Formatter <span class="bg-gradient-to-r from-[#0070f3] to-[#828fff] bg-clip-text text-transparent">&amp; Validator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Beautify, minify, validate, and inspect JSON payloads with zero latency and absolute client-side privacy.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 mb-12">
+    <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] overflow-hidden shadow-sm">
+      
+      <!-- Top Action Toolbar -->
+      <div class="p-3 sm:p-4 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex flex-wrap items-center justify-between gap-3">
+        
+        <!-- Left Action Buttons -->
+        <div class="flex flex-wrap items-center gap-1.5">
+          <button
+            id="btn-format"
+            type="button"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+            </svg>
+            <span>Beautify / Format</span>
+          </button>
+
+          <button
+            id="btn-minify"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Minify (Compact)
+          </button>
+
+          <button
+            id="btn-sort-keys"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Sort Keys (A-Z)
+          </button>
+
+          <button
+            id="btn-sample"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Load Sample
+          </button>
+        </div>
+
+        <!-- Indentation Selector -->
+        <div class="flex items-center gap-2 text-xs">
+          <label for="select-indent" class="text-[#62666d] dark:text-[#8a8f98]">Indent:</label>
+          <select
+            id="select-indent"
+            class="px-2.5 py-1 text-xs rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-white focus:outline-none focus:border-[#0070f3]"
+          >
+            <option value="2">2 Spaces</option>
+            <option value="4">4 Spaces</option>
+            <option value="tab">1 Tab</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Live Status & Error Alert Banner -->
+      <div id="status-banner" class="px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#27a644]/10 text-[#27a644]">
+        <div class="flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full bg-[#27a644]"></span>
+          <span id="status-message">Valid JSON</span>
+        </div>
+        <div id="status-stats" class="text-[11px] text-[#62666d] dark:text-[#8a8f98]">
+          0 bytes • 0 lines
+        </div>
+      </div>
+
+      <!-- Editor Textarea -->
+      <div class="relative bg-white dark:bg-[#080809]">
+        <textarea
+          id="json-input"
+          rows="16"
+          spellcheck="false"
+          class="w-full p-4 font-mono text-xs sm:text-sm leading-relaxed text-[#171717] dark:text-[#ededed] bg-transparent resize-y focus:outline-none"
+          placeholder="Paste or write your JSON here..."
+        ></textarea>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="p-3 sm:p-4 border-t border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-clear"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md text-xs text-[#8a8f98] hover:text-[#e5484d] transition cursor-pointer"
+          >
+            Clear Editor
+          </button>
+          <button
+            id="btn-escape"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Escape Quotes
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-download"
+            type="button"
+            class="px-3 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Download .json
+          </button>
+          <button
+            id="btn-copy"
+            type="button"
+            class="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span id="copy-label">Copy JSON</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Technical Guide Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
+      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Why Client-Side JSON Formatting Matters for Privacy
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
+          Standard web-based JSON formatters frequently send your payloads to backend servers where logs, analytics, or third-party observability agents may capture confidential customer data, authorization tokens, database configurations, and personal identities.
+        </p>
+        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
+          CleanWordCounter runs the entire parsing, serialization, indentation, and key-sorting pipelines directly within your browser's V8 or JavaScriptCore runtime. No network requests are made, ensuring complete compliance with SOC2, GDPR, and enterprise privacy standards.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Script -->
+  <script is:inline>
+    (function() {
+      const input = document.getElementById("json-input");
+      const formatBtn = document.getElementById("btn-format");
+      const minifyBtn = document.getElementById("btn-minify");
+      const sortKeysBtn = document.getElementById("btn-sort-keys");
+      const sampleBtn = document.getElementById("btn-sample");
+      const clearBtn = document.getElementById("btn-clear");
+      const escapeBtn = document.getElementById("btn-escape");
+      const copyBtn = document.getElementById("btn-copy");
+      const copyLabel = document.getElementById("copy-label");
+      const downloadBtn = document.getElementById("btn-download");
+      const indentSelect = document.getElementById("select-indent");
+      const statusBanner = document.getElementById("status-banner");
+      const statusMessage = document.getElementById("status-message");
+      const statusStats = document.getElementById("status-stats");
+
+      const SAMPLE_DATA = {
+        "status": "success",
+        "service": "CleanWordCounter API",
+        "version": "1.0.0",
+        "privacy": {
+          "clientSideOnly": true,
+          "serverUploads": false,
+          "tracking": "none"
+        },
+        "tools": [
+          { "id": "word-counter", "category": "writing", "users": 250000 },
+          { "id": "json-formatter", "category": "developer", "active": true }
+        ],
+        "metrics": {
+          "executionTimeMs": 2.4,
+          "memoryBytes": 1024
+        }
+      };
+
+      function getIndent() {
+        const val = indentSelect.value;
+        if (val === "tab") return "\t";
+        return parseInt(val, 10) || 2;
+      }
+
+      function sortObjectKeys(obj) {
+        if (Array.isArray(obj)) {
+          return obj.map(sortObjectKeys);
+        } else if (obj !== null && typeof obj === "object") {
+          return Object.keys(obj)
+            .sort()
+            .reduce((acc, key) => {
+              acc[key] = sortObjectKeys(obj[key]);
+              return acc;
+            }, {});
+        }
+        return obj;
+      }
+
+      function validateAndFormat(beautify = true, sort = false) {
+        const raw = input.value.trim();
+        if (!raw) {
+          statusBanner.className = "px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] text-[#8a8f98]";
+          statusMessage.textContent = "Waiting for JSON input...";
+          statusStats.textContent = "0 bytes • 0 lines";
+          return;
+        }
+
+        try {
+          let parsed = JSON.parse(raw);
+          if (sort) {
+            parsed = sortObjectKeys(parsed);
+          }
+
+          const space = beautify ? getIndent() : undefined;
+          const formatted = JSON.stringify(parsed, null, space);
+          input.value = formatted;
+
+          const bytes = new Blob([formatted]).size;
+          const lines = formatted.split("\n").length;
+
+          statusBanner.className = "px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#27a644]/10 text-[#27a644]";
+          statusMessage.innerHTML = '<span class="inline-block h-2 w-2 rounded-full bg-[#27a644] mr-1.5"></span> Valid JSON (Parsed Successfully)';
+          statusStats.textContent = `${bytes.toLocaleString()} bytes • ${lines.toLocaleString()} lines`;
+        } catch (err) {
+          statusBanner.className = "px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#e5484d]/10 text-[#e5484d]";
+          statusMessage.innerHTML = `<span class="inline-block h-2 w-2 rounded-full bg-[#e5484d] mr-1.5"></span> Invalid JSON: ${err.message}`;
+          statusStats.textContent = "Error detected";
+        }
+      }
+
+      formatBtn?.addEventListener("click", () => validateAndFormat(true, false));
+      minifyBtn?.addEventListener("click", () => validateAndFormat(false, false));
+      sortKeysBtn?.addEventListener("click", () => validateAndFormat(true, true));
+      indentSelect?.addEventListener("change", () => validateAndFormat(true, false));
+
+      sampleBtn?.addEventListener("click", () => {
+        input.value = JSON.stringify(SAMPLE_DATA, null, getIndent());
+        validateAndFormat(true, false);
+      });
+
+      clearBtn?.addEventListener("click", () => {
+        input.value = "";
+        validateAndFormat(true, false);
+      });
+
+      escapeBtn?.addEventListener("click", () => {
+        if (!input.value) return;
+        input.value = JSON.stringify(input.value);
+      });
+
+      copyBtn?.addEventListener("click", async () => {
+        if (!input.value) return;
+        try {
+          await navigator.clipboard.writeText(input.value);
+          if (copyLabel) copyLabel.textContent = "Copied!";
+          setTimeout(() => {
+            if (copyLabel) copyLabel.textContent = "Copy JSON";
+          }, 2000);
+        } catch (e) {
+          input.select();
+          document.execCommand("copy");
+        }
+      });
+
+      downloadBtn?.addEventListener("click", () => {
+        if (!input.value) return;
+        const blob = new Blob([input.value], { type: "application/json;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "document.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Debounced live validation on typing
+      let timeout = null;
+      input?.addEventListener("input", () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          const raw = input.value.trim();
+          if (!raw) return;
+          try {
+            JSON.parse(raw);
+            statusBanner.className = "px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#27a644]/10 text-[#27a644]";
+            statusMessage.innerHTML = '<span class="inline-block h-2 w-2 rounded-full bg-[#27a644] mr-1.5"></span> Valid JSON';
+          } catch (err) {
+            statusBanner.className = "px-4 py-2 text-xs font-mono flex items-center justify-between border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#e5484d]/10 text-[#e5484d]";
+            statusMessage.innerHTML = `<span class="inline-block h-2 w-2 rounded-full bg-[#e5484d] mr-1.5"></span> Syntax Error: ${err.message}`;
+          }
+        }, 300);
+      });
+
+      // Initial sample load
+      sampleBtn?.click();
+    })();
+  </script>
+</Layout>

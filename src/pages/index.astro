@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import WordsToPages from '../components/WordsToPages.astro';
+import ToolsDashboard from '../components/ToolsDashboard.astro';
 
 const pageTitle = "Free Word Counter – 100% Private, Instant & No Ads";
 const pageDescription = "Count words, characters, sentences & reading time in real time with zero ads. 100% private in-browser text tool for writers & students. Try it free!";
@@ -161,6 +162,15 @@ const structuredData = {
 
   <!-- Interactive Tool Workspace (Above the fold) -->
   <WordCounter showHeroCopy={true} />
+
+  <!-- Interactive All-Tools Hub & Category Switcher -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fdfdfd] dark:bg-[#070708] py-12 transition-colors duration-200">
+    <ToolsDashboard
+      headline="Explore All In-Browser Tools"
+      subheadline="Switch between writing, cleaning, generator, developer, and social media utilities. 100% private with instant execution."
+      showHero={true}
+    />
+  </section>
 
   <!-- BELOW THE FOLD: VERCEL GEIST SEO SECTIONS & TECHNICAL MATRICES -->
   <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">

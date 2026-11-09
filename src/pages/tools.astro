@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ToolsDashboard from '../components/ToolsDashboard.astro';
+
+const pageTitle = "All Free In-Browser Tools & Writing Utilities – CleanWordCounter";
+const pageDescription = "Explore 20+ free, 100% private in-browser utilities: word counters, essay citation filters, case converters, JSON formatters, text repeaters, and hashtag generators.";
+const pageKeywords = "free online tools, text tools, writing utilities, private browser tools, word counter, json formatter, text repeater, fancy text generator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "name": "CleanWordCounter Tools Suite",
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/tools/"
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="tools"
+  schema={schema}
+>
+  <div class="py-4">
+    <ToolsDashboard
+      headline="All-in-One Utility Suite"
+      subheadline="Discover 20 fast, zero-server in-browser utilities. Filter by category, search instantly, and process text with total privacy."
+      showHero={true}
+    />
+  </div>
+
+  <!-- Bottom Privacy & Architecture Pillar -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 space-y-12">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+          Engineered for Speed, Privacy &amp; Daily Productivity
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          Every tool in this directory executes strictly client-side inside your browser sandbox.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 space-y-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0070f3]/10 text-[#0070f3]">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#171717] dark:text-white">100% Client-Side Privacy</h3>
+          <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+            Your text, JSON, and documents never leave your machine. No cloud uploads, no logging, and zero tracking scripts.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 space-y-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#171717] dark:text-white">Instant Sub-5ms Latency</h3>
+          <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+            Zero server round-trips mean immediate reactions as you type, copy, or convert data.
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 space-y-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-500">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+            </svg>
+          </div>
+          <h3 class="text-base font-semibold text-[#171717] dark:text-white">PWA &amp; Offline Ready</h3>
+          <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+            Install CleanWordCounter to your desktop dock or phone home screen to access all tools even while completely offline.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -4,40 +4,98 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  /* ========================================================================
+     Vercel Design System Tokens (DESIGN.md)
+     Surface: #fafafa (page) / #ffffff (cards) | Primary: #171717 | Geist Sans & Mono
+     ======================================================================== */
   :root {
+    /* Vercel Light Surface Ladder */
     --canvas: #fafafa;
+    --canvas-card: #ffffff;
+    --canvas-soft-2: #f5f5f5;
     --canvas-elevated: #ffffff;
-    --canvas-subtle: #f2f2f2;
+    
+    /* Vercel Ink & Text */
     --ink: #171717;
     --body: #4d4d4d;
-    --mute: #8f8f8f;
+    --mute: #888888;
     --faint: #a1a1a1;
+    
+    /* Hairlines */
     --hairline: #ebebeb;
     --hairline-soft: #f2f2f2;
+    --hairline-strong: #a1a1a1;
+    
+    /* Conversion Target: Black Ink #171717 */
+    --primary: #171717;
+    --on-primary: #ffffff;
+    --primary-hover: #000000;
+    --primary-focus: #171717;
+    
+    /* Semantic & Link */
     --link: #0070f3;
     --link-deep: #0761d1;
-    --link-soft: #d3e5ff;
-    --error: #ee0000;
-    --warning: #f5a623;
+    --link-bg-soft: #d3e5ff;
     --success: #0070f3;
+    --error: #ee0000;
+    --error-soft: #f7d4d6;
+    --error-deep: #c50000;
+    --warning: #f5a623;
+    --warning-soft: #ffefcf;
+    --warning-deep: #ab570a;
+
+    /* Vercel Multi-Stop Gradients */
+    --gradient-develop-start: #007cf0;
+    --gradient-develop-end: #00dfd8;
+    --gradient-preview-start: #7928ca;
+    --gradient-preview-end: #ff0080;
+    --gradient-ship-start: #ff4d4d;
+    --gradient-ship-end: #f9cb28;
+
+    /* Selection */
+    --selection-bg: #171717;
+    --selection-fg: #f2f2f2;
   }
 
   .dark {
+    /* Vercel Polarity-Flipped Dark Canvas */
     --canvas: #000000;
-    --canvas-elevated: #0a0a0a;
-    --canvas-subtle: #141414;
+    --canvas-card: #0a0a0a;
+    --canvas-soft-2: #141414;
+    --canvas-elevated: #0f0f10;
+    
+    /* Vercel Dark Ink & Text */
     --ink: #ededed;
     --body: #a1a1a1;
     --mute: #707070;
-    --faint: #4d4d4d;
-    --hairline: #222222;
+    --faint: #555555;
+    
+    /* Hairlines */
+    --hairline: #262626;
     --hairline-soft: #1a1a1a;
+    --hairline-strong: #404040;
+    
+    /* Inverted Primary: Crisp White #ffffff */
+    --primary: #ffffff;
+    --on-primary: #000000;
+    --primary-hover: #e5e5e5;
+    --primary-focus: #ffffff;
+    
+    /* Semantic & Link */
     --link: #0070f3;
     --link-deep: #3291ff;
-    --link-soft: #002244;
-    --error: #f33;
-    --warning: #f5a623;
+    --link-bg-soft: #002752;
     --success: #0070f3;
+    --error: #f87171;
+    --error-soft: #3b1219;
+    --error-deep: #e5484d;
+    --warning: #fbbf24;
+    --warning-soft: #362208;
+    --warning-deep: #f5a623;
+
+    /* Selection */
+    --selection-bg: #ffffff;
+    --selection-fg: #000000;
   }
 }
 
@@ -49,104 +107,103 @@ html {
 body {
   background-color: var(--canvas);
   color: var(--ink);
-  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", system-ui, sans-serif;
+  font-family: "Geist", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   overflow-x: hidden;
 }
 
-/* Vercel Geist Display & Headings */
+/* Vercel Display Headings: Sentence-case, Aggressive Negative Tracking, Weight 600 Ceiling */
 h1, h2, h3, .font-display {
-  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", system-ui, sans-serif;
-  letter-spacing: -0.04em;
+  font-family: "Geist", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
+  letter-spacing: -0.04em;
 }
 
-/* Geist Mono for technical eyebrows, code & numbers */
+/* Vercel Monospace for technical labels, eyebrows, and code */
 code, pre, .font-mono, .font-mono-numbers {
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "JetBrains Mono", monospace;
+  font-family: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-variant-numeric: tabular-nums;
 }
 
-/* Vercel Uppercase Technical Eyebrow */
-.mono-eyebrow {
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+/* Vercel Section Eyebrow (Geist Mono Caption) */
+.mono-eyebrow, .vercel-eyebrow {
+  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 16px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-/* Vercel Mesh Gradient Background for Hero Band */
+/* Vercel Atmospheric Hero Mesh Gradient (Cyan / Blue / Magenta / Amber) */
 .vercel-hero-mesh {
   background-image:
-    radial-gradient(at 20% 15%, rgba(0, 124, 240, 0.08) 0px, transparent 55%),
-    radial-gradient(at 80% 10%, rgba(80, 227, 194, 0.09) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.06) 0px, transparent 60%),
-    radial-gradient(at 85% 85%, rgba(255, 0, 128, 0.06) 0px, transparent 50%),
-    radial-gradient(at 15% 90%, rgba(249, 203, 40, 0.06) 0px, transparent 50%);
+    radial-gradient(at 50% 0%, rgba(0, 124, 240, 0.12) 0px, transparent 65%),
+    radial-gradient(at 82% 18%, rgba(121, 40, 202, 0.08) 0px, transparent 55%),
+    radial-gradient(at 18% 22%, rgba(0, 223, 216, 0.08) 0px, transparent 55%);
 }
 
 .dark .vercel-hero-mesh {
   background-image:
-    radial-gradient(at 20% 15%, rgba(0, 124, 240, 0.15) 0px, transparent 55%),
-    radial-gradient(at 80% 10%, rgba(80, 227, 194, 0.12) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(121, 40, 202, 0.14) 0px, transparent 60%),
-    radial-gradient(at 85% 85%, rgba(255, 0, 128, 0.12) 0px, transparent 50%),
-    radial-gradient(at 15% 90%, rgba(249, 203, 40, 0.1) 0px, transparent 50%);
+    radial-gradient(at 50% 0%, rgba(0, 124, 240, 0.18) 0px, transparent 65%),
+    radial-gradient(at 82% 18%, rgba(235, 54, 127, 0.12) 0px, transparent 55%),
+    radial-gradient(at 18% 22%, rgba(80, 227, 194, 0.12) 0px, transparent 55%);
 }
 
-/* Vercel Signature Multi-Stop Gradient Text */
+/* Vercel Gradient Text (Develop / Preview / Ship Pairs) */
 .vercel-gradient-develop {
-  background: linear-gradient(to right, #007cf0, #00dfd8);
+  background: linear-gradient(135deg, #007cf0 0%, #00dfd8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .vercel-gradient-preview {
-  background: linear-gradient(to right, #7928ca, #ff0080);
+  background: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .vercel-gradient-ship {
-  background: linear-gradient(to right, #ff4d4d, #f9cb28);
+  background: linear-gradient(135deg, #ff4d4d 0%, #f9cb28 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .vercel-mesh-text {
-  background: linear-gradient(135deg, #007cf0 0%, #7928ca 50%, #ff0080 100%);
+  background: linear-gradient(to right, #007cf0, #7928ca, #ff0080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Vercel Hairline Cards */
+/* Vercel Stacked Elevation Cards */
 .vercel-card {
-  background-color: var(--canvas-elevated);
+  background-color: var(--canvas-card);
   border: 1px solid var(--hairline);
-  border-radius: 12px;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 8px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 2px 2px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
 .vercel-card:hover {
-  border-color: #d4d4d4;
+  border-color: var(--hairline-strong);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 8px -2px rgba(0, 0, 0, 0.04);
+}
+
+.dark .vercel-card {
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
 .dark .vercel-card:hover {
-  border-color: #333333;
+  border-color: var(--hairline-strong);
 }
 
-/* Vercel Buttons */
-/* 1. Marketing Primary Pill (Start Deploying) */
+/* Vercel Primary Button (Pill 100px or Nav 6px) */
 .vercel-btn-primary {
-  background-color: var(--ink);
-  color: var(--canvas-elevated);
-  font-family: "Geist", sans-serif;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -156,21 +213,23 @@ code, pre, .font-mono, .font-mono-numbers {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: opacity 0.15s ease, transform 0.1s ease;
+  transition: all 0.15s ease;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.12);
 }
 .vercel-btn-primary:hover {
-  opacity: 0.9;
+  background-color: var(--primary-hover);
+  color: var(--on-primary);
 }
 .vercel-btn-primary:active {
   transform: scale(0.98);
 }
 
-/* 2. Marketing Secondary Pill */
+/* Vercel Secondary Button */
 .vercel-btn-secondary {
-  background-color: var(--canvas-elevated);
+  background-color: var(--canvas-card);
   color: var(--ink);
   border: 1px solid var(--hairline);
-  font-family: "Geist", sans-serif;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -180,26 +239,25 @@ code, pre, .font-mono, .font-mono-numbers {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  transition: all 0.15s ease;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04);
 }
 .vercel-btn-secondary:hover {
-  border-color: #c4c4c4;
-}
-.dark .vercel-btn-secondary:hover {
-  border-color: #444444;
+  border-color: var(--hairline-strong);
+  background-color: var(--canvas-soft-2);
 }
 .vercel-btn-secondary:active {
   transform: scale(0.98);
 }
 
-/* 3. Nav / App Square Button (6px radius) */
+/* Small UI/Nav Button (6px radius) */
 .vercel-btn-sm {
   border-radius: 6px;
-  font-family: "Geist", sans-serif;
+  font-family: inherit;
   font-size: 13px;
   font-weight: 500;
   line-height: 20px;
-  padding: 5px 12px;
+  padding: 4px 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -213,36 +271,36 @@ code, pre, .font-mono, .font-mono-numbers {
   border: 1px solid var(--hairline);
 }
 .vercel-btn-sm-ghost:hover {
-  background-color: var(--canvas-subtle);
+  background-color: var(--canvas-soft-2);
   color: var(--ink);
-  border-color: #d4d4d4;
-}
-.dark .vercel-btn-sm-ghost:hover {
-  border-color: #383838;
+  border-color: var(--hairline-strong);
 }
 
 .vercel-btn-sm-primary {
-  background-color: var(--ink);
-  color: var(--canvas-elevated);
-  border: 1px solid var(--ink);
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: 1px solid var(--primary);
 }
 .vercel-btn-sm-primary:hover {
-  opacity: 0.9;
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
 }
 
-/* 4. Category Tab Pill (64px radius) */
-.vercel-category-pill {
-  border-radius: 64px;
-  padding: 6px 16px;
-  font-size: 13px;
+/* Vercel Badge & Category Pill */
+.vercel-badge {
+  border-radius: 9999px;
+  padding: 2px 10px;
+  font-size: 12px;
   font-weight: 500;
-  transition: all 0.15s ease;
+  background-color: var(--canvas-soft-2);
+  color: var(--body);
+  border: 1px solid var(--hairline);
 }
 
-/* Crisp Vercel Scrollbars */
+/* Vercel Scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -255,13 +313,16 @@ code, pre, .font-mono, .font-mono-numbers {
   background: #2a2a2a;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #a3a3a3;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f3f;
 }
 
 /* Selection */
 ::selection {
-  background-color: #0070f3;
-  color: #ffffff;
+  background-color: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 /* Toast Animation */

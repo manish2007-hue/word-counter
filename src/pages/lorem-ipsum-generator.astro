@@ -1,0 +1,353 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Lorem Ipsum Generator – Free Online Dummy Text Tool";
+const pageDescription = "Generate customizable Lorem Ipsum placeholder text by paragraphs, sentences, words, or lists. Includes HTML tag formatting and 1-click copy. 100% free!";
+const pageKeywords = "lorem ipsum generator, dummy text generator, placeholder text, latin dummy text, lorem ipsum paragraphs, html lorem ipsum, web design placeholder";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Lorem Ipsum Generator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/lorem-ipsum-generator/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Lorem Ipsum dummy text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lorem Ipsum is standard placeholder dummy text used by typesetters, graphic designers, and web developers since the 1500s. Derived from Cicero's 45 BC philosophical treatise 'De Finibus Bonorum et Malorum', it mimics the natural rhythm and word distribution of English without distracting readers with meaningful content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do designers use Lorem Ipsum instead of real text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When reviewing website wireframes, typography specimens, or magazine layouts, human readers naturally get distracted reading actual text rather than evaluating visual hierarchy, whitespace balance, font legibility, and page structure. Lorem Ipsum provides a realistic text texture while keeping focus on design."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I generate HTML paragraph tags (<p>) automatically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Simply toggle the 'Wrap with HTML Tags' option in our generator. It will wrap every generated paragraph in standard <p>...</p> tags or list items in <li>...</li> tags for direct insertion into your HTML templates and CMS editors."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="lorem-ipsum-generator"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser Dummy Text Tool</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Lorem Ipsum <span class="bg-gradient-to-r from-[#0070f3] to-[#828fff] bg-clip-text text-transparent">Generator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Generate clean, customizable dummy placeholder text for website mockups, print typography, UI designs, and wireframes.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 mb-12">
+    <!-- Generator Controls & Display Card -->
+    <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] overflow-hidden shadow-sm">
+      
+      <!-- Top Control Bar -->
+      <div class="p-4 sm:p-5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Type Selection Pills -->
+        <div class="flex items-center gap-1.5 bg-[#f0f2f4] dark:bg-[#0a0a0a] p-1 rounded-lg border border-[#e2e4e8] dark:border-[#23252a]" id="type-selector">
+          <button type="button" data-type="paragraphs" class="px-3 py-1.5 rounded-md text-xs font-medium transition-colors bg-white dark:bg-[#1c1c1e] text-[#171717] dark:text-white shadow-2xs cursor-pointer">
+            Paragraphs
+          </button>
+          <button type="button" data-type="sentences" class="px-3 py-1.5 rounded-md text-xs font-medium transition-colors text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer">
+            Sentences
+          </button>
+          <button type="button" data-type="words" class="px-3 py-1.5 rounded-md text-xs font-medium transition-colors text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer">
+            Words
+          </button>
+          <button type="button" data-type="lists" class="px-3 py-1.5 rounded-md text-xs font-medium transition-colors text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer">
+            List Items
+          </button>
+        </div>
+
+        <!-- Quantity & Options -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <label for="input-count" class="text-xs font-medium text-[#62666d] dark:text-[#8a8f98]">Count:</label>
+            <input
+              id="input-count"
+              type="number"
+              min="1"
+              max="100"
+              value="5"
+              class="w-16 px-2.5 py-1 text-xs text-center font-mono rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-white focus:outline-none focus:border-[#0070f3]"
+            />
+          </div>
+
+          <button
+            id="btn-generate"
+            type="button"
+            class="px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            Generate
+          </button>
+        </div>
+      </div>
+
+      <!-- Secondary Options -->
+      <div class="px-4 sm:px-5 py-3 border-b border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-4">
+          <label class="flex items-center gap-1.5 cursor-pointer select-none text-[#4c515a] dark:text-[#d0d6e0]">
+            <input type="checkbox" id="check-start-lorem" checked class="rounded border-[#e2e4e8] text-[#0070f3] focus:ring-0" />
+            <span>Start with "Lorem ipsum dolor sit amet..."</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer select-none text-[#4c515a] dark:text-[#d0d6e0]">
+            <input type="checkbox" id="check-html-tags" class="rounded border-[#e2e4e8] text-[#0070f3] focus:ring-0" />
+            <span>Wrap with HTML tags (&lt;p&gt; / &lt;li&gt;)</span>
+          </label>
+        </div>
+
+        <!-- Live Metrics -->
+        <div class="flex items-center gap-3 text-[11px] font-mono text-[#8a8f98]">
+          <span><strong id="stat-words" class="text-[#171717] dark:text-white font-semibold">0</strong> words</span>
+          <span>•</span>
+          <span><strong id="stat-chars" class="text-[#171717] dark:text-white font-semibold">0</strong> chars</span>
+        </div>
+      </div>
+
+      <!-- Output Display Viewport -->
+      <div class="p-4 sm:p-6 bg-white dark:bg-[#0f1011] relative">
+        <textarea
+          id="output-text"
+          readonly
+          rows="12"
+          class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] p-4 text-xs sm:text-sm font-mono leading-relaxed text-[#171717] dark:text-[#ededed] resize-y focus:outline-none focus:border-[#0070f3]"
+          placeholder="Generated placeholder text will appear here..."
+        ></textarea>
+      </div>
+
+      <!-- Bottom Action Bar -->
+      <div class="p-3 sm:p-4 border-t border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex items-center justify-between gap-3">
+        <div class="text-[11px] text-[#8a8f98]">
+          ⚡ Client-side instant generation • Zero tracking
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-download"
+            type="button"
+            class="px-3 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Download .txt
+          </button>
+          <button
+            id="btn-copy"
+            type="button"
+            class="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span id="copy-label">Copy to Clipboard</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Educational & SEO Guide -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
+      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Why Lorem Ipsum Remains Essential in Modern Product Design
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
+          The primary purpose of dummy text is to create a natural typographic texture. When product managers, software engineers, and client stakeholders review prototypes filled with intelligible English, they immediately begin critiquing the draft copy instead of analyzing font sizing, component padding, responsive grid flow, and visual weight.
+        </p>
+        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
+          Our generator features standard Latin vocabulary sets calibrated for English-like character and word length distributions. It runs 100% locally in your browser with instant copy support and optional HTML wrapper syntax.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Client-side Script -->
+  <script is:inline>
+    (function() {
+      const WORDS = [
+        "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "sed", "do",
+        "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore", "magna", "aliqua", "enim",
+        "ad", "minim", "veniam", "quis", "nostrud", "exercitation", "ullamco", "laboris", "nisi", "ut",
+        "aliquip", "ex", "ea", "commodo", "consequat", "duis", "aute", "irure", "in", "reprehenderit",
+        "voluptate", "velit", "esse", "cillum", "fugiat", "nulla", "pariatur", "excepteur", "sint",
+        "occaecat", "cupidatat", "non", "proident", "sunt", "culpa", "qui", "officia", "deserunt",
+        "mollit", "anim", "id", "est", "laborum", "curabitur", "pretium", "tincidunt", "lacus", "vel",
+        "facilisis", "velit", "egestas", "dui", "viverra", "iaculis", "interdum", "posuere", "vestibulum",
+        "morbi", "blandit", "cursus", "risus", "ultrices", "mi", "tempus", "imperdiet", "nulla", "malesuada"
+      ];
+
+      const STANDARD_OPENING = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+      let currentType = "paragraphs";
+
+      const typeBtns = document.querySelectorAll("#type-selector button");
+      const countInput = document.getElementById("input-count");
+      const generateBtn = document.getElementById("btn-generate");
+      const startLoremCheck = document.getElementById("check-start-lorem");
+      const htmlTagsCheck = document.getElementById("check-html-tags");
+      const outputArea = document.getElementById("output-text");
+      const copyBtn = document.getElementById("btn-copy");
+      const copyLabel = document.getElementById("copy-label");
+      const downloadBtn = document.getElementById("btn-download");
+      const statWords = document.getElementById("stat-words");
+      const statChars = document.getElementById("stat-chars");
+
+      function getRandomWord() {
+        return WORDS[Math.floor(Math.random() * WORDS.length)];
+      }
+
+      function generateSentence() {
+        const length = Math.floor(Math.random() * 10) + 8;
+        const words = [];
+        for (let i = 0; i < length; i++) {
+          words.push(getRandomWord());
+        }
+        let sentence = words.join(" ");
+        return sentence.charAt(0).toUpperCase() + sentence.slice(1) + ".";
+      }
+
+      function generateParagraph() {
+        const sentenceCount = Math.floor(Math.random() * 4) + 4;
+        const sentences = [];
+        for (let i = 0; i < sentenceCount; i++) {
+          sentences.push(generateSentence());
+        }
+        return sentences.join(" ");
+      }
+
+      function generateText() {
+        const count = Math.max(1, Math.min(100, parseInt(countInput.value, 10) || 5));
+        const startLorem = startLoremCheck.checked;
+        const useHtml = htmlTagsCheck.checked;
+        let result = "";
+
+        if (currentType === "words") {
+          const words = [];
+          if (startLorem) {
+            words.push("Lorem", "ipsum", "dolor", "sit", "amet");
+          }
+          while (words.length < count) {
+            words.push(getRandomWord());
+          }
+          result = words.slice(0, count).join(" ");
+        } else if (currentType === "sentences") {
+          const sentences = [];
+          if (startLorem) {
+            sentences.push(STANDARD_OPENING);
+          }
+          while (sentences.length < count) {
+            sentences.push(generateSentence());
+          }
+          result = sentences.join(" ");
+        } else if (currentType === "lists") {
+          const items = [];
+          for (let i = 0; i < count; i++) {
+            const itemText = generateSentence().replace(/\.$/, "");
+            items.push(useHtml ? `  <li>${itemText}</li>` : `• ${itemText}`);
+          }
+          result = useHtml ? `<ul>\n${items.join("\n")}\n</ul>` : items.join("\n");
+        } else {
+          // paragraphs
+          const paragraphs = [];
+          for (let i = 0; i < count; i++) {
+            let p = generateParagraph();
+            if (i === 0 && startLorem) {
+              p = STANDARD_OPENING + " " + p;
+            }
+            paragraphs.push(useHtml ? `<p>${p}</p>` : p);
+          }
+          result = paragraphs.join(useHtml ? "\n\n" : "\n\n");
+        }
+
+        outputArea.value = result;
+        updateStats(result);
+      }
+
+      function updateStats(text) {
+        const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+        const chars = text.length;
+        if (statWords) statWords.textContent = words.toLocaleString();
+        if (statChars) statChars.textContent = chars.toLocaleString();
+      }
+
+      typeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          typeBtns.forEach(b => {
+            b.classList.remove("bg-white", "dark:bg-[#1c1c1e]", "text-[#171717]", "dark:text-white", "shadow-2xs");
+            b.classList.add("text-[#62666d]", "dark:text-[#8a8f98]");
+          });
+          btn.classList.add("bg-white", "dark:bg-[#1c1c1e]", "text-[#171717]", "dark:text-white", "shadow-2xs");
+          btn.classList.remove("text-[#62666d]", "dark:text-[#8a8f98]");
+          currentType = btn.getAttribute("data-type") || "paragraphs";
+          generateText();
+        });
+      });
+
+      generateBtn?.addEventListener("click", generateText);
+      countInput?.addEventListener("change", generateText);
+      startLoremCheck?.addEventListener("change", generateText);
+      htmlTagsCheck?.addEventListener("change", generateText);
+
+      copyBtn?.addEventListener("click", async () => {
+        if (!outputArea.value) return;
+        try {
+          await navigator.clipboard.writeText(outputArea.value);
+          if (copyLabel) copyLabel.textContent = "Copied!";
+          setTimeout(() => {
+            if (copyLabel) copyLabel.textContent = "Copy to Clipboard";
+          }, 2000);
+        } catch (e) {
+          outputArea.select();
+          document.execCommand("copy");
+        }
+      });
+
+      downloadBtn?.addEventListener("click", () => {
+        if (!outputArea.value) return;
+        const blob = new Blob([outputArea.value], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "lorem-ipsum.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Initial run
+      generateText();
+    })();
+  </script>
+</Layout>

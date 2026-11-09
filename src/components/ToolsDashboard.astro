@@ -1,0 +1,344 @@
+---
+import { TOOLS_LIST, CATEGORIES } from '../lib/toolsData';
+
+interface Props {
+  headline?: string;
+  subheadline?: string;
+  showHero?: boolean;
+}
+
+const {
+  headline = "Explore All Free In-Browser Tools",
+  subheadline = "20 category-defining text, writing, formatting, generator, and developer utilities. 100% private, zero server tracking, instant speed.",
+  showHero = true
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="w-full" id="tools-dashboard-root">
+  {showHero && (
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-6 text-center">
+      <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#171717] dark:text-[#ededed] shadow-2xs mb-3">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
+        <span>20 Fast In-Browser Utilities</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+        {headline}
+      </h1>
+      <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+        {subheadline}
+      </p>
+    </div>
+  )}
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 mb-16">
+    <!-- Command Search Bar (Vercel-style) -->
+    <div class="rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-3 sm:p-4 shadow-sm mb-6 transition-all focus-within:border-[#171717] dark:focus-within:border-white">
+      <div class="relative flex items-center">
+        <svg class="absolute left-3.5 h-4 w-4 text-[#888888]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+
+        <input
+          id="tools-search-input"
+          type="text"
+          placeholder="Search all 20 tools by name, keyword, or action... (Press '/' to focus)"
+          autocomplete="off"
+          class="w-full rounded-md bg-transparent py-2.5 pl-10 pr-24 text-sm text-[#171717] dark:text-white placeholder-[#888888] focus:outline-none"
+        />
+
+        <div class="absolute right-2.5 flex items-center gap-1.5">
+          <button
+            id="tools-search-clear"
+            type="button"
+            class="hidden px-2 py-1 text-xs text-[#888888] hover:text-[#171717] dark:hover:text-white cursor-pointer"
+          >
+            Clear
+          </button>
+          <kbd class="hidden sm:inline-flex items-center gap-0.5 rounded border border-[#ebebeb] dark:border-[#262626] bg-[#f5f5f5] dark:bg-[#141414] px-1.5 py-0.5 font-mono text-[11px] text-[#888888]">
+            /
+          </kbd>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="mt-3 pt-3 border-t border-[#f0f0f0] dark:border-[#1a1a1a] flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none" id="category-pills">
+        {CATEGORIES.map(cat => (
+          <button
+            type="button"
+            data-category={cat.id}
+            class={`category-tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition cursor-pointer ${
+              cat.id === 'all'
+                ? 'bg-[#171717] text-white dark:bg-white dark:text-black shadow-2xs'
+                : 'border border-[#ebebeb] dark:border-[#262626] bg-transparent text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white hover:border-[#171717] dark:hover:border-white'
+            }`}
+          >
+            <span>{cat.label}</span>
+            <span class={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${
+              cat.id === 'all' ? 'bg-white/20 text-white dark:bg-black/20 dark:text-black' : 'bg-black/5 dark:bg-white/5 text-[#888888]'
+            }`}>
+              {cat.count}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Active Tools Count Bar -->
+    <div class="flex items-center justify-between text-xs text-[#888888] mb-4 px-1">
+      <div class="flex items-center gap-2">
+        <span class="font-medium text-[#171717] dark:text-white" id="visible-count">{TOOLS_LIST.length}</span>
+        <span>tools available</span>
+        <span class="hidden sm:inline">•</span>
+        <span class="hidden sm:inline text-[#0070f3]">100% In-Browser &amp; Zero Tracking</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="hidden md:inline">Sort:</span>
+        <select
+          id="tools-sort-select"
+          class="rounded-md border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-2 py-1 text-xs text-[#171717] dark:text-white focus:outline-none"
+        >
+          <option value="featured">Featured First</option>
+          <option value="name">Alphabetical (A-Z)</option>
+          <option value="category">By Category</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tools Grid (Vercel-style Cards) -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      id="tools-grid-container"
+    >
+      {TOOLS_LIST.map((tool) => (
+        <a
+          href={`${base}${tool.href}`}
+          data-id={tool.id}
+          data-category={tool.category}
+          data-name={tool.name.toLowerCase()}
+          data-desc={tool.shortDesc.toLowerCase()}
+          data-tags={tool.tags.join(' ').toLowerCase()}
+          class="tool-card group relative flex flex-col justify-between rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 hover:border-[#171717] dark:hover:border-white transition-all duration-150"
+        >
+          <div>
+            <!-- Top Card Header: Category + Badges -->
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <span class={`rounded-full px-2.5 py-0.5 text-[10px] font-mono font-medium ${
+                tool.category === 'writing'
+                  ? 'bg-blue-500/10 text-[#0070f3] border border-blue-500/20'
+                  : tool.category === 'cleaning'
+                  ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
+                  : tool.category === 'generators'
+                  ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
+                  : tool.category === 'developer'
+                  ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20'
+                  : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
+              }`}>
+                {tool.categoryLabel}
+              </span>
+
+              {tool.badge && (
+                <span class={`rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase ${
+                  tool.badge === 'New'
+                    ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                    : tool.badge === 'Essential'
+                    ? 'bg-black/5 dark:bg-white/10 text-[#171717] dark:text-white border border-[#ebebeb] dark:border-[#333]'
+                    : 'bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30'
+                }`}>
+                  {tool.badge}
+                </span>
+              )}
+            </div>
+
+            <!-- Tool Name -->
+            <h3 class="text-base font-semibold tracking-tight text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors flex items-center justify-between">
+              <span>{tool.name}</span>
+              <svg class="h-4 w-4 text-[#888888] group-hover:text-[#0070f3] group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </h3>
+
+            <!-- Tool Short Description -->
+            <p class="mt-2 text-xs sm:text-[13px] text-[#4d4d4d] dark:text-[#888888] leading-relaxed">
+              {tool.shortDesc}
+            </p>
+          </div>
+
+          <!-- Bottom Footer: Tags preview + Launch Indicator -->
+          <div class="mt-4 pt-3 border-t border-[#f0f0f0] dark:border-[#1a1a1a] flex items-center justify-between text-[11px] text-[#888888]">
+            <div class="flex items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[10px]">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+              <span>100% Client-Side</span>
+            </div>
+
+            <span class="font-medium text-[#0070f3] group-hover:underline">
+              Open Tool →
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="tools-empty-state" class="hidden rounded-lg border border-dashed border-[#ebebeb] dark:border-[#262626] p-12 text-center">
+      <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-black/5 dark:bg-white/5 text-[#888888] mb-3">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h4 class="text-sm font-semibold text-[#171717] dark:text-white mb-1">No matching tools found</h4>
+      <p class="text-xs text-[#888888] max-w-sm mx-auto mb-4">
+        We couldn't find any tool matching your search query. Try searching for "essay", "json", "repeat", or "readability".
+      </p>
+      <button
+        id="btn-reset-search"
+        type="button"
+        class="px-4 py-2 rounded-full bg-[#171717] text-white dark:bg-white dark:text-black text-xs font-semibold hover:opacity-90 transition cursor-pointer"
+      >
+        Reset Filter
+      </button>
+    </div>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Interactive Client-side Search and Filter Script -->
+<script is:inline>
+  (function() {
+    const searchInput = document.getElementById("tools-search-input");
+    const searchClear = document.getElementById("tools-search-clear");
+    const categoryBtns = document.querySelectorAll(".category-tab-btn");
+    const sortSelect = document.getElementById("tools-sort-select");
+    const grid = document.getElementById("tools-grid-container");
+    const cards = Array.from(document.querySelectorAll(".tool-card"));
+    const visibleCount = document.getElementById("visible-count");
+    const emptyState = document.getElementById("tools-empty-state");
+    const resetBtn = document.getElementById("btn-reset-search");
+
+    let currentCategory = "all";
+    let searchQuery = "";
+
+    function filterTools() {
+      let visible = 0;
+      const query = searchQuery.trim().toLowerCase();
+
+      cards.forEach(card => {
+        const cat = card.getAttribute("data-category");
+        const name = card.getAttribute("data-name") || "";
+        const desc = card.getAttribute("data-desc") || "";
+        const tags = card.getAttribute("data-tags") || "";
+
+        const matchesCat = (currentCategory === "all" || cat === currentCategory);
+        const matchesQuery = !query || name.includes(query) || desc.includes(query) || tags.includes(query);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = "flex";
+          visible++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      if (visibleCount) {
+        visibleCount.textContent = visible;
+      }
+
+      if (visible === 0) {
+        if (emptyState) emptyState.classList.remove("hidden");
+        if (grid) grid.classList.add("hidden");
+      } else {
+        if (emptyState) emptyState.classList.add("hidden");
+        if (grid) grid.classList.remove("hidden");
+      }
+
+      if (searchClear) {
+        if (query) {
+          searchClear.classList.remove("hidden");
+        } else {
+          searchClear.classList.add("hidden");
+        }
+      }
+    }
+
+    // Category button click handling
+    categoryBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        categoryBtns.forEach(b => {
+          b.className = "category-tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition cursor-pointer border border-[#ebebeb] dark:border-[#262626] bg-transparent text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-white hover:border-[#171717] dark:hover:border-white";
+          const countPill = b.querySelector(".rounded-full");
+          if (countPill) countPill.className = "rounded-full px-1.5 py-0.2 font-mono text-[10px] bg-black/5 dark:bg-white/5 text-[#888888]";
+        });
+
+        btn.className = "category-tab-btn flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition cursor-pointer bg-[#171717] text-white dark:bg-white dark:text-black shadow-2xs";
+        const countPill = btn.querySelector(".rounded-full");
+        if (countPill) countPill.className = "rounded-full px-1.5 py-0.2 font-mono text-[10px] bg-white/20 text-white dark:bg-black/20 dark:text-black";
+
+        currentCategory = btn.getAttribute("data-category") || "all";
+        filterTools();
+      });
+    });
+
+    // Search input handling
+    searchInput?.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      filterTools();
+    });
+
+    searchClear?.addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        searchQuery = "";
+        filterTools();
+        searchInput.focus();
+      }
+    });
+
+    resetBtn?.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      searchQuery = "";
+      currentCategory = "all";
+      const allBtn = document.querySelector('[data-category="all"]');
+      if (allBtn) allBtn.click();
+      else filterTools();
+    });
+
+    // Keyboard shortcut '/' to focus search
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement !== searchInput && !["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        searchInput?.focus();
+      }
+      if (e.key === "Escape" && document.activeElement === searchInput) {
+        searchInput.blur();
+      }
+    });
+
+    // Sorting functionality
+    sortSelect?.addEventListener("change", (e) => {
+      const val = e.target.value;
+      const sorted = [...cards];
+
+      if (val === "name") {
+        sorted.sort((a, b) => {
+          const na = a.getAttribute("data-name") || "";
+          const nb = b.getAttribute("data-name") || "";
+          return na.localeCompare(nb);
+        });
+      } else if (val === "category") {
+        sorted.sort((a, b) => {
+          const ca = a.getAttribute("data-category") || "";
+          const cb = b.getAttribute("data-category") || "";
+          return ca.localeCompare(cb);
+        });
+      }
+
+      sorted.forEach(c => grid.appendChild(c));
+      filterTools();
+    });
+
+  })();
+</script>

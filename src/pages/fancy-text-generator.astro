@@ -1,0 +1,375 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Fancy Text Generator – 30+ Cool & Stylish Fonts (Copy & Paste)";
+const pageDescription = "Convert normal text into 30+ stylish Unicode fonts: Bold, Gothic, Cursive, Bubbles, Small Caps & Aesthetics. Perfect for Instagram, TikTok, Twitter & Discord bios. 100% free!";
+const pageKeywords = "fancy text generator, cool fonts online, stylish text, copy and paste fonts, instagram fonts, cursive text generator, gothic text generator, small caps generator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Fancy Text & Cool Fonts Generator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/fancy-text-generator/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does the Fancy Text Generator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Fancy Text Generator replaces standard ASCII characters with specialized Unicode character glyphs (such as Mathematical Alphanumeric Symbols, Enclosed Alphanumerics, and combining diacritics). Because these are actual Unicode characters and not CSS fonts, they can be copied and pasted directly into social media apps, bios, emails, and games."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use these fonts in Instagram and TikTok bios?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! All generated fonts are 100% compatible with Instagram, TikTok, X (Twitter), Facebook, Discord, WhatsApp, YouTube comments, and Roblox. Just click the Copy button next to any style and paste it into your bio or message."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do some devices show boxes or question marks for fancy fonts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All modern iPhones, Android phones, Windows 10/11 PCs, and Macs support these standard Unicode blocks. However, older operating systems or outdated browsers lacking comprehensive Unicode font fallbacks may occasionally show replacement glyphs (tofu boxes)."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="fancy-text-generator"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser Unicode Font Generator</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Fancy Text <span class="bg-gradient-to-r from-[#0070f3] to-[#828fff] bg-clip-text text-transparent">Generator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Convert plain words into 25+ cool, aesthetic, and bold Unicode fonts. Click any style to copy instantly for Instagram, Twitter, TikTok, and Discord.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 mb-12">
+    <!-- Main Interactive Card -->
+    <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] overflow-hidden shadow-sm">
+      
+      <!-- Input Box -->
+      <div class="p-4 sm:p-5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516]">
+        <label for="fancy-input" class="block text-xs font-semibold text-[#171717] dark:text-white mb-2">
+          Type or paste your text here:
+        </label>
+        <div class="relative">
+          <input
+            id="fancy-input"
+            type="text"
+            value="Clean Tools Are Awesome"
+            placeholder="Type anything here..."
+            class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#080809] px-4 py-3 text-sm sm:text-base font-sans text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3] transition shadow-2xs"
+          />
+        </div>
+      </div>
+
+      <!-- Quick Category Filter Pills -->
+      <div class="px-4 sm:px-5 py-3 border-b border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] flex flex-wrap items-center gap-2 text-xs" id="font-filter-pills">
+        <span class="text-[#8a8f98] font-medium mr-1">Filter:</span>
+        <button type="button" class="font-filter-btn px-2.5 py-1 rounded-md bg-[#0070f3] text-white font-medium cursor-pointer" data-filter="all">All Styles</button>
+        <button type="button" class="font-filter-btn px-2.5 py-1 rounded-md border border-[#e2e4e8] dark:border-[#23252a] text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer" data-filter="bold">Bold &amp; Serif</button>
+        <button type="button" class="font-filter-btn px-2.5 py-1 rounded-md border border-[#e2e4e8] dark:border-[#23252a] text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer" data-filter="script">Cursive &amp; Gothic</button>
+        <button type="button" class="font-filter-btn px-2.5 py-1 rounded-md border border-[#e2e4e8] dark:border-[#23252a] text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer" data-filter="bubble">Bubbles &amp; Boxes</button>
+        <button type="button" class="font-filter-btn px-2.5 py-1 rounded-md border border-[#e2e4e8] dark:border-[#23252a] text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer" data-filter="aesthetic">Aesthetic &amp; Deco</button>
+      </div>
+
+      <!-- Generated Fonts List -->
+      <div class="p-4 sm:p-5 bg-white dark:bg-[#0f1011] space-y-2.5" id="fonts-container">
+        <!-- Rendered dynamically by script -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEO / Guide Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
+      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Where to Use Fancy Unicode Fonts
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
+          Standard social media platforms restrict caption typography to a single default system typeface. By converting standard alphanumeric characters into mathematical symbols and enclosed glyphs, you can stand out with bold headers, cursive nicknames, and gothic banners across:
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
+          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
+            📸 Instagram Bios
+          </div>
+          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
+            🐦 Twitter / X Posts
+          </div>
+          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
+            💬 Discord Usernames
+          </div>
+          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
+            🎵 TikTok Captions
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Script for Unicode Font Conversions -->
+  <script is:inline>
+    (function() {
+      const input = document.getElementById("fancy-input");
+      const container = document.getElementById("fonts-container");
+      const filterBtns = document.querySelectorAll(".font-filter-btn");
+
+      // Character map mappings
+      const NORMAL = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+      const MAPS = {
+        boldSans: {
+          name: "Sans Bold",
+          group: "bold",
+          chars: "𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵"
+        },
+        boldSerif: {
+          name: "Serif Bold",
+          group: "bold",
+          chars: "𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗"
+        },
+        italicSans: {
+          name: "Sans Italic",
+          group: "bold",
+          chars: "𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡0123456789"
+        },
+        boldItalicSans: {
+          name: "Bold Italic",
+          group: "bold",
+          chars: "𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕0123456789"
+        },
+        cursive: {
+          name: "Cursive Script",
+          group: "script",
+          chars: "𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵0123456789"
+        },
+        boldCursive: {
+          name: "Bold Cursive",
+          group: "script",
+          chars: "𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩0123456789"
+        },
+        gothic: {
+          name: "Medieval Gothic / Fraktur",
+          group: "script",
+          chars: "𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ0123456789"
+        },
+        boldGothic: {
+          name: "Bold Gothic",
+          group: "script",
+          chars: "𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅0123456789"
+        },
+        doubleStruck: {
+          name: "Double-Struck / Blackboard",
+          group: "bold",
+          chars: "𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡"
+        },
+        monospace: {
+          name: "Monospace Code",
+          group: "bold",
+          chars: "𝚖𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎0123456789" // Will use dynamic offset
+        },
+        bubbles: {
+          name: "Bubble / Circled",
+          group: "bubble",
+          chars: "ⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ⓪①②③④⑤⑥⑦⑧⑨"
+        },
+        blackBubbles: {
+          name: "Inverted Bubble (Black)",
+          group: "bubble",
+          chars: "🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩🅐🅑🅒🅓🅔🅕🅖🅗🅘🅙🅚🅛🅜🅝🅞🅟🅠🅡🅢🅣🅤🅥🅦🅧🅨🅩⓿➊➋➌➍➎➏➐➑➒"
+        },
+        squared: {
+          name: "Squared / Boxed",
+          group: "bubble",
+          chars: "0🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉🄐🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉0123456789"
+        },
+        smallCaps: {
+          name: "Small Caps",
+          group: "aesthetic",
+          chars: "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ0123456789"
+        },
+        fullwidth: {
+          name: "Aesthetic Fullwidth",
+          group: "aesthetic",
+          chars: "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ０１２３４５６７８９"
+        }
+      };
+
+      // Custom transformation functions
+      function transformMapped(text, mappedChars) {
+        if (!mappedChars) return text;
+        const mapArray = Array.from(mappedChars);
+        const normalArray = Array.from(NORMAL);
+        let out = "";
+        for (const ch of text) {
+          const idx = normalArray.indexOf(ch);
+          if (idx !== -1 && mapArray[idx]) {
+            out += mapArray[idx];
+          } else {
+            out += ch;
+          }
+        }
+        return out;
+      }
+
+      function transformStrikethrough(text) {
+        return text.split("").map(c => c + "\u0336").join("");
+      }
+
+      function transformSlashthrough(text) {
+        return text.split("").map(c => c + "\u0337").join("");
+      }
+
+      function transformUnderline(text) {
+        return text.split("").map(c => c + "\u0332").join("");
+      }
+
+      function transformUpsideDown(text) {
+        const flipTable = {
+          a: 'ɐ', b: 'q', c: 'ɔ', d: 'p', e: 'ǝ', f: 'ɟ', g: 'ƃ', h: 'ɥ', i: 'ᴉ', j: 'ɾ',
+          k: 'ʞ', l: 'l', m: 'ɯ', n: 'u', o: 'o', p: 'd', q: 'b', r: 'ɹ', s: 's', t: 'ʇ',
+          u: 'n', v: 'ʌ', w: 'ʍ', x: 'x', y: 'ʎ', z: 'z',
+          A: '∀', B: '𐐒', C: 'Ɔ', D: 'ᗡ', E: 'Ǝ', F: 'Ⅎ', G: '⅁', H: 'H', I: 'I', J: 'ſ',
+          K: 'ʞ', L: '˥', M: 'W', N: 'N', O: 'O', P: 'Ԁ', Q: 'Ò', R: 'ᴚ', S: 'S', T: '⊥',
+          U: '∩', V: 'Λ', W: 'M', X: 'X', Y: '⅄', Z: 'Z',
+          '0': '0', '1': 'Ɩ', '2': 'ᄅ', '3': 'Ɛ', '4': 'ㄣ', '5': 'ϛ', '6': '9', '7': 'ㄥ', '8': '8', '9': '6',
+          '?': '¿', '!': '¡', '.': '˙', ',': "'", '(': ')', ')': '('
+        };
+        return text.split('').map(c => flipTable[c] || c).reverse().join('');
+      }
+
+      function transformVaporwave(text) {
+        return text.split("").join("  ");
+      }
+
+      function transformDecorated(text, prefix, suffix) {
+        return `${prefix} ${text} ${suffix}`;
+      }
+
+      let activeFilter = "all";
+
+      function renderFonts() {
+        const text = input.value || "Clean Tools";
+        container.innerHTML = "";
+
+        const styles = [
+          { name: "Sans Bold", group: "bold", val: transformMapped(text, MAPS.boldSans.chars) },
+          { name: "Serif Bold", group: "bold", val: transformMapped(text, MAPS.boldSerif.chars) },
+          { name: "Italic Sans", group: "bold", val: transformMapped(text, MAPS.italicSans.chars) },
+          { name: "Bold Italic", group: "bold", val: transformMapped(text, MAPS.boldItalicSans.chars) },
+          { name: "Cursive Script", group: "script", val: transformMapped(text, MAPS.cursive.chars) },
+          { name: "Bold Cursive", group: "script", val: transformMapped(text, MAPS.boldCursive.chars) },
+          { name: "Gothic / Fraktur", group: "script", val: transformMapped(text, MAPS.gothic.chars) },
+          { name: "Bold Gothic", group: "script", val: transformMapped(text, MAPS.boldGothic.chars) },
+          { name: "Double-Struck (Blackboard)", group: "bold", val: transformMapped(text, MAPS.doubleStruck.chars) },
+          { name: "Small Caps", group: "aesthetic", val: transformMapped(text, MAPS.smallCaps.chars) },
+          { name: "Bubble / Circled", group: "bubble", val: transformMapped(text, MAPS.bubbles.chars) },
+          { name: "Inverted Bubble", group: "bubble", val: transformMapped(text, MAPS.blackBubbles.chars) },
+          { name: "Aesthetic Fullwidth", group: "aesthetic", val: transformMapped(text, MAPS.fullwidth.chars) },
+          { name: "Strikethrough", group: "aesthetic", val: transformStrikethrough(text) },
+          { name: "Underline", group: "aesthetic", val: transformUnderline(text) },
+          { name: "Slashthrough", group: "aesthetic", val: transformSlashthrough(text) },
+          { name: "Upside Down / Flip", group: "aesthetic", val: transformUpsideDown(text) },
+          { name: "Vaporwave Spaced", group: "aesthetic", val: transformVaporwave(text) },
+          { name: "Sparkles Aesthetic", group: "aesthetic", val: transformDecorated(text, "✨", "✨") },
+          { name: "Hearts Aesthetic", group: "aesthetic", val: transformDecorated(text, "💖", "💖") },
+          { name: "Japanese Brackets", group: "aesthetic", val: transformDecorated(text, "【", "】") },
+          { name: "Stars Aesthetic", group: "aesthetic", val: transformDecorated(text, "★·.·´¯`·.·★", "★·.·´¯`·.·★") }
+        ];
+
+        styles.forEach(item => {
+          if (activeFilter !== "all" && item.group !== activeFilter) {
+            return;
+          }
+
+          const card = document.createElement("div");
+          card.className = "flex items-center justify-between gap-3 p-3 sm:p-3.5 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] hover:border-[#0070f3] transition group";
+          
+          card.innerHTML = `
+            <div class="min-w-0 flex-1">
+              <div class="text-[10px] font-mono uppercase tracking-wider text-[#8a8f98] mb-1 font-semibold">${item.name}</div>
+              <div class="text-sm sm:text-base font-normal text-[#171717] dark:text-[#f7f8f8] truncate select-all">${item.val}</div>
+            </div>
+            <button
+              type="button"
+              class="copy-font-btn shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white dark:bg-[#1c1c1e] border border-[#e2e4e8] dark:border-[#23252a] text-xs font-semibold text-[#171717] dark:text-white hover:bg-[#0070f3] hover:text-white hover:border-[#0070f3] transition shadow-2xs cursor-pointer"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+              </svg>
+              <span>Copy</span>
+            </button>
+          `;
+
+          const copyBtn = card.querySelector(".copy-font-btn");
+          copyBtn.addEventListener("click", async () => {
+            try {
+              await navigator.clipboard.writeText(item.val);
+              const span = copyBtn.querySelector("span");
+              span.textContent = "Copied!";
+              copyBtn.classList.add("bg-[#27a644]", "text-white", "border-[#27a644]");
+              setTimeout(() => {
+                span.textContent = "Copy";
+                copyBtn.classList.remove("bg-[#27a644]", "text-white", "border-[#27a644]");
+              }, 1800);
+            } catch (err) {
+              const ta = document.createElement("textarea");
+              ta.value = item.val;
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand("copy");
+              document.body.removeChild(ta);
+            }
+          });
+
+          container.appendChild(card);
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          filterBtns.forEach(b => {
+            b.className = "font-filter-btn px-2.5 py-1 rounded-md border border-[#e2e4e8] dark:border-[#23252a] text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer";
+          });
+          btn.className = "font-filter-btn px-2.5 py-1 rounded-md bg-[#0070f3] text-white font-medium cursor-pointer";
+          activeFilter = btn.getAttribute("data-filter") || "all";
+          renderFonts();
+        });
+      });
+
+      input.addEventListener("input", renderFonts);
+
+      // Initial render
+      renderFonts();
+    })();
+  </script>
+</Layout>

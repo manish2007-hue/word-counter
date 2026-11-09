@@ -1,0 +1,405 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Hashtag Generator & Extractor – Free Instagram, TikTok & X Tags";
+const pageDescription = "Generate viral hashtags for Instagram, TikTok & Twitter by keyword, or extract and clean hashtags from existing captions. Includes Instagram 30-tag limit checker. 100% free!";
+const pageKeywords = "hashtag generator, instagram hashtag generator, tiktok hashtags, extract hashtags, hashtag counter, best hashtags for instagram, clean hashtags";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Hashtag Generator & Extractor",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/hashtag-generator/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many hashtags should I use on Instagram?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Instagram permits up to 30 hashtags per post. However, modern Instagram algorithm best practices recommend 3 to 8 highly targeted, topical hashtags in your main caption for maximum reach and discoverability without triggering spam filters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Hashtag Extractor mode work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paste any post caption, tweet, or article into the extractor. Our regex tokenizer instantly isolates every hashtag (including Unicode international characters), strips duplicates, and formats them into a clean, ready-to-copy tag list."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the hashtag limit on TikTok?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TikTok does not have a strict count ceiling on hashtags, but limits captions to 2,200 characters. Social media strategists suggest using 4 to 6 relevant hashtags balancing high-volume (#fyp, #viral) and specific niche tags."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="hashtag-generator"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser Social Media Tag Suite</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Hashtag <span class="bg-gradient-to-r from-[#0070f3] to-[#828fff] bg-clip-text text-transparent">Generator &amp; Extractor</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Generate targeted hashtags for Instagram, TikTok, LinkedIn, and X by niche, or extract and clean hashtags from existing posts.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 mb-12">
+    <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] overflow-hidden shadow-sm">
+      
+      <!-- Mode Tabs (Generate vs Extract) -->
+      <div class="p-3 sm:p-4 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 bg-[#f0f2f4] dark:bg-[#0a0a0a] p-1 rounded-lg border border-[#e2e4e8] dark:border-[#23252a]" id="mode-selector">
+          <button type="button" data-mode="generate" class="px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors bg-white dark:bg-[#1c1c1e] text-[#171717] dark:text-white shadow-2xs cursor-pointer">
+            ✨ Generate by Keyword
+          </button>
+          <button type="button" data-mode="extract" class="px-3.5 py-1.5 rounded-md text-xs font-semibold transition-colors text-[#62666d] dark:text-[#8a8f98] hover:text-black dark:hover:text-white cursor-pointer">
+            🔍 Extract from Caption
+          </button>
+        </div>
+
+        <!-- Quick Niche Presets (Shown in Generate Mode) -->
+        <div id="niche-presets-container" class="hidden sm:flex items-center gap-1 text-xs">
+          <span class="text-[#8a8f98] text-[11px] mr-1">Presets:</span>
+          <button type="button" class="preset-tag px-2 py-0.5 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] hover:border-[#0070f3] hover:text-[#0070f3] cursor-pointer" data-kw="tech coding startup">Tech</button>
+          <button type="button" class="preset-tag px-2 py-0.5 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] hover:border-[#0070f3] hover:text-[#0070f3] cursor-pointer" data-kw="fitness workout gym health">Fitness</button>
+          <button type="button" class="preset-tag px-2 py-0.5 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] hover:border-[#0070f3] hover:text-[#0070f3] cursor-pointer" data-kw="travel wanderlust adventure">Travel</button>
+          <button type="button" class="preset-tag px-2 py-0.5 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] hover:border-[#0070f3] hover:text-[#0070f3] cursor-pointer" data-kw="business marketing growth">Business</button>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="p-4 sm:p-5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] space-y-3">
+        <label id="input-label" for="hashtag-input" class="block text-xs font-semibold text-[#171717] dark:text-white">
+          Enter keyword(s) separated by commas or spaces:
+        </label>
+        <textarea
+          id="hashtag-input"
+          rows="3"
+          class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] p-3 text-xs sm:text-sm font-sans text-[#171717] dark:text-[#ededed] resize-y focus:outline-none focus:border-[#0070f3]"
+          placeholder="e.g. software, saas, coding, web development..."
+        >software, saas, coding, webdev</textarea>
+
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <!-- Separator Format -->
+          <div class="flex items-center gap-2 text-xs">
+            <span class="text-[#62666d] dark:text-[#8a8f98]">Separator:</span>
+            <label class="inline-flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="format-sep" value="space" checked class="text-[#0070f3] focus:ring-0" />
+              <span>Space</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="format-sep" value="newline" class="text-[#0070f3] focus:ring-0" />
+              <span>New Line</span>
+            </label>
+            <label class="inline-flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="format-sep" value="comma" class="text-[#0070f3] focus:ring-0" />
+              <span>Comma</span>
+            </label>
+          </div>
+
+          <!-- Action Button -->
+          <button
+            id="btn-process-tags"
+            type="button"
+            class="px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            Process Hashtags
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Header & Limits Indicator -->
+      <div class="px-4 sm:px-5 py-2.5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-3">
+          <span class="font-semibold text-[#171717] dark:text-white">Generated Hashtags</span>
+          <span id="badge-count" class="px-2 py-0.5 rounded-full bg-[#0070f3]/10 text-[#0070f3] text-[11px] font-mono font-semibold">
+            0 tags
+          </span>
+        </div>
+
+        <!-- Instagram Limit Bar -->
+        <div class="flex items-center gap-2 text-[11px] font-mono text-[#8a8f98]">
+          <span>Instagram Limit:</span>
+          <span id="stat-ig-limit" class="font-semibold text-[#27a644]">0 / 30</span>
+        </div>
+      </div>
+
+      <!-- Output Display -->
+      <div class="p-4 sm:p-5 bg-white dark:bg-[#0f1011]">
+        <textarea
+          id="hashtag-output"
+          readonly
+          rows="6"
+          class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] p-4 text-xs sm:text-sm font-mono leading-relaxed text-[#171717] dark:text-[#ededed] resize-y focus:outline-none focus:border-[#0070f3]"
+          placeholder="Processed hashtags will appear here..."
+        ></textarea>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="p-3 sm:p-4 border-t border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-copy-top10"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Copy Top 10
+          </button>
+          <button
+            id="btn-copy-top30"
+            type="button"
+            class="px-2.5 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Copy Top 30 (IG Max)
+          </button>
+        </div>
+
+        <button
+          id="btn-copy-all"
+          type="button"
+          class="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+        >
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+          </svg>
+          <span id="copy-all-label">Copy All Hashtags</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Guide Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
+      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          The 3-Tier Hashtag Formula for Social Growth
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 1 (30%)</div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Broad Industry Tags</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              High-volume tags like #tech, #fitness, or #marketing that categorize your post into the overarching algorithm feed.
+            </p>
+          </div>
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 2 (50%)</div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Niche Specific Tags</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              Targeted tags with 50K–500K posts (e.g. #saasbuilder, #reactdeveloper) where your post can easily rank on Explore feeds.
+            </p>
+          </div>
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 3 (20%)</div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Community &amp; Brand Tags</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              Micro tags like #indiehackers or custom branded campaign tags to build loyalty and connect with core audiences.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Script -->
+  <script is:inline>
+    (function() {
+      let currentMode = "generate";
+
+      const modeBtns = document.querySelectorAll("#mode-selector button");
+      const input = document.getElementById("hashtag-input");
+      const inputLabel = document.getElementById("input-label");
+      const output = document.getElementById("hashtag-output");
+      const processBtn = document.getElementById("btn-process-tags");
+      const copyAllBtn = document.getElementById("btn-copy-all");
+      const copyAllLabel = document.getElementById("copy-all-label");
+      const copyTop10Btn = document.getElementById("btn-copy-top10");
+      const copyTop30Btn = document.getElementById("btn-copy-top30");
+      const badgeCount = document.getElementById("badge-count");
+      const statIgLimit = document.getElementById("stat-ig-limit");
+      const presetTags = document.querySelectorAll(".preset-tag");
+      const formatRads = document.querySelectorAll("input[name='format-sep']");
+
+      const DICTIONARY = {
+        software: ["coding", "programming", "developer", "webdevelopment", "softwareengineer", "tech", "code", "devlife", "javascript", "python", "typescript", "fullstack", "frontend", "backend", "buildinpublic"],
+        coding: ["programming", "developer", "softwareengineer", "programmer", "learntocode", "coder", "computerscience", "webdeveloper", "html", "css", "github", "opensource"],
+        saas: ["startuplife", "entrepreneur", "buildinpublic", "microsaas", "solopreneur", "indiehackers", "businessgrowth", "producthunt", "b2b", "marketingstrategy", "techstartup", "founder"],
+        fitness: ["workout", "gymlife", "fitfam", "bodybuilding", "training", "fitnessmotivation", "healthylifestyle", "cardio", "personaltrainer", "muscle", "strength", "crossfit"],
+        travel: ["wanderlust", "travelgram", "adventure", "explore", "vacation", "nature", "travelphotography", "instatravel", "backpacking", "roadtrip", "travelblogger"],
+        business: ["entrepreneur", "marketing", "success", "motivation", "money", "smallbusiness", "startup", "leadership", "growth", "branding", "sales", "strategy"]
+      };
+
+      function getSeparator() {
+        let sep = " ";
+        formatRads.forEach(r => {
+          if (r.checked) {
+            if (r.value === "newline") sep = "\n";
+            else if (r.value === "comma") sep = ", ";
+            else sep = " ";
+          }
+        });
+        return sep;
+      }
+
+      let currentTags = [];
+
+      function process() {
+        const text = input.value.trim();
+        const sep = getSeparator();
+
+        if (currentMode === "extract") {
+          // Extract hashtags using regex
+          const regex = /#[\p{L}\p{N}_]+/gu;
+          const matches = text.match(regex) || [];
+          // Deduplicate
+          const unique = Array.from(new Set(matches.map(t => t.toLowerCase())));
+          currentTags = unique;
+        } else {
+          // Generate hashtags
+          const tokens = text.toLowerCase().split(/[\s,]+/).filter(Boolean);
+          const collected = new Set();
+
+          tokens.forEach(tok => {
+            const clean = tok.replace(/^#/, "");
+            if (clean) collected.add("#" + clean);
+
+            // Lookup in dictionary
+            for (const [key, related] of Object.entries(DICTIONARY)) {
+              if (clean.includes(key) || key.includes(clean)) {
+                related.forEach(r => collected.add("#" + r));
+              }
+            }
+          });
+
+          // Add universal discovery tags if short
+          if (collected.size < 5 && tokens.length > 0) {
+            collected.add("#explore");
+            collected.add("#trending");
+            collected.add("#viral");
+          }
+
+          currentTags = Array.from(collected);
+        }
+
+        output.value = currentTags.join(sep);
+        updateCounts();
+      }
+
+      function updateCounts() {
+        const count = currentTags.length;
+        if (badgeCount) badgeCount.textContent = `${count} tags`;
+        if (statIgLimit) {
+          statIgLimit.textContent = `${count} / 30`;
+          if (count > 30) {
+            statIgLimit.className = "font-semibold text-[#e5484d]";
+          } else {
+            statIgLimit.className = "font-semibold text-[#27a644]";
+          }
+        }
+      }
+
+      modeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          modeBtns.forEach(b => {
+            b.classList.remove("bg-white", "dark:bg-[#1c1c1e]", "text-[#171717]", "dark:text-white", "shadow-2xs");
+            b.classList.add("text-[#62666d]", "dark:text-[#8a8f98]");
+          });
+          btn.classList.add("bg-white", "dark:bg-[#1c1c1e]", "text-[#171717]", "dark:text-white", "shadow-2xs");
+          btn.classList.remove("text-[#62666d]", "dark:text-[#8a8f98]");
+          currentMode = btn.getAttribute("data-mode") || "generate";
+
+          if (currentMode === "extract") {
+            inputLabel.textContent = "Paste caption or text containing #hashtags:";
+            input.placeholder = "e.g. Loving this view! #travel #nature #wanderlust #sunset #photography";
+            input.value = "Just launched our new product on Product Hunt! 🚀 Check it out: #buildinpublic #saas #startup #coding #indiehackers #tech";
+          } else {
+            inputLabel.textContent = "Enter keyword(s) separated by commas or spaces:";
+            input.placeholder = "e.g. software, saas, coding, web development...";
+            input.value = "software, saas, coding, webdev";
+          }
+          process();
+        });
+      });
+
+      presetTags.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const kw = btn.getAttribute("data-kw");
+          if (kw) {
+            input.value = kw;
+            process();
+          }
+        });
+      });
+
+      formatRads.forEach(r => r.addEventListener("change", process));
+      processBtn?.addEventListener("click", process);
+      input?.addEventListener("input", process);
+
+      async function copyText(str, btn, originalLabel) {
+        if (!str) return;
+        try {
+          await navigator.clipboard.writeText(str);
+          btn.classList.add("bg-[#27a644]");
+          const span = btn.querySelector("span") || btn;
+          const orig = span.textContent;
+          span.textContent = "Copied!";
+          setTimeout(() => {
+            btn.classList.remove("bg-[#27a644]");
+            span.textContent = orig;
+          }, 1800);
+        } catch (e) {
+          output.select();
+          document.execCommand("copy");
+        }
+      }
+
+      copyAllBtn?.addEventListener("click", () => {
+        copyText(output.value, copyAllBtn, "Copy All Hashtags");
+      });
+
+      copyTop10Btn?.addEventListener("click", () => {
+        const sep = getSeparator();
+        const top10 = currentTags.slice(0, 10).join(sep);
+        copyText(top10, copyTop10Btn, "Copy Top 10");
+      });
+
+      copyTop30Btn?.addEventListener("click", () => {
+        const sep = getSeparator();
+        const top30 = currentTags.slice(0, 30).join(sep);
+        copyText(top30, copyTop30Btn, "Copy Top 30 (IG Max)");
+      });
+
+      // Initial run
+      process();
+    })();
+  </script>
+</Layout>

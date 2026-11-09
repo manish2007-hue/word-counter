@@ -1,0 +1,361 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Text Repeater Online – Repeat Words & Messages 10,000 Times";
+const pageDescription = "Repeat any text, phrase, or emoji up to 10,000 times with custom separators (newline, space, comma) and numbering. Free, instant, and 100% private in-browser.";
+const pageKeywords = "text repeater, repeat text online, repeat message 1000 times, text multiplier, duplicate string online, repeat emoji, whatsapp text repeater";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Text Repeater Tool",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/text-repeater/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I repeat text 1000 times online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Type or paste your text into the input field, set the repetition count to 1000 (or click the '1000x' quick preset), choose your preferred separator like newline or space, and click 'Repeat Text'. Then copy your result with one click."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I add row numbers to the repeated text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Toggle the 'Add Line Numbers' checkbox. Each repetition will be prefixed with its sequence number (e.g., '1. Sample Text', '2. Sample Text') which is ideal for testing lists and test data generation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a limit on how many times I can repeat text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can repeat text up to 10,000 times per operation. Because processing executes directly in your browser JavaScript memory, repetitions generate in under 5 milliseconds with zero server delay."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="text-repeater"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-4 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser String Multiplier</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Text Repeater <span class="bg-gradient-to-r from-[#0070f3] to-[#828fff] bg-clip-text text-transparent">Online</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Instantly repeat any word, sentence, or emoji up to 10,000 times with custom line breaks, spaces, or numbering.
+    </p>
+  </div>
+
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 mb-12">
+    <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] overflow-hidden shadow-sm">
+      
+      <!-- Input Section -->
+      <div class="p-4 sm:p-5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] space-y-4">
+        <div>
+          <label for="input-text" class="block text-xs font-semibold text-[#171717] dark:text-white mb-1.5">
+            Text or Message to Repeat:
+          </label>
+          <textarea
+            id="input-text"
+            rows="3"
+            class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] p-3 text-xs sm:text-sm font-sans text-[#171717] dark:text-[#ededed] resize-y focus:outline-none focus:border-[#0070f3]"
+            placeholder="Type your message, words, or emojis here (e.g., 'Never give up! 🔥')..."
+          >Repeat this text! 🚀</textarea>
+        </div>
+
+        <!-- Controls Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          
+          <!-- Repetitions & Presets -->
+          <div class="space-y-2">
+            <label for="input-repeats" class="block text-xs font-semibold text-[#171717] dark:text-white">
+              Number of Repetitions:
+            </label>
+            <div class="flex items-center gap-2">
+              <input
+                id="input-repeats"
+                type="number"
+                min="1"
+                max="10000"
+                value="20"
+                class="w-24 px-3 py-1.5 text-xs font-mono rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#080809] text-[#171717] dark:text-white focus:outline-none focus:border-[#0070f3]"
+              />
+              <div class="flex items-center gap-1">
+                <button type="button" class="preset-btn px-2 py-1 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] font-mono hover:bg-[#0070f3]/10 hover:text-[#0070f3] transition cursor-pointer" data-val="10">10x</button>
+                <button type="button" class="preset-btn px-2 py-1 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] font-mono hover:bg-[#0070f3]/10 hover:text-[#0070f3] transition cursor-pointer" data-val="50">50x</button>
+                <button type="button" class="preset-btn px-2 py-1 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] font-mono hover:bg-[#0070f3]/10 hover:text-[#0070f3] transition cursor-pointer" data-val="100">100x</button>
+                <button type="button" class="preset-btn px-2 py-1 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] font-mono hover:bg-[#0070f3]/10 hover:text-[#0070f3] transition cursor-pointer" data-val="500">500x</button>
+                <button type="button" class="preset-btn px-2 py-1 rounded border border-[#e2e4e8] dark:border-[#23252a] text-[11px] font-mono hover:bg-[#0070f3]/10 hover:text-[#0070f3] transition cursor-pointer" data-val="1000">1000x</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Separator & Numbering -->
+          <div class="space-y-2">
+            <label for="select-separator" class="block text-xs font-semibold text-[#171717] dark:text-white">
+              Separator:
+            </label>
+            <div class="flex items-center gap-2">
+              <select
+                id="select-separator"
+                class="px-3 py-1.5 text-xs rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#080809] text-[#171717] dark:text-white focus:outline-none focus:border-[#0070f3]"
+              >
+                <option value="newline">New Line (\n)</option>
+                <option value="space">Space (" ")</option>
+                <option value="comma">Comma (", ")</option>
+                <option value="dash">Dash (" - ")</option>
+                <option value="none">No Separator</option>
+                <option value="custom">Custom String</option>
+              </select>
+
+              <input
+                id="input-custom-sep"
+                type="text"
+                placeholder="Custom..."
+                class="hidden w-24 px-2.5 py-1.5 text-xs font-mono rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#080809] text-[#171717] dark:text-white focus:outline-none focus:border-[#0070f3]"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Toggles -->
+        <div class="flex items-center gap-4 pt-1 text-xs">
+          <label class="flex items-center gap-1.5 cursor-pointer select-none text-[#4c515a] dark:text-[#d0d6e0]">
+            <input type="checkbox" id="check-numbering" class="rounded border-[#e2e4e8] text-[#0070f3] focus:ring-0" />
+            <span>Add line numbers (1. , 2. , ...)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Result Toolbar Header -->
+      <div class="px-4 sm:px-5 py-2.5 border-b border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex items-center justify-between text-xs">
+        <span class="font-semibold text-[#171717] dark:text-white">Generated Output</span>
+        
+        <div class="flex items-center gap-3 text-[11px] font-mono text-[#8a8f98]">
+          <span><strong id="stat-words" class="text-[#171717] dark:text-white font-semibold">0</strong> words</span>
+          <span>•</span>
+          <span><strong id="stat-chars" class="text-[#171717] dark:text-white font-semibold">0</strong> chars</span>
+        </div>
+      </div>
+
+      <!-- Output Viewport -->
+      <div class="p-4 sm:p-5 bg-white dark:bg-[#0f1011]">
+        <textarea
+          id="output-text"
+          readonly
+          rows="10"
+          class="w-full rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] p-4 text-xs sm:text-sm font-mono leading-relaxed text-[#171717] dark:text-[#ededed] resize-y focus:outline-none focus:border-[#0070f3]"
+        ></textarea>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="p-3 sm:p-4 border-t border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#141516] flex items-center justify-between gap-3">
+        <button
+          id="btn-clear"
+          type="button"
+          class="px-3 py-1.5 rounded-md text-xs text-[#8a8f98] hover:text-[#e5484d] transition cursor-pointer"
+        >
+          Clear
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-download"
+            type="button"
+            class="px-3 py-1.5 rounded-md border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#1c1c1e] text-xs font-medium text-[#4c515a] dark:text-[#d0d6e0] hover:border-black dark:hover:border-white transition cursor-pointer"
+          >
+            Download .txt
+          </button>
+          <button
+            id="btn-copy"
+            type="button"
+            class="flex items-center gap-1.5 px-4 py-1.5 rounded-md bg-[#0070f3] text-white text-xs font-semibold hover:bg-[#4c58be] transition shadow-2xs cursor-pointer"
+          >
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+            </svg>
+            <span id="copy-label">Copy Repeated Text</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SEO & Guide Section -->
+  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
+      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Common Use Cases for Text Repeaters
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Social &amp; Messaging</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              Generate fun repetitive messages, emoji banners, or reaction chains for WhatsApp, Discord, TikTok, and Instagram chats.
+            </p>
+          </div>
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Software &amp; QA Testing</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              Stress-test form input fields, database text columns, buffer overflows, and UI layout wrapping with massive string payloads.
+            </p>
+          </div>
+          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Design &amp; Typography</h3>
+            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
+              Fill wireframe blocks, create patterned graphic borders, or test multi-line text rendering without tedious copy-pasting.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Script -->
+  <script is:inline>
+    (function() {
+      const input = document.getElementById("input-text");
+      const repeats = document.getElementById("input-repeats");
+      const separator = document.getElementById("select-separator");
+      const customSep = document.getElementById("input-custom-sep");
+      const numbering = document.getElementById("check-numbering");
+      const output = document.getElementById("output-text");
+      const copyBtn = document.getElementById("btn-copy");
+      const copyLabel = document.getElementById("copy-label");
+      const downloadBtn = document.getElementById("btn-download");
+      const clearBtn = document.getElementById("btn-clear");
+      const statWords = document.getElementById("stat-words");
+      const statChars = document.getElementById("stat-chars");
+      const presetBtns = document.querySelectorAll(".preset-btn");
+
+      function getSeparatorString() {
+        const val = separator.value;
+        if (val === "newline") return "\n";
+        if (val === "space") return " ";
+        if (val === "comma") return ", ";
+        if (val === "dash") return " - ";
+        if (val === "none") return "";
+        if (val === "custom") return customSep.value;
+        return "\n";
+      }
+
+      function repeat() {
+        const text = input.value;
+        const count = Math.max(1, Math.min(10000, parseInt(repeats.value, 10) || 1));
+        const sep = getSeparatorString();
+        const withNumbers = numbering.checked;
+
+        if (!text) {
+          output.value = "";
+          updateStats("");
+          return;
+        }
+
+        const items = [];
+        for (let i = 1; i <= count; i++) {
+          if (withNumbers) {
+            items.push(`${i}. ${text}`);
+          } else {
+            items.push(text);
+          }
+        }
+
+        const result = items.join(sep);
+        output.value = result;
+        updateStats(result);
+      }
+
+      function updateStats(str) {
+        const words = str.trim() ? str.trim().split(/\s+/).length : 0;
+        const chars = str.length;
+        if (statWords) statWords.textContent = words.toLocaleString();
+        if (statChars) statChars.textContent = chars.toLocaleString();
+      }
+
+      separator.addEventListener("change", () => {
+        if (separator.value === "custom") {
+          customSep.classList.remove("hidden");
+        } else {
+          customSep.classList.add("hidden");
+        }
+        repeat();
+      });
+
+      customSep.addEventListener("input", repeat);
+      input.addEventListener("input", repeat);
+      repeats.addEventListener("input", repeat);
+      numbering.addEventListener("change", repeat);
+
+      presetBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const val = btn.getAttribute("data-val");
+          if (val) {
+            repeats.value = val;
+            repeat();
+          }
+        });
+      });
+
+      clearBtn?.addEventListener("click", () => {
+        input.value = "";
+        output.value = "";
+        updateStats("");
+      });
+
+      copyBtn?.addEventListener("click", async () => {
+        if (!output.value) return;
+        try {
+          await navigator.clipboard.writeText(output.value);
+          if (copyLabel) copyLabel.textContent = "Copied!";
+          setTimeout(() => {
+            if (copyLabel) copyLabel.textContent = "Copy Repeated Text";
+          }, 2000);
+        } catch (e) {
+          output.select();
+          document.execCommand("copy");
+        }
+      });
+
+      downloadBtn?.addEventListener("click", () => {
+        if (!output.value) return;
+        const blob = new Blob([output.value], { type: "text/plain;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "repeated-text.txt";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Initial run
+      repeat();
+    })();
+  </script>
+</Layout>
