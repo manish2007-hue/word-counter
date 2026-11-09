@@ -1,0 +1,357 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  const PRESET_DATA = [
+    {
+      preset: 'passport-photo-35x45mm',
+      name: 'Passport Photo (3.5 × 4.5 cm)',
+      unit: 'cm',
+      w: 3.5,
+      h: 4.5,
+      dpi: 300,
+      calcW: 413,
+      calcH: 531,
+      title: 'Resize Photo to 3.5 x 4.5 cm (35x45 mm) for Passport Online',
+      description: 'Free online tool to resize photos to exact 3.5 x 4.5 cm (35 x 45 mm) at 300 DPI (413 x 531 px). Official standard for Indian, Schengen, and international passports. 100% private.',
+      keywords: 'resize photo 3.5 x 4.5 cm, passport photo 35x45 mm, 3.5x4.5 cm photo in pixels 300 dpi, online passport photo resizer, schengen passport photo size',
+      specs: [
+        { label: 'Physical Size', val: '3.5 cm × 4.5 cm (35 mm × 45 mm)' },
+        { label: 'Print Resolution', val: '300 DPI' },
+        { label: 'Pixel Dimensions', val: '413 × 531 px' },
+        { label: 'Aspect Ratio', val: '7:9 Portrait' },
+        { label: 'Standard', val: 'ICAO / Indian / Schengen Passport' }
+      ]
+    },
+    {
+      preset: 'us-visa-photo-2x2-inch',
+      name: 'US Visa & DS-160 Photo (2 × 2 Inches)',
+      unit: 'in',
+      w: 2,
+      h: 2,
+      dpi: 300,
+      calcW: 600,
+      calcH: 600,
+      title: 'Resize Photo to 2x2 Inches (600x600 px) for US Visa & DS-160',
+      description: 'Resize photograph to 2x2 inches (51x51 mm) at 300 DPI (600x600 px) for US Visa DS-160 and US Passport applications online. 100% private in-browser tool.',
+      keywords: 'resize photo 2x2 inches, us visa photo resizer 600x600, ds 160 photo size in pixels, 2 by 2 inch photo converter, us passport photo dimensions',
+      specs: [
+        { label: 'Physical Size', val: '2.0 × 2.0 inches (51 × 51 mm)' },
+        { label: 'Print Resolution', val: '300 DPI' },
+        { label: 'Pixel Dimensions', val: '600 × 600 px' },
+        { label: 'Aspect Ratio', val: '1:1 Square' },
+        { label: 'Standard', val: 'US State Dept / CEAC DS-160' }
+      ]
+    },
+    {
+      preset: 'online-signature-resize',
+      name: 'Signature (140 × 60 Pixels)',
+      unit: 'px',
+      w: 140,
+      h: 60,
+      dpi: 72,
+      calcW: 140,
+      calcH: 60,
+      title: 'Resize Signature to 140x60 Pixels Online – Exam & Govt Forms',
+      description: 'Resize signature to exact 140 x 60 pixels online for SSC, UPSC, IBPS, and state public service job applications. Pure client-side processing.',
+      keywords: 'resize signature 140x60 px, online signature resizer, signature dimensions 140 60, ssc signature resize, upsc admit card signature size',
+      specs: [
+        { label: 'Target Size', val: '140 × 60 pixels' },
+        { label: 'Print Resolution', val: '72 DPI (Web form upload)' },
+        { label: 'Pixel Dimensions', val: '140 × 60 px' },
+        { label: 'Aspect Ratio', val: '7:3 Landscape' },
+        { label: 'Standard', val: 'SSC / UPSC / IBPS / RRB' }
+      ]
+    },
+    {
+      preset: 'ssc-upsc-photo-resize',
+      name: 'SSC & UPSC Photo (200 × 230 Pixels)',
+      unit: 'px',
+      w: 200,
+      h: 230,
+      dpi: 72,
+      calcW: 200,
+      calcH: 230,
+      title: 'Resize Photo to 200x230 Pixels for SSC, UPSC & Govt Exams',
+      description: 'Crop and resize candidate passport photo to 200x230 pixels for SSC CGL, CHSL, MTS, UPSC CSE, and state examinations. 100% private in browser.',
+      keywords: 'resize photo 200x230, ssc photo size converter, 200 x 230 pixel photo resizer, upsc exam photo size online, ssc cgl photo dimension',
+      specs: [
+        { label: 'Target Size', val: '200 × 230 pixels' },
+        { label: 'Print Resolution', val: '72 DPI' },
+        { label: 'Pixel Dimensions', val: '200 × 230 px' },
+        { label: 'Aspect Ratio', val: '20:23 Portrait' },
+        { label: 'Standard', val: 'Staff Selection Commission / UPSC' }
+      ]
+    }
+  ];
+
+  return PRESET_DATA.map((p) => ({
+    params: { preset: p.preset },
+    props: { data: p }
+  }));
+}
+
+const { data } = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": data.title,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": data.description,
+      "url": `https://cleanwordcounter.com/resize-image/${data.preset}/`
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `What are the exact pixel dimensions for ${data.name}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `At ${data.dpi} DPI, ${data.name} translates to exactly ${data.calcW} × ${data.calcH} pixels.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my photo uploaded to any server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Never. All image scaling and cropping executes in your web browser memory using HTML5 Canvas. Your photo remains 100% private on your device."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={data.title}
+  description={data.description}
+  keywords={data.keywords}
+  canonicalSlug={`resize-image/${data.preset}`}
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Official Preset &bull; {data.calcW} &times; {data.calcH} px &bull; {data.dpi} DPI</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      {data.name} <span class="vercel-gradient-develop">Resizer</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Pre-configured to <strong class="text-[#0070f3] font-mono">{data.calcW} &times; {data.calcH} pixels</strong> ({data.w}{data.unit} &times; {data.h}{data.unit} @ {data.dpi} DPI). 100% private in-browser tool.
+    </p>
+  </div>
+
+  <main class="mx-auto max-w-4xl px-4 sm:px-6 py-8">
+    <!-- Specifications Callout Card -->
+    <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 sm:p-5 shadow-2xs mb-6">
+      <div class="flex items-center justify-between pb-3 border-b border-[#ebebeb] dark:border-[#262626] mb-3">
+        <span class="text-xs font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+          Required Specifications
+        </span>
+        <a href="/resize-image" class="text-xs text-[#0070f3] hover:underline font-medium">
+          &larr; Switch to Custom Resizer
+        </a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        {data.specs.map((s) => (
+          <div class="p-2.5 rounded-lg bg-[#fafafa] dark:bg-[#121212] border border-[#ebebeb] dark:border-[#262626]">
+            <div class="text-[10px] text-[#888888] uppercase tracking-wider">{s.label}</div>
+            <div class="text-xs font-semibold text-[#171717] dark:text-[#ededed] mt-0.5 truncate">{s.val}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Active Dropzone -->
+    <div
+      id="preset-dropzone"
+      data-unit={data.unit}
+      data-w={data.w}
+      data-h={data.h}
+      data-dpi={data.dpi}
+      class="border-2 border-dashed border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] dark:hover:border-[#0070f3] rounded-2xl p-8 sm:p-12 text-center transition-all bg-white dark:bg-[#0a0a0a] cursor-pointer shadow-2xs group"
+    >
+      <input type="file" id="preset-file-input" accept="image/*" class="hidden" />
+      <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-[#0070f3]/10 text-[#0070f3] flex items-center justify-center transition-transform group-hover:scale-105">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+      <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] mb-1">
+        Select photo to resize to {data.name}
+      </h2>
+      <p class="text-xs text-[#666666] dark:text-[#888888] max-w-sm mx-auto">
+        Drop image or press Ctrl+V. Image is instantly scaled to exact {data.calcW} &times; {data.calcH} px specifications.
+      </p>
+      <button
+        type="button"
+        id="btn-choose-photo"
+        class="mt-4 px-5 py-2 rounded-full bg-[#171717] dark:bg-[#ededed] text-white dark:text-[#171717] text-xs font-medium tracking-tight hover:bg-[#000000] dark:hover:bg-[#ffffff] transition-colors"
+      >
+        Choose Photo
+      </button>
+    </div>
+
+    <!-- Result View -->
+    <div id="preset-result-view" class="hidden mt-6">
+      <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 sm:p-7 shadow-2xs">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-[#ebebeb] dark:border-[#262626]">
+          <div>
+            <span class="block text-[11px] uppercase tracking-wider font-semibold text-[#888888]">Resized Photo</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {data.calcW} &times; {data.calcH} px &bull; {data.dpi} DPI
+            </span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              id="preset-reset-btn"
+              class="px-4 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-xs font-medium text-[#666666] dark:text-[#888888] hover:bg-[#fafafa]"
+            >
+              Upload Another
+            </button>
+            <a
+              id="preset-download-link"
+              download={`${data.preset}.jpg`}
+              href="#"
+              class="flex items-center gap-2 px-6 py-2 rounded-full bg-[#0070f3] hover:bg-[#0060df] text-white text-xs font-semibold shadow-sm"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Download Resized Photo</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col items-center justify-center p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212]">
+          <img id="preset-preview-img" src="" alt="Resized Photo" class="max-h-96 max-w-full object-contain rounded-lg shadow-sm" />
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script define:vars={{ targetW: data.calcW, targetH: data.calcH, targetPreset: data.preset }}>
+  const dropzone = document.getElementById('preset-dropzone');
+  const fileInput = document.getElementById('preset-file-input');
+  const btnChoose = document.getElementById('btn-choose-photo');
+  const resultView = document.getElementById('preset-result-view');
+  const previewImg = document.getElementById('preset-preview-img');
+  const downloadLink = document.getElementById('preset-download-link');
+  const resetBtn = document.getElementById('preset-reset-btn');
+
+  btnChoose?.addEventListener('click', () => fileInput?.click());
+  dropzone?.addEventListener('click', (e) => {
+    if (e.target !== btnChoose) fileInput?.click();
+  });
+
+  ['dragenter', 'dragover'].forEach((ev) => {
+    dropzone?.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-[#0070f3]', 'bg-[#0070f3]/5');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach((ev) => {
+    dropzone?.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-[#0070f3]', 'bg-[#0070f3]/5');
+    });
+  });
+
+  dropzone?.addEventListener('drop', (e) => {
+    if (e.dataTransfer?.files?.[0]) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files?.[0]) {
+      processFile(fileInput.files[0]);
+      fileInput.value = '';
+    }
+  });
+
+  window.addEventListener('paste', (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.indexOf('image') !== -1) {
+        const file = item.getAsFile();
+        if (file) processFile(file);
+        break;
+      }
+    }
+  });
+
+  function processFile(file) {
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = targetW;
+        canvas.height = targetH;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // White background standard for IDs/visas
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, targetW, targetH);
+
+        // Aspect fit centered
+        const srcAspect = img.width / img.height;
+        const targetAspect = targetW / targetH;
+        let drawW = targetW;
+        let drawH = targetH;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        if (srcAspect > targetAspect) {
+          drawW = targetW;
+          drawH = targetW / srcAspect;
+          offsetY = (targetH - drawH) / 2;
+        } else {
+          drawH = targetH;
+          drawW = targetH * srcAspect;
+          offsetX = (targetW - drawW) / 2;
+        }
+
+        ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        if (previewImg) previewImg.src = dataUrl;
+        if (downloadLink) {
+          downloadLink.href = dataUrl;
+          downloadLink.download = `${targetPreset}-${targetW}x${targetH}.jpg`;
+        }
+
+        dropzone?.classList.add('hidden');
+        resultView?.classList.remove('hidden');
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  resetBtn?.addEventListener('click', () => {
+    resultView?.classList.add('hidden');
+    dropzone?.classList.remove('hidden');
+  });
+</script>

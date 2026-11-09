@@ -1,0 +1,656 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Free QR Code Generator Online – Custom Colors, SVG & PNG HD";
+const pageDescription = "Generate free custom QR codes online in seconds. Support for URLs, Wi-Fi passwords, plain text, vCards, emails, and SMS. Customize colors, error correction, and download in vector SVG or high-resolution PNG. 100% private in-browser.";
+const pageKeywords = "qr code generator, free qr code maker, custom qr code, wifi qr code generator, vcard qr code, qr code svg download, high resolution qr code png, offline qr generator";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Free In-Browser QR Code Generator",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/qr-code-generator/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Do these QR codes expire or have scan limits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All QR codes created on this tool are static, permanent, and direct. They contain the raw data encoded directly into the matrix, so they never expire and have zero scan limits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data sent to any cloud server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The QR matrix is rendered directly in your browser using local JavaScript and HTML5 Canvas. Your Wi-Fi passwords, URLs, and personal details never leave your computer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which error correction level should I choose?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For standard website links or clean digital screens, Level M (15%) is standard. If you plan to print your QR code on physical paper, outdoor banners, or add a central logo, select Level H (30%) so the code remains scannable even if partially damaged."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="qr-code-generator"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% In-Browser &bull; High Resolution &bull; SVG &bull; PNG &bull; Wi-Fi &bull; vCard</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Free Online <span class="vercel-gradient-develop">QR Code Generator</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Create instant, custom QR codes for websites, Wi-Fi networks, contact cards, and text. Download in crisp vector SVG or high-resolution PNG with zero tracking.
+    </p>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Left Config Column -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Type Tabs -->
+        <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 shadow-2xs">
+          <label class="block text-xs font-semibold text-[#666666] dark:text-[#888888] uppercase tracking-wider mb-3">
+            1. Select QR Code Type
+          </label>
+          <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="type-selector">
+            <button
+              type="button"
+              data-type="url"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#0070f3] bg-[#0070f3]/5 text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+              </svg>
+              URL
+            </button>
+            <button
+              type="button"
+              data-type="text"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path>
+              </svg>
+              Text
+            </button>
+            <button
+              type="button"
+              data-type="wifi"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.393 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+              </svg>
+              Wi-Fi
+            </button>
+            <button
+              type="button"
+              data-type="email"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+              Email
+            </button>
+            <button
+              type="button"
+              data-type="phone"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+              </svg>
+              Phone
+            </button>
+            <button
+              type="button"
+              data-type="vcard"
+              class="type-tab-btn flex flex-col items-center justify-center p-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors"
+            >
+              <svg class="w-4 h-4 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path>
+              </svg>
+              vCard
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Inputs -->
+        <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 shadow-2xs">
+          <!-- URL Form -->
+          <div id="form-url" class="space-y-4">
+            <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider">
+              Website Destination URL
+            </label>
+            <input
+              type="url"
+              id="input-url"
+              placeholder="https://example.com"
+              value="https://cleanwordcounter.com"
+              class="w-full px-3.5 py-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+            />
+          </div>
+
+          <!-- Plain Text Form -->
+          <div id="form-text" class="hidden space-y-4">
+            <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider">
+              Text Content
+            </label>
+            <textarea
+              id="input-text"
+              rows="4"
+              placeholder="Enter message or notes to encode..."
+              class="w-full px-3.5 py-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+            ></textarea>
+          </div>
+
+          <!-- Wi-Fi Form -->
+          <div id="form-wifi" class="hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Network Name (SSID)</label>
+                <input
+                  type="text"
+                  id="wifi-ssid"
+                  placeholder="Home-WiFi"
+                  class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Wi-Fi Password</label>
+                <input
+                  type="text"
+                  id="wifi-password"
+                  placeholder="SecretPassword123"
+                  class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+                />
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 items-center">
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Encryption</label>
+                <select
+                  id="wifi-type"
+                  class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+                >
+                  <option value="WPA">WPA / WPA2 / WPA3</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">None (Open Network)</option>
+                </select>
+              </div>
+              <div class="flex items-center gap-2 pt-5">
+                <input type="checkbox" id="wifi-hidden" class="rounded border-[#ebebeb] text-[#0070f3] focus:ring-0" />
+                <label for="wifi-hidden" class="text-xs text-[#4d4d4d] dark:text-[#a1a1a1] cursor-pointer">Hidden Network</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Form -->
+          <div id="form-email" class="hidden space-y-3">
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Email Address</label>
+              <input
+                type="email"
+                id="email-address"
+                placeholder="hello@domain.com"
+                class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Subject</label>
+              <input
+                type="text"
+                id="email-subject"
+                placeholder="Inquiry"
+                class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Message Body</label>
+              <textarea
+                id="email-body"
+                rows="2"
+                placeholder="Pre-filled email body..."
+                class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Phone Form -->
+          <div id="form-phone" class="hidden space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Phone Number (with Country Code)</label>
+              <input
+                type="tel"
+                id="input-phone"
+                placeholder="+1 555 123 4567"
+                class="w-full px-3.5 py-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm text-[#171717] dark:text-[#ededed] focus:outline-none focus:border-[#0070f3]"
+              />
+            </div>
+          </div>
+
+          <!-- vCard Form -->
+          <div id="form-vcard" class="hidden space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">First Name</label>
+                <input type="text" id="vcard-fn" placeholder="Sarah" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Last Name</label>
+                <input type="text" id="vcard-ln" placeholder="Connor" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Organization / Title</label>
+                <input type="text" id="vcard-org" placeholder="Founder & CEO" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Phone</label>
+                <input type="tel" id="vcard-phone" placeholder="+1 555 123 4567" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Email</label>
+                <input type="email" id="vcard-email" placeholder="sarah@company.com" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Website</label>
+                <input type="url" id="vcard-url" placeholder="https://company.com" class="w-full px-3 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-sm" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Styling & Precision Options -->
+        <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 shadow-2xs space-y-4">
+          <label class="block text-xs font-semibold text-[#666666] dark:text-[#888888] uppercase tracking-wider">
+            2. Design &amp; Export Options
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">QR Foreground</label>
+              <div class="flex items-center gap-2">
+                <input type="color" id="qr-color-dark" value="#000000" class="w-8 h-8 rounded border border-[#ebebeb] cursor-pointer" />
+                <span class="text-xs font-mono text-[#666666]" id="label-color-dark">#000000</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Background</label>
+              <div class="flex items-center gap-2">
+                <input type="color" id="qr-color-light" value="#ffffff" class="w-8 h-8 rounded border border-[#ebebeb] cursor-pointer" />
+                <span class="text-xs font-mono text-[#666666]" id="label-color-light">#ffffff</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Error Correction</label>
+              <select id="qr-ec-level" class="w-full px-2.5 py-1.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-xs">
+                <option value="L">L (7% Recovery)</option>
+                <option value="M" selected>M (15% Recovery)</option>
+                <option value="Q">Q (25% Recovery)</option>
+                <option value="H">H (30% Best for Print)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] mb-1">Margin Padding</label>
+              <select id="qr-margin" class="w-full px-2.5 py-1.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-xs">
+                <option value="0">0 (Border-free)</option>
+                <option value="1">1 Module</option>
+                <option value="2" selected>2 Modules</option>
+                <option value="4">4 Modules (Standard)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Output & Actions Column -->
+      <div class="lg:col-span-5">
+        <div class="sticky top-20 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xs text-center flex flex-col items-center">
+          <div class="flex items-center justify-between w-full mb-4">
+            <span class="text-xs font-semibold text-[#666666] dark:text-[#888888] uppercase tracking-wider">Live Preview</span>
+            <span class="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Scannable
+            </span>
+          </div>
+
+          <!-- QR Canvas Container -->
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] inline-block shadow-inner mb-6">
+            <canvas id="qr-canvas" class="max-w-full h-auto rounded-lg shadow-sm"></canvas>
+          </div>
+
+          <!-- Download Action Buttons -->
+          <div class="w-full space-y-2.5">
+            <button
+              type="button"
+              id="btn-download-png"
+              class="w-full py-2.5 px-4 rounded-full bg-[#171717] dark:bg-[#ededed] text-white dark:text-[#171717] hover:bg-[#000000] dark:hover:bg-[#ffffff] font-medium text-xs tracking-tight transition-all shadow-sm flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              Download High-Res PNG (1024×1024)
+            </button>
+
+            <button
+              type="button"
+              id="btn-download-svg"
+              class="w-full py-2 px-4 rounded-full border border-[#ebebeb] dark:border-[#262626] text-[#171717] dark:text-[#ededed] hover:border-[#0070f3] hover:text-[#0070f3] font-medium text-xs transition-colors flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+              Download Scalable Vector (SVG)
+            </button>
+
+            <button
+              type="button"
+              id="btn-copy-image"
+              class="w-full py-2 px-4 rounded-full border border-dashed border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:text-[#171717] dark:hover:text-[#ededed] font-medium text-xs transition-colors flex items-center justify-center gap-2"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+              <span id="copy-text">Copy Image to Clipboard</span>
+            </button>
+          </div>
+
+          <p class="mt-4 text-[11px] text-[#888888] leading-tight">
+            100% Client-Side Matrix &bull; Never Expires &bull; Zero Scan Limits
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Educational & Explanatory SEO Content -->
+    <div class="mt-16 max-w-4xl mx-auto border-t border-[#ebebeb] dark:border-[#262626] pt-12 space-y-12">
+      <section>
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
+          Why Use In-Browser Client-Side QR Codes?
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
+              <span class="text-[#0070f3]">&bull;</span> Zero Third-Party Tracking
+            </h3>
+            <p>Unlike commercial redirect QR generators that intercept scans through an advertising gateway, these QR codes contain the raw destination payload directly.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
+              <span class="text-[#0070f3]">&bull;</span> Permanent &amp; Never Expire
+            </h3>
+            <p>Because there is no redirect server, your QR codes will continue working 10 or 20 years into the future as long as the destination URL or Wi-Fi remains valid.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
+              <span class="text-[#0070f3]">&bull;</span> Print-Ready Vector SVG
+            </h3>
+            <p>Export directly to mathematical SVG vectors for billboard printing, business cards, merchandise, and packaging with infinitely sharp edges.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Frequently Asked Questions -->
+      <section>
+        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
+          Frequently Asked Questions
+        </h2>
+        <div class="space-y-4 text-xs">
+          <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-1">
+              How does the Wi-Fi QR Code connect guests automatically?
+            </h3>
+            <p class="text-[#666666] dark:text-[#888888] leading-relaxed">
+              When a smartphone camera (iOS or Android) scans a standard <code>WIFI:S:...</code> payload, the operating system natively prompts: "Join network [SSID]?". The guest taps Connect without having to manually type long alphanumeric keys.
+            </p>
+          </div>
+          <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-1">
+              Can I customize the color while maintaining scannability?
+            </h3>
+            <p class="text-[#666666] dark:text-[#888888] leading-relaxed">
+              Yes, provided there is strong contrast between the dark foreground modules and light background. Avoid light yellow or pale gray on white, as optical camera sensors require luminance contrast to detect module boundaries.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import QRCode from 'qrcode';
+
+  let currentType = 'url';
+  const canvas = document.getElementById('qr-canvas') as HTMLCanvasElement;
+  const darkColorInput = document.getElementById('qr-color-dark') as HTMLInputElement;
+  const lightColorInput = document.getElementById('qr-color-light') as HTMLInputElement;
+  const ecLevelSelect = document.getElementById('qr-ec-level') as HTMLSelectElement;
+  const marginSelect = document.getElementById('qr-margin') as HTMLSelectElement;
+
+  const labelDark = document.getElementById('label-color-dark');
+  const labelLight = document.getElementById('label-color-light');
+
+  // Forms
+  const forms: Record<string, HTMLElement | null> = {
+    url: document.getElementById('form-url'),
+    text: document.getElementById('form-text'),
+    wifi: document.getElementById('form-wifi'),
+    email: document.getElementById('form-email'),
+    phone: document.getElementById('form-phone'),
+    vcard: document.getElementById('form-vcard')
+  };
+
+  function getPayload(): string {
+    switch (currentType) {
+      case 'url': {
+        const val = (document.getElementById('input-url') as HTMLInputElement)?.value.trim();
+        return val || 'https://cleanwordcounter.com';
+      }
+      case 'text': {
+        const val = (document.getElementById('input-text') as HTMLTextAreaElement)?.value.trim();
+        return val || 'Welcome to CleanWordCounter!';
+      }
+      case 'wifi': {
+        const ssid = (document.getElementById('wifi-ssid') as HTMLInputElement)?.value.trim() || 'MyNetwork';
+        const pass = (document.getElementById('wifi-password') as HTMLInputElement)?.value || '';
+        const type = (document.getElementById('wifi-type') as HTMLSelectElement)?.value || 'WPA';
+        const hidden = (document.getElementById('wifi-hidden') as HTMLInputElement)?.checked ? 'H:true;' : '';
+        return `WIFI:T:${type};S:${ssid};P:${pass};${hidden};`;
+      }
+      case 'email': {
+        const addr = (document.getElementById('email-address') as HTMLInputElement)?.value.trim() || 'hello@example.com';
+        const subj = encodeURIComponent((document.getElementById('email-subject') as HTMLInputElement)?.value || '');
+        const body = encodeURIComponent((document.getElementById('email-body') as HTMLTextAreaElement)?.value || '');
+        return `mailto:${addr}?subject=${subj}&body=${body}`;
+      }
+      case 'phone': {
+        const phone = (document.getElementById('input-phone') as HTMLInputElement)?.value.trim() || '+15551234567';
+        return `tel:${phone}`;
+      }
+      case 'vcard': {
+        const fn = (document.getElementById('vcard-fn') as HTMLInputElement)?.value.trim() || 'John';
+        const ln = (document.getElementById('vcard-ln') as HTMLInputElement)?.value.trim() || 'Doe';
+        const org = (document.getElementById('vcard-org') as HTMLInputElement)?.value.trim() || '';
+        const phone = (document.getElementById('vcard-phone') as HTMLInputElement)?.value.trim() || '';
+        const email = (document.getElementById('vcard-email') as HTMLInputElement)?.value.trim() || '';
+        const url = (document.getElementById('vcard-url') as HTMLInputElement)?.value.trim() || '';
+        return `BEGIN:VCARD\nVERSION:3.0\nN:${ln};${fn};;;\nFN:${fn} ${ln}\nORG:${org}\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}\nURL:${url}\nEND:VCARD`;
+      }
+      default:
+        return 'https://cleanwordcounter.com';
+    }
+  }
+
+  async function renderQR() {
+    if (!canvas) return;
+    const text = getPayload();
+    const dark = darkColorInput?.value || '#000000';
+    const light = lightColorInput?.value || '#ffffff';
+    const errorCorrectionLevel = (ecLevelSelect?.value || 'M') as 'L' | 'M' | 'Q' | 'H';
+    const margin = parseInt(marginSelect?.value || '2', 10);
+
+    if (labelDark) labelDark.textContent = dark;
+    if (labelLight) labelLight.textContent = light;
+
+    try {
+      await QRCode.toCanvas(canvas, text, {
+        width: 320,
+        margin,
+        color: {
+          dark,
+          light
+        },
+        errorCorrectionLevel
+      });
+    } catch (err) {
+      console.error('QR Render error:', err);
+    }
+  }
+
+  // Type Switcher
+  const typeButtons = document.querySelectorAll('.type-tab-btn');
+  typeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const type = btn.getAttribute('data-type');
+      if (!type) return;
+      currentType = type;
+
+      // Update button styles
+      typeButtons.forEach((b) => {
+        b.classList.remove('border-[#0070f3]', 'bg-[#0070f3]/5', 'text-[#0070f3]');
+        b.classList.add('border-[#ebebeb]', 'dark:border-[#262626]', 'text-[#666666]', 'dark:text-[#888888]');
+      });
+      btn.classList.add('border-[#0070f3]', 'bg-[#0070f3]/5', 'text-[#0070f3]');
+      btn.classList.remove('border-[#ebebeb]', 'dark:border-[#262626]', 'text-[#666666]', 'dark:text-[#888888]');
+
+      // Show matching form
+      Object.entries(forms).forEach(([key, formEl]) => {
+        if (!formEl) return;
+        if (key === currentType) {
+          formEl.classList.remove('hidden');
+        } else {
+          formEl.classList.add('hidden');
+        }
+      });
+
+      renderQR();
+    });
+  });
+
+  // Listeners on inputs
+  const allInputs = document.querySelectorAll('input, textarea, select');
+  allInputs.forEach((inp) => {
+    inp.addEventListener('input', () => renderQR());
+    inp.addEventListener('change', () => renderQR());
+  });
+
+  // Download High-Res PNG
+  document.getElementById('btn-download-png')?.addEventListener('click', async () => {
+    const text = getPayload();
+    const dark = darkColorInput?.value || '#000000';
+    const light = lightColorInput?.value || '#ffffff';
+    const errorCorrectionLevel = (ecLevelSelect?.value || 'M') as 'L' | 'M' | 'Q' | 'H';
+    const margin = parseInt(marginSelect?.value || '2', 10);
+
+    const offscreenCanvas = document.createElement('canvas');
+    await QRCode.toCanvas(offscreenCanvas, text, {
+      width: 1024,
+      margin,
+      color: { dark, light },
+      errorCorrectionLevel
+    });
+
+    const dataUrl = offscreenCanvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = `qrcode-${currentType}-${Date.now()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+  // Download SVG
+  document.getElementById('btn-download-svg')?.addEventListener('click', async () => {
+    const text = getPayload();
+    const dark = darkColorInput?.value || '#000000';
+    const light = lightColorInput?.value || '#ffffff';
+    const errorCorrectionLevel = (ecLevelSelect?.value || 'M') as 'L' | 'M' | 'Q' | 'H';
+    const margin = parseInt(marginSelect?.value || '2', 10);
+
+    const svgString = await QRCode.toString(text, {
+      type: 'svg',
+      margin,
+      color: { dark, light },
+      errorCorrectionLevel
+    });
+
+    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `qrcode-${currentType}-${Date.now()}.svg`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Copy Image to Clipboard
+  document.getElementById('btn-copy-image')?.addEventListener('click', async () => {
+    const copyLabel = document.getElementById('copy-text');
+    if (!canvas) return;
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      try {
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob })
+        ]);
+        if (copyLabel) copyLabel.textContent = 'Copied to Clipboard!';
+        setTimeout(() => {
+          if (copyLabel) copyLabel.textContent = 'Copy Image to Clipboard';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy to clipboard', err);
+        if (copyLabel) copyLabel.textContent = 'Use Download Button (Browser Restricted)';
+        setTimeout(() => {
+          if (copyLabel) copyLabel.textContent = 'Copy Image to Clipboard';
+        }, 2500);
+      }
+    });
+  });
+
+  // Initial render
+  renderQR();
+</script>

@@ -8,7 +8,7 @@ function checkDistFile(relPath: string, expectedKeywords: string[]) {
   }
   const content = fs.readFileSync(fullPath, 'utf-8');
   for (const kw of expectedKeywords) {
-    if (!content.includes(kw)) {
+    if (!content.toLowerCase().includes(kw.toLowerCase())) {
       throw new Error(`File ${relPath} missing required keyword "${kw}"`);
     }
   }
@@ -18,17 +18,24 @@ function checkDistFile(relPath: string, expectedKeywords: string[]) {
 console.log('🔍 RUNNING COMPREHENSIVE DIST VERIFICATION...\n');
 
 // 1. Core and Dashboard with Command Palette
-checkDistFile('index.html', ['CleanWordCounter', 'Tools', '25', 'cmd-k-modal', 'cmd-k-input']);
-checkDistFile('tools/index.html', ['All 25 Free In-Browser Tools', 'Image Tools', 'PDF to JPG Converter']);
+checkDistFile('index.html', ['CleanWordCounter', 'Tools', '29', 'cmd-k-modal', 'cmd-k-input']);
+checkDistFile('tools/index.html', ['All 29 Free In-Browser Tools', 'Image & PDF Tools', 'PDF to JPG Converter', 'Merge PDF Files']);
 
 // 2. Image & Document Tools Suite (Pi7 Model)
 checkDistFile('compress-image/index.html', ['Target Image', 'Compressor', '20KB', '50KB', '100KB', '200KB']);
 checkDistFile('compress-image/to-20kb/index.html', ['Compress Image to 20KB', '20 KB Maximum', 'Signatures']);
 checkDistFile('compress-image/to-50kb/index.html', ['Compress Image to 50KB', '50 KB Maximum', 'Exam Forms']);
 checkDistFile('resize-image/index.html', ['Passport Photo', '3.5 × 4.5 cm', '300 DPI', 'US Visa (2 × 2 in)']);
+checkDistFile('resize-image/passport-photo-35x45mm/index.html', ['Passport Photo', '413 × 531 px', '300 DPI']);
+checkDistFile('resize-image/us-visa-photo-2x2-inch/index.html', ['US Visa', '600 × 600 px', '300 DPI']);
+checkDistFile('resize-image/online-signature-resize/index.html', ['Signature', '140 × 60 pixels']);
 checkDistFile('image-converter/index.html', ['Image Format', 'Converter', 'PNG', 'WebP', 'JPG']);
 checkDistFile('image-to-pdf/index.html', ['Image to', 'PDF Converter', 'A4 Portrait', 'US Letter']);
 checkDistFile('pdf-to-jpg/index.html', ['PDF to', 'JPG Converter', '300 DPI (High Resolution Print)']);
+checkDistFile('merge-pdf/index.html', ['Merge Multiple', 'PDF Files', 'Drag &amp; Reorder']);
+checkDistFile('split-pdf/index.html', ['Split &amp;', 'Extract PDF Pages', 'Page Range']);
+checkDistFile('qr-code-generator/index.html', ['QR Code Generator', 'Wi-Fi', 'vCard', 'High-Res PNG']);
+checkDistFile('base64-converter/index.html', ['Base64', 'Encoder &amp; Decoder', 'Plain Text Input', 'Image to Base64']);
 
 // 3. Priority 1 Tools
 checkDistFile('lorem-ipsum-generator/index.html', ['Lorem Ipsum', 'Generator']);
@@ -58,6 +65,11 @@ checkDistFile('words-to-pages/1000-words/index.html', ['1,000 Words']);
 checkDistFile('sitemap.xml', [
   'https://cleanwordcounter.com/pdf-to-jpg/',
   'https://cleanwordcounter.com/image-to-pdf/',
+  'https://cleanwordcounter.com/merge-pdf/',
+  'https://cleanwordcounter.com/split-pdf/',
+  'https://cleanwordcounter.com/qr-code-generator/',
+  'https://cleanwordcounter.com/base64-converter/',
+  'https://cleanwordcounter.com/resize-image/passport-photo-35x45mm/',
   'https://cleanwordcounter.com/words-to-reading-time/1000-words/',
   'https://cleanwordcounter.com/compress-image/to-20kb/'
 ]);

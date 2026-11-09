@@ -50,7 +50,18 @@ for (const f of htmlFiles) {
     priority = '1.0';
     changefreq = 'daily';
   } else if (
-    ['/tools/', '/compress-image/', '/resize-image/', '/image-to-pdf/', '/image-converter/'].includes(urlPath)
+    [
+      '/tools/',
+      '/compress-image/',
+      '/resize-image/',
+      '/image-to-pdf/',
+      '/pdf-to-jpg/',
+      '/merge-pdf/',
+      '/split-pdf/',
+      '/qr-code-generator/',
+      '/base64-converter/',
+      '/image-converter/'
+    ].includes(urlPath)
   ) {
     priority = '0.95';
     changefreq = 'daily';
@@ -58,6 +69,7 @@ for (const f of htmlFiles) {
     [
       '/words-to-pages/',
       '/words-to-speaking-time/',
+      '/words-to-reading-time/',
       '/academic-word-counter/',
       '/clean-text/',
       '/diff-checker/',
@@ -74,7 +86,9 @@ for (const f of htmlFiles) {
   } else if (
     urlPath.startsWith('/words-to-pages/') ||
     urlPath.startsWith('/words-to-speaking-time/') ||
+    urlPath.startsWith('/words-to-reading-time/') ||
     urlPath.startsWith('/compress-image/') ||
+    urlPath.startsWith('/resize-image/') ||
     urlPath.startsWith('/character-counter/')
   ) {
     priority = '0.85';

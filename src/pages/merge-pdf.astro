@@ -1,0 +1,425 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Merge PDF Online Free – Combine Multiple PDF Files In Browser";
+const pageDescription = "Combine multiple PDF documents into one single file online for free. Reorder pages, check page counts, and merge securely in your browser with zero file upload. 100% private client-side.";
+const pageKeywords = "merge pdf, combine pdf files, join pdf, merge pdf online free, combine pdfs without upload, private pdf merger, free pdf combiner";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Free Private PDF Merger",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/merge-pdf/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are my confidential PDF documents uploaded to your servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Never. All PDF decoding, page extraction, and file merging happens directly inside your web browser's WebAssembly and JavaScript engine. Your files never touch external servers or cloud storage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I reorder the PDF files before merging?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Once you select or drag and drop your PDFs, use the Up and Down arrow buttons next to each document to set your exact desired sequence before clicking Merge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a limit on how many PDF files I can merge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are no artificial software limits. You can combine dozens of PDFs. Performance is bounded only by your device's available browser memory."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="merge-pdf"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>100% Private Client-Side &bull; Zero Server Uploads &bull; Drag &amp; Reorder</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Merge Multiple <span class="vercel-gradient-develop">PDF Files</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Combine separate PDF files into one clean document in seconds. Reorder items, preview page counts, and merge entirely offline inside your browser.
+    </p>
+  </div>
+
+  <main class="mx-auto max-w-4xl px-4 sm:px-6 py-8">
+    <!-- Dropzone Area -->
+    <div
+      id="pdf-dropzone"
+      class="border-2 border-dashed border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] dark:hover:border-[#0070f3] rounded-2xl p-8 sm:p-12 text-center transition-all bg-white dark:bg-[#0a0a0a] cursor-pointer shadow-2xs group"
+    >
+      <input type="file" id="pdf-file-input" multiple accept="application/pdf" class="hidden" />
+      <div class="w-14 h-14 mx-auto mb-4 rounded-full bg-[#0070f3]/10 text-[#0070f3] flex items-center justify-center transition-transform group-hover:scale-105">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+        </svg>
+      </div>
+      <h2 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed] mb-1">
+        Select PDF files or drag &amp; drop here
+      </h2>
+      <p class="text-xs text-[#666666] dark:text-[#888888] max-w-sm mx-auto">
+        Select 2 or more PDF documents. Files are processed locally on your device with zero upload latency.
+      </p>
+      <button
+        type="button"
+        id="btn-choose-files"
+        class="mt-4 px-5 py-2 rounded-full bg-[#171717] dark:bg-[#ededed] text-white dark:text-[#171717] text-xs font-medium tracking-tight hover:bg-[#000000] dark:hover:bg-[#ffffff] transition-colors"
+      >
+        Choose PDF Files
+      </button>
+    </div>
+
+    <!-- Active PDF File List Card -->
+    <div id="file-list-card" class="hidden mt-6 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 shadow-2xs">
+      <div class="flex items-center justify-between pb-3 border-b border-[#ebebeb] dark:border-[#262626]">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+            Selected Files (<span id="total-files-count">0</span>)
+          </span>
+          <span class="text-xs text-[#666666] dark:text-[#888888] ml-2 font-mono">
+            Total Pages: <span id="total-pages-count">0</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            id="btn-add-more"
+            class="text-xs text-[#0070f3] hover:underline font-medium"
+          >
+            + Add More
+          </button>
+          <button
+            type="button"
+            id="btn-clear-all"
+            class="text-xs text-rose-500 hover:underline"
+          >
+            Clear All
+          </button>
+        </div>
+      </div>
+
+      <!-- File Items Container -->
+      <div id="pdf-items-container" class="divide-y divide-[#ebebeb] dark:divide-[#262626] my-2">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Bottom Merge Action Bar -->
+      <div class="pt-4 border-t border-[#ebebeb] dark:border-[#262626] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="w-full sm:w-auto flex items-center gap-2">
+          <label class="text-xs font-medium text-[#666666] dark:text-[#888888] whitespace-nowrap">File Name:</label>
+          <input
+            type="text"
+            id="output-filename"
+            value="merged-document.pdf"
+            class="px-3 py-1.5 text-xs rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] text-[#171717] dark:text-[#ededed] w-full sm:w-64"
+          />
+        </div>
+        <button
+          type="button"
+          id="btn-merge-action"
+          class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#0070f3] hover:bg-[#0060df] text-white text-xs font-semibold tracking-tight transition-all shadow-sm flex items-center justify-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+          </svg>
+          <span id="merge-btn-text">Merge &amp; Download PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Instructions & Benefits Section -->
+    <div class="mt-16 border-t border-[#ebebeb] dark:border-[#262626] pt-12 space-y-10">
+      <section>
+        <h2 class="text-xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
+          How to Merge PDF Files Locally
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1]">
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <div class="font-bold text-sm text-[#0070f3] mb-1">01. Select Files</div>
+            <p>Drag and drop multiple PDF files or click the choose files button. Multiple files can be selected simultaneously.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <div class="font-bold text-sm text-[#0070f3] mb-1">02. Arrange Sequence</div>
+            <p>Use the up and down arrow controls to adjust the order. The merged document compiles pages in this exact sequence.</p>
+          </div>
+          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
+            <div class="font-bold text-sm text-[#0070f3] mb-1">03. Merge &amp; Save</div>
+            <p>Click "Merge &amp; Download PDF". The engine merges the page trees instantly in memory and triggers a direct download.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Security Guarantee -->
+      <section class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5 text-xs text-[#171717] dark:text-[#ededed] flex items-start gap-3">
+        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+        <div>
+          <strong class="font-semibold block mb-1">Bank-Grade Privacy &amp; Confidentiality</strong>
+          Financial reports, tax filings, legal contracts, and medical scans are sensitive documents. Unlike standard web converters that upload your PDFs to remote cloud servers, this tool executes 100% inside your local web browser. Your data never leaves your computer.
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import { PDFDocument } from 'pdf-lib';
+
+  interface PdfFileItem {
+    id: string;
+    file: File;
+    name: string;
+    sizeFormatted: string;
+    pages: number;
+    bytes: ArrayBuffer;
+  }
+
+  let pdfItems: PdfFileItem[] = [];
+
+  const dropzone = document.getElementById('pdf-dropzone');
+  const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+  const btnChoose = document.getElementById('btn-choose-files');
+  const btnAddMore = document.getElementById('btn-add-more');
+  const btnClearAll = document.getElementById('btn-clear-all');
+  const fileListCard = document.getElementById('file-list-card');
+  const itemsContainer = document.getElementById('pdf-items-container');
+  const totalFilesCount = document.getElementById('total-files-count');
+  const totalPagesCount = document.getElementById('total-pages-count');
+  const btnMerge = document.getElementById('btn-merge-action');
+  const mergeBtnText = document.getElementById('merge-btn-text');
+  const outputFilenameInput = document.getElementById('output-filename') as HTMLInputElement;
+
+  function formatBytes(bytes: number): string {
+    if (bytes < 1024) return bytes + ' B';
+    const kb = bytes / 1024;
+    if (kb < 1024) return kb.toFixed(1) + ' KB';
+    return (kb / 1024).toFixed(2) + ' MB';
+  }
+
+  btnChoose?.addEventListener('click', () => fileInput?.click());
+  btnAddMore?.addEventListener('click', () => fileInput?.click());
+  dropzone?.addEventListener('click', (e) => {
+    if (e.target !== btnChoose) fileInput?.click();
+  });
+
+  // Drag & drop
+  ['dragenter', 'dragover'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-[#0070f3]', 'bg-[#0070f3]/5');
+    });
+  });
+
+  ['dragleave', 'drop'].forEach((eventName) => {
+    dropzone?.addEventListener(eventName, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-[#0070f3]', 'bg-[#0070f3]/5');
+    });
+  });
+
+  dropzone?.addEventListener('drop', (e: DragEvent) => {
+    if (e.dataTransfer?.files) {
+      handleFiles(Array.from(e.dataTransfer.files));
+    }
+  });
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files) {
+      handleFiles(Array.from(fileInput.files));
+      fileInput.value = '';
+    }
+  });
+
+  async function handleFiles(files: File[]) {
+    const pdfFiles = files.filter(f => f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf'));
+    if (!pdfFiles.length) return;
+
+    for (const f of pdfFiles) {
+      try {
+        const bytes = await f.arrayBuffer();
+        const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        const pages = pdf.getPageCount();
+
+        pdfItems.push({
+          id: Math.random().toString(36).substring(2, 9),
+          file: f,
+          name: f.name,
+          sizeFormatted: formatBytes(f.size),
+          pages,
+          bytes
+        });
+      } catch (err) {
+        console.error('Failed to parse PDF', f.name, err);
+      }
+    }
+
+    renderList();
+  }
+
+  function renderList() {
+    if (!fileListCard || !itemsContainer) return;
+
+    if (pdfItems.length === 0) {
+      fileListCard.classList.add('hidden');
+      return;
+    }
+
+    fileListCard.classList.remove('hidden');
+
+    const totalPages = pdfItems.reduce((acc, curr) => acc + curr.pages, 0);
+    if (totalFilesCount) totalFilesCount.textContent = pdfItems.length.toString();
+    if (totalPagesCount) totalPagesCount.textContent = totalPages.toString();
+
+    itemsContainer.innerHTML = '';
+
+    pdfItems.forEach((item, index) => {
+      const row = document.createElement('div');
+      row.className = 'py-3 flex items-center justify-between gap-3 text-xs';
+
+      const left = document.createElement('div');
+      left.className = 'flex items-center gap-3 overflow-hidden';
+      left.innerHTML = `
+        <span class="w-6 h-6 rounded-full bg-[#fafafa] dark:bg-[#1f1f1f] border border-[#ebebeb] dark:border-[#262626] flex items-center justify-center font-mono text-[11px] text-[#888888]">
+          ${index + 1}
+        </span>
+        <div class="truncate">
+          <div class="font-medium text-[#171717] dark:text-[#ededed] truncate max-w-xs sm:max-w-md">${item.name}</div>
+          <div class="text-[11px] text-[#888888] font-mono">${item.sizeFormatted} &bull; ${item.pages} page${item.pages === 1 ? '' : 's'}</div>
+        </div>
+      `;
+
+      const right = document.createElement('div');
+      right.className = 'flex items-center gap-1.5 shrink-0';
+
+      // Move Up
+      const btnUp = document.createElement('button');
+      btnUp.type = 'button';
+      btnUp.title = 'Move Up';
+      btnUp.disabled = index === 0;
+      btnUp.className = `p-1 rounded hover:bg-[#f0f0f0] dark:hover:bg-[#1a1a1a] transition-colors ${index === 0 ? 'opacity-30 cursor-not-allowed' : 'text-[#666666] dark:text-[#888888]'}`;
+      btnUp.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>`;
+      btnUp.onclick = () => {
+        if (index > 0) {
+          const temp = pdfItems[index - 1];
+          pdfItems[index - 1] = pdfItems[index];
+          pdfItems[index] = temp;
+          renderList();
+        }
+      };
+
+      // Move Down
+      const btnDown = document.createElement('button');
+      btnDown.type = 'button';
+      btnDown.title = 'Move Down';
+      btnDown.disabled = index === pdfItems.length - 1;
+      btnDown.className = `p-1 rounded hover:bg-[#f0f0f0] dark:hover:bg-[#1a1a1a] transition-colors ${index === pdfItems.length - 1 ? 'opacity-30 cursor-not-allowed' : 'text-[#666666] dark:text-[#888888]'}`;
+      btnDown.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>`;
+      btnDown.onclick = () => {
+        if (index < pdfItems.length - 1) {
+          const temp = pdfItems[index + 1];
+          pdfItems[index + 1] = pdfItems[index];
+          pdfItems[index] = temp;
+          renderList();
+        }
+      };
+
+      // Remove
+      const btnRemove = document.createElement('button');
+      btnRemove.type = 'button';
+      btnRemove.title = 'Remove';
+      btnRemove.className = 'p-1 rounded text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors ml-1';
+      btnRemove.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`;
+      btnRemove.onclick = () => {
+        pdfItems.splice(index, 1);
+        renderList();
+      };
+
+      right.appendChild(btnUp);
+      right.appendChild(btnDown);
+      right.appendChild(btnRemove);
+
+      row.appendChild(left);
+      row.appendChild(right);
+      itemsContainer.appendChild(row);
+    });
+  }
+
+  btnClearAll?.addEventListener('click', () => {
+    pdfItems = [];
+    renderList();
+  });
+
+  // Merge Action
+  btnMerge?.addEventListener('click', async () => {
+    if (pdfItems.length < 2) {
+      alert('Please add at least 2 PDF files to merge.');
+      return;
+    }
+
+    if (mergeBtnText) mergeBtnText.textContent = 'Merging pages in browser...';
+    btnMerge.setAttribute('disabled', 'true');
+
+    try {
+      const mergedPdf = await PDFDocument.create();
+
+      for (const item of pdfItems) {
+        const srcPdf = await PDFDocument.load(item.bytes, { ignoreEncryption: true });
+        const indices = srcPdf.getPageIndices();
+        const copiedPages = await mergedPdf.copyPages(srcPdf, indices);
+        copiedPages.forEach((page) => mergedPdf.addPage(page));
+      }
+
+      const mergedBytes = await mergedPdf.save();
+      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+
+      let filename = outputFilenameInput?.value.trim() || 'merged-document.pdf';
+      if (!filename.toLowerCase().endsWith('.pdf')) filename += '.pdf';
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      if (mergeBtnText) mergeBtnText.textContent = 'Merge & Download PDF';
+      btnMerge.removeAttribute('disabled');
+    } catch (err) {
+      console.error('Merge failure:', err);
+      alert('Failed to merge PDFs. Please verify the files are valid and not password protected.');
+      if (mergeBtnText) mergeBtnText.textContent = 'Merge & Download PDF';
+      btnMerge.removeAttribute('disabled');
+    }
+  });
+</script>

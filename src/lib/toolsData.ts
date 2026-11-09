@@ -13,12 +13,12 @@ export interface ToolItem {
 }
 
 export const CATEGORIES = [
-  { id: 'all', label: 'All Tools', count: 25 },
+  { id: 'all', label: 'All Tools', count: 29 },
   { id: 'writing', label: 'Writing & Analysis', count: 7 },
-  { id: 'image', label: 'Image Tools', count: 5 },
+  { id: 'image', label: 'Image & PDF Tools', count: 7 },
   { id: 'cleaning', label: 'Formatting & Cleaning', count: 4 },
-  { id: 'generators', label: 'Text Generators', count: 3 },
-  { id: 'developer', label: 'Developer & Code', count: 2 },
+  { id: 'generators', label: 'Text Generators', count: 4 },
+  { id: 'developer', label: 'Developer & Code', count: 3 },
   { id: 'social', label: 'Social & SEO', count: 4 },
 ] as const;
 
@@ -200,6 +200,19 @@ export const TOOLS_LIST: ToolItem[] = [
     tags: ['fancy text', 'cool fonts', 'instagram fonts', 'unicode', 'cursive', 'gothic', 'small caps'],
     icon: 'wand'
   },
+  {
+    id: 'qr-code-generator',
+    slug: 'qr-code-generator',
+    href: '/qr-code-generator',
+    name: 'Free QR Code Generator',
+    shortDesc: 'Create instant custom QR codes for URLs, Wi-Fi, text, and vCards with SVG and high-res PNG download.',
+    category: 'generators',
+    categoryLabel: 'Text Generators',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['qr code generator', 'wifi qr code', 'custom qr code', 'vector svg qr', 'vcard qr', 'offline qr'],
+    icon: 'code'
+  },
 
   // --- Developer & Code (Priority 1) ---
   {
@@ -213,6 +226,19 @@ export const TOOLS_LIST: ToolItem[] = [
     badge: 'New',
     badgeColor: 'emerald',
     tags: ['json formatter', 'json validator', 'beautify json', 'minify json', 'json lint', 'parse json'],
+    icon: 'code'
+  },
+  {
+    id: 'base64-converter',
+    slug: 'base64-converter',
+    href: '/base64-converter',
+    name: 'Base64 Encoder & Decoder',
+    shortDesc: 'Encode/decode text with full UTF-8 Unicode support and convert images to Base64 data URIs and CSS code.',
+    category: 'developer',
+    categoryLabel: 'Developer & Code',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['base64 encode', 'base64 decode', 'image to base64', 'data uri', 'base64 converter'],
     icon: 'code'
   },
   {
@@ -343,5 +369,31 @@ export const TOOLS_LIST: ToolItem[] = [
     badgeColor: 'emerald',
     tags: ['pdf to jpg', 'convert pdf to image', 'pdf to png', 'extract pages from pdf', 'pdf to jpeg online', 'convert pdf offline'],
     icon: 'image'
+  },
+  {
+    id: 'merge-pdf',
+    slug: 'merge-pdf',
+    href: '/merge-pdf',
+    name: 'Merge PDF Files',
+    shortDesc: 'Combine multiple PDF documents into one single file offline in-browser with drag-and-drop reordering.',
+    category: 'image',
+    categoryLabel: 'Image & PDF Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['merge pdf', 'combine pdf', 'join pdf', 'combine pdf files', 'pdf combiner'],
+    icon: 'document'
+  },
+  {
+    id: 'split-pdf',
+    slug: 'split-pdf',
+    href: '/split-pdf',
+    name: 'Split & Extract PDF Pages',
+    shortDesc: 'Extract custom page ranges or separate individual pages from PDF documents 100% offline in-browser.',
+    category: 'image',
+    categoryLabel: 'Image & PDF Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['split pdf', 'extract pdf pages', 'separate pdf', 'cut pdf pages'],
+    icon: 'document'
   }
 ];
