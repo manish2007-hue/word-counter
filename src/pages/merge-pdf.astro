@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Merge PDF Online Free – Combine Multiple PDF Files In Browser";
 const pageDescription = "Combine multiple PDF documents into one single file online for free. Reorder pages, check page counts, and merge securely in your browser with zero file upload. 100% private client-side.";
@@ -155,39 +156,14 @@ const schema = {
       </div>
     </div>
 
-    <!-- Instructions & Benefits Section -->
-    <div class="mt-16 border-t border-[#ebebeb] dark:border-[#262626] pt-12 space-y-10">
-      <section>
-        <h2 class="text-xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
-          How to Merge PDF Files Locally
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1]">
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <div class="font-bold text-sm text-[#0070f3] mb-1">01. Select Files</div>
-            <p>Drag and drop multiple PDF files or click the choose files button. Multiple files can be selected simultaneously.</p>
-          </div>
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <div class="font-bold text-sm text-[#0070f3] mb-1">02. Arrange Sequence</div>
-            <p>Use the up and down arrow controls to adjust the order. The merged document compiles pages in this exact sequence.</p>
-          </div>
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <div class="font-bold text-sm text-[#0070f3] mb-1">03. Merge &amp; Save</div>
-            <p>Click "Merge &amp; Download PDF". The engine merges the page trees instantly in memory and triggers a direct download.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Security Guarantee -->
-      <section class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-5 text-xs text-[#171717] dark:text-[#ededed] flex items-start gap-3">
-        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-        </svg>
-        <div>
-          <strong class="font-semibold block mb-1">Bank-Grade Privacy &amp; Confidentiality</strong>
-          Financial reports, tax filings, legal contracts, and medical scans are sensitive documents. Unlike standard web converters that upload your PDFs to remote cloud servers, this tool executes 100% inside your local web browser. Your data never leaves your computer.
-        </div>
-      </section>
-    </div>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="PDF Merger & Combiner"
+      category="image"
+      currentToolId="merge-pdf"
+      guidelinesHeading="Understanding PDF Merging Guidelines & Document Verification"
+      guidelinesIntro="Many application portals, educational admissions boards, and legal systems require multi-semester marksheets, identity records, and supporting certificates to be consolidated into a single unified PDF file. Our in-browser PDF Merger allows you to drag & drop multiple files, reorder pages, and assemble a clean PDF document with 100% client-side privacy."
+    />
   </main>
 </Layout>
 

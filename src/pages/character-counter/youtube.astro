@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "YouTube Character Counter – Title (100) & Description (5,000) Limit";
 const pageDescription = "Check your YouTube video title (100 char limit), description (5,000 char ceiling), and search tags (500 chars). Free YouTube SEO character counter.";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" initialTarget={100} showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="YouTube Video Title & Description Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding YouTube Title Cutoffs & Description Snippets"
+      guidelinesIntro="YouTube allows 100 characters in titles and 5,000 characters in descriptions. However, mobile search results truncate titles after 70 characters and descriptions after 157 characters. Keeping primary keywords in the visible front portion ensures high click-through rates from search results and recommendation sidebars."
+    />
+  </div>
 </Layout>

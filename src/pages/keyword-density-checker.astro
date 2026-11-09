@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Keyword Density Checker – Free SEO Phrase Frequency Tool";
 const pageDescription = "Analyze 1, 2, and 3-word keyword density in real time. Filter stop words, avoid keyword stuffing penalties, and optimize content for search rankings. Try free!";
@@ -90,4 +91,61 @@ const faqSchema = {
 
     </div>
   </section>
+
+  <ToolAuthoritySection
+    toolName="Keyword Density & N-Gram Checker"
+    category="social"
+    currentToolId="keyword-density-checker"
+    compatibilityList={["Google Search Console", "Bing Webmaster Tools", "Yoast SEO", "Rank Math", "Ahrefs & Semrush", "SurferSEO Standards", "WordPress CMS", "Medium & Substack"]}
+    guidelinesHeading="Search Engine Topical Density & Entity Guidelines"
+    guidelinesIntro="Modern search engines reward topical depth while penalizing unnatural repetition. Balancing 1-word, 2-word, and 3-word n-gram frequencies ensures authoritative ranking without triggering spam algorithms."
+    steps={[
+      { step: "01", title: "Paste Article or Copy", desc: "Input your draft blog post, product description, or landing page copy into the editor." },
+      { step: "02", title: "Filter Stop Words & N-Grams", desc: "Toggle common grammatical stop words and examine 1-word, 2-word, and 3-word keyword tables." },
+      { step: "03", title: "Balance Frequency Ratios", desc: "Adjust high-frequency phrases so primary keywords land between the recommended 1% to 2.5% density range." }
+    ]}
+    specsHeading="SEO Keyword Density Frequency Benchmarks"
+    specsRows={[
+      ["Single Keywords (1-Gram)", "1.0% to 2.5%", "Core topical anchor nouns and subject entities"],
+      ["Two-Word Phrases (2-Gram)", "0.5% to 1.5%", "High-intent long-tail modifiers (e.g. 'best tool')"],
+      ["Three-Word Phrases (3-Gram)", "0.3% to 0.8%", "Specific search queries and conversational questions"],
+      ["Keyword Stuffing Penalty Threshold", "> 3.5%", "Over-optimization risk triggering algorithmic dampening"]
+    ]}
+    commonErrors={[
+      {
+        title: "Keyword Stuffing Penalty Flag",
+        cause: "Repeating target keyword phrases artificially in headings and footer copy exceeding 3.5%.",
+        fix: "Use semantic synonyms, LSI keywords, and varied pronoun structures."
+      },
+      {
+        title: "Unfiltered Grammatical Stop Words",
+        cause: "Words like 'the', 'is', 'at' skewing top frequency charts.",
+        fix: "Enable our one-click stop word filter to surface meaningful topical terms."
+      },
+      {
+        title: "Neglecting Long-Tail N-Gram Variants",
+        cause: "Focusing solely on 1-word terms while ignoring natural 2-word and 3-word search intents.",
+        fix: "Check the 2-word and 3-word frequency tables to discover organic phrase clusters."
+      }
+    ]}
+    faqs={[
+      {
+        q: "What is an ideal keyword density percentage for SEO?",
+        a: "Between 1% and 2.5% is widely considered the sweet spot for main target keywords. Exceeding 3% can trigger spam penalties, while falling below 0.5% might prevent search engines from identifying your main focus."
+      },
+      {
+        q: "What are stop words?",
+        a: "Stop words are auxiliary linguistic words like 'and', 'the', 'of', 'in', and 'to'. Filtering them reveals the actual substantive vocabulary that defines your subject matter."
+      },
+      {
+        q: "What is an N-gram in SEO?",
+        a: "An N-gram is a continuous sequence of N words. A 1-gram is a single keyword ('counter'), a 2-gram is a 2-word phrase ('word counter'), and a 3-gram is a 3-word phrase ('free online word counter')."
+      },
+      {
+        q: "Is my content kept private?",
+        a: "Yes. All frequency calculations and n-gram parses are computed entirely client-side in your web browser. Nothing is logged or saved."
+      }
+    ]}
+    disclaimerText="Optimal keyword densities serve as guidelines for editorial balance. Modern semantic search engines place higher emphasis on topical relevance, entity coverage, and reader intent satisfaction than rigid percentage metrics."
+  />
 </Layout>

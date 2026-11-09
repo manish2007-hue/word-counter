@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Image to PDF Converter – Convert JPG, PNG to PDF 100% Free & Private";
 const pageDescription = "Convert images (JPG, PNG, WebP) to clean single or multi-page PDF documents in your browser. A4, US Letter, and Fit-to-Page options with zero server uploads.";
@@ -174,28 +175,14 @@ const schema = {
       </div>
     </div>
 
-    <!-- SEO Informational Article -->
-    <article class="mt-16 mx-auto max-w-4xl space-y-10">
-      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
-          Why Use In-Browser Image to PDF?
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Zero Server Uploads</h3>
-            <p>Most commercial converters upload your files to remote cloud servers to process with ghostscript. CleanWordCounter synthesizes raw PDF binary structures entirely inside browser WebAssembly/JS.</p>
-          </div>
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Multi-Page Merging</h3>
-            <p>Combine multiple receipt photos, certificates, or ID cards into a single cohesive document with custom page orientations and margins.</p>
-          </div>
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Government &amp; Exam Ready</h3>
-            <p>Meets strict PDF guidelines for US Visa applications, Schengen portals, university assignments, and UPSC/SSC document uploads.</p>
-          </div>
-        </div>
-      </section>
-    </article>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="Image to PDF Converter"
+      category="image"
+      currentToolId="image-to-pdf"
+      guidelinesHeading="Understanding Image to PDF Standards & Guidelines"
+      guidelinesIntro="Submitting educational certificates, marksheet scans, or identity proofs often requires converting JPG or PNG photos into standard ISO-compliant PDF documents. Our zero-server in-browser synthesizer creates standard PDF 1.4 documents with custom page geometry (A4, US Letter, Fit to Image) and margin padding without cloud compute latency."
+    />
   </main>
 </Layout>
 

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Words to Pages Calculator – Custom Spacing & Fonts";
 const pageDescription = "Calculate exact typed pages from word count. Customize fonts (Times, Arial, Calibri), font sizes, and single or double spacing in real time. 100% free!";
@@ -384,6 +385,15 @@ const schema = {
         </div>
       </div>
     </div>
+
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="Words to Pages Calculator"
+      category="writing"
+      currentToolId="words-to-pages"
+      guidelinesHeading="Understanding Typographic Page Density & Academic Spacing Rules"
+      guidelinesIntro="A standard single-spaced page in 12pt Times New Roman contains approximately 500 words, whereas a double-spaced page (the required format for APA, MLA, and Chicago college papers) yields roughly 250 words per page. Margin widths (1-inch standard vs 0.5-inch compact) and font choice (monospaced Courier vs proportional Calibri) alter total page counts by up to 40%."
+    />
   </div>
 
   <script>

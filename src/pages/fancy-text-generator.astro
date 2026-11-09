@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Fancy Text Generator – 30+ Cool & Stylish Fonts (Copy & Paste)";
 const pageDescription = "Convert normal text into 30+ stylish Unicode fonts: Bold, Gothic, Cursive, Bubbles, Small Caps & Aesthetics. Perfect for Instagram, TikTok, Twitter & Discord bios. 100% free!";
@@ -108,33 +109,16 @@ const schema = {
     </div>
   </div>
 
-  <!-- SEO / Guide Section -->
-  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
-      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
-          Where to Use Fancy Unicode Fonts
-        </h2>
-        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
-          Standard social media platforms restrict caption typography to a single default system typeface. By converting standard alphanumeric characters into mathematical symbols and enclosed glyphs, you can stand out with bold headers, cursive nicknames, and gothic banners across:
-        </p>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
-            📸 Instagram Bios
-          </div>
-          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
-            🐦 Twitter / X Posts
-          </div>
-          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
-            💬 Discord Usernames
-          </div>
-          <div class="p-3 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#080809] text-center font-medium">
-            🎵 TikTok Captions
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <ToolAuthoritySection
+      toolName="Fancy Text Generator"
+      category="generators"
+      currentToolId="fancy-text-generator"
+      guidelinesHeading="Understanding Unicode Glyphs & Social Media Typography Standards"
+      guidelinesIntro="Standard social media platforms restrict caption typography to a single default system typeface. By converting standard alphanumeric characters into mathematical alphanumeric symbols and enclosed glyphs, you can stand out with bold headers, cursive nicknames, and gothic banners across Instagram, TikTok, Twitter/X, and Discord."
+    />
+  </div>
 
   <!-- Script for Unicode Font Conversions -->
   <script is:inline>

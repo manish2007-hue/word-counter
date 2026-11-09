@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Resize Image in CM, MM, Inches & Pixels – Passport Photo Resizer";
 const pageDescription = "Free online image resizer in cm, mm, inches and pixels. Preset sizes for passport photos (3.5x4.5cm), US Visa (2x2 in), SSC/UPSC, and social media with 300 DPI support. 100% private.";
@@ -211,58 +212,14 @@ const presets = [
       </div>
     </div>
 
-    <!-- Reference Presets Guide -->
-    <article class="mt-16 mx-auto max-w-4xl space-y-10">
-      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
-          Standard Photo Dimensions Reference Guide
-        </h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead class="border-b border-[#ebebeb] dark:border-[#262626] font-mono text-[#888888] uppercase">
-              <tr>
-                <th class="py-2.5 pr-4">Purpose / Document</th>
-                <th class="py-2.5 px-4">Physical Size</th>
-                <th class="py-2.5 px-4">Standard DPI</th>
-                <th class="py-2.5 pl-4">Calculated Pixels</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[#ebebeb] dark:divide-[#262626] text-[#4d4d4d] dark:text-[#a1a1a1]">
-              <tr>
-                <td class="py-3 pr-4 font-medium text-[#171717] dark:text-[#ededed]">Standard Passport Photo (India, Schengen, UK)</td>
-                <td class="py-3 px-4 font-mono">3.5 × 4.5 cm (35 × 45 mm)</td>
-                <td class="py-3 px-4 font-mono">300 DPI</td>
-                <td class="py-3 pl-4 font-mono font-semibold text-[#0070f3]">413 × 531 px</td>
-              </tr>
-              <tr>
-                <td class="py-3 pr-4 font-medium text-[#171717] dark:text-[#ededed]">US Visa / Passport (DS-160)</td>
-                <td class="py-3 px-4 font-mono">2 × 2 inches (51 × 51 mm)</td>
-                <td class="py-3 px-4 font-mono">300 DPI</td>
-                <td class="py-3 pl-4 font-mono font-semibold text-[#0070f3]">600 × 600 px</td>
-              </tr>
-              <tr>
-                <td class="py-3 pr-4 font-medium text-[#171717] dark:text-[#ededed]">PAN Card / Driving License</td>
-                <td class="py-3 px-4 font-mono">2.5 × 3.5 cm (25 × 35 mm)</td>
-                <td class="py-3 px-4 font-mono">300 DPI</td>
-                <td class="py-3 pl-4 font-mono font-semibold text-[#0070f3]">295 × 413 px</td>
-              </tr>
-              <tr>
-                <td class="py-3 pr-4 font-medium text-[#171717] dark:text-[#ededed]">UPSC / SSC Examination Photo</td>
-                <td class="py-3 px-4 font-mono">Pixel specification</td>
-                <td class="py-3 px-4 font-mono">72-150 DPI</td>
-                <td class="py-3 pl-4 font-mono font-semibold text-[#0070f3]">200 × 230 px</td>
-              </tr>
-              <tr>
-                <td class="py-3 pr-4 font-medium text-[#171717] dark:text-[#ededed]">UPSC / SSC Signature Upload</td>
-                <td class="py-3 px-4 font-mono">Pixel specification</td>
-                <td class="py-3 px-4 font-mono">72-150 DPI</td>
-                <td class="py-3 pl-4 font-mono font-semibold text-[#0070f3]">140 × 60 px</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </article>
+    <!-- Reference Presets Guide, Matrix & Authority Sections -->
+    <ToolAuthoritySection
+      toolName="Passport Photo & Dimension Resizer"
+      category="image"
+      currentToolId="resize-image"
+      guidelinesHeading="Understanding Passport & Exam Photo Sizing Guidelines"
+      guidelinesIntro="Official government identity portals require photographs and signatures to match precise geometric dimensions and aspect ratios. Our in-browser resizer converts physical dimensions (cm, mm, inches) into exact digital pixels with print-grade 300 DPI support."
+    />
   </main>
 </Layout>
 

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Text Repeater Online – Repeat Words & Messages 10,000 Times";
 const pageDescription = "Repeat any text, phrase, or emoji up to 10,000 times with custom separators (newline, space, comma) and numbering. Free, instant, and 100% private in-browser.";
@@ -207,36 +208,16 @@ const schema = {
     </div>
   </div>
 
-  <!-- SEO & Guide Section -->
-  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
-      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
-          Common Use Cases for Text Repeaters
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Social &amp; Messaging</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              Generate fun repetitive messages, emoji banners, or reaction chains for WhatsApp, Discord, TikTok, and Instagram chats.
-            </p>
-          </div>
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Software &amp; QA Testing</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              Stress-test form input fields, database text columns, buffer overflows, and UI layout wrapping with massive string payloads.
-            </p>
-          </div>
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Design &amp; Typography</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              Fill wireframe blocks, create patterned graphic borders, or test multi-line text rendering without tedious copy-pasting.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <ToolAuthoritySection
+      toolName="Text Repeater Tool"
+      category="generators"
+      currentToolId="text-repeater"
+      guidelinesHeading="Understanding High-Volume String Replication & QA Test Generation"
+      guidelinesIntro="Replicating words, phrases, or symbols up to 10,000 times is widely used for software QA testing, input boundary stress-testing, social messaging formatting, and creative design pattern generation. Our tool runs in local browser memory with line numbering, custom separators, and instant clipboard export."
+    />
+  </div>
 
   <!-- Interactive Script -->
   <script is:inline>

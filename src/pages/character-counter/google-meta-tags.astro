@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Google SERP Snippet Preview – Title & Meta Tag Counter";
 const pageDescription = "Simulate Google search snippets in real time. Count title characters (60) and meta description pixels (160) to stop truncation and boost search CTR. Try free!";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="Google Meta Tag Character Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding Google Pixel Truncation & SERP Snippet Optimization"
+      guidelinesIntro="Google truncates page titles past 600 pixels (roughly 60 characters) and meta descriptions past 960 pixels (roughly 155 to 160 characters). Pre-testing your metadata prevents ellipsis truncation in organic search listings and maximizes organic search CTR."
+    />
+  </div>
 </Layout>

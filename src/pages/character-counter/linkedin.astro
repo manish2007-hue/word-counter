@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "LinkedIn Character Counter – Live Post & Hook Limit Check";
 const pageDescription = "Check LinkedIn character counts and preview your 140-character 'see more' hook cutoff in real time. Optimize engagement before posting. 100% free & instant!";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="LinkedIn Post Character Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding LinkedIn 3,000 Limits & '...see more' Click Triggers"
+      guidelinesIntro="LinkedIn posts can contain up to 3,000 characters, but only the initial 140 to 210 characters appear above the fold on mobile and desktop feeds. Crafting a compelling opening hook ensures professionals click '...see more' to expand your full commentary."
+    />
+  </div>
 </Layout>

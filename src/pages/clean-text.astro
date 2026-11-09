@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Clean Text Online – Remove Spaces, Breaks & Duplicates";
 const pageDescription = "Instantly clean messy text: remove duplicate lines, strip extra spaces, delete empty breaks & fix formatting in 1 click. 100% private in-browser tool!";
@@ -215,54 +216,14 @@ const schema = {
 
     </div>
 
-    <!-- Educational & SEO Guide Section -->
-    <div class="mt-12 space-y-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-          <div class="font-mono text-xs uppercase text-[#0070f3] mb-2 font-semibold">1. PDF Line Break Repair</div>
-          <p class="text-xs text-[#8f8f8f] leading-relaxed">
-            PDF text columns often wrap lines with hard line breaks at 60–80 characters. Our Join Lines algorithm stitches fragmented paragraphs back together without stripping legitimate punctuation.
-          </p>
-        </div>
-        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-          <div class="font-mono text-xs uppercase text-emerald-600 dark:text-emerald-400 mb-2 font-semibold">2. Redundant Spaces &amp; Tabs</div>
-          <p class="text-xs text-[#8f8f8f] leading-relaxed">
-            Collapses multiple spaces, tabs, and non-breaking Unicode spaces into single typographic spaces, ensuring clean formatting for essays, blog publishing, and databases.
-          </p>
-        </div>
-        <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-          <div class="font-mono text-xs uppercase text-purple-600 dark:text-purple-400 mb-2 font-semibold">3. Duplicate Row Purging</div>
-          <p class="text-xs text-[#8f8f8f] leading-relaxed">
-            Eliminates repeated lines and list items instantly. Perfect for cleaning email lists, keyword databases, reference citations, and code manifests with zero data leakage.
-          </p>
-        </div>
-      </div>
-
-      <!-- FAQ Section -->
-      <div class="p-6 rounded-[12px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-        <h3 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-white mb-4">Frequently Asked Questions</h3>
-        <div class="space-y-4 text-xs sm:text-sm">
-          <div>
-            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">Why does text copied from PDF files contain bad line breaks?</h4>
-            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
-              PDFs store text by absolute coordinate positioning rather than continuous paragraphs. When copied, PDF viewers insert hard carriage returns at the end of every line column. Clean Text Tool detects and joins these lines in milliseconds.
-            </p>
-          </div>
-          <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-4">
-            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">Are my documents uploaded to a remote server?</h4>
-            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
-              No. CleanWordCounter processes all strings locally inside your browser's WebAssembly and JavaScript engine. Your drafts, legal texts, and private notes never touch the cloud.
-            </p>
-          </div>
-          <div class="border-t border-[#ebebeb] dark:border-[#222222] pt-4">
-            <h4 class="font-semibold text-[#171717] dark:text-[#ededed]">How do I remove empty blank paragraphs?</h4>
-            <p class="text-[#8f8f8f] mt-1 leading-relaxed">
-              Click the "Delete Blank Lines" button. The tool filters out lines that contain only whitespace or empty carriage returns, leaving only content-bearing text.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="Clean Text & Formatting Utility"
+      category="cleaning"
+      currentToolId="clean-text"
+      guidelinesHeading="Understanding Typographic Cleaning & String Sanitization"
+      guidelinesIntro="PDF files, OCR scans, and CMS editors frequently introduce hard line wraps, trailing whitespace, curly quotes, and duplicated rows. Clean Text normalizes strings into clean, publish-ready paragraphs with zero server latency."
+    />
   </div>
 
   <script>

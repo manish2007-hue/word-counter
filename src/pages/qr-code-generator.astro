@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Free QR Code Generator Online – Custom Colors, SVG & PNG HD";
 const pageDescription = "Generate free custom QR codes online in seconds. Support for URLs, Wi-Fi passwords, plain text, vCards, emails, and SMS. Customize colors, error correction, and download in vector SVG or high-resolution PNG. 100% private in-browser.";
@@ -392,59 +393,14 @@ const schema = {
       </div>
     </div>
 
-    <!-- Educational & Explanatory SEO Content -->
-    <div class="mt-16 max-w-4xl mx-auto border-t border-[#ebebeb] dark:border-[#262626] pt-12 space-y-12">
-      <section>
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
-          Why Use In-Browser Client-Side QR Codes?
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
-              <span class="text-[#0070f3]">&bull;</span> Zero Third-Party Tracking
-            </h3>
-            <p>Unlike commercial redirect QR generators that intercept scans through an advertising gateway, these QR codes contain the raw destination payload directly.</p>
-          </div>
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
-              <span class="text-[#0070f3]">&bull;</span> Permanent &amp; Never Expire
-            </h3>
-            <p>Because there is no redirect server, your QR codes will continue working 10 or 20 years into the future as long as the destination URL or Wi-Fi remains valid.</p>
-          </div>
-          <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a]">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-2 flex items-center gap-1.5">
-              <span class="text-[#0070f3]">&bull;</span> Print-Ready Vector SVG
-            </h3>
-            <p>Export directly to mathematical SVG vectors for billboard printing, business cards, merchandise, and packaging with infinitely sharp edges.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Frequently Asked Questions -->
-      <section>
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-4">
-          Frequently Asked Questions
-        </h2>
-        <div class="space-y-4 text-xs">
-          <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-1">
-              How does the Wi-Fi QR Code connect guests automatically?
-            </h3>
-            <p class="text-[#666666] dark:text-[#888888] leading-relaxed">
-              When a smartphone camera (iOS or Android) scans a standard <code>WIFI:S:...</code> payload, the operating system natively prompts: "Join network [SSID]?". The guest taps Connect without having to manually type long alphanumeric keys.
-            </p>
-          </div>
-          <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed] mb-1">
-              Can I customize the color while maintaining scannability?
-            </h3>
-            <p class="text-[#666666] dark:text-[#888888] leading-relaxed">
-              Yes, provided there is strong contrast between the dark foreground modules and light background. Avoid light yellow or pale gray on white, as optical camera sensors require luminance contrast to detect module boundaries.
-            </p>
-          </div>
-        </div>
-      </section>
-    </div>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="QR Code Generator & Vector Designer"
+      category="generators"
+      currentToolId="qr-code-generator"
+      guidelinesHeading="Understanding Static QR Code Encoding Standards & Best Practices"
+      guidelinesIntro="Unlike commercial QR generators that lock destinations behind paid redirect proxies, our in-browser generator compiles data payloads (URLs, Wi-Fi keys, vCards, SMS) directly into standard ISO/IEC 18004 matrices. Your QR codes are 100% static, permanent, and never expire."
+    />
   </main>
 </Layout>
 

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Hashtag Generator & Extractor – Free Instagram, TikTok & X Tags";
 const pageDescription = "Generate viral hashtags for Instagram, TikTok & Twitter by keyword, or extract and clean hashtags from existing captions. Includes Instagram 30-tag limit checker. 100% free!";
@@ -196,39 +197,16 @@ const schema = {
     </div>
   </div>
 
-  <!-- Guide Section -->
-  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
-      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
-          The 3-Tier Hashtag Formula for Social Growth
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 1 (30%)</div>
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Broad Industry Tags</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              High-volume tags like #tech, #fitness, or #marketing that categorize your post into the overarching algorithm feed.
-            </p>
-          </div>
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 2 (50%)</div>
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Niche Specific Tags</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              Targeted tags with 50K–500K posts (e.g. #saasbuilder, #reactdeveloper) where your post can easily rank on Explore feeds.
-            </p>
-          </div>
-          <div class="p-4 rounded-lg border border-[#e2e4e8] dark:border-[#23252a] bg-[#fafafa] dark:bg-[#0a0a0a]">
-            <div class="text-xs font-mono text-[#0070f3] font-semibold mb-1">TIER 3 (20%)</div>
-            <h3 class="text-sm font-semibold text-[#171717] dark:text-white mb-1.5">Community &amp; Brand Tags</h3>
-            <p class="text-xs text-[#62666d] dark:text-[#8a8f98] leading-relaxed">
-              Micro tags like #indiehackers or custom branded campaign tags to build loyalty and connect with core audiences.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <ToolAuthoritySection
+      toolName="Hashtag Generator & Extractor"
+      category="social"
+      currentToolId="hashtag-generator"
+      guidelinesHeading="Understanding 3-Tier Hashtag Formulas & Algorithm Discoverability"
+      guidelinesIntro="Social algorithms (Instagram, TikTok, LinkedIn, Twitter/X) categorize content into recommendation feeds using hashtags and keyword entity extraction. Our generator pairs high-volume industry tags with targeted community tags to optimize reach without triggering automated spam downranking."
+    />
+  </div>
 
   <!-- Interactive Script -->
   <script is:inline>

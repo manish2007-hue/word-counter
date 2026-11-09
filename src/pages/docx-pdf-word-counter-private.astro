@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Count Words in PDF & DOCX – 100% Private & No Uploads";
 const pageDescription = "Count words in PDF & Word (.docx) files without uploading to a server. 100% in-browser processing guarantees total privacy for NDAs, legal & academic docs!";
@@ -89,4 +90,61 @@ const schema = {
       </div>
     </div>
   </section>
+
+  <ToolAuthoritySection
+    toolName="Private PDF & DOCX Word Counter"
+    category="writing"
+    currentToolId="docx-pdf-word-counter-private"
+    compatibilityList={["Adobe PDF (.pdf)", "Microsoft Word (.docx)", "Plain Text (.txt)", "Markdown (.md)", "Rich Text (.rtf)", "Google Docs Exports", "HIPAA Compliant", "NDA Safe"]}
+    guidelinesHeading="Zero-Knowledge Client-Side Document Analysis"
+    guidelinesIntro="Confidential manuscripts, legal contracts, and medical briefs require strict data privacy. Our parser runs entirely in your device's memory without cloud transmission."
+    steps={[
+      { step: "01", title: "Drop or Select Document", desc: "Drag any PDF or DOCX file directly into the editor viewport or click the upload icon." },
+      { step: "02", title: "In-Memory Parsing", desc: "Browser-native WebAssembly and PDF.js parse text streams locally without uploading a single byte." },
+      { step: "03", title: "Instant Metric Breakdown", desc: "View total words, character count with/without spaces, estimated pages, and reading duration." }
+    ]}
+    specsHeading="Document Format & Parser Specifications"
+    specsRows={[
+      ["Adobe PDF (.pdf)", "pdfjs-dist in-memory text extraction", "No file size limit (RAM dependent)"],
+      ["Microsoft Word (.docx)", "XML zip stream decompression", "Formatted text, tables, and lists"],
+      ["Plain Text / Markdown (.txt, .md)", "Direct UTF-8 stream reader", "Code snippets and raw markup"],
+      ["Privacy & Network Sandbox", "Zero outbound HTTP/WebSocket requests", "100% Offline compatible"]
+    ]}
+    commonErrors={[
+      {
+        title: "Scanned Image PDF (Zero Selectable Text)",
+        cause: "PDF contains pure raster bitmap scans rather than selectable vector text.",
+        fix: "Run local OCR on the document prior to text counting."
+      },
+      {
+        title: "Password-Protected PDF or Encrypted DOCX",
+        cause: "Document has user encryption keys blocking client-side reading.",
+        fix: "Remove the encryption password before parsing in browser."
+      },
+      {
+        title: "Complex Multi-Column Header/Footer Duplication",
+        cause: "Repeated page headers and footers counted on every page.",
+        fix: "Inspect extracted text in the editor and trim unwanted recurring margins."
+      }
+    ]}
+    faqs={[
+      {
+        q: "Are my PDF or DOCX files uploaded to external servers?",
+        a: "No. CleanWordCounter uses in-memory WebAssembly and client-side JavaScript parsers. Your files are decoded directly in your device's RAM and never leave your web browser."
+      },
+      {
+        q: "Is CleanWordCounter compliant with NDAs, HIPAA, and confidentiality agreements?",
+        a: "Yes. Because there is zero data transmission over the network, using CleanWordCounter preserves full confidentiality for legal contracts, medical transcripts, manuscripts, and proprietary code."
+      },
+      {
+        q: "Which file formats can I count words in?",
+        a: "You can drag and drop or upload PDF (.pdf), Microsoft Word (.docx), Plain Text (.txt), Markdown (.md), and Rich Text (.rtf) files."
+      },
+      {
+        q: "Does this tool work completely offline?",
+        a: "Yes! Once this web page loads, you can turn off Wi-Fi or disconnect from the internet and parse documents entirely offline."
+      }
+    ]}
+    disclaimerText="All file parsing executes client-side using JavaScript/WebAssembly. Scanned image documents without an embedded text layer require OCR prior to analysis."
+  />
 </Layout>

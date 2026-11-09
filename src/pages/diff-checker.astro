@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Private Text Diff Checker – Compare 2 Texts Side-by-Side";
 const pageDescription = "Compare two texts or code snippets side-by-side with instant red/green diff highlights. 100% client-side privacy: zero uploads, safe for sensitive drafts!";
@@ -200,27 +201,14 @@ const schema = {
       </div>
     </div>
 
-    <!-- Trust & FAQ Info -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-        <h4 class="font-semibold text-xs text-[#0070f3] uppercase font-mono mb-2">100% Client-Side Privacy</h4>
-        <p class="text-xs text-[#8f8f8f] leading-relaxed">
-          Zero data transmission. All string comparisons run locally in memory. Completely safe for legal agreements, confidential contracts, and medical transcripts.
-        </p>
-      </div>
-      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-        <h4 class="font-semibold text-xs text-emerald-600 dark:text-emerald-400 uppercase font-mono mb-2">Word &amp; Character Granularity</h4>
-        <p class="text-xs text-[#8f8f8f] leading-relaxed">
-          Our Myers longest common subsequence (LCS) engine spots exact modified words and punctuation changes rather than just highlighting full lines blindly.
-        </p>
-      </div>
-      <div class="p-5 rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-white dark:bg-[#0a0a0a]">
-        <h4 class="font-semibold text-xs text-purple-600 dark:text-purple-400 uppercase font-mono mb-2">Contract &amp; Revision Audits</h4>
-        <p class="text-xs text-[#8f8f8f] leading-relaxed">
-          Quickly catch sneaky clause changes, redlines, pricing edits, and sneaky wording shifts between two versions of any document.
-        </p>
-      </div>
-    </div>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="Private Text & Code Diff Checker"
+      category="developer"
+      currentToolId="diff-checker"
+      guidelinesHeading="Understanding Character & Word Granularity in Text Comparison"
+      guidelinesIntro="Comparing revisions of sensitive legal agreements, code blocks, or editorial drafts requires word-level and character-level granularity without transmitting proprietary paragraphs to external servers. Our Myers longest common subsequence engine renders red/green visual comparisons 100% in your local browser."
+    />
   </div>
 
   <script>

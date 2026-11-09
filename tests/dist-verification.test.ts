@@ -38,11 +38,16 @@ checkDistFile('qr-code-generator/index.html', ['QR Code Generator', 'Wi-Fi', 'vC
 checkDistFile('base64-converter/index.html', ['Base64', 'Encoder &amp; Decoder', 'Plain Text Input', 'Image to Base64']);
 
 // 3. Priority 1 Tools
-checkDistFile('lorem-ipsum-generator/index.html', ['Lorem Ipsum', 'Generator']);
-checkDistFile('text-repeater/index.html', ['Text Repeater']);
-checkDistFile('fancy-text-generator/index.html', ['Fancy Text']);
-checkDistFile('json-formatter/index.html', ['JSON Formatter']);
-checkDistFile('hashtag-generator/index.html', ['Hashtag']);
+checkDistFile('lorem-ipsum-generator/index.html', ['Lorem Ipsum', 'Generator', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('text-repeater/index.html', ['Text Repeater', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('fancy-text-generator/index.html', ['Fancy Text', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('json-formatter/index.html', ['JSON Formatter', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('hashtag-generator/index.html', ['Hashtag', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('ai-token-counter/index.html', ['AI Token Counter', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('case-converter/index.html', ['Case Converter', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('docx-pdf-word-counter-private/index.html', ['Private PDF &amp; DOCX Word Counter', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('website-word-counter/index.html', ['Website Word Counter', 'Frequently Asked Questions', 'You want to see more']);
+checkDistFile('readability-checker/index.html', ['Readability Score Checker', 'Frequently Asked Questions', 'You want to see more']);
 
 // 4. Social Media Character Counters
 checkDistFile('character-counter/instagram/index.html', ['Instagram', 'Character Counter', '2,200', '30 Hashtags']);

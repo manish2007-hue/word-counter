@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Base64 Encoder & Decoder – Text and Image to Base64 Online";
 const pageDescription = "Free online Base64 encoder and decoder for text and images. Convert images to Base64 data URIs, HTML img tags, and CSS backgrounds. Full UTF-8 Unicode support with 100% private in-browser conversion.";
@@ -236,6 +237,15 @@ const schema = {
         </div>
       </div>
     </div>
+
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="Base64 Encoder & Decoder"
+      category="developer"
+      currentToolId="base64-converter"
+      guidelinesHeading="Understanding Base64 Encoding & Data URI Architecture"
+      guidelinesIntro="Base64 converts binary streams into ASCII strings using a 64-character alphabet. It is extensively used to embed images directly into HTML/CSS without external HTTP network requests and to transport binary payloads across REST APIs. Our tool uses standard Web APIs to handle full UTF-8 Unicode characters without encoding crashes."
+    />
   </main>
 </Layout>
 

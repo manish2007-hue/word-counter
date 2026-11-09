@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 export function getStaticPaths() {
   const counts = [
@@ -401,4 +402,15 @@ const schema = {
       </div>
     </div>
   </section>
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName={`How Many Pages is ${words.toLocaleString()} Words?`}
+      category="writing"
+      currentToolId="words-to-pages"
+      guidelinesHeading={`Understanding ${words.toLocaleString()} Words in Academic & Professional Writing`}
+      guidelinesIntro={`In standard academic formatting (12pt Times New Roman, double-spaced with 1-inch margins), ${words.toLocaleString()} words corresponds to ${doubleSpaced} pages (or ${singleSpaced} pages single-spaced). Knowing exact page equivalents allows you to plan section breaks, paragraph structures, and oral speaking tempos.`}
+    />
+  </div>
 </Layout>

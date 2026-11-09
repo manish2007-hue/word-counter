@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Lorem Ipsum Generator – Free Online Dummy Text Tool";
 const pageDescription = "Generate customizable Lorem Ipsum placeholder text by paragraphs, sentences, words, or lists. Includes HTML tag formatting and 1-click copy. 100% free!";
@@ -177,22 +178,16 @@ const schema = {
     </div>
   </div>
 
-  <!-- Educational & SEO Guide -->
-  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
-      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
-          Why Lorem Ipsum Remains Essential in Modern Product Design
-        </h2>
-        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
-          The primary purpose of dummy text is to create a natural typographic texture. When product managers, software engineers, and client stakeholders review prototypes filled with intelligible English, they immediately begin critiquing the draft copy instead of analyzing font sizing, component padding, responsive grid flow, and visual weight.
-        </p>
-        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
-          Our generator features standard Latin vocabulary sets calibrated for English-like character and word length distributions. It runs 100% locally in your browser with instant copy support and optional HTML wrapper syntax.
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <ToolAuthoritySection
+      toolName="Lorem Ipsum Generator"
+      category="generators"
+      currentToolId="lorem-ipsum-generator"
+      guidelinesHeading="Understanding Typographic Dummy Text & Design Mockup Standards"
+      guidelinesIntro="The primary purpose of dummy text is to create a natural typographic texture. When product managers, software engineers, and client stakeholders review prototypes filled with intelligible English, they immediately begin critiquing the draft copy instead of analyzing font sizing, component padding, responsive grid flow, and visual weight. Our generator features standard Latin vocabulary sets calibrated for English-like character and word length distributions."
+    />
+  </div>
 
   <!-- Interactive Client-side Script -->
   <script is:inline>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Flesch-Kincaid Calculator – Test Reading Ease & Grade Level";
 const pageDescription = "Calculate Flesch Reading Ease and Flesch-Kincaid Grade Level formulas instantly. Free online readability test for essays, web copy, and articles. 100% private.";
@@ -96,4 +97,61 @@ const schema = {
       </div>
     </div>
   </section>
+
+  <ToolAuthoritySection
+    toolName="Flesch-Kincaid Readability Calculator"
+    category="writing"
+    currentToolId="flesch-kincaid-readability-calculator"
+    compatibilityList={["US Navy Standards", "US Military MIL-SPEC", "State Insurance Regulations", "Healthcare Patient Docs", "Search Engine Content", "Academic Grading", "Legal Disclosures", "AP Style Guidelines"]}
+    guidelinesHeading="Readability Scoring & Grade Level Guidelines"
+    guidelinesIntro="Flesch-Kincaid evaluates how easily human readers can understand prose based on average sentence length and syllable count per word. Most digital web content targets 8th-9th grade reading level (score 60-70)."
+    steps={[
+      { step: "01", title: "Paste Prose or Essay", desc: "Input your draft copy, blog article, essay, or customer communication into the analyzer." },
+      { step: "02", title: "Algorithmic Analysis", desc: "Our client-side parser counts sentences, words, syllables, and complex words in real time." },
+      { step: "03", title: "Review Scores & Suggestions", desc: "View Flesch Reading Ease, Flesch-Kincaid Grade Level, Coleman-Liau, and Gunning Fog scores instantly." }
+    ]}
+    specsHeading="Readability Formulas & Metric Specifications"
+    specsRows={[
+      ["Flesch Reading Ease", "206.835 - 1.015(words/sentences) - 84.6(syllables/words)", "0 to 100+ (Higher is easier)"],
+      ["Flesch-Kincaid Grade Level", "0.39(words/sentences) + 11.8(syllables/words) - 15.59", "1.0 to 18.0+ US School Grade"],
+      ["Gunning Fog Index", "0.4 * ((words/sentences) + 100 * (complex words / words))", "Formal education years needed"],
+      ["Coleman-Liau Index", "0.0588 * L - 0.296 * S - 15.8 (based on characters)", "Grade level without syllable count"]
+    ]}
+    commonErrors={[
+      {
+        title: "Run-On Sentences Inflating Grade Level",
+        cause: "Unbroken sentences containing multiple conjunctions pushing average sentence length beyond 30 words.",
+        fix: "Split complex compound sentences with periods to instantly increase Reading Ease score."
+      },
+      {
+        title: "Polysyllabic Jargon & Buzzwords",
+        cause: "Dense 3+ syllable vocabulary elevating the Gunning Fog and Flesch indices.",
+        fix: "Replace complex corporate phrases with simple, direct monosyllabic or disyllabic verbs."
+      },
+      {
+        title: "Punctuation Mismatch in Bulleted Lists",
+        cause: "Bullet points lacking terminal periods treated as a single monstrous run-on sentence.",
+        fix: "End list items with periods or clean text formatting."
+      }
+    ]}
+    faqs={[
+      {
+        q: "What is a good Flesch Reading Ease score?",
+        a: "A score between 60 and 70 (standard 8th to 9th grade) is optimal for the general public, SaaS documentation, blogs, and marketing copy. High school level is 50-60, while college academic writing is 30-50."
+      },
+      {
+        q: "Why is Flesch-Kincaid legally required in some industries?",
+        a: "In the United States, many states legally mandate that insurance policies, healthcare brochures, and legal notices achieve a minimum Flesch Reading Ease score of 45 to 65 to ensure consumer comprehension."
+      },
+      {
+        q: "How do syllables affect my readability score?",
+        a: "Words with 3 or more syllables ('polysyllabic words') significantly penalize your score because they take longer to read and comprehend. Choosing simpler synonyms immediately lowers grade level."
+      },
+      {
+        q: "Is my draft private?",
+        a: "Yes. All syllable calculations and grade level scoring happen directly in your browser. Nothing is sent to our servers."
+      }
+    ]}
+    disclaimerText="Readability formulas are mathematical heuristics designed for general English prose. Highly technical terms, brand names, or code snippets may skew syllable and grade level calculations."
+  />
 </Layout>

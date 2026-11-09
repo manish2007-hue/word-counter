@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "TikTok Character Counter – 2,200 Character Caption Checker";
 const pageDescription = "Check your TikTok caption and bio character count online. Monitor the 2,200-character description limit and 80-character bio ceiling in real time.";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" initialTarget={2200} showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="TikTok Character & Bio Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding TikTok SEO Keywords & Caption Limits"
+      guidelinesIntro="TikTok's 2,200 character caption limit transformed the platform into an SEO search engine. Including descriptive terms, relevant keywords, and niche tags in your caption allows TikTok's recommendation algorithm to index your video for organic in-app search queries."
+    />
+  </div>
 </Layout>

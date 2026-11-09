@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Readability Score Checker – Flesch-Kincaid & Grade Level";
 const pageDescription = "Check Flesch Reading Ease, Flesch-Kincaid Grade Level & Gunning Fog scores instantly. Make your writing clearer, punchier & easy to read. 100% free & private!";
@@ -102,4 +103,62 @@ const faqSchema = {
 
     </div>
   </section>
+
+  <ToolAuthoritySection
+    toolName="Readability Score Checker"
+    category="writing"
+    currentToolId="readability-checker"
+    compatibilityList={["Flesch Reading Ease", "Flesch-Kincaid Grade", "Gunning Fog Index", "Coleman-Liau Index", "US Plain Language Act", "Yoast & SEO Plugins", "Academic Theses", "Healthcare Literacy"]}
+    guidelinesHeading="Readability Formulas & Content Clarity Guidelines"
+    guidelinesIntro="Content clarity directly impacts user retention, SEO time-on-page, and comprehension. Writing at an 8th-grade level (Flesch score 60-70) ensures accessibility to over 85% of general web readers."
+    steps={[
+      { step: "01", title: "Input Draft or Document", desc: "Paste your essay, article, customer documentation, or legal terms into the editor." },
+      { step: "02", title: "Multi-Algorithm Parsing", desc: "Our client-side engine computes syllables, sentence lengths, and character counts across 4 standard formulas." },
+      { step: "03", title: "Refine Sentence Structure", desc: "Inspect grade level ratings, identify complex multi-syllable terms, and adjust phrasing for maximum clarity." }
+    ]}
+    specsHeading="Standard Readability Indices & Target Audiences"
+    specsRows={[
+      ["Flesch Reading Ease (90-100)", "5th Grade Level", "Comics, children's literature, basic instructions"],
+      ["Flesch Reading Ease (60-70)", "8th to 9th Grade Level", "SaaS marketing, web articles, consumer news (Target)"],
+      ["Flesch Reading Ease (30-50)", "College Undergraduate", "Academic journals, legal disclosures, technical manuals"],
+      ["Gunning Fog Index (< 8)", "Easy Reading", "General public reading comprehension"],
+      ["Coleman-Liau Index", "Character-based calculation", "Programmatic & technical documentation"]
+    ]}
+    commonErrors={[
+      {
+        title: "Overly Complex Sentence Length",
+        cause: "Averaging over 25 words per sentence causing reading fatigue and lowering ease scores.",
+        fix: "Divide lengthy sentences into 2 or 3 shorter, focused assertions."
+      },
+      {
+        title: "Excessive Passive Voice and Jargon",
+        cause: "Passive verb formations inflating syllable counts unnecessarily.",
+        fix: "Switch to active subject-verb-object phrasing with clear, Anglo-Saxon verbs."
+      },
+      {
+        title: "Unformatted Raw Data or Code Blocks",
+        cause: "Pasting dense lists or JSON without punctuation triggering distorted sentence counts.",
+        fix: "Isolate narrative prose from raw code or structured data tables."
+      }
+    ]}
+    faqs={[
+      {
+        q: "What is considered a good readability score?",
+        a: "For most public websites, blogs, and communications, a Flesch Reading Ease score between 60 and 70 (or Flesch-Kincaid Grade Level around 8.0) is ideal. It ensures your message is easily comprehended without sounding simplistic."
+      },
+      {
+        q: "How do Flesch Reading Ease and Flesch-Kincaid Grade Level differ?",
+        a: "Flesch Reading Ease gives a 0-100 number where higher is easier. Flesch-Kincaid Grade Level translates this into US school grade equivalents (e.g. 7.5 = 7th grade, mid-year), where lower is easier."
+      },
+      {
+        q: "Which readability formula should I rely on?",
+        a: "Flesch-Kincaid is the most universally referenced standard. Gunning Fog is especially useful for business and formal copy, while Coleman-Liau is reliable for technical writing."
+      },
+      {
+        q: "Is my writing analyzed on a remote server?",
+        a: "No. All text parsing, syllable algorithms, and formula scoring run 100% locally in your web browser. Your work remains completely private."
+      }
+    ]}
+    disclaimerText="Readability algorithms use mathematical word-length and syllable models designed for standard English prose. Specialized terminology, proper nouns, or code snippets may affect computed grade levels."
+  />
 </Layout>

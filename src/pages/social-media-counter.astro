@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Social Media Character Counter – X, LinkedIn & Instagram";
 const pageDescription = "Real-time character counters for Twitter/X (280), LinkedIn (3000), Instagram & SEO. Preview cutoffs and avoid truncated posts before publishing. 100% free!";
@@ -109,4 +110,15 @@ const faqSchema = {
 
     </div>
   </section>
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="Social Media Character Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding Social Media Character Limits & Truncation Cutoffs"
+      guidelinesIntro="Social media platforms enforce hard character caps (e.g. 280 on X/Twitter, 3,000 on LinkedIn, 2,200 on Instagram, 500 on Threads). More importantly, feed algorithms truncate captions behind '...see more' after only 125 to 140 characters. Our multi-platform counter ensures your hook stays visible before the fold."
+    />
+  </div>
 </Layout>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "X (Twitter) Character Counter – Live 280 Tweet Checker";
 const pageDescription = "Count characters for X (Twitter) with real-time 280-character limit feedback, overflow alerts, and thread preview. Fast, accurate, free & 100% private!";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" initialTarget={280} showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="X / Twitter Character Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding Twitter 280 Limits & t.co Link Wrapping"
+      guidelinesIntro="Standard X (Twitter) posts enforce a strict 280-character maximum. All web links automatically consume 23 characters via Twitter's t.co URL shortener regardless of their raw length. Tracking characters in real time avoids awkward truncation or mid-sentence edits."
+    />
+  </div>
 </Layout>

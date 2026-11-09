@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Words to Speaking Time – Speech & Presentation Duration";
 const pageDescription = "Convert script words to exact speaking minutes. Calculate duration for presentations, speeches, podcasts & videos across slow, normal, and fast pacing. Free!";
@@ -99,6 +100,17 @@ const schema = {
   </div>
 
   <WordCounter showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="Words to Speaking Time Calculator"
+      category="writing"
+      currentToolId="words-to-speaking-time"
+      guidelinesHeading="Understanding Speech Delivery Velocity & Keynote Pacing"
+      guidelinesIntro="Conversational speech delivery averages 130 words per minute (WPM). Formal auditorium keynotes and presentations typically decelerate to 100 WPM to accommodate audience comprehension and slide visual aids, while dynamic podcast commentary accelerates to 160 WPM. Our speech timer calculates exact minute-and-second benchmarks."
+    />
+  </div>
 
   <script>
     const sInput = document.getElementById('speech-words-input') as HTMLInputElement;

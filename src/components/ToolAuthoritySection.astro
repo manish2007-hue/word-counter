@@ -1,0 +1,608 @@
+---
+import { TOOLS_LIST, type ToolItem } from '../lib/toolsData';
+
+export interface FAQItem {
+  q: string;
+  a: string;
+}
+
+export interface SpecRow {
+  portal: string;
+  docType: string;
+  targetBudget: string;
+  geometry: string;
+  quality: string;
+  standards: string;
+}
+
+export interface CommonErrorItem {
+  num: string;
+  title: string;
+  desc: string;
+  fix: string;
+}
+
+export interface Props {
+  toolName: string;
+  category?: 'image' | 'writing' | 'cleaning' | 'generators' | 'developer' | 'social';
+  currentToolId?: string;
+  compatibilityList?: string[];
+  relatedTools?: Array<{
+    name: string;
+    href: string;
+    desc: string;
+    badge?: string;
+    icon?: string;
+  }>;
+  guidelinesHeading?: string;
+  guidelinesIntro?: string;
+  guidelinesDetails?: string[];
+  steps?: Array<{
+    step: string;
+    title: string;
+    desc: string;
+  }>;
+  specsHeading?: string;
+  specsRows?: SpecRow[];
+  commonErrors?: CommonErrorItem[];
+  faqs?: FAQItem[];
+  disclaimerText?: string;
+}
+
+const {
+  toolName,
+  category = 'image',
+  currentToolId = '',
+  compatibilityList,
+  relatedTools,
+  guidelinesHeading,
+  guidelinesIntro,
+  guidelinesDetails,
+  steps,
+  specsHeading,
+  specsRows,
+  commonErrors,
+  faqs,
+  disclaimerText
+} = Astro.props;
+
+// 1. Compatibility Defaults
+const defaultCompat: Record<string, string[]> = {
+  image: [
+    'UPSC DAF',
+    'SSC Document Verification',
+    'IBPS / SBI Banking',
+    'NTA NEET / JEE',
+    'State PSCs',
+    'EPFO Claims',
+    'US Visa / DS-160',
+    'Schengen Passport'
+  ],
+  writing: [
+    'Google Docs',
+    'Microsoft Word',
+    'Turnitin Plagiarism Engine',
+    'Canvas LMS',
+    'Overleaf LaTeX',
+    'ATS Resume Scanners',
+    'WordPress & Medium'
+  ],
+  developer: [
+    'VS Code',
+    'JSON Schema v7/2020-12',
+    'OpenAI & Anthropic APIs',
+    'Postman / Insomnia',
+    'Node.js & Python Web APIs',
+    'GitHub PR Review'
+  ],
+  social: [
+    'Instagram (Feed & Reels)',
+    'TikTok Caption Limits',
+    'X / Twitter (280 Chars)',
+    'YouTube Shorts & Desc',
+    'LinkedIn Articles',
+    'Threads (500 Chars)'
+  ],
+  generators: [
+    'Instagram Bio Fonts',
+    'TikTok Nicknames',
+    'Twitter/X Display Names',
+    'Discord User Profiles',
+    'Gaming Clans & Guilds',
+    'Figma & Web Design Mockups'
+  ],
+  cleaning: [
+    'Sublime & VS Code',
+    'CSV & Spreadsheet Import',
+    'Email Newsletter Editors',
+    'Markdown Documents',
+    'Database SQL Queries'
+  ]
+};
+
+const activeCompat = compatibilityList || defaultCompat[category] || defaultCompat.image;
+
+// 2. Related Tools ("You Want to See More") Defaults
+// Pick 4 relevant tools from toolsData if not provided
+let activeRelated = relatedTools;
+if (!activeRelated || activeRelated.length === 0) {
+  const filtered = TOOLS_LIST.filter((t) => t.id !== currentToolId && (t.category === category || t.category === 'image' || t.category === 'writing'));
+  const picked = filtered.slice(0, 4);
+  activeRelated = picked.map((t) => ({
+    name: t.name,
+    href: t.href,
+    desc: t.shortDesc,
+    badge: t.badge || 'Instant & Free',
+    icon: t.icon
+  }));
+}
+
+// 3. Step-by-Step Defaults
+const defaultSteps = steps || [
+  {
+    step: 'Step 1: Upload / Input Original',
+    title: 'Select or Paste Your Data',
+    desc: 'Drag & drop your photo, PDF certificate, or text document directly into the tool. The file is held safely in your browser memory.'
+  },
+  {
+    step: 'Step 2: Adjust & Verify Parameters',
+    title: 'Configure Presets & Specs',
+    desc: 'Select your target file size (e.g. 20KB, 50KB), physical dimensions (3.5×4.5cm, 2×2 in), or formatting options with instant live preview.'
+  },
+  {
+    step: 'Step 3: Process & Instant Download',
+    title: 'Save Directly to Device',
+    desc: 'Click download to generate your optimized file immediately. All processing runs 100% offline with zero server upload latency.'
+  }
+];
+
+// 4. Specifications Matrix Defaults
+const defaultImageSpecs: SpecRow[] = [
+  {
+    portal: 'UPSC DAF 1 & 2 (Civil Services / NDA)',
+    docType: 'Degree Certificates, Age Proof & Caste Proof',
+    targetBudget: 'Strictly Under 200.0 KB (Target 150–190 KB)',
+    geometry: 'Standard A4 (Portrait)',
+    quality: '2.0x High Viewport Scale',
+    standards: 'Clear university seal, registrar signature, and roll number clarity'
+  },
+  {
+    portal: 'SSC Document Verification (CGL, CHSL, MTS)',
+    docType: '10th / 12th Marksheets & Domicile Certificates',
+    targetBudget: '100.0 KB to 200.0 KB',
+    geometry: 'Standard A4 (Portrait)',
+    quality: '2.0x High Viewport Scale',
+    standards: 'High contrast, zero shadow gradients, sharp board stamp'
+  },
+  {
+    portal: 'NTA (NEET, JEE Main, CUET)',
+    docType: 'Category, EWS & PwD Disability Certificates',
+    targetBudget: '50.0 KB to 300.0 KB (Preset 200KB)',
+    geometry: 'Standard A4',
+    quality: '2.0x High Viewport Scale',
+    standards: 'Competent issuing authority seal, certificate issue date legible'
+  },
+  {
+    portal: 'IBPS & SBI Banking Document Upload',
+    docType: 'Graduation Transcripts & Caste Proofs',
+    targetBudget: '100.0 KB to 200.0 KB / 500.0 KB',
+    geometry: 'Standard A4',
+    quality: '2.0x High Viewport Scale',
+    standards: 'Multi-semester marksheet merging into a single consolidated PDF'
+  },
+  {
+    portal: 'EPFO Member Claim Portal',
+    docType: 'Cancelled Cheque & Bank Passbook Proof',
+    targetBudget: '100.0 KB to 500.0 KB (Target 200KB)',
+    geometry: 'A4 / Landscape',
+    quality: '2.0x High Viewport Scale',
+    standards: 'Clear IFSC code, account number & printed candidate name'
+  },
+  {
+    portal: 'State PSC & Police Recruitment',
+    docType: 'Educational Degrees & Identity Cards',
+    targetBudget: '100.0 KB to 200.0 KB',
+    geometry: 'Standard A4',
+    quality: '2.0x High Viewport Scale',
+    standards: 'Clean white paper background with zero camera desk glare'
+  }
+];
+
+const defaultWritingSpecs: SpecRow[] = [
+  {
+    portal: 'Undergraduate College Term Papers',
+    docType: 'Essays, Case Studies, Reading Summaries',
+    targetBudget: '1,500 – 3,000 Words (5–10 Pages)',
+    geometry: 'Double Spaced (250 WPP)',
+    quality: 'Times New Roman / Arial 12pt',
+    standards: 'APA / MLA Citation conformity; Net body words exclude reference lists'
+  },
+  {
+    portal: 'Master & Doctoral Theses / Dissertations',
+    docType: 'Research Manuscripts & Chapters',
+    targetBudget: '10,000 – 50,000 Words',
+    geometry: 'Double Spaced 1-inch margins',
+    quality: 'Standard Academic 12pt',
+    standards: 'Turnitin similarity index < 15%; abstract strictly under 350 words'
+  },
+  {
+    portal: 'Corporate & Executive Whitepapers',
+    docType: 'Market Reports & Executive Briefs',
+    targetBudget: '2,500 – 5,000 Words',
+    geometry: 'Single Spaced (500 WPP)',
+    quality: 'Inter / Calibri 11pt',
+    standards: 'Flesch-Kincaid Grade Level 9–11; concise scannable subheadings'
+  },
+  {
+    portal: 'Job Applications & Professional Resumes',
+    docType: '1-Page CV / Resume & Cover Letter',
+    targetBudget: '400 – 600 Words (Resume), 300 Words (Letter)',
+    geometry: 'Single Spaced 0.5-inch margins',
+    quality: 'ATS-Friendly Clean UTF-8',
+    standards: '0% parsing rejection on Workday, Greenhouse, Taleo ATS'
+  }
+];
+
+const activeSpecs = specsRows || (category === 'writing' || category === 'cleaning' ? defaultWritingSpecs : defaultImageSpecs);
+
+// 5. Common Errors Defaults
+const defaultImageErrors: CommonErrorItem[] = [
+  {
+    num: '1',
+    title: 'File size exceeds the allowed limit (e.g., must be between 20KB and 50KB)',
+    desc: 'This error occurs when modern smartphone cameras take 12MP to 48MP photos that generate 5MB–10MB files. Recruitment and visa portals will instantly reject uploads exceeding their threshold ceiling.',
+    fix: 'Use our target binary quantization compressor. Set the target slider strictly to 45KB or 20KB, and our client-side algorithm will compress the file below the ceiling without pixelating details.'
+  },
+  {
+    num: '2',
+    title: 'Image dimensions (width × height) do not match the specified aspect ratio',
+    desc: 'Manual mobile cropping often distorts rectangular proportions into arbitrary shapes. Automated optical scanners flag disproportionate images as non-compliant.',
+    fix: 'Select our official preset (such as 3.5 × 4.5 cm for passports or 140 × 60 px for signatures). Our aspect ratio lock strictly prevents facial elongation or horizontal stretching.'
+  },
+  {
+    num: '3',
+    title: 'Signature or text is faint, blurry, or unreadable on automated verification',
+    desc: 'Submitting a photograph taken under dim indoor lighting creates gray paper shadows and faint ballpoint ink strokes that fail automated biometric verification.',
+    fix: 'Our tool automatically normalizes contrast against pure white backgrounds, stripping shadow artifacts so ink strokes pass optical automated verification scanners.'
+  }
+];
+
+const defaultWritingErrors: CommonErrorItem[] = [
+  {
+    num: '1',
+    title: 'Word count exceeds professor or competition threshold by > 10%',
+    desc: 'Academic professors, journal submissions, and admissions essays enforce strict ±10% tolerances. Including citations and reference headers often triggers automated disqualification.',
+    fix: 'Enable our Academic Mode or In-Text Citation filter to compute your net editorial length and ensure your submission strictly complies with assignment rubrics.'
+  },
+  {
+    num: '2',
+    title: 'Hidden unicode characters, zero-width spaces, or smart quotes breaking parsers',
+    desc: 'Copying text from Microsoft Word or Google Docs into CMS platforms, ATS job portals, or code editors frequently introduces curly quotes and non-standard line breaks.',
+    fix: 'Use our Clean Text & Line Breaks utility to sanitize smart quotes, normalize line feeds (LF/CRLF), and strip zero-width characters in 1 click.'
+  },
+  {
+    num: '3',
+    title: 'Flesch-Kincaid readability score too low or sentences too convoluted',
+    desc: 'Overly long compound sentences with excessive passive voice lower reading comprehension and cause readers to lose interest quickly.',
+    fix: 'Check the real-time Readability Score analyzer to pinpoint sentences exceeding 25 words and maintain an optimal grade level between 7 and 10.'
+  }
+];
+
+const activeErrors = commonErrors || (category === 'writing' || category === 'cleaning' ? defaultWritingErrors : defaultImageErrors);
+
+// 6. FAQ Defaults
+const defaultImageFaqs: FAQItem[] = [
+  {
+    q: 'What is the recommended file format for official examination and portal forms?',
+    a: 'Most government portals (such as SSC, UPSC, NTA, IBPS, and State PSCs) require photographs and signatures in standard JPG or JPEG format, while multi-page educational certificates require standard PDF format under 200KB. If you upload a PNG or WebP, our tool automatically converts and exports it as a 100% compliant file.'
+  },
+  {
+    q: 'How do I ensure my photo will not get rejected for bad lighting or background?',
+    a: 'Capture your portrait in even daylight against a plain white or light off-white background. Avoid wearing glasses with glare, hats, or masks. Make sure your face occupies roughly 70% to 80% of the total cropped frame.'
+  },
+  {
+    q: 'Can I resize photos, PDFs, and signatures directly on my mobile smartphone?',
+    a: 'Yes. Our platform is completely responsive and touchscreen-optimized. You can snap a photo with your mobile camera, crop it smoothly on your screen, and download the compressed file directly into your device downloads.'
+  },
+  {
+    q: 'What DPI / PPI resolution is used during compression and resizing?',
+    a: 'Our tools preserve high pixel density equivalent to 300 DPI for physical passport prints (such as 3.5×4.5 cm generating 413×531 px) and standard 72 DPI for web-only form uploads, matching the optical verification standards required by official portals.'
+  },
+  {
+    q: 'Is there any fee, watermarking, or daily limit on using this tool?',
+    a: 'No. All tools on CleanWordCounter are completely free for students, job applicants, and professionals. There are no watermarks, daily limits, account registrations, or hidden subscriptions.'
+  },
+  {
+    q: 'Are my confidential personal documents or photographs stored on your servers?',
+    a: 'Never. All operations execute 100% locally inside your web browser sandbox using HTML5 Canvas and JavaScript. Nothing is ever uploaded to or stored on any server, ensuring complete confidentiality.'
+  }
+];
+
+const activeFaqs = faqs || defaultImageFaqs;
+---
+
+<div class="mt-14 space-y-14">
+  <!-- 1. GUARANTEED PORTAL / PLATFORM COMPATIBILITY STRIP -->
+  <section class="border-y border-[#ebebeb] dark:border-[#262626] bg-[#fafafa]/60 dark:bg-[#0c0c0c] py-5 px-4 sm:px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-[#666666] dark:text-[#888888]">
+          Guaranteed Portal Compatibility:
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center md:justify-end gap-1.5 sm:gap-2">
+        {activeCompat.map((item) => (
+          <span class="inline-flex items-center gap-1 rounded-md border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] px-2.5 py-1 font-mono text-[11px] font-medium text-[#171717] dark:text-[#ededed] shadow-2xs">
+            <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>{item}</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. "YOU WANT TO SEE MORE?" / RELATED UTILITIES CARD GRID -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-[#ebebeb] dark:border-[#262626]">
+      <div>
+        <div class="mono-eyebrow text-[#0070f3] text-xs font-semibold mb-1">
+          Explore Ecosystem
+        </div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Related Compression &amp; Exam Utilities
+        </h2>
+      </div>
+      <a
+        href="/tools"
+        class="mt-2 sm:mt-0 text-xs font-semibold text-[#0070f3] hover:underline flex items-center gap-1 shrink-0"
+      >
+        <span>Browse All 29 Tools</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+
+    <!-- 4 Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {activeRelated.map((tool) => (
+        <a
+          href={tool.href}
+          class="group rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4.5 hover:border-[#0070f3] dark:hover:border-[#0070f3] transition-all shadow-2xs hover:shadow-sm flex flex-col justify-between"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-8 h-8 rounded-lg bg-[#0070f3]/10 text-[#0070f3] flex items-center justify-center transition-transform group-hover:scale-110">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <span class="text-[10px] font-mono font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
+                {tool.badge || 'Tool'}
+              </span>
+            </div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors leading-snug">
+              {tool.name}
+            </h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] line-clamp-2 leading-relaxed">
+              {tool.desc}
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#ebebeb] dark:border-[#262626] flex items-center justify-between text-xs font-medium text-[#0070f3]">
+            <span>Launch Tool</span>
+            <span class="transform transition-transform group-hover:translate-x-1">&rarr;</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 3. UNDERSTANDING GUIDELINES & STEP-BY-STEP HOW-TO -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 space-y-8">
+    <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 shadow-2xs space-y-6">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-3">
+          {guidelinesHeading || `Understanding ${toolName} Guidelines & Requirements`}
+        </h2>
+        <div class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed space-y-3">
+          <p>
+            {guidelinesIntro || `When submitting online applications for competitive examinations, educational institutions, and government recruitment portals, adhering strictly to official notification parameters is mandatory. ${toolName} provides an instant, client-side utility to crop, resize, and compress your files to the exact pixel dimensions and kilobyte (KB) thresholds required by testing agencies and recruitment boards.`}
+          </p>
+          <p>
+            Recruitment portals frequently reject candidatures during the automated verification phase due to incorrect aspect ratios, blurry signatures, non-standard DPI, or exceeding file size caps. Our free tool guarantees that your digital images maintain crisp contrast, proper face centering (covering 70–80% of the photo frame), clear background contrast, and strict adherence to the file size limits without compromising optical clarity.
+          </p>
+          {guidelinesDetails && guidelinesDetails.map((para) => (
+            <p>{para}</p>
+          ))}
+        </div>
+      </div>
+
+      <!-- Step-by-Step 3 Cards -->
+      <div class="pt-4 border-t border-[#ebebeb] dark:border-[#262626]">
+        <h3 class="text-base sm:text-lg font-semibold tracking-tight text-[#171717] dark:text-[#ededed] mb-4">
+          How to Use {toolName} (Step-by-Step Guide)
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {defaultSteps.map((st) => (
+            <div class="p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] flex flex-col justify-between">
+              <div>
+                <span class="inline-block font-mono text-[10px] font-bold uppercase tracking-wider text-[#0070f3] mb-1.5">
+                  {st.step}
+                </span>
+                <h4 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-1">
+                  {st.title}
+                </h4>
+                <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+                  {st.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. STANDARD SPECIFICATIONS & DIMENSION MATRIX TABLE -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 shadow-2xs">
+      <div class="mb-4">
+        <h2 class="text-lg sm:text-xl font-bold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          {specsHeading || 'Standard Specifications & Dimension Matrix'}
+        </h2>
+        <p class="text-xs text-[#666666] dark:text-[#888888] mt-1">
+          Official notification requirements and dimension thresholds curated from premier verification portals:
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="border-b border-[#ebebeb] dark:border-[#262626] font-mono text-[11px] uppercase tracking-wider text-[#888888] bg-[#fafafa] dark:bg-[#121212]">
+            <tr>
+              <th class="py-3 px-3 rounded-l-lg">Recruitment Board / Portal</th>
+              <th class="py-3 px-3">Document Type</th>
+              <th class="py-3 px-3">Target Budget</th>
+              <th class="py-3 px-3">Geometry</th>
+              <th class="py-3 px-3">Quality Scaling</th>
+              <th class="py-3 px-3 rounded-r-lg">Key Compliance Standards</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#ebebeb] dark:divide-[#262626] text-[#4d4d4d] dark:text-[#a1a1a1]">
+            {activeSpecs.map((row) => (
+              <tr class="hover:bg-[#fafafa]/80 dark:hover:bg-[#141414] transition-colors">
+                <td class="py-3 px-3 font-semibold text-[#171717] dark:text-[#ededed]">{row.portal}</td>
+                <td class="py-3 px-3">{row.docType}</td>
+                <td class="py-3 px-3 font-mono text-[#0070f3] font-semibold">{row.targetBudget}</td>
+                <td class="py-3 px-3 font-mono">{row.geometry}</td>
+                <td class="py-3 px-3">{row.quality}</td>
+                <td class="py-3 px-3 text-[#666666] dark:text-[#888888]">{row.standards}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. COMMON APPLICATION PORTAL ERRORS & HOW TO FIX THEM -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 shadow-2xs space-y-5">
+      <div>
+        <h2 class="text-lg sm:text-xl font-bold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
+          Common Application Portal Errors &amp; How to Fix Them
+        </h2>
+        <p class="text-xs text-[#666666] dark:text-[#888888] mt-1">
+          Review these common candidate rejection triggers before uploading your documents to official portals:
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        {activeErrors.map((err) => (
+          <div class="p-4 sm:p-5 rounded-xl border-l-4 border-l-rose-500 border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa]/50 dark:bg-[#111111] space-y-2">
+            <div class="flex items-start gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                {err.num}
+              </span>
+              <h3 class="font-semibold text-xs sm:text-sm text-[#171717] dark:text-[#ededed]">
+                &ldquo;{err.title}&rdquo;
+              </h3>
+            </div>
+            <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed pl-7">
+              {err.desc}
+            </p>
+            <div class="pl-7 pt-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 flex items-start gap-1.5">
+              <span class="font-bold uppercase tracking-wider text-[10px] bg-emerald-500/10 px-1.5 py-0.5 rounded shrink-0">Solution:</span>
+              <span>{err.fix}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FREQUENTLY ASKED QUESTIONS -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 shadow-2xs">
+      <h2 class="text-lg sm:text-xl font-bold tracking-[-0.03em] text-[#171717] dark:text-[#ededed] mb-6">
+        Frequently Asked Questions About {toolName}
+      </h2>
+
+      <div class="space-y-3.5">
+        {activeFaqs.map((faq, idx) => (
+          <details class="group rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa]/50 dark:bg-[#111111] p-4 open:bg-white dark:open:bg-[#141414] transition-colors">
+            <summary class="flex cursor-pointer items-center justify-between text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed] select-none list-none">
+              <span>{faq.q}</span>
+              <span class="ml-3 shrink-0 rounded-full border border-[#ebebeb] dark:border-[#262626] p-1 text-[#888888] group-open:rotate-180 transition-transform">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <p class="mt-3 text-xs sm:text-[13px] text-[#666666] dark:text-[#888888] leading-relaxed border-t border-[#ebebeb] dark:border-[#262626] pt-3">
+              {faq.a}
+            </p>
+          </details>
+        ))}
+      </div>
+
+      <!-- Educational Notice Disclaimer Box -->
+      <div class="mt-8 p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 text-xs text-[#855304] dark:text-amber-300 flex items-start gap-3">
+        <svg class="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <strong class="font-semibold block mb-0.5">Educational &amp; Informational Notice:</strong>
+          {disclaimerText || `CleanWordCounter is an independent document utility and image processing platform developed to assist students, candidates, and professionals. All dimension parameters and file size specifications are curated from publicly available notification guidelines. Please cross-check your official portal instructions before final submission.`}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FOUR TRUST & VALUE PROPS PILLARS -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pb-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 text-center shadow-2xs">
+        <div class="w-9 h-9 mx-auto mb-2.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">100% In-Browser Privacy</div>
+        <p class="text-[11px] text-[#888888] mt-1">Zero server uploads, local device memory processing</p>
+      </div>
+
+      <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 text-center shadow-2xs">
+        <div class="w-9 h-9 mx-auto mb-2.5 rounded-full bg-blue-500/10 text-[#0070f3] flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">Recruitment Standards</div>
+        <p class="text-[11px] text-[#888888] mt-1">Pre-set crops for SSC, UPSC, NTA, IBPS, and Visas</p>
+      </div>
+
+      <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 text-center shadow-2xs">
+        <div class="w-9 h-9 mx-auto mb-2.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">Exact Precision</div>
+        <p class="text-[11px] text-[#888888] mt-1">Binary search targeting to exact 20KB, 50KB, 100KB</p>
+      </div>
+
+      <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 text-center shadow-2xs">
+        <div class="w-9 h-9 mx-auto mb-2.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="font-semibold text-xs text-[#171717] dark:text-[#ededed]">Mobile &amp; Desktop Ready</div>
+        <p class="text-[11px] text-[#888888] mt-1">Touchscreen cropper with instant local file export</p>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "PDF to JPG Converter – Convert PDF Pages to Images 100% Free & Private";
 const pageDescription = "Convert PDF documents into high-resolution JPG or PNG images directly in your browser. 100% free, private client-side conversion with zero file uploads.";
@@ -172,28 +173,14 @@ const schema = {
       </div>
     </div>
 
-    <!-- SEO Guide Section -->
-    <article class="mt-16 mx-auto max-w-4xl space-y-10">
-      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
-          How to Convert PDF Pages to JPG Offline
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">1. Select Your PDF</h3>
-            <p>Drag and drop your PDF or click to browse. The document is decoded straight in your web browser via WebAssembly.</p>
-          </div>
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">2. Vector Rasterization</h3>
-            <p>Every vector font, illustration, and bitmap image on the page is rasterized at full 300 DPI print quality without pixelation.</p>
-          </div>
-          <div class="space-y-1.5">
-            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">3. Download Instantly</h3>
-            <p>Download individual page JPGs with 1 click, or click 'Download All Pages' to save every slide or page sequentially.</p>
-          </div>
-        </div>
-      </section>
-    </article>
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName="PDF to JPG Converter"
+      category="image"
+      currentToolId="pdf-to-jpg"
+      guidelinesHeading="Understanding PDF to Image Rasterization & Portal Standards"
+      guidelinesIntro="Many application gateways, recruitment forms, and identity verifiers require single image files (JPG or PNG) rather than PDF documents. Our client-side rasterizer decodes PDF vectors at standard 300 DPI print quality directly in browser GPU memory, extracting pages with crisp contrast and zero server uploads."
+    />
   </main>
 </Layout>
 

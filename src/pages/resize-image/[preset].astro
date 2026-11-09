@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 export function getStaticPaths() {
   const PRESET_DATA = [
@@ -239,6 +240,15 @@ const schema = {
         </div>
       </div>
     </div>
+
+    <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+    <ToolAuthoritySection
+      toolName={data.name}
+      category="image"
+      currentToolId="resize-image"
+      guidelinesHeading={`Understanding ${data.name} Specifications & Guidelines`}
+      guidelinesIntro={`Official portal guidelines mandate exact dimensions of ${data.calcW} × ${data.calcH} pixels (${data.w}${data.unit} × ${data.h}${data.unit} at ${data.dpi} DPI). Our in-browser resizer guarantees compliance with automated biometric verification engines.`}
+    />
   </main>
 </Layout>
 

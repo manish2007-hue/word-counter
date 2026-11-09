@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 export function getStaticPaths() {
   const counts = [
@@ -233,4 +234,63 @@ const schema = {
       </div>
     </div>
   </main>
+
+  <ToolAuthoritySection
+    toolName={`${words.toLocaleString()} Words Reading Time Calculator`}
+    category="writing"
+    currentToolId="words-to-reading-time"
+    compatibilityList={["Standard Adult Silent (238 WPM)", "Slow Reading / ESL (150 WPM)", "Fast Skim / Scan (350 WPM)", "Audiobook / Aloud (130 WPM)", "Academic Theses", "Speeches & Scripts", "Blog Articles", "Medium Read Time"]}
+    guidelinesHeading={`Reading Duration Benchmark for ${words.toLocaleString()} Words`}
+    guidelinesIntro={`Reading ${words.toLocaleString()} words takes an average adult approximately ${avgDuration} at standard silent comprehension speed (238 WPM), or ${aloudDuration} when spoken aloud.`}
+    steps={[
+      { step: "01", title: "Enter Word Count or Copy", desc: `Evaluate the ${words.toLocaleString()}-word benchmark or paste custom text into the interactive live calculator.` },
+      { step: "02", title: "Select Cognitive Velocity", desc: "Compare silent reading (238 WPM), learning comprehension (150 WPM), and speed scanning (350 WPM)." },
+      { step: "03", title: "Export Timing Breakdown", desc: "Review minutes, seconds, estimated printed pages, and audible presentation lengths." }
+    ]}
+    specsHeading={`${words.toLocaleString()} Words Velocity Matrix Specifications`}
+    specsRows={[
+      ["Silent Reading (Adult Avg)", "238 words per minute", `${avgDuration} total duration`],
+      ["Slow / Detailed Study", "150 words per minute", `${slowDuration} total duration`],
+      ["Speed Reading / Skim", "350 words per minute", `${speedDuration} total duration`],
+      ["Spoken Aloud / Podcast", "130 words per minute", `${aloudDuration} total duration`],
+      ["Standard Page Format (Single)", "500 words per page", `${(words / 500).toFixed(1)} single-spaced pages`],
+      ["Standard Page Format (Double)", "250 words per page", `${(words / 250).toFixed(1)} double-spaced pages`]
+    ]}
+    commonErrors={[
+      {
+        title: "Ignoring Technical Vocabulary Density",
+        cause: "Scientific or legal text takes up to 40% longer to comprehend than general fiction.",
+        fix: "Use the 150 WPM study reading speed for complex academic or technical manuscripts."
+      },
+      {
+        title: "Confusing Silent Reading with Speech Pace",
+        cause: "Silent reading is nearly twice as fast as vocal speaking.",
+        fix: "For speeches, podcasts, or video scripts, calculate using 130-150 words per minute instead."
+      },
+      {
+        title: "Overestimating Skim Reading Retention",
+        cause: "Speeds above 350 WPM reduce detail comprehension significantly.",
+        fix: "Budget standard 238 WPM pace for informational blog content and consumer articles."
+      }
+    ]}
+    faqs={[
+      {
+        q: `How long does it take to read ${words.toLocaleString()} words?`,
+        a: `It takes ${avgDuration} for an average adult to read ${words.toLocaleString()} words silently at 238 WPM. Reading aloud takes approximately ${aloudDuration}.`
+      },
+      {
+        q: `How many pages is ${words.toLocaleString()} words?`,
+        a: `${words.toLocaleString()} words is roughly ${(words / 250).toFixed(1)} double-spaced pages or ${(words / 500).toFixed(1)} single-spaced pages using 12pt standard font.`
+      },
+      {
+        q: `How many paragraphs are in ${words.toLocaleString()} words?`,
+        a: `Assuming an average paragraph length of 100 to 200 words, ${words.toLocaleString()} words contains roughly ${Math.max(1, Math.round(words / 150))} paragraphs.`
+      },
+      {
+        q: `How is reading time calculated?`,
+        a: `CleanWordCounter applies the scientifically recognized standard of 238 words per minute established by eye-tracking and cognitive psycholinguistic research for adult silent reading.`
+      }
+    ]}
+    disclaimerText="Reading speed estimates are based on empirical adult non-fiction benchmarks (238 WPM). Actual duration will vary depending on reader vocabulary, domain expertise, and formatting complexity."
+  />
 </Layout>

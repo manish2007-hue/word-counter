@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Academic Word Counter – Exclude APA & MLA Citations";
 const pageDescription = "Calculate your true net essay word count. Automatically excludes APA, MLA, Harvard citations & end references from limits. 100% private college essay tool!";
@@ -109,4 +110,15 @@ const faqSchema = {
 
     </div>
   </section>
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="Academic Essay Word Counter"
+      category="writing"
+      currentToolId="academic-word-counter"
+      guidelinesHeading="Understanding Academic Essay Word Count Tolerances & Citation Rules"
+      guidelinesIntro="Colleges, universities, and academic journals enforce strict ±10% word count tolerances. In-text citations (such as APA parenthetical references, MLA author-page markers, or Harvard format) artificially inflate your word count. Our academic counter filters citations to compute your true net essay body length."
+    />
+  </div>
 </Layout>

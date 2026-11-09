@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Website Word Counter – Count Webpage Words Online Free";
 const pageDescription = "Free online website word counter. Count words, characters, headings & reading time on any webpage URL or raw HTML. 100% private, instant & ad-free!";
@@ -385,6 +386,64 @@ const schema = {
 
     </section>
   </main>
+
+  <ToolAuthoritySection
+    toolName="Website Word Counter & Page Auditor"
+    category="social"
+    currentToolId="website-word-counter"
+    compatibilityList={["Public Webpage URLs", "Raw HTML Markup", "WordPress & Ghost Sites", "Shopify & E-Commerce", "SaaS Landing Pages", "Google Search Snippets", "CORS Proxy Fallback", "DOM Text Extractor"]}
+    guidelinesHeading="Webpage Word Count & SEO Content Standards"
+    guidelinesIntro="Comprehensive, authoritative content typically correlates with higher search visibility. Accurately measuring visible editorial word count while excluding navigation, footers, and code boilerplate reveals true topical substance."
+    steps={[
+      { step: "01", title: "Enter URL or Paste HTML", desc: "Input any public website address or paste raw webpage HTML source code directly into the workbench." },
+      { step: "02", title: "DOM Content Extraction", desc: "Our client-side scraper strips navigation bars, scripts, styles, and footer boilerplate to isolate true body prose." },
+      { step: "03", title: "Inspect SEO Metrics", desc: "View total editorial words, reading duration, heading hierarchy (H1-H3), keyword frequency, and link densities." }
+    ]}
+    specsHeading="Standard Web Content Word Count Benchmarks"
+    specsRows={[
+      ["Informational Blog Post", "1,200 – 2,500 words", "High ranking depth, long-tail search intent"],
+      ["Pillar Page / Comprehensive Guide", "3,000 – 5,000+ words", "Broad topical authority, cornerstone internal linking"],
+      ["Homepage / Brand Landing Page", "400 – 1,000 words", "Concise value proposition, conversion-focused"],
+      ["E-Commerce Product Description", "300 – 800 words", "Technical specs, benefits, customer reviews, FAQs"],
+      ["Lead Generation Squeeze Page", "250 – 500 words", "High conversion focus, minimal reading friction"]
+    ]}
+    commonErrors={[
+      {
+        title: "CORS Block on Protected Domains",
+        cause: "Strict Cross-Origin Resource Sharing (CORS) headers preventing direct browser fetching.",
+        fix: "Switch to 'Paste Raw HTML' tab, view page source (Ctrl+U), copy all code, and paste for instant offline parsing."
+      },
+      {
+        title: "JavaScript SPA Rendering Delay",
+        cause: "Heavy single-page apps (React/Angular) where content is injected after initial DOM load.",
+        fix: "Copy the rendered DOM text from browser DevTools or use pre-rendered HTML."
+      },
+      {
+        title: "Header and Footer Duplication Overcount",
+        cause: "Counting recurring sitewide navigation links instead of pure editorial body text.",
+        fix: "Our content algorithm automatically isolates <article> and <main> tags to exclude chrome clutter."
+      }
+    ]}
+    faqs={[
+      {
+        q: "How does the Website Word Counter extract words from a URL?",
+        a: "The tool fetches the webpage HTML and uses a client-side DOM parser to isolate genuine editorial content. It automatically ignores non-content tags including header navigation, footer links, script bundles, and style sheets."
+      },
+      {
+        q: "What if a website blocks automated fetching or CORS?",
+        a: "If a website has strict CORS policies or requires login authentication, simply switch to the 'Paste Raw HTML' tab, open the page source (Ctrl+U or View Source), copy the HTML, and paste it directly for immediate local parsing."
+      },
+      {
+        q: "How many words should a webpage have for optimal SEO?",
+        a: "For informational articles and educational blogs, 1,200 to 2,500 words typically yields the highest search authority. Pillar guides often exceed 3,000 words, while homepages and landing pages remain concise at 400 to 1,000 words."
+      },
+      {
+        q: "Is my URL or scraped content stored anywhere?",
+        a: "No. All HTML parsing and metric aggregations are processed directly in your browser. No URLs or content are recorded on our servers."
+      }
+    ]}
+    disclaimerText="Website word count extraction relies on semantic HTML DOM tags. Content rendered asynchronously via JavaScript client-side frameworks or obfuscated canvas elements may require pasting raw source text."
+  />
 
   <script>
     import { calculateMetrics } from '../lib/metrics';

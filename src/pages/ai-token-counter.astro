@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WordCounter from '../components/WordCounter.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "AI Token Counter – Calculate Tokens & API Costs Online";
 const pageDescription = "Count tokens and estimate prompt costs for GPT-4o, Claude 3.5, Gemini, DeepSeek & Llama. Accurate BPE tokenization & live API pricing. 100% free & instant!";
@@ -142,4 +143,62 @@ const schema = {
 
     </div>
   </section>
+
+  <ToolAuthoritySection
+    toolName="AI Token Counter & API Pricing"
+    category="developer"
+    currentToolId="ai-token-counter"
+    compatibilityList={["OpenAI (GPT-4o / o3)", "Anthropic (Claude 3.7)", "Google (Gemini 2.0)", "DeepSeek (V3 / R1)", "Meta (Llama 3.3)", "Mistral AI", "LangChain / LlamaIndex", "Local Ollama"]}
+    guidelinesHeading="AI Prompt Tokenization & Context Window Standards"
+    guidelinesIntro="Large Language Models chunk prompts into sub-word tokens via Byte-Pair Encoding. Accurately counting tokens before sending requests prevents context overflow, lowers API latency, and eliminates bill shock."
+    steps={[
+      { step: "01", title: "Enter Prompt or Context", desc: "Paste your raw text, system prompts, JSON payloads, or source code directly into the token workbench." },
+      { step: "02", title: "Select AI Model & Tokenizer", desc: "Pick from 45+ model architectures including OpenAI o200k, Anthropic Claude, Gemini, or DeepSeek R1." },
+      { step: "03", title: "Review Cost & Context Capacity", desc: "Inspect exact token counts, character-to-token ratios, remaining context window headroom, and exact API cost in USD." }
+    ]}
+    specsHeading="Frontier AI Model Tokenizer & Pricing Specifications"
+    specsRows={[
+      ["OpenAI GPT-4o / 4o-mini", "o200k_base", "128,000 tokens", "$2.50 / $0.15 per 1M"],
+      ["Anthropic Claude 3.7 Sonnet", "Claude BPE", "200,000 tokens", "$3.00 per 1M"],
+      ["DeepSeek R1 / V3", "DeepSeek BPE", "64,000 / 128,000 tokens", "$0.55 per 1M"],
+      ["Google Gemini 2.0 Flash", "SentencePiece", "1,048,576 tokens", "$0.10 per 1M"],
+      ["Meta Llama 3.3 70B", "Tiktoken (128k vocab)", "128,000 tokens", "Open Weights / $0.20 per 1M"]
+    ]}
+    commonErrors={[
+      {
+        title: "Context Length Exceeded (400 Bad Request)",
+        cause: "Prompt plus system instructions exceeded maximum context window limit.",
+        fix: "Truncate earlier chat history or switch to 128k/200k extended context models."
+      },
+      {
+        title: "Multi-byte Character Token Inflation",
+        cause: "Special emojis, Asian languages, or math symbols consuming 2-4 tokens each.",
+        fix: "Sanitize prompt formatting or use models trained on expanded vocabularies (e.g. o200k_base)."
+      },
+      {
+        title: "Hidden System Message Cost Overrun",
+        cause: "Large system prompts running on every single API turn accumulating unexpected billing.",
+        fix: "Use prompt caching (Anthropic/OpenAI) or compress static system instructions."
+      }
+    ]}
+    faqs={[
+      {
+        q: "What is an AI token and how does it relate to words?",
+        a: "A token is a sequence of characters that an AI model reads as a single piece. In English, 1,000 tokens equals roughly 750 words (~4 characters per token). For source code or non-English languages, token density is higher."
+      },
+      {
+        q: "Which AI model tokenizers are supported?",
+        a: "We support official tokenization mappings for 45+ models across OpenAI (o200k, cl100k, p50k), Anthropic Claude, DeepSeek, Google Gemini, and Meta Llama."
+      },
+      {
+        q: "Is my prompt uploaded or saved to any external servers?",
+        a: "No. All token counts and cost projections are calculated 100% locally in your browser using client-side JavaScript. Your confidential prompts, keys, and documents never leave your machine."
+      },
+      {
+        q: "How accurate is the cost estimation?",
+        a: "Our pricing tables reflect current official API provider list prices per 1 million input tokens. Output generation cost will vary depending on your completion length."
+      }
+    ]}
+    disclaimerText="CleanWordCounter Token Counter provides algorithmic estimations based on standard Byte-Pair Encoding (BPE) vocabularies. Actual API charges may vary based on provider billing rules, cached prompts, and output token generation."
+  />
 </Layout>

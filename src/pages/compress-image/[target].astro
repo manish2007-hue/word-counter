@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ImageCompressor from '../../components/ImageCompressor.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 export function getStaticPaths() {
   const targets = [
@@ -144,51 +145,16 @@ const schema = {
   <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
     <ImageCompressor initialTargetKB={kb} initialFormat="jpeg" />
 
-    <!-- Specific Guide for this KB target -->
-    <article class="mt-16 mx-auto max-w-4xl space-y-10">
-      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-3">
-          Best Use Cases for {kb}KB Compression
-        </h2>
-        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed mb-4">
-          {useCase}
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[#ebebeb] dark:border-[#262626]">
-          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
-            <span class="block text-[11px] font-mono text-[#888888] uppercase">Target Cap</span>
-            <span class="text-sm font-semibold text-[#171717] dark:text-[#ededed] font-mono">&le; {kb} KB ({kb * 1024} bytes)</span>
-          </div>
-          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
-            <span class="block text-[11px] font-mono text-[#888888] uppercase">Privacy Standard</span>
-            <span class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">100% In-Browser (Local)</span>
-          </div>
-          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
-            <span class="block text-[11px] font-mono text-[#888888] uppercase">Optimal Format</span>
-            <span class="text-sm font-semibold text-[#0070f3]">JPEG / WebP</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ Section -->
-      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
-          Common Questions About Compressing to {kb}KB
-        </h2>
-        <div class="space-y-4">
-          <div class="border-b border-[#ebebeb] dark:border-[#262626] pb-3">
-            <h3 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed]">How does this ensure the file stays under {kb}KB?</h3>
-            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
-              Our compression engine measures the exact byte payload of the generated canvas blob. If the file is even 1 byte over {kb}KB, it automatically iterates to lower quantization or performs proportional downsampling until the file strictly meets your portal's restriction.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed]">Can I use this for photos taken on my iPhone or Android?</h3>
-            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
-              Yes. Modern smartphone cameras generate photos between 3MB and 12MB. CleanWordCounter decodes high-resolution captures in your device's GPU memory and compresses them down to {kb}KB in milliseconds.
-            </p>
-          </div>
-        </div>
-      </section>
-    </article>
+    <ToolAuthoritySection
+      toolName={`Compress Image to ${kb}KB`}
+      category="image"
+      currentToolId="compress-image"
+      guidelinesHeading={`Understanding ${kb}KB Image Compression Guidelines & Portal Requirements`}
+      guidelinesIntro={`When applying for online examinations and recruitment portals, candidate files must be strictly capped under ${kb}KB (${kb * 1024} bytes). Our in-browser compressor quantizes the image to remain safely within the ${kb}KB ceiling without introducing pixelation or border distortion.`}
+      guidelinesDetails={[
+        useCase,
+        `If your file is rejected for exceeding ${kb}KB, our binary quantization search automatically converges on the highest resolution that passes automated portal verification on the first attempt.`
+      ]}
+    />
   </main>
 </Layout>

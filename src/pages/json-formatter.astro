@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "JSON Formatter & Validator – 100% Private In-Browser Tool";
 const pageDescription = "Beautify, minify, validate, and repair JSON online. Fast, zero-server privacy, syntax error line detection, and key sorting. Free client-side JSON editor!";
@@ -194,22 +195,16 @@ const schema = {
     </div>
   </div>
 
-  <!-- Technical Guide Section -->
-  <section class="border-t border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#000000] py-16 sm:py-20 transition-colors duration-200">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 space-y-10">
-      <div class="rounded-xl border border-[#e2e4e8] dark:border-[#23252a] bg-white dark:bg-[#0f1011] p-6 sm:p-8 space-y-4">
-        <h2 class="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#171717] dark:text-[#ededed]">
-          Why Client-Side JSON Formatting Matters for Privacy
-        </h2>
-        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
-          Standard web-based JSON formatters frequently send your payloads to backend servers where logs, analytics, or third-party observability agents may capture confidential customer data, authorization tokens, database configurations, and personal identities.
-        </p>
-        <p class="text-xs sm:text-sm text-[#4c515a] dark:text-[#8a8f98] leading-relaxed">
-          CleanWordCounter runs the entire parsing, serialization, indentation, and key-sorting pipelines directly within your browser's V8 or JavaScriptCore runtime. No network requests are made, ensuring complete compliance with SOC2, GDPR, and enterprise privacy standards.
-        </p>
-      </div>
-    </div>
-  </section>
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <ToolAuthoritySection
+      toolName="JSON Formatter & Validator"
+      category="developer"
+      currentToolId="json-formatter"
+      guidelinesHeading="Understanding JSON Syntax Standards & Validation Best Practices"
+      guidelinesIntro="Standard web formatters frequently send confidential API keys, customer database records, and authorization tokens to remote backend servers where they can be logged or leaked. Our JSON Formatter parses, validates, minifies, and formats data 100% inside your local browser memory with zero network requests."
+    />
+  </div>
 
   <!-- Interactive Script -->
   <script is:inline>

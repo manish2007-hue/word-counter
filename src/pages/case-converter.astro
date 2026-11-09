@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Case Converter Online – UPPERCASE, Title & Sentence Case";
 const pageDescription = "Transform text between UPPERCASE, lowercase, Title Case, Sentence case & camelCase in one click. Free, instant, copy-ready, and 100% private in your browser!";
@@ -258,6 +259,65 @@ const schema = {
       </div>
     </div>
   </div>
+
+  <ToolAuthoritySection
+    toolName="Case Converter & Text Capitalizer"
+    category="cleaning"
+    currentToolId="case-converter"
+    compatibilityList={["AP Stylebook", "Chicago Manual of Style", "TypeScript / JavaScript", "Python PEP 8", "SQL Databases", "WordPress / CMS Slugs", "Academic Papers", "Social Media Captions"]}
+    guidelinesHeading="Text Case Formatting & Typography Standards"
+    guidelinesIntro="Consistency in casing makes documents professional and codebases readable. Capitalization standards differ between headlines, titles, software source code identifiers, and URL routing slugs."
+    steps={[
+      { step: "01", title: "Paste Text or Code", desc: "Input or paste any raw paragraph, headline, variable list, or messy sentences into the converter workbench." },
+      { step: "02", title: "Select Case Format", desc: "Click any case button: Title Case, Sentence case, UPPERCASE, lowercase, camelCase, snake_case, or kebab-case." },
+      { step: "03", title: "Instant Copy or Download", desc: "Copy the formatted text with one click or download as a .txt file. All operations run 100% locally in your browser." }
+    ]}
+    specsHeading="Standard Text Case Formatting Specifications"
+    specsRows={[
+      ["Title Case (AP / Chicago)", "Capitalize primary words; keep short articles & prepositions lowercase", "Headlines, book titles, email subject lines"],
+      ["Sentence case", "Capitalize first character after terminal punctuation (. ? !)", "Standard prose, user interface copy, bullet points"],
+      ["camelCase", "First word lowercase, subsequent sub-words capitalized", "JavaScript, TypeScript, Java variables"],
+      ["snake_case", "All lowercase separated by underscores", "Python variables, PostgreSQL column names"],
+      ["kebab-case", "All lowercase separated by hyphens", "URL slugs, CSS class selectors, HTML attributes"],
+      ["CONSTANT_CASE", "All uppercase separated by underscores", "Global constants, environment variables (.env)"]
+    ]}
+    commonErrors={[
+      {
+        title: "Inadvertent Acronym Lowercasing",
+        cause: "Sentence case converting recognized acronyms like NASA, SEO, or API to lowercase.",
+        fix: "Re-capitalize domain acronyms or review before final export."
+      },
+      {
+        title: "Special Character Stripping in Code Cases",
+        cause: "Converting sentences with symbols (@, $, #) into camelCase or snake_case drops punctuation.",
+        fix: "Clean up or substitute punctuation before applying programming case transformations."
+      },
+      {
+        title: "Title Case Preposition Rules",
+        cause: "Unintentional capitalization of 2-letter prepositions like 'in', 'on', or 'at' in article titles.",
+        fix: "Use our AP-compliant Title Case mode which automatically preserves lowercase prepositions."
+      }
+    ]}
+    faqs={[
+      {
+        q: "What is the difference between Title Case and Capitalized Words?",
+        a: "Capitalized Words capitalizes every single word indiscriminately. Title Case complies with AP and Chicago manuals, keeping minor articles, conjunctions, and prepositions (a, an, the, and, but, or, for, in, on, at, to) lowercase unless they start the phrase."
+      },
+      {
+        q: "Can I convert text directly into code variable names?",
+        a: "Yes! You can instantly convert plain phrases into camelCase (for JavaScript/TypeScript), PascalCase (for React components), snake_case (for Python/SQL), or kebab-case (for URL slugs and CSS classes)."
+      },
+      {
+        q: "Does this tool support bulk text?",
+        a: "Yes, there is no character or word limit. You can paste thousands of lines at once and transform them instantaneously."
+      },
+      {
+        q: "Is my text data stored or sent to any server?",
+        a: "No. All text transformations occur client-side in your browser's JavaScript engine. No data is stored, logged, or transmitted."
+      }
+    ]}
+    disclaimerText="Case conversion is applied deterministically using standard Unicode case-mapping and AP/Chicago style rules. Language-specific capitalization (e.g. German nouns) should be verified manually."
+  />
 
   <script>
     const textarea = document.getElementById('case-input') as HTMLTextAreaElement;

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 export function getStaticPaths() {
   const counts = [
@@ -263,4 +264,63 @@ const schema = {
       </div>
     </div>
   </main>
+
+  <ToolAuthoritySection
+    toolName={`${words.toLocaleString()} Words Speech & Presentation Calculator`}
+    category="writing"
+    currentToolId="words-to-speaking-time"
+    compatibilityList={["TED Talk Cadence (150 WPM)", "Toastmasters International", "Keynote Addresses (100 WPM)", "Audiobook Narration (140-150 WPM)", "Podcast Conversations", "Broadcast News (130-140 WPM)", "Slide Deck Presentations", "Teleprompter Scripts"]}
+    guidelinesHeading={`Speech Pacing & Rehearsal Guidelines for ${words.toLocaleString()} Words`}
+    guidelinesIntro={`Delivering ${words.toLocaleString()} words takes an average speaker approximately ${normalDuration} at standard conversational cadence (130 WPM). Formal keynotes average ${slowDuration} (100 WPM) to allow room for audience reactions and pauses.`}
+    steps={[
+      { step: "01", title: "Input Script or Word Goal", desc: `Review the ${words.toLocaleString()}-word benchmark or paste your full speech script into the live timer.` },
+      { step: "02", title: "Calibrate Delivery Cadence", desc: "Select between Slow/Deliberate (100 WPM), Conversational (130 WPM), or Fast Pitch (160 WPM)." },
+      { step: "03", title: "Plan Slide Deck & Rehearsal", desc: `Budget approximately ${recommendedSlides} presentation slides (~90 seconds per slide) and mark 2-second breathing pauses.` }
+    ]}
+    specsHeading={`${words.toLocaleString()} Words Cadence & Presentation Specifications`}
+    specsRows={[
+      ["Conversational Pace (Normal)", "130 words per minute", `${normalDuration} total speaking duration`],
+      ["Deliberate Keynote / Lecture (Slow)", "100 words per minute", `${slowDuration} total speaking duration`],
+      ["Fast Pitch / Auction (Fast)", "160 words per minute", `${fastDuration} total speaking duration`],
+      ["Recommended Slide Deck", "1 slide every 1.5 minutes", `~${recommendedSlides} slides total`],
+      ["Double-Spaced Script", "250 words per page (12pt font)", `${(words / 250).toFixed(1)} printed script pages`],
+      ["Silent Reading Velocity", "238 words per minute", `${silentDuration} silent review time`]
+    ]}
+    commonErrors={[
+      {
+        title: "Speaking 30% Faster Under Stage Adrenaline",
+        cause: "Nervous adrenaline unconsciously rushing delivery and finishing minutes ahead of schedule.",
+        fix: "Annotate 2-second breath markers ([PAUSE]) directly into your speaker notes."
+      },
+      {
+        title: "Slide Overload Causing Audience Attention Split",
+        cause: "Advancing slides too frequently competing with your spoken verbal explanations.",
+        fix: `Target no more than ${recommendedSlides} slides for a ${words.toLocaleString()} word speech.`
+      },
+      {
+        title: "Small Font Size on Teleprompters",
+        cause: "Using default 12pt document text leading to squinting and lost place on stage.",
+        fix: "Format script in 16pt or 18pt font with double-spacing and numbered paragraphs."
+      }
+    ]}
+    faqs={[
+      {
+        q: `How long is a ${words.toLocaleString()} word speech?`,
+        a: `At an average conversational pace of 130 words per minute, a ${words.toLocaleString()} word speech takes ${normalDuration}. At a deliberate keynote pace of 100 WPM, it takes ${slowDuration}.`
+      },
+      {
+        q: `How many slides do I need for ${words.toLocaleString()} words?`,
+        a: `We recommend approximately ${recommendedSlides} slides. The general public speaking rule of thumb is one slide every 1.5 to 2 minutes.`
+      },
+      {
+        q: `How many double-spaced pages is a ${words.toLocaleString()} word speech?`,
+        a: `In standard 12pt font with double spacing, ${words.toLocaleString()} words is approximately ${(words / 250).toFixed(1)} pages.`
+      },
+      {
+        q: `What speaking speed does TED talk speakers use?`,
+        a: `Most TED speakers maintain a measured pace between 130 and 150 words per minute, incorporating deliberate pauses for laughter, reflection, and audience absorption.`
+      }
+    ]}
+    disclaimerText="Speaking times are calculated based on standard public speaking cadence (130 WPM). Rehearse aloud with a stopwatch to adjust for natural pauses, audience interaction, and personal tempo."
+  />
 </Layout>

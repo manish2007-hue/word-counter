@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Remove Line Breaks Online – Clean Broken Text Instantly";
 const pageDescription = "Fix broken line breaks, PDF copy-paste wraps & carriage returns in 1 click. Preserve paragraphs or merge into a single line. 100% free, instant & private!";
@@ -143,6 +144,63 @@ const schema = {
 
     </div>
   </div>
+
+  <ToolAuthoritySection
+    toolName="Line Break Remover & Text Joiner"
+    category="cleaning"
+    currentToolId="remove-line-breaks"
+    compatibilityList={["PDF Column Wraps", "Email Client Wraps", "Terminal & SSH Logs", "Microsoft Word", "Google Docs", "Markdown Documents", "Spreadsheet Cells", "Chat Messages"]}
+    guidelinesHeading="Text Unwrapping & Line Break Formatting Standards"
+    guidelinesIntro="Pasting text from PDF columns, OCR readers, or terminal windows often introduces unwanted hard carriage returns. Stripping unnatural line wraps while preserving true paragraph breaks restores continuous prose flow."
+    steps={[
+      { step: "01", title: "Paste Broken Text", desc: "Paste text copied from PDF files, emails, or spreadsheets that suffer from erratic line wrapping." },
+      { step: "02", title: "Select Unwrapping Mode", desc: "Choose 'Remove Breaks & Keep Paragraphs' to preserve paragraph indentations, or 'Remove ALL Breaks' to collapse into a single line." },
+      { step: "03", title: "Instant Copy or Clean", desc: "Copy the repaired continuous prose directly to your clipboard or send to additional text cleaning tools." }
+    ]}
+    specsHeading="Line Break Unwrapping Specifications"
+    specsRows={[
+      ["Smart Paragraph Mode", "Joins single returns (\\n) into spaces while preserving double returns (\\n\\n)", "PDF text, academic papers, books"],
+      ["All Breaks (Single Line)", "Collapses all carriage returns (\\r\\n, \\n) into a single continuous string", "Spreadsheet cells, SQL queries, URLs"],
+      ["Strip Extra Spaces", "Reduces consecutive spaces and tabs into a single clean space", "OCR transcripts, scan cleanups"],
+      ["Execution Environment", "100% In-Browser Memory (Client-Side Regex)", "No character limits, instant processing"]
+    ]}
+    commonErrors={[
+      {
+        title: "Merged Paragraph Blocks",
+        cause: "Using 'Remove ALL Breaks' on multiple distinct paragraphs compressing the entire document into one block.",
+        fix: "Use 'Remove Breaks & Keep Paragraphs' mode which distinguishes between single and double line returns."
+      },
+      {
+        title: "Residual Hyphenated Words from PDF Margins",
+        cause: "Words broken across lines like 'con- sidering' retaining orphan hyphens.",
+        fix: "Use our Clean Text tool to automatically detect and reassemble hyphenated line endings."
+      },
+      {
+        title: "Stray Multiple Spaces",
+        cause: "Carriage returns replaced by spaces leaving 2-3 consecutive whitespace characters.",
+        fix: "Click 'Strip Extra Spaces' to normalize all whitespace down to single standard spaces."
+      }
+    ]}
+    faqs={[
+      {
+        q: "How do I remove line breaks from a PDF without losing paragraphs?",
+        a: "Use the 'Remove Breaks & Keep Paragraphs' button. Our regex engine detects whether a line break is a hard column wrap (single newline) or an intended paragraph break (double newline), preserving your document structure."
+      },
+      {
+        q: "Why does copying text from a PDF have so many line breaks?",
+        a: "PDF documents store text with fixed physical coordinates rather than continuous reflowable text. When you highlight and copy text across narrow PDF columns, the clipboard captures every line ending as a hard carriage return."
+      },
+      {
+        q: "Can I use this tool to put everything on a single line?",
+        a: "Yes! Click 'Remove ALL Breaks (Single Line)' to collapse all paragraphs and newlines into one single continuous line of text, ideal for spreadsheet cells or single-line code inputs."
+      },
+      {
+        q: "Is my copied text uploaded to any server?",
+        a: "No. Everything runs 100% client-side in your web browser. No data ever leaves your device."
+      }
+    ]}
+    disclaimerText="Line break removal utilizes standard POSIX/Unicode regex patterns. Text containing specialized code indents or tabular whitespace should be validated after stripping."
+  />
 
   <script>
     const textarea = document.getElementById('breaks-input') as HTMLTextAreaElement;

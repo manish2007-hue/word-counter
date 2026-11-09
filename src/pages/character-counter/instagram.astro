@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WordCounter from '../../components/WordCounter.astro';
+import ToolAuthoritySection from '../../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Instagram Character Counter – 2,200 Caption & 30 Hashtag Limit";
 const pageDescription = "Free Instagram character counter. Track the 2,200 character caption limit, 125-character above-the-fold cutoff, and 30 hashtag maximum in real time.";
@@ -63,4 +64,15 @@ const schema = {
   </div>
 
   <WordCounter initialTab="social" initialTarget={2200} showHeroCopy={false} />
+
+  <!-- Authority Guide, Matrix, Portal Errors, FAQs, and Related Utilities -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+    <ToolAuthoritySection
+      toolName="Instagram Character & Caption Counter"
+      category="social"
+      currentToolId="social-media-counter"
+      guidelinesHeading="Understanding Instagram Caption Limits & Above-the-Fold Feeds"
+      guidelinesIntro="While Instagram permits captions up to 2,200 characters and up to 30 hashtags, mobile feeds truncate all text after the first 125 characters behind a '...more' link. Positioning your primary value proposition and call-to-action in the first 125 characters is critical for feed engagement."
+    />
+  </div>
 </Layout>

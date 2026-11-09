@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ToolAuthoritySection from '../components/ToolAuthoritySection.astro';
 
 const pageTitle = "Image Converter – Convert PNG to JPG, WebP to PNG, JPG to WebP Free";
 const pageDescription = "Convert images instantly between PNG, JPG, and WebP in your browser. 100% free, private batch image format converter with quality control and zero file uploads.";
@@ -147,6 +148,63 @@ const schema = {
       </div>
     </div>
   </main>
+
+  <ToolAuthoritySection
+    toolName="Image Format Converter"
+    category="image"
+    currentToolId="image-converter"
+    compatibilityList={["PNG Lossless", "JPG / JPEG", "Google WebP", "Social Media Graphics", "Government Portals", "E-Commerce Stores", "WordPress Media Library", "HTML5 Canvas Engine"]}
+    guidelinesHeading="Image Format Conversion & Compression Standards"
+    guidelinesIntro="Different web platforms and official portals mandate specific image encodings. Converting PNGs to JPG or WebP reduces file size by up to 80% while retaining crisp visual fidelity."
+    steps={[
+      { step: "01", title: "Select Output Format", desc: "Choose your destination file type: JPG (maximum compatibility), PNG (lossless transparency), or WebP (modern web compression)." },
+      { step: "02", title: "Drop or Select Images", desc: "Drag single or multiple image files into the canvas dropzone. Supports batch conversion simultaneously." },
+      { step: "03", title: "Instant Download", desc: "Fine-tune the output quality slider and download converted files individually or as a batch with zero upload latency." }
+    ]}
+    specsHeading="Raster Image Format Comparison Specifications"
+    specsRows={[
+      ["JPG / JPEG", "Lossy compression with adjustable quality 10-100%", "Universal portal compatibility, photos, no alpha"],
+      ["PNG", "Lossless RGB & RGBA with transparency support", "Logos, screenshots, graphics requiring transparent bg"],
+      ["WebP (Google)", "Next-gen modern lossy/lossless container", "25-35% smaller than JPG/PNG, supported by all browsers"],
+      ["HTML5 Canvas Pipeline", "100% in-browser memory rasterization", "Zero network round-trips, infinite privacy"]
+    ]}
+    commonErrors={[
+      {
+        title: "Black Background on PNG to JPG Conversion",
+        cause: "JPG does not support transparency channels, turning alpha areas black.",
+        fix: "Our converter automatically blends transparent layers onto clean white canvas before encoding."
+      },
+      {
+        title: "Browser Incompatibility with Ancient Viewers",
+        cause: "Older legacy software failing to open next-gen WebP images.",
+        fix: "Convert WebP images back to universal standard JPG or PNG format."
+      },
+      {
+        title: "Oversized File Size After Converting JPG to PNG",
+        cause: "PNG uses lossless algorithms which cannot compress photographic noise as efficiently as JPG.",
+        fix: "Keep photographs in JPG or WebP format for optimal lightweight web delivery."
+      }
+    ]}
+    faqs={[
+      {
+        q: "How do I convert WebP images back to JPG or PNG?",
+        a: "Select 'JPG' or 'PNG' at the top, drop your WebP image into the dropzone, and click Download. Your browser instantly renders the pixels and outputs standard image files."
+      },
+      {
+        q: "Does converting an image to PNG improve its quality?",
+        a: "No. Converting from a lossy format (like JPG) to PNG prevents further quality degradation during re-saves, but cannot restore previously compressed pixel data."
+      },
+      {
+        q: "Are my private photos uploaded to a remote server?",
+        a: "Never. CleanWordCounter processes all image encoding locally inside your browser's HTML5 Canvas sandbox. Your photos never leave your device."
+      },
+      {
+        q: "Can I convert multiple images at once?",
+        a: "Yes! You can drop dozens of images at the same time and convert them with batch download."
+      }
+    ]}
+    disclaimerText="Image rendering and format conversion execute entirely client-side via the HTML5 2D Canvas API. No photos are transmitted or stored on external servers."
+  />
 </Layout>
 
 <script>
