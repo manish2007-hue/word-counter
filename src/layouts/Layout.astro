@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
+import LanguagePicker from '../components/LanguagePicker.astro';
 import { TOOLS_LIST } from '../lib/toolsData';
+import { getLangFromUrl, useTranslations, useTranslatedPath, getHreflangAlternates } from '../i18n/utils';
+import { defaultLang, type SupportedLang } from '../i18n/ui';
 
 interface Props {
   title?: string;
@@ -11,6 +14,7 @@ interface Props {
   ogImage?: string;
   ogType?: string;
   schema?: Record<string, any>;
+  lang?: SupportedLang;
 }
 
 const {
@@ -21,14 +25,35 @@ const {
   ogImage,
   ogType = 'website',
   schema,
+  lang,
 } = Astro.props;
+
+const currentLang: SupportedLang = lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isHome = canonicalSlug === '';
 const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://cleanwordcounter.com';
 const siteUrl = base ? `${siteOrigin}${base}` : siteOrigin;
 const cleanSlug = canonicalSlug ? canonicalSlug.replace(/^\/+|\/+$/g, '') : '';
-const canonicalUrl = cleanSlug ? `${siteUrl}/${cleanSlug}/` : `${siteUrl}/`;
+const localizedSlugPath = currentLang === defaultLang 
+  ? (cleanSlug ? `${cleanSlug}/` : '') 
+  : `${currentLang}/${cleanSlug ? cleanSlug + '/' : ''}`;
+const canonicalUrl = `${siteUrl}/${localizedSlugPath}`;
+const hreflangAlternates = getHreflangAlternates(cleanSlug, siteUrl);
+
+const ogLocales: Record<SupportedLang, string> = {
+  en: 'en_US',
+  es: 'es_ES',
+  ja: 'ja_JP',
+  fr: 'fr_FR',
+  de: 'de_DE',
+  pt: 'pt_BR',
+  ko: 'ko_KR',
+  it: 'it_IT',
+};
+const ogLocale = ogLocales[currentLang] || 'en_US';
 const ogImageUrl = ogImage || `${siteUrl}/og-image.png`;
 
 const isTool = [
@@ -83,7 +108,7 @@ const finalSchema = schema || defaultSchema;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <meta charset="UTF-8" />
     <!-- Google tag (gtag.js) -->
@@ -117,13 +142,18 @@ const finalSchema = schema || defaultSchema;
     <meta name="keywords" content={keywords} />
     <link rel="canonical" href={canonicalUrl} />
 
+    <!-- Multilingual Hreflang Tags (Google SEO & Internationalization) -->
+    {hreflangAlternates.map(alt => (
+      <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+    ))}
+
     <!-- OpenGraph Protocols -->
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="CleanWordCounter" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:secure_url" content={ogImageUrl} />
     <meta property="og:image:type" content="image/png" />
@@ -169,7 +199,7 @@ const finalSchema = schema || defaultSchema;
         
         <!-- Left Brand Logo -->
         <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-          <a href={`${base}/`} class="group flex items-center gap-2" aria-label="CleanWordCounter Home">
+          <a href={translatePath('/', currentLang)} class="group flex items-center gap-2" aria-label="CleanWordCounter Home">
             <Logo size={24} class="transition-transform group-hover:scale-105 active:scale-95" />
             <div class="flex items-center gap-1.5 sm:gap-2">
               <span class="text-[15px] font-semibold tracking-tight text-[#171717] dark:text-[#ededed]">Clean<span class="text-[#0070f3]">WordCounter</span></span>
@@ -185,20 +215,20 @@ const finalSchema = schema || defaultSchema;
           
           <!-- Primary Tool: Word Counter -->
           <a
-            href={`${base}/`}
+            href={translatePath('/', currentLang)}
             class={`whitespace-nowrap px-3 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === ''
                 ? 'text-[#171717] dark:text-white bg-[#f0f0f0] dark:bg-[#1c1c1c] font-semibold'
                 : 'hover:text-[#171717] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            Word Counter
+            {t('nav.wordCounter')}
           </a>
 
           <!-- Tools Dropdown Tab: All 25 tools neatly categorized under it -->
           <div class="relative group" id="nav-tools-menu">
             <a
-              href={`${base}/tools`}
+              href={translatePath('/tools', currentLang)}
               id="tools-menu-btn"
               class={`flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] transition-colors cursor-pointer ${
                 isTool
@@ -207,7 +237,7 @@ const finalSchema = schema || defaultSchema;
               }`}
               aria-haspopup="true"
             >
-              <span>Tools</span>
+              <span>{t('nav.tools')}</span>
               <span class="rounded-full bg-black/5 dark:bg-white/10 text-[#171717] dark:text-white px-1.5 py-0.2 font-mono text-[10px] font-semibold">29</span>
               <svg class="h-3 w-3 text-[#888888] transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -409,47 +439,47 @@ const finalSchema = schema || defaultSchema;
           </a>
 
           <a
-            href={`${base}/about`}
+            href={translatePath('/about', currentLang)}
             class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === 'about'
                 ? 'text-[#111111] dark:text-white bg-[#ececee] dark:bg-[#202022] font-semibold shadow-2xs'
                 : 'text-[#71717a] dark:text-[#a1a1aa] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            About
+            {t('nav.about')}
           </a>
 
           <a
-            href={`${base}/contact`}
+            href={translatePath('/contact', currentLang)}
             class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === 'contact'
                 ? 'text-[#111111] dark:text-white bg-[#ececee] dark:bg-[#202022] font-semibold shadow-2xs'
                 : 'text-[#71717a] dark:text-[#a1a1aa] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            Contact
+            {t('nav.contact')}
           </a>
 
           <a
-            href={`${base}/privacy`}
+            href={translatePath('/privacy', currentLang)}
             class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === 'privacy' || canonicalSlug === 'privacy-policy'
                 ? 'text-[#111111] dark:text-white bg-[#ececee] dark:bg-[#202022] font-semibold shadow-2xs'
                 : 'text-[#71717a] dark:text-[#a1a1aa] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            Privacy
+            {t('nav.privacy')}
           </a>
 
           <a
-            href={`${base}/terms`}
+            href={translatePath('/terms', currentLang)}
             class={`whitespace-nowrap px-2.5 py-1.5 rounded-[6px] transition-colors ${
               canonicalSlug === 'terms'
                 ? 'text-[#111111] dark:text-white bg-[#ececee] dark:bg-[#202022] font-semibold shadow-2xs'
                 : 'text-[#71717a] dark:text-[#a1a1aa] hover:text-[#111111] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
             }`}
           >
-            Terms
+            {t('nav.terms')}
           </a>
 
         </nav>
@@ -458,9 +488,9 @@ const finalSchema = schema || defaultSchema;
         <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
           <!-- Trust Privacy Pill (Vercel Mono Spec-sheet Badge) -->
-          <div class="hidden 2xl:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#23252a] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title="100% Client-Side. Your text never leaves your device.">
+          <div class="hidden 2xl:flex items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#23252a] bg-white dark:bg-[#0a0a0a] px-2.5 py-1 font-mono text-[11px] font-medium text-[#4d4d4d] dark:text-[#a1a1a1]" title={t('trust.title')}>
             <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
-            <span>100% Local</span>
+            <span>{t('trust.pill')}</span>
           </div>
 
           <!-- Command Palette Trigger (Cmd+K / Ctrl+K) -->
@@ -492,6 +522,9 @@ const finalSchema = schema || defaultSchema;
             <span class="text-[10px] hidden md:inline">Shortcuts</span>
             <kbd class="text-[9px] px-1 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1f1f1f] text-[#71717a] dark:text-[#a1a1aa] border border-[#e4e4e7] dark:border-[#333]">?</kbd>
           </button>
+
+          <!-- Language Selector -->
+          <LanguagePicker currentLang={currentLang} canonicalSlug={cleanSlug} />
 
           <!-- Theme Toggle Button (Vercel 6px Square Icon Button) -->
           <button

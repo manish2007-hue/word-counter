@@ -1,0 +1,115 @@
+---
+import { languages, type SupportedLang } from '../i18n/ui';
+import { useTranslatedPath } from '../i18n/utils';
+
+interface Props {
+  currentLang?: SupportedLang;
+  canonicalSlug?: string;
+}
+
+const { currentLang = 'en', canonicalSlug = '' } = Astro.props;
+const translatePath = useTranslatedPath(currentLang);
+
+const languageCodes: Record<SupportedLang, string> = {
+  en: 'EN',
+  es: 'ES',
+  ja: 'JA',
+  fr: 'FR',
+  de: 'DE',
+  pt: 'PT',
+  ko: 'KO',
+  it: 'IT',
+};
+---
+
+<div class="relative" id="lang-picker-container">
+  <!-- Language Trigger Button -->
+  <button
+    id="lang-picker-btn"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+    aria-label="Change language"
+    title="Change language / Cambiar idioma"
+    class="flex h-8 items-center gap-1.5 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-2 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] dark:hover:text-[#ededed] hover:border-[#171717] dark:hover:border-white transition cursor-pointer text-xs font-mono"
+  >
+    <!-- Globe Icon -->
+    <svg class="h-3.5 w-3.5 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+    </svg>
+    <span class="font-semibold text-[#171717] dark:text-[#ededed]">{languageCodes[currentLang] || 'EN'}</span>
+    <svg class="h-3 w-3 text-[#888888] transition-transform duration-200" id="lang-picker-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Language Dropdown Menu -->
+  <div
+    id="lang-picker-menu"
+    class="hidden absolute right-0 top-full mt-1.5 z-50 w-44 rounded-[10px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#1c1c1c] p-1.5 shadow-xl"
+  >
+    <div class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-[#888888] border-b border-[#ebebeb] dark:border-[#262626] mb-1">
+      Select Language
+    </div>
+    <ul class="space-y-0.5 text-xs">
+      {Object.entries(languages).map(([langKey, label]) => {
+        const isCurrent = langKey === currentLang;
+        const targetUrl = translatePath(canonicalSlug, langKey as SupportedLang);
+        return (
+          <li>
+            <a
+              href={targetUrl}
+              class={`flex items-center justify-between rounded-[6px] px-2.5 py-1.5 transition ${
+                isCurrent
+                  ? 'bg-[#0070f3]/10 text-[#0070f3] font-semibold'
+                  : 'text-[#171717] dark:text-[#ededed] hover:bg-[#f5f5f5] dark:hover:bg-[#252525]'
+              }`}
+            >
+              <span>{label}</span>
+              <span class="font-mono text-[10px] text-[#888888] uppercase">{langKey}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</div>
+
+<script>
+  function setupLangPicker() {
+    const btn = document.getElementById('lang-picker-btn');
+    const menu = document.getElementById('lang-picker-menu');
+    const chevron = document.getElementById('lang-picker-chevron');
+    if (!btn || !menu) return;
+
+    function toggleMenu(e: Event) {
+      e.stopPropagation();
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) {
+        menu.classList.add('hidden');
+        btn?.setAttribute('aria-expanded', 'false');
+        chevron?.classList.remove('rotate-180');
+      } else {
+        menu.classList.remove('hidden');
+        btn?.setAttribute('aria-expanded', 'true');
+        chevron?.classList.add('rotate-180');
+      }
+    }
+
+    function closeMenu() {
+      menu?.classList.add('hidden');
+      btn?.setAttribute('aria-expanded', 'false');
+      chevron?.classList.remove('rotate-180');
+    }
+
+    btn.addEventListener('click', toggleMenu);
+    document.addEventListener('click', (e) => {
+      if (!btn.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        closeMenu();
+      }
+    });
+  }
+
+  setupLangPicker();
+  document.addEventListener('astro:page-load', setupLangPicker);
+</script>
