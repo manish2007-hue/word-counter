@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "YouTube Character Counter – Title (100) & Description (5,000) Limit";
+const pageDescription = "Check your YouTube video title (100 char limit), description (5,000 char ceiling), and search tags (500 chars). Free YouTube SEO character counter.";
+const pageKeywords = "youtube character counter, youtube title character limit, youtube description length checker, youtube tag character counter, youtube seo character limit";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "YouTube Video Title & Description Character Counter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for YouTube video titles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "YouTube allows up to 100 characters in video titles. However, YouTube truncates titles over 70 characters on mobile search and suggested feeds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the YouTube description character limit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "YouTube descriptions allow up to 5,000 characters. The first 100-157 characters appear before the 'Show more' button in search snippets."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/youtube"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+      <span>100 Title &bull; 5,000 Description &bull; 500 Tags</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      YouTube <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Craft high-CTR titles (within <strong class="text-[#0070f3] font-mono">70-100 chars</strong>) and SEO-optimized descriptions (<strong class="text-[#0070f3] font-mono">5,000 chars</strong>).
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" initialTarget={100} showHeroCopy={false} />
+</Layout>

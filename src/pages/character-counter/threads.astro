@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "Threads Character Counter – 500 Character Limit Checker";
+const pageDescription = "Count characters for Threads by Instagram. Track the 500-character post limit with live character warnings and link detection. Free & 100% private.";
+const pageKeywords = "threads character counter, threads character limit, check threads post length, threads 500 character checker, meta threads counter";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Threads Post Character Counter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for Meta Threads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Threads allows up to 500 characters per post, giving you almost double the space of a standard 280-character X/Twitter tweet."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/threads"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#171717] dark:text-[#ededed] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#171717] dark:bg-white"></span>
+      <span>500-Character Maximum Pacing</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Threads <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Craft sharp micro-essays and commentary within the <strong class="text-[#0070f3] font-mono">500 character ceiling</strong>.
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" initialTarget={500} showHeroCopy={false} />
+</Layout>

@@ -1,0 +1,528 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Image to PDF Converter – Convert JPG, PNG to PDF 100% Free & Private";
+const pageDescription = "Convert images (JPG, PNG, WebP) to clean single or multi-page PDF documents in your browser. A4, US Letter, and Fit-to-Page options with zero server uploads.";
+const pageKeywords = "image to pdf, convert jpg to pdf, convert png to pdf, photo to pdf free, merge images into pdf, multi page pdf maker, jpg to pdf converter online";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Free In-Browser Image to PDF Converter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/image-to-pdf/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to convert photos into a single PDF document?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload one or multiple photos, select your preferred page size (Fit Image, A4, or US Letter), arrange the order of your pages, and click 'Download PDF'. Your browser compiles the PDF directly in memory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my sensitive scanned documents private?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100%. Our tool runs completely offline in your browser's local memory. None of your photos, bank statements, or certificates are ever uploaded to any server."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="image-to-pdf"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Multi-Page PDF Synthesizer &bull; 100% In-Browser Privacy</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Image to <span class="vercel-gradient-develop">PDF Converter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Convert <strong class="font-mono text-[#0070f3]">JPG</strong>, <strong class="font-mono text-[#0070f3]">PNG</strong>, and <strong class="font-mono text-[#0070f3]">WebP</strong> photos into clean, high-resolution PDF documents. 100% private, client-side rendering.
+    </p>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- PDF Settings Bar -->
+      <div class="rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 sm:p-5 shadow-2xs mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <!-- Page Format -->
+          <div>
+            <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-1.5">
+              Page Size
+            </label>
+            <select id="pdf-size-select" class="w-full rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] px-3 py-2 text-xs font-medium text-[#171717] dark:text-[#ededed] focus:border-[#0070f3] focus:outline-none">
+              <option value="fit" selected>Fit to Image (No Borders)</option>
+              <option value="a4-portrait">A4 Portrait (Standard Document)</option>
+              <option value="a4-landscape">A4 Landscape</option>
+              <option value="us-letter">US Letter</option>
+            </select>
+          </div>
+
+          <!-- Margins -->
+          <div>
+            <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-1.5">
+              Margins
+            </label>
+            <select id="pdf-margin-select" class="w-full rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] px-3 py-2 text-xs font-medium text-[#171717] dark:text-[#ededed] focus:border-[#0070f3] focus:outline-none">
+              <option value="0" selected>No Margin (Full Bleed)</option>
+              <option value="20">Small (10 mm)</option>
+              <option value="40">Standard (20 mm)</option>
+            </select>
+          </div>
+
+          <!-- Compression Quality -->
+          <div>
+            <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-1.5">
+              Quality / File Size
+            </label>
+            <select id="pdf-quality-select" class="w-full rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] px-3 py-2 text-xs font-medium text-[#171717] dark:text-[#ededed] focus:border-[#0070f3] focus:outline-none">
+              <option value="0.92" selected>High Quality (Recommended)</option>
+              <option value="0.75">Compressed (Smaller PDF size)</option>
+              <option value="0.55">Maximum Compression (Exam portals &lt; 200KB)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropzone -->
+      <div
+        id="pdf-dropzone"
+        class="relative cursor-pointer rounded-2xl border-2 border-dashed border-[#d1d5db] dark:border-[#333333] hover:border-[#0070f3] dark:hover:border-[#0070f3] bg-white dark:bg-[#0a0a0a] transition-all p-8 sm:p-12 text-center group"
+      >
+        <input type="file" id="pdf-file-input" multiple accept="image/*" class="hidden" />
+        
+        <div class="flex flex-col items-center justify-center pointer-events-none">
+          <div class="w-14 h-14 rounded-full bg-[#f4f4f5] dark:bg-[#1a1a1a] flex items-center justify-center text-[#0070f3] mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+
+          <h3 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed]">
+            Click or drag &amp; drop photos to convert into PDF
+          </h3>
+          <p class="mt-1 text-xs text-[#666666] dark:text-[#888888]">
+            Select multiple images to create a multi-page PDF &bull; Or press <kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#222] font-mono text-[10px] text-[#171717] dark:text-[#ededed]">Ctrl+V</kbd> to paste
+          </p>
+
+          <div class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#f4f4f5] dark:bg-[#171717] px-3 py-1 text-[11px] font-medium text-[#666666] dark:text-[#a1a1a1]">
+            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span>100% In-Browser Privacy &bull; Zero Server Latency</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pages Manager & Action Bar -->
+      <div id="pdf-manager" class="hidden mt-8 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] shadow-2xs">
+          <div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed]" id="pdf-page-count">
+              1 Image Selected
+            </h3>
+            <p class="text-[11px] text-[#888888]">
+              Drag cards or use arrow buttons to reorder pages
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              id="pdf-add-more-btn"
+              class="px-3.5 py-2 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-xs font-medium text-[#666666] dark:text-[#888888] hover:bg-[#fafafa] dark:hover:bg-[#141414] transition-colors"
+            >
+              + Add More
+            </button>
+            <button
+              type="button"
+              id="pdf-compile-btn"
+              class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#171717] dark:bg-white text-white dark:text-[#171717] text-xs font-semibold hover:bg-black dark:hover:bg-[#f0f0f0] shadow-sm transition-transform active:scale-95"
+            >
+              <svg class="w-4 h-4 text-[#0070f3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              <span>Download PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thumbnails Grid -->
+        <div id="pdf-thumbnails" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+      </div>
+    </div>
+
+    <!-- SEO Informational Article -->
+    <article class="mt-16 mx-auto max-w-4xl space-y-10">
+      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          Why Use In-Browser Image to PDF?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          <div class="space-y-1.5">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Zero Server Uploads</h3>
+            <p>Most commercial converters upload your files to remote cloud servers to process with ghostscript. CleanWordCounter synthesizes raw PDF binary structures entirely inside browser WebAssembly/JS.</p>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Multi-Page Merging</h3>
+            <p>Combine multiple receipt photos, certificates, or ID cards into a single cohesive document with custom page orientations and margins.</p>
+          </div>
+          <div class="space-y-1.5">
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Government &amp; Exam Ready</h3>
+            <p>Meets strict PDF guidelines for US Visa applications, Schengen portals, university assignments, and UPSC/SSC document uploads.</p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>
+
+<script>
+  interface PageItem {
+    id: string;
+    file: File;
+    previewUrl: string;
+    width: number;
+    height: number;
+  }
+
+  const pages: PageItem[] = [];
+
+  const dropzone = document.getElementById('pdf-dropzone')!;
+  const fileInput = document.getElementById('pdf-file-input') as HTMLInputElement;
+  const manager = document.getElementById('pdf-manager')!;
+  const pageCountText = document.getElementById('pdf-page-count')!;
+  const thumbnailsContainer = document.getElementById('pdf-thumbnails')!;
+  const addMoreBtn = document.getElementById('pdf-add-more-btn')!;
+  const compileBtn = document.getElementById('pdf-compile-btn')!;
+  const sizeSelect = document.getElementById('pdf-size-select') as HTMLSelectElement;
+  const marginSelect = document.getElementById('pdf-margin-select') as HTMLSelectElement;
+  const qualitySelect = document.getElementById('pdf-quality-select') as HTMLSelectElement;
+
+  dropzone.addEventListener('click', () => fileInput.click());
+  addMoreBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files) handleFiles(fileInput.files);
+  });
+
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('border-[#0070f3]');
+  });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-[#0070f3]'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-[#0070f3]');
+    if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+  });
+
+  window.addEventListener('paste', (e: ClipboardEvent) => {
+    if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length > 0) {
+      handleFiles(e.clipboardData.files);
+    }
+  });
+
+  async function handleFiles(fileList: FileList) {
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      if (!file.type.startsWith('image/')) continue;
+
+      const previewUrl = URL.createObjectURL(file);
+      const img = new Image();
+      await new Promise((res) => {
+        img.onload = res;
+        img.src = previewUrl;
+      });
+
+      pages.push({
+        id: Math.random().toString(36).substring(2, 9),
+        file,
+        previewUrl,
+        width: img.naturalWidth,
+        height: img.naturalHeight
+      });
+    }
+
+    renderThumbnails();
+  }
+
+  function renderThumbnails() {
+    if (pages.length === 0) {
+      manager.classList.add('hidden');
+      dropzone.classList.remove('hidden');
+      return;
+    }
+
+    dropzone.classList.add('hidden');
+    manager.classList.remove('hidden');
+    pageCountText.textContent = `${pages.length} Page${pages.length === 1 ? '' : 's'} Ready to Convert`;
+    thumbnailsContainer.innerHTML = '';
+
+    pages.forEach((page, idx) => {
+      const card = document.createElement('div');
+      card.className = 'relative group rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-2.5 shadow-2xs flex flex-col justify-between';
+      card.innerHTML = `
+        <div class="aspect-3/4 rounded-lg bg-[#fafafa] dark:bg-[#141414] overflow-hidden flex items-center justify-center mb-2 border border-[#ebebeb] dark:border-[#262626]">
+          <img src="${page.previewUrl}" class="max-h-full max-w-full object-contain" />
+        </div>
+        <div class="flex items-center justify-between text-[11px] font-mono text-[#888888]">
+          <span>Page ${idx + 1}</span>
+          <div class="flex items-center gap-1">
+            ${idx > 0 ? `<button type="button" data-idx="${idx}" data-action="prev" class="p-1 hover:text-[#0070f3] cursor-pointer">&larr;</button>` : ''}
+            ${idx < pages.length - 1 ? `<button type="button" data-idx="${idx}" data-action="next" class="p-1 hover:text-[#0070f3] cursor-pointer">&rarr;</button>` : ''}
+            <button type="button" data-idx="${idx}" data-action="remove" class="p-1 hover:text-red-500 cursor-pointer">&times;</button>
+          </div>
+        </div>
+      `;
+      thumbnailsContainer.appendChild(card);
+    });
+
+    // Wire up prev/next/remove buttons
+    thumbnailsContainer.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const action = btn.getAttribute('data-action');
+        const idx = Number(btn.getAttribute('data-idx'));
+        if (action === 'remove') {
+          pages.splice(idx, 1);
+          renderThumbnails();
+        } else if (action === 'prev' && idx > 0) {
+          const temp = pages[idx];
+          pages[idx] = pages[idx - 1];
+          pages[idx - 1] = temp;
+          renderThumbnails();
+        } else if (action === 'next' && idx < pages.length - 1) {
+          const temp = pages[idx];
+          pages[idx] = pages[idx + 1];
+          pages[idx + 1] = temp;
+          renderThumbnails();
+        }
+      });
+    });
+  }
+
+  // Pure Client-Side PDF Synthesizer
+  compileBtn.addEventListener('click', async () => {
+    if (pages.length === 0) return;
+
+    compileBtn.setAttribute('disabled', 'true');
+    compileBtn.classList.add('opacity-50');
+
+    const quality = parseFloat(qualitySelect.value) || 0.9;
+    const sizeMode = sizeSelect.value;
+    const margin = parseFloat(marginSelect.value) || 0;
+
+    const jpegBuffers: Uint8Array[] = [];
+    const dimensions: {
+      pageWidth: number;
+      pageHeight: number;
+      imgWidth: number;
+      imgHeight: number;
+      imgX: number;
+      imgY: number;
+      rawWidth: number;
+      rawHeight: number;
+    }[] = [];
+
+    for (const page of pages) {
+      // Decode and convert to high quality JPEG
+      const canvas = document.createElement('canvas');
+      canvas.width = page.width;
+      canvas.height = page.height;
+      const ctx = canvas.getContext('2d')!;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const img = new Image();
+      await new Promise((res) => {
+        img.onload = res;
+        img.src = page.previewUrl;
+      });
+      ctx.drawImage(img, 0, 0);
+
+      const blob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), 'image/jpeg', quality));
+      const arrayBuf = await blob.arrayBuffer();
+      const u8 = new Uint8Array(arrayBuf);
+      jpegBuffers.push(u8);
+
+      // Determine PDF Page & Image Dimensions in Points (72 pt / inch)
+      let pW = 595.28;
+      let pH = 841.89;
+
+      if (sizeMode === 'fit') {
+        pW = (page.width * 72) / 150;
+        pH = (page.height * 72) / 150;
+      } else if (sizeMode === 'a4-portrait') {
+        pW = 595.28;
+        pH = 841.89;
+      } else if (sizeMode === 'a4-landscape') {
+        pW = 841.89;
+        pH = 595.28;
+      } else if (sizeMode === 'us-letter') {
+        pW = 612.0;
+        pH = 792.0;
+      }
+
+      let availW = pW - margin * 2;
+      let availH = pH - margin * 2;
+      let imgRatio = page.width / page.height;
+      let boxRatio = availW / availH;
+
+      let drawW = availW;
+      let drawH = availH;
+      if (imgRatio > boxRatio) {
+        drawH = availW / imgRatio;
+      } else {
+        drawW = availH * imgRatio;
+      }
+
+      let drawX = margin + (availW - drawW) / 2;
+      let drawY = margin + (availH - drawH) / 2;
+
+      dimensions.push({
+        pageWidth: pW,
+        pageHeight: pH,
+        imgWidth: drawW,
+        imgHeight: drawH,
+        imgX: drawX,
+        imgY: drawY,
+        rawWidth: page.width,
+        rawHeight: page.height
+      });
+    }
+
+    // Synthesize PDF binary structure
+    const pdfBytes = buildPdf(jpegBuffers, dimensions);
+    const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+
+    const a = document.createElement('a');
+    a.href = pdfUrl;
+    a.download = `documents-${Date.now()}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    compileBtn.removeAttribute('disabled');
+    compileBtn.classList.remove('opacity-50');
+  });
+
+  function buildPdf(
+    jpegBuffers: Uint8Array[],
+    dims: {
+      pageWidth: number;
+      pageHeight: number;
+      imgWidth: number;
+      imgHeight: number;
+      imgX: number;
+      imgY: number;
+      rawWidth: number;
+      rawHeight: number;
+    }[]
+  ): Uint8Array {
+    const encoder = new TextEncoder();
+    const pdfChunks: Uint8Array[] = [];
+    const offsets: number[] = [];
+    let curOffset = 0;
+
+    function pushChunk(chunk: Uint8Array) {
+      pdfChunks.push(chunk);
+      curOffset += chunk.length;
+    }
+
+    function pushStr(str: string) {
+      const b = encoder.encode(str);
+      pushChunk(b);
+    }
+
+    // Header
+    pushStr('%PDF-1.4\n%\xe2\xe3\xcf\xd3\n');
+
+    const pageCount = jpegBuffers.length;
+    const kidIds: number[] = [];
+    for (let i = 0; i < pageCount; i++) {
+      kidIds.push(3 + i * 3);
+    }
+
+    // Obj 1: Catalog
+    offsets.push(curOffset);
+    pushStr('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+
+    // Obj 2: Pages
+    offsets.push(curOffset);
+    const kidsStr = kidIds.map((id) => `${id} 0 R`).join(' ');
+    pushStr(`2 0 obj\n<< /Type /Pages /Kids [${kidsStr}] /Count ${pageCount} >>\nendobj\n`);
+
+    for (let i = 0; i < pageCount; i++) {
+      const d = dims[i];
+      const pageObjNum = 3 + i * 3;
+      const contentObjNum = 4 + i * 3;
+      const imageObjNum = 5 + i * 3;
+
+      // Page Obj
+      offsets.push(curOffset);
+      pushStr(
+        `${pageObjNum} 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${d.pageWidth.toFixed(2)} ${d.pageHeight.toFixed(2)}] /Contents ${contentObjNum} 0 R /Resources << /XObject << /Im${i + 1} ${imageObjNum} 0 R >> >> >>\nendobj\n`
+      );
+
+      // Content Obj
+      offsets.push(curOffset);
+      const streamStr = `q\n${d.imgWidth.toFixed(2)} 0 0 ${d.imgHeight.toFixed(2)} ${d.imgX.toFixed(2)} ${d.imgY.toFixed(2)} cm\n/Im${i + 1} Do\nQ\n`;
+      const streamBytes = encoder.encode(streamStr);
+      pushStr(`${contentObjNum} 0 obj\n<< /Length ${streamBytes.length} >>\nstream\n`);
+      pushChunk(streamBytes);
+      pushStr('endstream\nendobj\n');
+
+      // Image Obj
+      offsets.push(curOffset);
+      const jpeg = jpegBuffers[i];
+      pushStr(
+        `${imageObjNum} 0 obj\n<< /Type /XObject /Subtype /Image /Width ${d.rawWidth} /Height ${d.rawHeight} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`
+      );
+      pushChunk(jpeg);
+      pushStr('\nendstream\nendobj\n');
+    }
+
+    // XRef & Trailer
+    const xrefOffset = curOffset;
+    const totalObjects = 2 + pageCount * 3;
+    let xrefStr = `xref\n0 ${totalObjects + 1}\n0000000000 65535 f \n`;
+    for (const o of offsets) {
+      xrefStr += `${String(o).padStart(10, '0')} 00000 n \n`;
+    }
+    const trailerStr = `trailer\n<< /Size ${totalObjects + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`;
+    pushStr(xrefStr + trailerStr);
+
+    // Merge into single buffer
+    const merged = new Uint8Array(curOffset);
+    let pos = 0;
+    for (const c of pdfChunks) {
+      merged.set(c, pos);
+      pos += c.length;
+    }
+    return merged;
+  }
+</script>

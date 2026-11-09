@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WordCounter from '../../components/WordCounter.astro';
+
+const pageTitle = "TikTok Character Counter – 2,200 Character Caption Checker";
+const pageDescription = "Check your TikTok caption and bio character count online. Monitor the 2,200-character description limit and 80-character bio ceiling in real time.";
+const pageKeywords = "tiktok character counter, tiktok caption limit, tiktok character limit, tiktok bio character counter, check tiktok caption length";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "TikTok Character Counter",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for TikTok captions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TikTok allows up to 2,200 characters in post captions, enabling creators to include detailed explanations, keywords, and hashtags for search visibility."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the TikTok bio character limit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TikTok user profiles permit up to 80 characters in the bio description."
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="character-counter/tiktok"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+      <span>2,200 Caption &bull; 80 Bio Ceiling</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      TikTok <span class="vercel-gradient-develop">Character Counter</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Monitor your caption keywords and hashtags against TikTok's <strong class="text-[#0070f3] font-mono">2,200 character ceiling</strong>.
+    </p>
+  </div>
+
+  <WordCounter initialTab="social" initialTarget={2200} showHeroCopy={false} />
+</Layout>
