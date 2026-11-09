@@ -1,0 +1,194 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ImageCompressor from '../../components/ImageCompressor.astro';
+
+export function getStaticPaths() {
+  const targets = [
+    {
+      target: 'to-20kb',
+      kb: 20,
+      title: 'Compress Image to 20KB Online – Free, Instant & 100% Private',
+      h1: 'Compress Image to 20KB',
+      desc: 'Compress your photo or signature to under 20KB online. Perfect for online exam forms, UPSC, SSC, passport & government portal uploads. 100% private in-browser tool.',
+      keywords: 'compress image to 20kb, resize image to 20kb, compress signature to 20kb, photo size reducer 20kb, compress jpg to 20 kb online',
+      useCase: 'Online government applications, UPSC, SSC, state service exams, and student portal signatures.'
+    },
+    {
+      target: 'to-50kb',
+      kb: 50,
+      title: 'Compress Image to 50KB Online – Free & High Quality',
+      h1: 'Compress Image to 50KB',
+      desc: 'Compress JPG and PNG images to under 50KB without losing clarity. Ideal for job applications, university admissions, and visa portals. Fast & client-side.',
+      keywords: 'compress image to 50kb, reduce image size to 50kb, resize photo to 50kb, jpg compressor 50kb, make image under 50 kb',
+      useCase: 'Government job applications, recruitment portals, university admission forms, and ID verification.'
+    },
+    {
+      target: 'to-100kb',
+      kb: 100,
+      title: 'Compress Image to 100KB Online – Sharp & Private',
+      h1: 'Compress Image to 100KB',
+      desc: 'Compress photos to 100KB while preserving sharp facial details and text. Standard for passport applications, Schengen visa forms, and resume headshots.',
+      keywords: 'compress image to 100kb, reduce photo size to 100kb, passport photo compressor 100kb, convert image to 100kb, compress jpg to 100kb',
+      useCase: 'Passport photos, Schengen and US visa portals, professional resumes, and email attachments.'
+    },
+    {
+      target: 'to-200kb',
+      kb: 200,
+      title: 'Compress Image to 200KB Online – High Resolution',
+      h1: 'Compress Image to 200KB',
+      desc: 'Reduce photo size to 200KB with crystal-clear image quality. Perfect for scanned documents, certificates, PDF attachments, and website hero photos.',
+      keywords: 'compress image to 200kb, reduce photo size to 200kb, resize image to 200 kb, compress scanned document to 200kb',
+      useCase: 'Scanned document certificates, marksheets, high-resolution portfolio photos, and email attachments.'
+    },
+    {
+      target: 'to-500kb',
+      kb: 500,
+      title: 'Compress Image to 500KB Online – Fast Web Optimization',
+      h1: 'Compress Image to 500KB',
+      desc: 'Compress camera photos from 5MB+ down to under 500KB. Optimize large DSLR and smartphone photos for fast web loading and messaging.',
+      keywords: 'compress image to 500kb, reduce photo size to 500kb, optimize image for web 500kb, compress large photo to 500 kb',
+      useCase: 'Website banner images, blog thumbnails, email blasts, and cloud upload optimization.'
+    }
+  ];
+
+  return targets.map((item) => ({
+    params: { target: item.target },
+    props: item
+  }));
+}
+
+const { target, kb, title, h1, desc, keywords, useCase } = Astro.props;
+
+const allTargets = [
+  { slug: 'to-20kb', label: '20 KB' },
+  { slug: 'to-50kb', label: '50 KB' },
+  { slug: 'to-100kb', label: '100 KB' },
+  { slug: 'to-200kb', label: '200 KB' },
+  { slug: 'to-500kb', label: '500 KB' }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": title,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": desc,
+      "url": `https://cleanwordcounter.com/compress-image/${target}/`
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How to compress image to ${kb}KB?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Simply drop your image into the dropzone or press Ctrl+V. Our client-side algorithm optimizes the image quantization table to guarantee the output is under ${kb}KB.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `Will compressing to ${kb}KB reduce readability or facial features?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `No. Our binary search engine balances dimension scaling and quality compression to keep faces, text, and signatures crisp while stripping bulky EXIF metadata.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={title}
+  description={desc}
+  keywords={keywords}
+  canonicalSlug={`compress-image/${target}`}
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Target Preset: {kb} KB Maximum</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      {h1} <span class="vercel-gradient-develop">Online</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Target size automatically preset to <strong class="font-mono text-[#0070f3]">{kb} KB</strong>. Drag &amp; drop your image below for instant private compression.
+    </p>
+
+    <!-- Target Selector Pills -->
+    <div class="mt-4 flex flex-wrap justify-center items-center gap-2">
+      <span class="text-xs text-[#888888] font-mono mr-1">Other targets:</span>
+      {allTargets.map((item) => (
+        <a
+          href={`/compress-image/${item.slug}/`}
+          class={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-mono transition-colors ${
+            item.slug === target
+              ? 'bg-[#171717] dark:bg-white text-white dark:text-[#171717] font-semibold'
+              : 'border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#121212] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3]'
+          }`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <ImageCompressor initialTargetKB={kb} initialFormat="jpeg" />
+
+    <!-- Specific Guide for this KB target -->
+    <article class="mt-16 mx-auto max-w-4xl space-y-10">
+      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-3">
+          Best Use Cases for {kb}KB Compression
+        </h2>
+        <p class="text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed mb-4">
+          {useCase}
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-[#ebebeb] dark:border-[#262626]">
+          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
+            <span class="block text-[11px] font-mono text-[#888888] uppercase">Target Cap</span>
+            <span class="text-sm font-semibold text-[#171717] dark:text-[#ededed] font-mono">&le; {kb} KB ({kb * 1024} bytes)</span>
+          </div>
+          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
+            <span class="block text-[11px] font-mono text-[#888888] uppercase">Privacy Standard</span>
+            <span class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">100% In-Browser (Local)</span>
+          </div>
+          <div class="p-3 rounded-lg bg-[#fafafa] dark:bg-[#121212]">
+            <span class="block text-[11px] font-mono text-[#888888] uppercase">Optimal Format</span>
+            <span class="text-sm font-semibold text-[#0070f3]">JPEG / WebP</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          Common Questions About Compressing to {kb}KB
+        </h2>
+        <div class="space-y-4">
+          <div class="border-b border-[#ebebeb] dark:border-[#262626] pb-3">
+            <h3 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed]">How does this ensure the file stays under {kb}KB?</h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+              Our compression engine measures the exact byte payload of the generated canvas blob. If the file is even 1 byte over {kb}KB, it automatically iterates to lower quantization or performs proportional downsampling until the file strictly meets your portal's restriction.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-xs sm:text-sm font-semibold text-[#171717] dark:text-[#ededed]">Can I use this for photos taken on my iPhone or Android?</h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+              Yes. Modern smartphone cameras generate photos between 3MB and 12MB. CleanWordCounter decodes high-resolution captures in your device's GPU memory and compresses them down to {kb}KB in milliseconds.
+            </p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>

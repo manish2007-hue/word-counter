@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-8 pb-6 text-center">
       <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#171717] dark:text-[#ededed] shadow-2xs mb-3">
         <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3] animate-pulse"></span>
-        <span>20 Fast In-Browser Utilities</span>
+        <span>{TOOLS_LIST.length} Fast In-Browser Utilities</span>
       </div>
       <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
         {headline}
@@ -43,7 +43,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <input
           id="tools-search-input"
           type="text"
-          placeholder="Search all 20 tools by name, keyword, or action... (Press '/' to focus)"
+          placeholder={`Search all ${TOOLS_LIST.length} tools by name, keyword, or action... (Press '/' to focus)`}
           autocomplete="off"
           class="w-full rounded-md bg-transparent py-2.5 pl-10 pr-24 text-sm text-[#171717] dark:text-white placeholder-[#888888] focus:outline-none"
         />
@@ -128,6 +128,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <span class={`rounded-full px-2.5 py-0.5 text-[10px] font-mono font-medium ${
                 tool.category === 'writing'
                   ? 'bg-blue-500/10 text-[#0070f3] border border-blue-500/20'
+                  : tool.category === 'image'
+                  ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20'
                   : tool.category === 'cleaning'
                   ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20'
                   : tool.category === 'generators'

@@ -1,0 +1,178 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ImageCompressor from '../components/ImageCompressor.astro';
+
+const pageTitle = "Compress Image to 20KB, 50KB, 100KB, 200KB – Free & 100% Private";
+const pageDescription = "Compress JPG, PNG & WebP images to exact target file sizes (20KB, 50KB, 100KB, 200KB). Instant in-browser binary search compression for job applications, passports & exam portals. 100% private.";
+const pageKeywords = "compress image to 50kb, compress image to 20kb, compress image to 100kb, compress image to 200kb, resize image to kb, image size reducer, photo compressor online";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Target Image Compressor (20KB, 50KB, 100KB, 200KB)",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": "https://cleanwordcounter.com/compress-image/"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I compress an image to under 50KB or 20KB?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Select your target preset (e.g. 50 KB or 20 KB), drop your image or paste it from clipboard. Our algorithm will run a binary search optimization directly inside your browser to hit the exact target size without sacrificing sharpness."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my images uploaded to any remote server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Everything runs 100% client-side in your browser's local memory via HTML5 Canvas. Your images, personal documents, and passport photos never touch our servers or any cloud database."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which portals require exact KB limits?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most government portals, visa application centers (Schengen, US DS-160), competitive exams (UPSC, SSC, NEET, JEE), and job application portals enforce strict file size caps like under 20KB or under 50KB."
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const targetPresets = [
+  { slug: 'to-20kb', label: 'Compress to 20 KB', desc: 'Ideal for signatures and small ID form portals' },
+  { slug: 'to-50kb', label: 'Compress to 50 KB', desc: 'Standard for government exams and job applications' },
+  { slug: 'to-100kb', label: 'Compress to 100 KB', desc: 'Standard passport photos and Schengen visa forms' },
+  { slug: 'to-200kb', label: 'Compress to 200 KB', desc: 'High-clarity document attachments and resume photos' },
+  { slug: 'to-500kb', label: 'Compress to 500 KB', desc: 'Email attachments and web hero images' }
+];
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug="compress-image"
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>In-Browser Image Engine &bull; Zero Server Uploads</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      Target Image <span class="vercel-gradient-develop">Compressor</span>
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      Compress your photos to exact target file sizes (<span class="font-mono text-[#0070f3]">20KB</span>, <span class="font-mono text-[#0070f3]">50KB</span>, <span class="font-mono text-[#0070f3]">100KB</span>, <span class="font-mono text-[#0070f3]">200KB</span>) with zero quality loss. 100% private in-browser processing.
+    </p>
+
+    <!-- Quick Target Links -->
+    <div class="mt-4 flex flex-wrap justify-center items-center gap-2">
+      {targetPresets.map((preset) => (
+        <a
+          href={`/compress-image/${preset.slug}/`}
+          class="inline-flex items-center gap-1 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#121212] px-3 py-1 text-[11px] font-mono text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors"
+        >
+          <span>{preset.label}</span>
+          <span class="text-[#0070f3]">&rarr;</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <!-- Compressor Interactive Component -->
+    <ImageCompressor initialTargetKB={50} initialFormat="jpeg" />
+
+    <!-- SEO Content & Guide -->
+    <article class="mt-16 mx-auto max-w-4xl space-y-12">
+      <!-- Target Sizes Cards -->
+      <section>
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          Popular Target Compression Sizes
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {targetPresets.map((preset) => (
+            <a
+              href={`/compress-image/${preset.slug}/`}
+              class="group block p-4 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] hover:border-[#0070f3] dark:hover:border-[#0070f3] transition-all"
+            >
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-sm font-semibold text-[#171717] dark:text-[#ededed] group-hover:text-[#0070f3] transition-colors">
+                  {preset.label}
+                </span>
+                <span class="text-xs font-mono text-[#0070f3] opacity-0 group-hover:opacity-100 transition-opacity">&rarr;</span>
+              </div>
+              <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+                {preset.desc}
+              </p>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <!-- How it Works -->
+      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          How Our In-Browser Compression Algorithm Works
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          <div class="space-y-2">
+            <div class="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-[#0070f3] flex items-center justify-center font-bold font-mono">1</div>
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Local Pixel Decoding</h3>
+            <p>Your image is decoded straight into your browser's GPU/canvas memory. No bytes ever leave your device or hit a cloud server.</p>
+          </div>
+          <div class="space-y-2">
+            <div class="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-[#0070f3] flex items-center justify-center font-bold font-mono">2</div>
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Binary Search Quality</h3>
+            <p>Our engine executes an adaptive binary search across compression quantization tables, converging on the highest quality that stays strictly under your target KB.</p>
+          </div>
+          <div class="space-y-2">
+            <div class="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-[#0070f3] flex items-center justify-center font-bold font-mono">3</div>
+            <h3 class="font-semibold text-sm text-[#171717] dark:text-[#ededed]">Instant One-Click Download</h3>
+            <p>Get your compressed image immediately in your chosen format (JPEG, WebP, or PNG) without watermarks, ads, or waiting queues.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Frequently Asked Questions -->
+      <section class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-6">
+          Frequently Asked Questions
+        </h2>
+        <div class="space-y-4">
+          <div class="border-b border-[#ebebeb] dark:border-[#262626] pb-4">
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed]">Why do government portals demand photos under 50KB or 20KB?</h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+              State and national examination servers process millions of candidate records concurrently. Restricting uploads to 20KB or 50KB minimizes server storage overhead and database payload sizes. Our tool ensures your image qualifies on the very first try.
+            </p>
+          </div>
+          <div class="border-b border-[#ebebeb] dark:border-[#262626] pb-4">
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed]">Is this safe for sensitive passport and visa documents?</h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+              Yes, 100%. Unlike standard online compressors that upload your files to AWS or overseas servers where they may be stored or logged, CleanWordCounter runs entirely on client-side Web APIs. You can even disconnect your internet and compress images offline.
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed]">Does compressing an image to 20KB make it blurry?</h3>
+            <p class="mt-1 text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+              Our algorithm preserves edge contrast and uses chroma subsampling adjustments to keep faces, text, and signatures sharp while stripping unnecessary metadata (EXIF data, camera profiles, timestamps) that bloats file size.
+            </p>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>

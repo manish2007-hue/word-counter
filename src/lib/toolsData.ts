@@ -4,7 +4,7 @@ export interface ToolItem {
   href: string;
   name: string;
   shortDesc: string;
-  category: 'writing' | 'cleaning' | 'generators' | 'developer' | 'social';
+  category: 'writing' | 'cleaning' | 'generators' | 'developer' | 'social' | 'image';
   categoryLabel: string;
   badge?: 'New' | 'Popular' | 'Essential' | 'Pro';
   badgeColor?: string;
@@ -13,8 +13,9 @@ export interface ToolItem {
 }
 
 export const CATEGORIES = [
-  { id: 'all', label: 'All Tools', count: 20 },
+  { id: 'all', label: 'All Tools', count: 23 },
   { id: 'writing', label: 'Writing & Analysis', count: 7 },
+  { id: 'image', label: 'Image Tools', count: 3 },
   { id: 'cleaning', label: 'Formatting & Cleaning', count: 4 },
   { id: 'generators', label: 'Text Generators', count: 3 },
   { id: 'developer', label: 'Developer & Code', count: 2 },
@@ -276,5 +277,45 @@ export const TOOLS_LIST: ToolItem[] = [
     categoryLabel: 'Social & SEO',
     tags: ['website word count', 'url word counter', 'competitor page count', 'webpage analyzer'],
     icon: 'globe'
+  },
+  // --- Image Tools ---
+  {
+    id: 'compress-image',
+    slug: 'compress-image',
+    href: '/compress-image',
+    name: 'Target Image Compressor',
+    shortDesc: 'Compress photos to exact target sizes (20KB, 50KB, 100KB, 200KB) with zero quality loss and 100% in-browser privacy.',
+    category: 'image',
+    categoryLabel: 'Image Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['compress image', 'compress to 20kb', 'compress to 50kb', 'compress to 100kb', 'photo compressor', 'image reducer', 'upsc photo', 'passport photo size'],
+    icon: 'image'
+  },
+  {
+    id: 'resize-image',
+    slug: 'resize-image',
+    href: '/resize-image',
+    name: 'Passport Photo & Dimension Resizer',
+    shortDesc: 'Resize photos in cm, mm, inches and px with 300 DPI support for Indian passports (3.5x4.5cm), US visas (2x2 in), and exam forms.',
+    category: 'image',
+    categoryLabel: 'Image Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['resize image', 'passport photo resizer', 'resize in cm', 'resize in mm', '3.5x4.5cm', '2x2 inch', 'photo 300 dpi', 'upsc signature resize'],
+    icon: 'aspect'
+  },
+  {
+    id: 'image-converter',
+    slug: 'image-converter',
+    href: '/image-converter',
+    name: 'Batch Image Format Converter',
+    shortDesc: 'Instant client-side conversion between PNG, JPG, and WebP formats with quality control and zero file uploads.',
+    category: 'image',
+    categoryLabel: 'Image Tools',
+    badge: 'New',
+    badgeColor: 'emerald',
+    tags: ['image converter', 'png to jpg', 'webp to png', 'jpg to webp', 'convert photo', 'batch image conversion'],
+    icon: 'refresh'
   }
 ];

@@ -1,0 +1,444 @@
+---
+interface Props {
+  initialTargetKB?: number;
+  initialFormat?: 'jpeg' | 'webp' | 'png';
+}
+
+const { initialTargetKB = 50, initialFormat = 'jpeg' } = Astro.props;
+---
+
+<div class="w-full max-w-4xl mx-auto" id="image-compressor-app" data-initial-target={initialTargetKB} data-initial-format={initialFormat}>
+  <!-- Target Size & Options Toolbar -->
+  <div class="mb-6 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 sm:p-5 shadow-2xs">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-2">
+          Target File Size
+        </label>
+        <div class="flex flex-wrap items-center gap-2" id="preset-buttons">
+          <button type="button" data-kb="20" class="preset-btn px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors">
+            20 KB
+          </button>
+          <button type="button" data-kb="50" class="preset-btn px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors">
+            50 KB
+          </button>
+          <button type="button" data-kb="100" class="preset-btn px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors">
+            100 KB
+          </button>
+          <button type="button" data-kb="200" class="preset-btn px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors">
+            200 KB
+          </button>
+          <button type="button" data-kb="500" class="preset-btn px-3.5 py-1.5 rounded-lg text-xs font-medium border border-[#ebebeb] dark:border-[#262626] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3] transition-colors">
+            500 KB
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-2">
+            Custom (KB)
+          </label>
+          <div class="relative w-28">
+            <input
+              type="number"
+              id="custom-kb-input"
+              min="5"
+              max="15000"
+              value={initialTargetKB}
+              class="w-full rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] px-3 py-1.5 text-xs font-mono font-medium text-[#171717] dark:text-[#ededed] focus:border-[#0070f3] focus:outline-none focus:ring-1 focus:ring-[#0070f3]"
+            />
+            <span class="absolute right-2.5 top-1.5 text-[10px] font-mono text-[#888888]">KB</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-[#171717] dark:text-[#ededed] uppercase tracking-wider mb-2">
+            Output Format
+          </label>
+          <select
+            id="format-select"
+            class="rounded-lg border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] px-3 py-1.5 text-xs font-medium text-[#171717] dark:text-[#ededed] focus:border-[#0070f3] focus:outline-none"
+          >
+            <option value="jpeg" selected={initialFormat === 'jpeg'}>JPEG (Standard)</option>
+            <option value="webp" selected={initialFormat === 'webp'}>WebP (High Quality)</option>
+            <option value="png" selected={initialFormat === 'png'}>PNG (Lossless)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dropzone Area -->
+  <div
+    id="dropzone"
+    class="relative cursor-pointer rounded-2xl border-2 border-dashed border-[#d1d5db] dark:border-[#333333] hover:border-[#0070f3] dark:hover:border-[#0070f3] bg-white dark:bg-[#0a0a0a] transition-all p-8 sm:p-12 text-center group"
+  >
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/avif,image/bmp" class="hidden" />
+    
+    <div class="flex flex-col items-center justify-center pointer-events-none">
+      <div class="w-14 h-14 rounded-full bg-[#f4f4f5] dark:bg-[#1a1a1a] flex items-center justify-center text-[#0070f3] mb-4 group-hover:scale-110 transition-transform">
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+      </div>
+
+      <h3 class="text-base sm:text-lg font-semibold text-[#171717] dark:text-[#ededed]">
+        Click to upload or drag &amp; drop your image here
+      </h3>
+      <p class="mt-1 text-xs text-[#666666] dark:text-[#888888]">
+        Supports JPG, PNG, WebP, AVIF &bull; Or press <kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#222] font-mono text-[10px] text-[#171717] dark:text-[#ededed]">Ctrl+V</kbd> to paste from clipboard
+      </p>
+
+      <div class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#f4f4f5] dark:bg-[#171717] px-3 py-1 text-[11px] font-medium text-[#666666] dark:text-[#a1a1a1]">
+        <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+        <span>100% Private &bull; Compressed in your browser &bull; Zero server uploads</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Processing State -->
+  <div id="processing-view" class="hidden my-8 text-center py-10">
+    <div class="inline-block animate-spin rounded-full h-9 w-9 border-2 border-[#ebebeb] dark:border-[#333] border-t-[#0070f3] mb-3"></div>
+    <p class="text-sm font-medium text-[#171717] dark:text-[#ededed]">Compressing image to exact target...</p>
+    <p class="text-xs text-[#888888] font-mono mt-1" id="processing-subtext">Executing binary search optimization</p>
+  </div>
+
+  <!-- Results Section -->
+  <div id="result-view" class="hidden mt-8">
+    <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-5 sm:p-7 shadow-2xs">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-[#ebebeb] dark:border-[#262626]">
+        <!-- Comparison Summary -->
+        <div class="flex items-center gap-4 sm:gap-6 w-full md:w-auto">
+          <div class="text-left">
+            <span class="block text-[11px] uppercase tracking-wider font-semibold text-[#888888]">Original</span>
+            <span id="res-orig-size" class="text-lg sm:text-xl font-bold font-mono text-[#666666] dark:text-[#888888]">0 KB</span>
+            <span id="res-orig-dims" class="block text-[11px] font-mono text-[#999999]">0 x 0 px</span>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <span id="res-reduction-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-mono text-xs font-semibold mb-1">
+              ↓ 0%
+            </span>
+            <svg class="w-5 h-5 text-[#888888]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </div>
+
+          <div class="text-left">
+            <span class="block text-[11px] uppercase tracking-wider font-semibold text-[#0070f3]">Compressed</span>
+            <span id="res-comp-size" class="text-lg sm:text-xl font-bold font-mono text-[#171717] dark:text-[#ededed]">0 KB</span>
+            <span id="res-comp-dims" class="block text-[11px] font-mono text-[#0070f3]">0 x 0 px</span>
+          </div>
+        </div>
+
+        <!-- Download CTA -->
+        <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+          <button
+            type="button"
+            id="reset-btn"
+            class="px-4 py-2.5 rounded-lg border border-[#ebebeb] dark:border-[#262626] text-xs font-medium text-[#666666] dark:text-[#888888] hover:bg-[#fafafa] dark:hover:bg-[#1a1a1a] transition-colors"
+          >
+            Upload Another
+          </button>
+          <a
+            id="download-link"
+            download="compressed-image.jpg"
+            href="#"
+            class="flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#171717] dark:bg-white text-white dark:text-[#171717] text-xs font-semibold hover:bg-black dark:hover:bg-[#f0f0f0] shadow-sm transition-all active:scale-[0.98]"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>Download Image</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Previews Side by Side -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[#666666] dark:text-[#888888]">Original Image</span>
+            <span id="preview-orig-meta" class="text-[11px] font-mono text-[#888888]"></span>
+          </div>
+          <div class="aspect-4/3 rounded-xl border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#121212] overflow-hidden flex items-center justify-center p-2">
+            <img id="preview-orig-img" src="" alt="Original Preview" class="max-h-full max-w-full object-contain rounded-lg" />
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold text-[#0070f3]">Compressed Result</span>
+            <span id="preview-comp-meta" class="text-[11px] font-mono text-[#0070f3]">Target Met</span>
+          </div>
+          <div class="aspect-4/3 rounded-xl border border-[#0070f3]/20 bg-[#fafafa] dark:bg-[#121212] overflow-hidden flex items-center justify-center p-2 relative">
+            <img id="preview-comp-img" src="" alt="Compressed Preview" class="max-h-full max-w-full object-contain rounded-lg" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentFile: File | null = null;
+  let compressedBlob: Blob | null = null;
+  let targetKB = 50;
+  let outputFormat = 'jpeg';
+
+  const appEl = document.getElementById('image-compressor-app');
+  if (appEl) {
+    targetKB = Number(appEl.dataset.initialTarget || '50');
+    outputFormat = appEl.dataset.initialFormat || 'jpeg';
+  }
+
+  const dropzone = document.getElementById('dropzone')!;
+  const fileInput = document.getElementById('file-input') as HTMLInputElement;
+  const customKbInput = document.getElementById('custom-kb-input') as HTMLInputElement;
+  const formatSelect = document.getElementById('format-select') as HTMLSelectElement;
+  const presetButtons = document.querySelectorAll('.preset-btn');
+  const processingView = document.getElementById('processing-view')!;
+  const resultView = document.getElementById('result-view')!;
+  const resetBtn = document.getElementById('reset-btn')!;
+  const downloadLink = document.getElementById('download-link') as HTMLAnchorElement;
+
+  // Formatting helpers
+  function formatBytes(bytes: number): string {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  }
+
+  // Update preset button active states
+  function updatePresetButtons() {
+    presetButtons.forEach((btn) => {
+      const kb = Number(btn.getAttribute('data-kb'));
+      if (kb === targetKB) {
+        btn.classList.add('bg-[#171717]', 'dark:bg-white', 'text-white', 'dark:text-[#171717]', 'border-transparent');
+        btn.classList.remove('text-[#666666]', 'dark:text-[#888888]');
+      } else {
+        btn.classList.remove('bg-[#171717]', 'dark:bg-white', 'text-white', 'dark:text-[#171717]', 'border-transparent');
+        btn.classList.add('text-[#666666]', 'dark:text-[#888888]');
+      }
+    });
+  }
+
+  // Event: Presets
+  presetButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const kb = Number(btn.getAttribute('data-kb'));
+      targetKB = kb;
+      customKbInput.value = kb.toString();
+      updatePresetButtons();
+      if (currentFile) processImage(currentFile);
+    });
+  });
+
+  // Event: Custom KB input
+  customKbInput.addEventListener('input', () => {
+    const val = Number(customKbInput.value);
+    if (val && val > 0) {
+      targetKB = val;
+      updatePresetButtons();
+      if (currentFile) processImage(currentFile);
+    }
+  });
+
+  // Event: Format change
+  formatSelect.addEventListener('change', () => {
+    outputFormat = formatSelect.value;
+    if (currentFile) processImage(currentFile);
+  });
+
+  // Event: Drag & Drop
+  dropzone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files && fileInput.files[0]) {
+      handleFileSelected(fileInput.files[0]);
+    }
+  });
+
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('border-[#0070f3]', 'bg-blue-50/20', 'dark:bg-blue-950/10');
+  });
+
+  dropzone.addEventListener('dragleave', () => {
+    dropzone.classList.remove('border-[#0070f3]', 'bg-blue-50/20', 'dark:bg-blue-950/10');
+  });
+
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('border-[#0070f3]', 'bg-blue-50/20', 'dark:bg-blue-950/10');
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileSelected(e.dataTransfer.files[0]);
+    }
+  });
+
+  // Paste from clipboard
+  window.addEventListener('paste', (e: ClipboardEvent) => {
+    if (e.clipboardData && e.clipboardData.files && e.clipboardData.files.length > 0) {
+      const item = e.clipboardData.files[0];
+      if (item.type.startsWith('image/')) {
+        handleFileSelected(item);
+      }
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    currentFile = null;
+    compressedBlob = null;
+    fileInput.value = '';
+    resultView.classList.add('hidden');
+    dropzone.classList.remove('hidden');
+  });
+
+  function handleFileSelected(file: File) {
+    if (!file.type.startsWith('image/')) {
+      alert('Please upload a valid image file (JPG, PNG, WebP, AVIF).');
+      return;
+    }
+    currentFile = file;
+    processImage(file);
+  }
+
+  // Core Target Size Binary Search Compressor
+  async function processImage(file: File) {
+    dropzone.classList.add('hidden');
+    resultView.classList.add('hidden');
+    processingView.classList.remove('hidden');
+
+    const targetBytes = targetKB * 1024;
+    const mimeType = outputFormat === 'png' ? 'image/png' : outputFormat === 'webp' ? 'image/webp' : 'image/jpeg';
+    const ext = outputFormat === 'png' ? 'png' : outputFormat === 'webp' ? 'webp' : 'jpg';
+
+    // Set preview of original
+    const origUrl = URL.createObjectURL(file);
+    const origImgEl = document.getElementById('preview-orig-img') as HTMLImageElement;
+    origImgEl.src = origUrl;
+
+    // Load image
+    const img = new Image();
+    await new Promise((res, rej) => {
+      img.onload = res;
+      img.onerror = rej;
+      img.src = origUrl;
+    });
+
+    const origW = img.naturalWidth;
+    const origH = img.naturalHeight;
+    document.getElementById('res-orig-size')!.textContent = formatBytes(file.size);
+    document.getElementById('res-orig-dims')!.textContent = `${origW} × ${origH} px`;
+    document.getElementById('preview-orig-meta')!.textContent = `${formatBytes(file.size)} &bull; ${file.type.split('/')[1]?.toUpperCase()}`;
+
+    // Compression Canvas
+    let width = origW;
+    let height = origH;
+    const maxBound = 3840;
+    if (width > maxBound || height > maxBound) {
+      const scale = Math.min(maxBound / width, maxBound / height);
+      width = Math.round(width * scale);
+      height = Math.round(height * scale);
+    }
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d')!;
+
+    if (mimeType === 'image/jpeg') {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+    }
+    ctx.drawImage(img, 0, 0, width, height);
+
+    let bestBlob: Blob | null = null;
+
+    if (mimeType === 'image/png') {
+      // PNG does not take quality param, downscale resolution if needed
+      bestBlob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), 'image/png'));
+      let scale = 0.9;
+      while (bestBlob && bestBlob.size > targetBytes && scale > 0.15) {
+        canvas.width = Math.round(origW * scale);
+        canvas.height = Math.round(origH * scale);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        bestBlob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), 'image/png'));
+        scale -= 0.15;
+      }
+    } else {
+      // JPEG / WebP Quality Binary Search
+      let minQ = 0.05;
+      let maxQ = 0.98;
+
+      for (let i = 0; i < 7; i++) {
+        const midQ = (minQ + maxQ) / 2;
+        const blob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), mimeType, midQ));
+        if (!blob) break;
+
+        if (blob.size <= targetBytes) {
+          bestBlob = blob;
+          minQ = midQ; // try better quality
+        } else {
+          maxQ = midQ; // reduce quality
+        }
+      }
+
+      // If lowest quality is still over target, scale down canvas resolution
+      if (!bestBlob || bestBlob.size > targetBytes) {
+        let currentScale = 0.85;
+        while (currentScale > 0.1) {
+          const curW = Math.max(50, Math.round(width * currentScale));
+          const curH = Math.max(50, Math.round(height * currentScale));
+          canvas.width = curW;
+          canvas.height = curH;
+          if (mimeType === 'image/jpeg') {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, curW, curH);
+          }
+          ctx.drawImage(img, 0, 0, curW, curH);
+
+          const candidate = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), mimeType, 0.65));
+          if (candidate && candidate.size <= targetBytes) {
+            bestBlob = candidate;
+            break;
+          }
+          currentScale -= 0.15;
+        }
+      }
+    }
+
+    if (!bestBlob) {
+      bestBlob = await new Promise<Blob>((res) => canvas.toBlob((b) => res(b!), mimeType, 0.3));
+    }
+
+    compressedBlob = bestBlob;
+
+    // Display Results
+    const compUrl = URL.createObjectURL(bestBlob!);
+    const compImgEl = document.getElementById('preview-comp-img') as HTMLImageElement;
+    compImgEl.src = compUrl;
+
+    const compSize = bestBlob!.size;
+    document.getElementById('res-comp-size')!.textContent = formatBytes(compSize);
+    document.getElementById('res-comp-dims')!.textContent = `${canvas.width} × ${canvas.height} px`;
+
+    const reductionPct = Math.max(0, Math.round((1 - compSize / file.size) * 100));
+    const badge = document.getElementById('res-reduction-badge')!;
+    badge.textContent = `↓ ${reductionPct}%`;
+
+    const originalName = file.name.substring(0, file.name.lastIndexOf('.')) || 'image';
+    downloadLink.download = `${originalName}-compressed-${targetKB}kb.${ext}`;
+    downloadLink.href = compUrl;
+
+    processingView.classList.add('hidden');
+    resultView.classList.remove('hidden');
+  }
+
+  // Initialize preset buttons
+  updatePresetButtons();
+</script>

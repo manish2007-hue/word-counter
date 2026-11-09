@@ -1,0 +1,266 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  const counts = [
+    100, 200, 250, 300, 400, 500, 600, 750, 800, 1000,
+    1200, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000
+  ];
+
+  return counts.map((words) => ({
+    params: { words: words.toString() },
+    props: { count: words }
+  }));
+}
+
+const { count } = Astro.props;
+const words = count;
+
+function formatMinutesAndSeconds(totalMinutes: number): string {
+  const mins = Math.floor(totalMinutes);
+  const secs = Math.round((totalMinutes - mins) * 60);
+  if (mins === 0) return `${secs} seconds`;
+  if (secs === 0) return `${mins} minute${mins === 1 ? '' : 's'}`;
+  return `${mins} min ${secs} sec`;
+}
+
+// Speaking rates
+const slowMinutes = words / 100;
+const normalMinutes = words / 130;
+const fastMinutes = words / 160;
+
+// Silent reading
+const silentReadingMinutes = words / 238;
+const readAloudMinutes = words / 180;
+
+// Slides recommendation (avg 1 slide per 1.5 minutes)
+const recommendedSlides = Math.max(1, Math.round(normalMinutes / 1.5));
+
+const slowDuration = formatMinutesAndSeconds(slowMinutes);
+const normalDuration = formatMinutesAndSeconds(normalMinutes);
+const fastDuration = formatMinutesAndSeconds(fastMinutes);
+const silentDuration = formatMinutesAndSeconds(silentReadingMinutes);
+
+const pageTitle = `How Long is a ${words.toLocaleString()} Word Speech? (Minutes & Speaking Time)`;
+const pageDescription = `A ${words.toLocaleString()} word speech takes ${normalDuration} at an average conversational pace (130 WPM). See slow (100 WPM) and fast (160 WPM) timings, slide count recommendations & rehearsal tips.`;
+const pageKeywords = `${words} word speech, how long is ${words} words speech, ${words} words speaking time, ${words} words speech minutes, how many minutes is ${words} words, presentation length for ${words} words`;
+
+const allCounts = [100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 4000, 5000, 10000];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": `${words.toLocaleString()} Words Speaking Time Calculator`,
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": pageDescription,
+      "url": `https://cleanwordcounter.com/words-to-speaking-time/${words}-words/`
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": `How long does it take to speak ${words.toLocaleString()} words?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Speaking ${words.toLocaleString()} words takes approximately ${normalDuration} at standard conversational tempo (130 WPM). At a deliberate keynote pace (100 WPM), it takes ${slowDuration}.`
+          }
+        },
+        {
+          "@type": "Question",
+          "name": `How many presentation slides do I need for a ${words.toLocaleString()} word speech?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `For a ${words.toLocaleString()} word presentation (${normalDuration}), you will need approximately ${recommendedSlides} slides, assuming 1 slide every 1 to 2 minutes.`
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+  canonicalSlug={`words-to-speaking-time/${words}-words`}
+  schema={schema}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-2 text-center">
+    <nav class="flex items-center justify-center gap-2 text-xs text-[#888888] font-mono mb-4">
+      <a href="/" class="hover:text-[#0070f3]">Home</a>
+      <span>/</span>
+      <a href="/words-to-speaking-time" class="hover:text-[#0070f3]">Speaking Time</a>
+      <span>/</span>
+      <span class="text-[#171717] dark:text-[#ededed] font-semibold">{words.toLocaleString()} Words</span>
+    </nav>
+
+    <div class="mono-eyebrow inline-flex items-center gap-1.5 rounded-full border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] px-3.5 py-1 text-[#0070f3] shadow-2xs mb-3">
+      <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
+      <span>Speech &amp; Presentation Pacing Analysis</span>
+    </div>
+    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.04em] text-[#171717] dark:text-[#ededed]">
+      How Long is a <span class="vercel-gradient-develop">{words.toLocaleString()} Word</span> Speech?
+    </h1>
+    <p class="mt-2 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] max-w-2xl mx-auto leading-relaxed">
+      A {words.toLocaleString()} word speech takes approximately <strong class="text-[#0070f3] font-mono">{normalDuration}</strong> to deliver aloud at standard presentation speed.
+    </p>
+
+    <!-- Quick Count Selector -->
+    <div class="mt-6 flex flex-wrap justify-center items-center gap-2">
+      <span class="text-xs text-[#888888] font-mono mr-1">Other Word Counts:</span>
+      {allCounts.map((c) => (
+        <a
+          href={`/words-to-speaking-time/${c}-words/`}
+          class={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-mono transition-colors ${
+            c === words
+              ? 'bg-[#171717] dark:bg-white text-white dark:text-[#171717] font-semibold'
+              : 'border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#121212] text-[#666666] dark:text-[#888888] hover:border-[#0070f3] hover:text-[#0070f3]'
+          }`}
+        >
+          {c.toLocaleString()}
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+    <div class="max-w-4xl mx-auto space-y-10">
+      <!-- Main Stat Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Normal Pace -->
+        <div class="rounded-2xl border-2 border-[#0070f3] bg-white dark:bg-[#0a0a0a] p-6 shadow-sm relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-[#0070f3] text-white text-[10px] font-mono font-semibold px-2.5 py-0.5 rounded-bl-lg uppercase tracking-wider">
+            Most Common
+          </div>
+          <span class="text-xs font-semibold text-[#0070f3] uppercase tracking-wider block mb-1">
+            Conversational Pace (130 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {normalDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            Standard rate for business meetings, webinars, classroom lectures, and podcasts.
+          </p>
+        </div>
+
+        <!-- Slow Pace -->
+        <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xs">
+          <span class="text-xs font-semibold text-[#888888] uppercase tracking-wider block mb-1">
+            Keynote Pace (100 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {slowDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            Deliberate cadence with pregnant pauses for TED talks, commencement addresses, and keynotes.
+          </p>
+        </div>
+
+        <!-- Fast Pace -->
+        <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xs">
+          <span class="text-xs font-semibold text-[#888888] uppercase tracking-wider block mb-1">
+            Energetic Pace (160 WPM)
+          </span>
+          <div class="text-2xl sm:text-3xl font-bold font-mono text-[#171717] dark:text-[#ededed] my-2">
+            {fastDuration}
+          </div>
+          <p class="text-xs text-[#666666] dark:text-[#888888] leading-relaxed">
+            High-energy tempo for commercial spots, dynamic pitches, and quick YouTube introductions.
+          </p>
+        </div>
+      </div>
+
+      <!-- Additional Metrics -->
+      <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h2 class="text-lg font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em] mb-4">
+          Complete {words.toLocaleString()} Word Reading &amp; Speaking Breakdown
+        </h2>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Silent Reading</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {silentDuration}
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">at 238 WPM</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Reading Aloud</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {formatMinutesAndSeconds(readAloudMinutes)}
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">at 180 WPM</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Slide Deck Count</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#0070f3]">
+              ~{recommendedSlides} Slides
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">at 1.5 min / slide</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#fafafa] dark:bg-[#121212]">
+            <span class="text-[11px] font-mono text-[#888888] block uppercase">Printed Script</span>
+            <span class="text-base sm:text-lg font-bold font-mono text-[#171717] dark:text-[#ededed]">
+              {(words / 250).toFixed(1)} Pages
+            </span>
+            <span class="text-[10px] text-[#888888] block mt-0.5">Double-spaced 12pt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preparation & Speech Delivery Tips -->
+      <article class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 space-y-6">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#171717] dark:text-[#ededed] tracking-[-0.02em]">
+          How to Deliver a {words.toLocaleString()} Word Presentation Flawlessly
+        </h2>
+
+        <div class="space-y-4 text-xs sm:text-sm text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+          <p>
+            When delivering a script of <strong class="text-[#171717] dark:text-[#ededed] font-semibold">{words.toLocaleString()} words</strong>, novice speakers frequently speak 20% to 30% faster than they do in casual rehearsal due to adrenaline. To ensure your audience digests your core thesis:
+          </p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>
+              <strong class="text-[#171717] dark:text-[#ededed]">Build In Strategic Pauses:</strong> Mark transitions with 2-second silent pauses. This gives listeners time to process complex assertions and allows you to catch your breath.
+            </li>
+            <li>
+              <strong class="text-[#171717] dark:text-[#ededed]">Target {recommendedSlides} Slides Maximum:</strong> A common mistake is overwhelming listeners with too many slides. Aim for roughly one slide every 90 seconds.
+            </li>
+            <li>
+              <strong class="text-[#171717] dark:text-[#ededed]">Format with Large Type:</strong> If using index cards or a printed teleprompter script, use 16pt font with generous line spacing to prevent losing your place while maintaining eye contact.
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Internal Linking Matrix -->
+      <div class="rounded-2xl border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 sm:p-8">
+        <h3 class="text-sm font-semibold text-[#171717] dark:text-[#ededed] mb-4">
+          Related Writing &amp; Speaking Tools
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+          <a href={`/words-to-pages/${words}-words/`} class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">{words.toLocaleString()} Words to Pages</span>
+            <span class="text-[11px] text-[#888888]">Single &amp; double spaced page count</span>
+          </a>
+          <a href="/words-to-speaking-time/" class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">Speaking Time Calculator</span>
+            <span class="text-[11px] text-[#888888]">Custom script pacing tool</span>
+          </a>
+          <a href="/tools/" class="p-3 rounded-lg border border-[#ebebeb] dark:border-[#262626] hover:border-[#0070f3] text-xs transition-colors block">
+            <span class="font-semibold text-[#171717] dark:text-[#ededed] block mb-0.5">All 23 Tools Directory</span>
+            <span class="text-[11px] text-[#888888]">Browse full utility suite</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

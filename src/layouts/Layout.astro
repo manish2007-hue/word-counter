@@ -194,7 +194,7 @@ const finalSchema = schema || defaultSchema;
             Word Counter
           </a>
 
-          <!-- Tools Dropdown Tab: All 20 tools neatly categorized under it -->
+          <!-- Tools Dropdown Tab: All 23 tools neatly categorized under it -->
           <div class="relative group" id="nav-tools-menu">
             <a
               href={`${base}/tools`}
@@ -207,20 +207,20 @@ const finalSchema = schema || defaultSchema;
               aria-haspopup="true"
             >
               <span>Tools</span>
-              <span class="rounded-full bg-black/5 dark:bg-white/10 text-[#171717] dark:text-white px-1.5 py-0.2 font-mono text-[10px] font-semibold">20</span>
+              <span class="rounded-full bg-black/5 dark:bg-white/10 text-[#171717] dark:text-white px-1.5 py-0.2 font-mono text-[10px] font-semibold">23</span>
               <svg class="h-3 w-3 text-[#888888] transition-transform duration-200 group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </a>
 
-            <!-- Dropdown Popover: 3-column Grid with all 20 tools under Tools tab -->
+            <!-- Dropdown Popover: 4-column Grid with all 23 tools under Tools tab -->
             <div
               id="tools-dropdown-menu"
-              class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[720px]"
+              class="hidden group-hover:block absolute left-0 top-full pt-2 z-50 w-[920px]"
             >
               <div class="rounded-[12px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-3.5 shadow-2xl">
                 
-                <div class="grid grid-cols-3 gap-3">
+                <div class="grid grid-cols-4 gap-3">
                   
                   <!-- Column 1: Writing & Analysis -->
                   <div class="space-y-1">
@@ -323,16 +323,48 @@ const finalSchema = schema || defaultSchema;
                     </a>
                   </div>
 
+                  <!-- Column 4: Image Tools (Pi7 Suite) -->
+                  <div class="space-y-1">
+                    <div class="px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-sky-500 font-semibold flex items-center justify-between">
+                      <span>Image Tools</span>
+                      <span class="text-[9px] bg-sky-500/10 text-sky-600 dark:text-sky-400 px-1 rounded">PI7 SUITE</span>
+                    </div>
+
+                    <a href={`${base}/compress-image`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-sky-500"></span>
+                      <span>Target Compressor</span>
+                      <span class="text-[9px] font-mono text-emerald-600 bg-emerald-500/10 px-1 rounded ml-auto">NEW</span>
+                    </a>
+                    <a href={`${base}/resize-image`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-sky-500"></span>
+                      <span>Passport &amp; Resizer</span>
+                      <span class="text-[9px] font-mono text-emerald-600 bg-emerald-500/10 px-1 rounded ml-auto">NEW</span>
+                    </a>
+                    <a href={`${base}/image-converter`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-sky-500"></span>
+                      <span>Format Converter</span>
+                      <span class="text-[9px] font-mono text-emerald-600 bg-emerald-500/10 px-1 rounded ml-auto">NEW</span>
+                    </a>
+                    <a href={`${base}/compress-image/to-20kb`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-[11px] font-mono text-[#666666] dark:text-[#888888]">
+                      <span class="h-1 w-1 rounded-full bg-[#888888]"></span>
+                      <span>To 20KB (Signatures)</span>
+                    </a>
+                    <a href={`${base}/compress-image/to-50kb`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-[11px] font-mono text-[#666666] dark:text-[#888888]">
+                      <span class="h-1 w-1 rounded-full bg-[#888888]"></span>
+                      <span>To 50KB (Exam Forms)</span>
+                    </a>
+                  </div>
+
                 </div>
 
-                <!-- Bottom Banner: Browse All 20 Tools on Dashboard -->
+                <!-- Bottom Banner: Browse All 23 Tools on Dashboard -->
                 <div class="mt-3 pt-2.5 border-t border-[#ebebeb] dark:border-[#222222] flex items-center justify-between px-2">
                   <span class="text-[11px] text-[#8a8f98]">100% Client-Side • Zero Server Tracking</span>
                   <a
                     href={`${base}/tools`}
                     class="text-xs font-semibold text-[#0070f3] hover:underline flex items-center gap-1"
                   >
-                    <span>Browse All 20 Tools on Dashboard</span>
+                    <span>Browse All 23 Tools on Dashboard</span>
                     <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -466,10 +498,19 @@ const finalSchema = schema || defaultSchema;
       <!-- Mobile Navigation Drawer -->
       <div id="mobile-nav-drawer" class="lg:hidden hidden border-b border-[#ebebeb] dark:border-[#23252a] bg-[#fafafa]/98 dark:bg-[#0a0a0a]/98 backdrop-blur-md px-4 py-3 space-y-1">
         <a href={`${base}/tools`} class="block px-3 py-2 rounded-[6px] text-sm font-semibold text-[#0070f3] bg-[#0070f3]/10 mb-2">
-          ⚡ Browse All 20 Tools &amp; Utilities →
+          ⚡ Browse All 23 Tools &amp; Utilities →
         </a>
         <a href={`${base}/`} class="block px-3 py-1.5 rounded-[6px] text-xs font-medium text-[#171717] dark:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5">
           Word Counter
+        </a>
+        <a href={`${base}/compress-image`} class="block px-3 py-1.5 rounded-[6px] text-xs font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-500/10">
+          Target Image Compressor (20KB - 500KB)
+        </a>
+        <a href={`${base}/resize-image`} class="block px-3 py-1.5 rounded-[6px] text-xs font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-500/10">
+          Passport Photo &amp; Dimension Resizer
+        </a>
+        <a href={`${base}/image-converter`} class="block px-3 py-1.5 rounded-[6px] text-xs font-medium text-sky-600 dark:text-sky-400 hover:bg-sky-500/10">
+          Image Format Converter (PNG/JPG/WebP)
         </a>
         <a href={`${base}/lorem-ipsum-generator`} class="block px-3 py-1.5 rounded-[6px] text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10">
           Lorem Ipsum Generator (New)
@@ -663,7 +704,7 @@ const finalSchema = schema || defaultSchema;
           <div>
             <h4 class="font-mono text-xs font-medium uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">Tools &amp; Calculators</h4>
             <ul class="space-y-2 text-xs">
-              <li><a href={`${base}/tools`} class="hover:text-[#171717] dark:hover:text-white transition font-semibold text-[#0070f3]">⚡ Browse All 20 Tools →</a></li>
+              <li><a href={`${base}/tools`} class="hover:text-[#171717] dark:hover:text-white transition font-semibold text-[#0070f3]">⚡ Browse All 23 Tools →</a></li>
               <li><a href={`${base}/`} class="hover:text-[#171717] dark:hover:text-white transition">Online Word Counter</a></li>
               <li><a href={`${base}/lorem-ipsum-generator`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-emerald-600 dark:text-emerald-400">Lorem Ipsum Generator</a></li>
               <li><a href={`${base}/text-repeater`} class="hover:text-[#171717] dark:hover:text-white transition font-medium text-emerald-600 dark:text-emerald-400">Text Repeater Tool</a></li>
