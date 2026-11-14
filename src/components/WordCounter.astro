@@ -2,7 +2,7 @@
 import { SOCIAL_PLATFORMS } from '../lib/socialLimits';
 
 interface Props {
-  initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style' | 'tokens';
+  initialTab?: 'keywords' | 'readability' | 'social' | 'academic' | 'style' | 'tokens' | 'ai-study';
   initialTarget?: number;
   showHeroCopy?: boolean;
 }
@@ -17,7 +17,7 @@ const {
 <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-4 pb-16" id="tool-container" data-initial-tab={initialTab} data-initial-target={initialTarget}>
   
   {showHeroCopy && (
-    <div class="hidden md:block text-center mb-6 py-5 sm:py-6 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#e2e4e8]/60 dark:border-[#23252a]/60">
+    <div class="block text-center mb-6 py-5 sm:py-6 vercel-hero-mesh rounded-[16px] relative overflow-hidden border border-[#e2e4e8]/60 dark:border-[#23252a]/60">
       <!-- Linear Uppercase Technical Eyebrow -->
       <div class="inline-flex items-center gap-2 rounded-full border border-[#e2e4e8] dark:border-[#23252a] bg-white/90 dark:bg-[#0f1011]/90 px-3.5 py-1 mono-eyebrow text-[#4c515a] dark:text-[#a1a1aa] shadow-2xs mb-3">
         <span class="h-1.5 w-1.5 rounded-full bg-[#0070f3]"></span>
@@ -720,6 +720,16 @@ const {
           <span>AI Token Counter</span>
         </button>
 
+        <button class="analysis-tab-btn flex items-center gap-2 px-3.5 py-1.5 vercel-category-pill text-xs font-medium text-[#4d4d4d] dark:text-[#a1a1a1] hover:text-[#171717] dark:hover:text-[#ededed] hover:bg-black/5 dark:hover:bg-white/5 shrink-0 transition" data-tab="ai-study">
+          <svg class="h-3.5 w-3.5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+          <div class="flex items-center gap-1.5">
+            <span>AI Study &amp; Summary</span>
+            <span class="rounded-[3px] bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono text-[9px] px-1 py-0.2 border border-purple-500/20">Alt + 7</span>
+          </div>
+        </button>
+
       </div>
     </div>
 
@@ -1300,8 +1310,583 @@ const {
 
     </div>
 
+    <!-- Tab 7: AI Study & Summary Workspace (NoteGPT Style) -->
+    <div id="tab-content-ai-study" class="analysis-panel hidden p-4 sm:p-6 bg-white dark:bg-[#0a0a0a]">
+      
+      <!-- Top Title & Quota Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-[#ebebeb] dark:border-[#222222]">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono text-[10px] font-semibold border border-purple-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+              NoteGPT Suite • Gemini 2.5 Flash
+            </span>
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded-[4px] bg-black/5 dark:bg-white/5 font-mono text-[10px] text-[#8f8f8f]">
+              Alt + 7
+            </span>
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-[#171717] dark:text-[#ededed] tracking-tight">
+            AI Study &amp; Summary Workspace
+          </h2>
+          <p class="text-xs text-[#8f8f8f] mt-0.5">
+            Executive summaries, active-recall flashcards, lecture note restructuring, and citation-safe admissions essay trimming.
+          </p>
+        </div>
+
+        <!-- Freemium Quota Status Pill -->
+        <div class="flex items-center gap-2">
+          <div id="ai-quota-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-mono font-medium text-purple-700 dark:text-purple-300">
+            <span>⚡</span>
+            <span id="ai-quota-pill-text">3 / 3 Free Runs Left Today</span>
+          </div>
+          <button
+            id="btn-trigger-pro-modal"
+            type="button"
+            class="px-3 py-1 rounded-full text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black hover:opacity-90 transition cursor-pointer"
+          >
+            Upgrade to Pro
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Mode Switcher (Vercel Hairline Segmented Pills) -->
+      <div class="flex items-center gap-1.5 p-1 rounded-[8px] bg-[#f5f5f5] dark:bg-[#141414] border border-[#ebebeb] dark:border-[#262626] mb-6 overflow-x-auto">
+        <button
+          type="button"
+          data-ai-action="summarize"
+          class="ai-action-btn flex items-center gap-2 px-3.5 py-1.5 rounded-[6px] text-xs font-semibold bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-white shadow-2xs transition shrink-0 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          <span>AI PDF &amp; Document Summarizer</span>
+        </button>
+
+        <button
+          type="button"
+          data-ai-action="transcript"
+          class="ai-action-btn flex items-center gap-2 px-3.5 py-1.5 rounded-[6px] text-xs font-medium text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] dark:hover:text-white transition shrink-0 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+          <span>YouTube / Lecture Transcript to Notes</span>
+        </button>
+
+        <button
+          type="button"
+          data-ai-action="trim"
+          class="ai-action-btn flex items-center gap-2 px-3.5 py-1.5 rounded-[6px] text-xs font-medium text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] dark:hover:text-white transition shrink-0 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/>
+          </svg>
+          <span>Strict Word-Limit Essay Trimmer</span>
+        </button>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ACTION 1: AI PDF & DOCUMENT SUMMARIZER -->
+      <!-- ========================================== -->
+      <div id="ai-view-summarize" class="ai-subview space-y-5">
+        
+        <!-- Source Selector & Editor Sync Status -->
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#111112] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-[6px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-mono text-sm font-bold">
+              DOC
+            </div>
+            <div>
+              <div class="text-xs font-medium text-[#171717] dark:text-[#ededed] flex items-center gap-2">
+                <span id="ai-summarize-active-doc-label">Active Document in Editor</span>
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+              </div>
+              <p class="text-[11px] text-[#8f8f8f] font-mono mt-0.5" id="ai-summarize-active-doc-meta">
+                0 words ready for analysis
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              id="btn-summarize-use-editor"
+              type="button"
+              class="vercel-btn-sm vercel-btn-sm-ghost text-xs"
+            >
+              Sync from Editor
+            </button>
+            <button
+              id="btn-summarize-custom-toggle"
+              type="button"
+              class="vercel-btn-sm vercel-btn-sm-ghost text-xs"
+            >
+              Paste Custom Text
+            </button>
+          </div>
+        </div>
+
+        <!-- Optional Custom Text Input (hidden by default) -->
+        <div id="ai-summarize-custom-input-box" class="hidden">
+          <label class="block text-xs font-mono text-[#8f8f8f] mb-1.5">Paste Document or Upload File Text</label>
+          <textarea
+            id="ai-summarize-custom-text"
+            rows="5"
+            placeholder="Paste your report, textbook chapter, or research article here..."
+            class="w-full rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-3 text-xs text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-purple-500"
+          ></textarea>
+        </div>
+
+        <!-- Action Trigger Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <div class="flex items-center gap-4 text-xs font-mono text-[#71717a] dark:text-[#a1a1aa]">
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="check-include-summary" checked class="rounded border-[#ccc] text-purple-600" />
+              <span>Executive Summary</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="check-include-takeaways" checked class="rounded border-[#ccc] text-purple-600" />
+              <span>Key Takeaways</span>
+            </label>
+            <label class="flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" id="check-include-flashcards" checked class="rounded border-[#ccc] text-purple-600" />
+              <span>Study Flashcards</span>
+            </label>
+          </div>
+
+          <button
+            id="btn-run-summarize"
+            type="button"
+            class="px-4 py-2 rounded-[6px] text-xs font-semibold bg-purple-600 text-white hover:bg-purple-700 transition flex items-center gap-2 cursor-pointer shadow-xs"
+          >
+            <span id="btn-run-summarize-spinner" class="hidden animate-spin">⟳</span>
+            <span id="btn-run-summarize-text">⚡ Generate AI Summary &amp; Flashcards</span>
+          </button>
+        </div>
+
+        <!-- Loading State Indicator -->
+        <div id="ai-summarize-loading" class="hidden rounded-[8px] border border-purple-500/20 bg-purple-500/5 p-6 text-center">
+          <div class="inline-block animate-spin text-purple-600 text-lg mb-2">⟳</div>
+          <div class="text-xs font-mono font-medium text-purple-600 dark:text-purple-400">
+            Synthesizing document with Gemini 2.5 Flash...
+          </div>
+          <p class="text-[11px] text-[#8f8f8f] mt-1">Generating executive summary, core takeaways, and active-recall flashcard deck</p>
+        </div>
+
+        <!-- Results Output Container -->
+        <div id="ai-summarize-results" class="hidden space-y-6 pt-2">
+          
+          <!-- Executive Summary Card -->
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                <h3 class="text-xs font-mono font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+                  Executive Summary
+                </h3>
+              </div>
+              <button
+                id="btn-copy-exec-summary"
+                type="button"
+                class="vercel-btn-sm vercel-btn-sm-ghost text-[11px]"
+              >
+                Copy Summary
+              </button>
+            </div>
+            <div id="output-exec-summary" class="text-xs sm:text-sm text-[#333] dark:text-[#d1d1d1] leading-relaxed whitespace-pre-wrap"></div>
+          </div>
+
+          <!-- Key Takeaways Card -->
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                <h3 class="text-xs font-mono font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+                  Key Takeaways &amp; Core Insights
+                </h3>
+              </div>
+              <button
+                id="btn-copy-takeaways"
+                type="button"
+                class="vercel-btn-sm vercel-btn-sm-ghost text-[11px]"
+              >
+                Copy Takeaways
+              </button>
+            </div>
+            <ul id="output-key-takeaways" class="space-y-2 text-xs sm:text-sm text-[#333] dark:text-[#d1d1d1]"></ul>
+          </div>
+
+          <!-- Study Flashcards Deck -->
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <h3 class="text-xs font-mono font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+                    Active-Recall Study Flashcards
+                  </h3>
+                  <span id="flashcards-count-badge" class="px-1.5 py-0.2 rounded font-mono text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">
+                    0 Cards
+                  </span>
+                </div>
+                <p class="text-[11px] text-[#8f8f8f] mt-0.5">Click any card to reveal the answer.</p>
+              </div>
+
+              <!-- Export Actions -->
+              <div class="flex items-center gap-1.5 font-mono text-xs">
+                <button id="btn-export-flashcards-md" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-[11px]">
+                  Export .MD
+                </button>
+                <button id="btn-export-flashcards-csv" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-[11px]">
+                  Export .CSV (Anki)
+                </button>
+                <button id="btn-export-flashcards-pdf" type="button" class="vercel-btn-sm text-[11px] bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
+                  Print / PDF Deck
+                </button>
+              </div>
+            </div>
+
+            <!-- Flashcards Grid -->
+            <div id="output-flashcards-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ACTION 2: YOUTUBE / TRANSCRIPT TO NOTES -->
+      <!-- ========================================== -->
+      <div id="ai-view-transcript" class="ai-subview hidden space-y-5">
+        
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#111112] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">
+              YouTube / Lecture Transcript Cleaner &amp; Structurer
+            </h3>
+            <p class="text-[11px] text-[#8f8f8f] mt-0.5">
+              Strips 00:15 timestamps and filler phrases ("um", "you know"), then synthesizes comprehensive revision notes.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btn-transcript-pull-editor" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-xs">
+              Load From Editor
+            </button>
+            <button id="btn-transcript-clean-local" type="button" class="vercel-btn-sm text-xs border border-blue-500/30 text-blue-600 dark:text-blue-400 bg-blue-500/10">
+              Clean Timestamps &amp; Fillers
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <textarea
+            id="ai-transcript-input"
+            rows="6"
+            placeholder="Paste raw transcript here: e.g. '00:12 So today um we are going to cover quantum mechanics... [01:45] Dr. Smith: Basically the wave function...'"
+            class="w-full rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-3.5 text-xs text-[#171717] dark:text-[#ededed] font-mono leading-relaxed focus:outline-hidden focus:border-blue-500"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] text-[#8f8f8f] font-mono" id="transcript-input-stats">0 words</span>
+          <button
+            id="btn-run-transcript"
+            type="button"
+            class="px-4 py-2 rounded-[6px] text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition flex items-center gap-2 cursor-pointer shadow-xs"
+          >
+            <span id="btn-run-transcript-spinner" class="hidden animate-spin">⟳</span>
+            <span id="btn-run-transcript-text">⚡ Structure Into Revision Notes</span>
+          </button>
+        </div>
+
+        <!-- Transcript Loading Indicator -->
+        <div id="ai-transcript-loading" class="hidden rounded-[8px] border border-blue-500/20 bg-blue-500/5 p-6 text-center">
+          <div class="inline-block animate-spin text-blue-600 text-lg mb-2">⟳</div>
+          <div class="text-xs font-mono font-medium text-blue-600 dark:text-blue-400">
+            Synthesizing lecture notes with Gemini 2.5 Flash...
+          </div>
+          <p class="text-[11px] text-[#8f8f8f] mt-1">Organizing headings, definitions, key concepts, and action items checklist</p>
+        </div>
+
+        <!-- Transcript Results -->
+        <div id="ai-transcript-results" class="hidden space-y-5 pt-2">
+          
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-3 pb-3 border-b border-[#ebebeb] dark:border-[#222222]">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-blue-500 font-semibold tracking-wider">Structured Revision Notes</span>
+                <h3 id="output-transcript-title" class="text-base font-bold text-[#171717] dark:text-[#ededed]"></h3>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="btn-copy-transcript-notes" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-xs">
+                  Copy Markdown
+                </button>
+                <button id="btn-apply-transcript-editor" type="button" class="vercel-btn-sm vercel-btn-sm-primary text-xs">
+                  Replace in Editor
+                </button>
+              </div>
+            </div>
+
+            <div id="output-transcript-markdown" class="text-xs sm:text-sm text-[#333] dark:text-[#d1d1d1] leading-relaxed whitespace-pre-wrap font-sans"></div>
+          </div>
+
+          <!-- Action Items Checklist -->
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed] mb-3">
+              Action Items &amp; Next Steps
+            </h4>
+            <div id="output-transcript-actions" class="space-y-2"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ACTION 3: STRICT WORD-LIMIT ESSAY TRIMMER -->
+      <!-- ========================================== -->
+      <div id="ai-view-trim" class="ai-subview hidden space-y-5">
+        
+        <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#111112] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-xs font-semibold text-[#171717] dark:text-[#ededed]">
+              Strict Word-Limit Essay Trimmer &amp; Citation Guardian
+            </h3>
+            <p class="text-[11px] text-[#8f8f8f] mt-0.5">
+              Rewrites verbose phrasing to hit your exact admissions or journal word ceiling while strictly protecting all academic citations.
+            </p>
+          </div>
+          <button id="btn-trim-pull-editor" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-xs">
+            Pull from Main Editor
+          </button>
+        </div>
+
+        <!-- Target Ceiling Selector Bar -->
+        <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <label class="block text-xs font-mono text-[#8f8f8f] uppercase mb-1">Target Word Ceiling</label>
+              <div class="flex items-center gap-2">
+                <input
+                  type="number"
+                  id="ai-trim-target-input"
+                  min="50"
+                  max="100000"
+                  value="650"
+                  class="w-32 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] bg-[#fafafa] dark:bg-[#141414] px-3 py-1.5 text-sm font-mono font-bold text-[#171717] dark:text-[#ededed] focus:outline-hidden focus:border-emerald-500"
+                />
+                <span class="text-xs font-mono text-[#8f8f8f]">words strict maximum</span>
+              </div>
+            </div>
+
+            <!-- Quick Preset Pills -->
+            <div class="flex items-center gap-1.5 font-mono text-[11px]">
+              <span class="text-[#8f8f8f] text-[10px] mr-1">Presets:</span>
+              <button type="button" class="preset-target-btn px-2.5 py-1 rounded-[4px] bg-[#f5f5f5] dark:bg-[#141414] hover:bg-emerald-500/10 hover:text-emerald-600 transition" data-target="250">250w (Abstract)</button>
+              <button type="button" class="preset-target-btn px-2.5 py-1 rounded-[4px] bg-[#f5f5f5] dark:bg-[#141414] hover:bg-emerald-500/10 hover:text-emerald-600 transition" data-target="500">500w (SOP)</button>
+              <button type="button" class="preset-target-btn px-2.5 py-1 rounded-[4px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/30" data-target="650">650w (Common App)</button>
+              <button type="button" class="preset-target-btn px-2.5 py-1 rounded-[4px] bg-[#f5f5f5] dark:bg-[#141414] hover:bg-emerald-500/10 hover:text-emerald-600 transition" data-target="1000">1000w</button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <span>APA, MLA, and Harvard citations (e.g. (Author, Year) or [1-3]) will be preserved without modification.</span>
+          </div>
+        </div>
+
+        <div>
+          <textarea
+            id="ai-trim-input"
+            rows="7"
+            placeholder="Paste your essay or manuscript draft here..."
+            class="w-full rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-3.5 text-xs text-[#171717] dark:text-[#ededed] leading-relaxed focus:outline-hidden focus:border-emerald-500"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] text-[#8f8f8f] font-mono" id="trim-input-stats">0 words</span>
+          <button
+            id="btn-run-trim"
+            type="button"
+            class="px-4 py-2 rounded-[6px] text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-2 cursor-pointer shadow-xs"
+          >
+            <span id="btn-run-trim-spinner" class="hidden animate-spin">⟳</span>
+            <span id="btn-run-trim-text">⚡ Trim Essay to Budget</span>
+          </button>
+        </div>
+
+        <!-- Trim Loading Indicator -->
+        <div id="ai-trim-loading" class="hidden rounded-[8px] border border-emerald-500/20 bg-emerald-500/5 p-6 text-center">
+          <div class="inline-block animate-spin text-emerald-600 text-lg mb-2">⟳</div>
+          <div class="text-xs font-mono font-medium text-emerald-600 dark:text-emerald-400">
+            Pruning verbose prose with Gemini 2.5 Flash...
+          </div>
+          <p class="text-[11px] text-[#8f8f8f] mt-1">Eliminating wordiness while protecting citations and voice</p>
+        </div>
+
+        <!-- Trim Results Output -->
+        <div id="ai-trim-results" class="hidden space-y-5 pt-2">
+          
+          <!-- Delta Stats Metric Bar -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-3">
+              <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Original</div>
+              <div class="font-mono text-xl font-bold text-[#171717] dark:text-[#ededed]" id="trim-stat-original">0w</div>
+            </div>
+            <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-3">
+              <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Trimmed</div>
+              <div class="font-mono text-xl font-bold text-emerald-600 dark:text-emerald-400" id="trim-stat-trimmed">0w</div>
+            </div>
+            <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-3">
+              <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Budget Ceiling</div>
+              <div class="font-mono text-xl font-bold text-[#0070f3]" id="trim-stat-budget">0w</div>
+            </div>
+            <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-3">
+              <div class="text-[10px] font-mono text-[#8f8f8f] uppercase">Reduction</div>
+              <div class="font-mono text-xl font-bold text-purple-600 dark:text-purple-400" id="trim-stat-saved">-0w</div>
+            </div>
+          </div>
+
+          <!-- Preserved Citations Notification -->
+          <div id="trim-citations-container" class="rounded-[8px] border border-emerald-500/20 bg-emerald-500/5 p-3 text-xs flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-emerald-600 font-bold">✓ Citations Preserved:</span>
+              <span id="trim-citations-list" class="font-mono text-emerald-700 dark:text-emerald-300"></span>
+            </div>
+          </div>
+
+          <!-- Trimmed Essay Text Box -->
+          <div class="rounded-[10px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-5">
+            <div class="flex items-center justify-between mb-3 pb-3 border-b border-[#ebebeb] dark:border-[#222222]">
+              <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-[#171717] dark:text-[#ededed]">
+                Trimmed Essay Prose
+              </h4>
+              <div class="flex items-center gap-2">
+                <button id="btn-copy-trimmed-essay" type="button" class="vercel-btn-sm vercel-btn-sm-ghost text-xs">
+                  Copy Prose
+                </button>
+                <button id="btn-apply-trimmed-editor" type="button" class="vercel-btn-sm vercel-btn-sm-primary text-xs">
+                  Apply to Main Editor
+                </button>
+              </div>
+            </div>
+            <div id="output-trimmed-essay" class="text-xs sm:text-sm text-[#333] dark:text-[#d1d1d1] leading-relaxed whitespace-pre-wrap font-sans"></div>
+          </div>
+
+          <!-- Editorial Optimization Notes -->
+          <div class="rounded-[8px] border border-[#ebebeb] dark:border-[#222222] bg-[#fafafa] dark:bg-[#0c0c0d] p-4 text-xs">
+            <span class="font-mono font-semibold text-[#8f8f8f] uppercase mr-2">Editorial Summary:</span>
+            <span id="output-trim-notes" class="text-[#4d4d4d] dark:text-[#a1a1a1]"></span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 
+</div>
+
+<!-- VERCEL PRO PAYWALL & FREEMIUM QUOTA MODAL -->
+<div id="pro-paywall-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+  <div class="w-full max-w-lg rounded-[14px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0c0c0c] p-6 sm:p-7 shadow-2xl transition-all relative overflow-hidden">
+    
+    <!-- Top Close Button -->
+    <button
+      id="btn-close-pro-modal"
+      type="button"
+      class="absolute top-4 right-4 h-7 w-7 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] flex items-center justify-center text-sm text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer"
+      aria-label="Close modal"
+    >
+      ✕
+    </button>
+
+    <!-- Modal Header -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono text-xs font-semibold border border-purple-500/20 mb-3">
+        <span>⚡</span> CleanWordCounter Pro
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#171717] dark:text-[#ededed]">
+        Unlock Unlimited AI Study Power
+      </h3>
+      <p class="text-xs sm:text-sm text-[#71717a] dark:text-[#a1a1aa] mt-1.5 max-w-sm mx-auto leading-relaxed">
+        You've used all 3 free daily AI runs. Upgrade for unlimited document summaries, transcript restructuring, and strict essay trimming.
+      </p>
+    </div>
+
+    <!-- Pricing Card with Currency Toggle -->
+    <div class="rounded-[10px] border border-purple-500/30 bg-purple-500/5 dark:bg-purple-500/10 p-5 mb-5 text-center">
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <span class="text-3xl font-extrabold text-[#171717] dark:text-white" id="pro-price-display">$4.99</span>
+        <span class="text-xs font-mono text-[#8f8f8f]">/ month</span>
+      </div>
+      <div class="flex items-center justify-center gap-2 text-[11px] font-mono">
+        <button id="btn-currency-usd" type="button" class="px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer">USD ($4.99)</button>
+        <button id="btn-currency-inr" type="button" class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer">INR (₹199)</button>
+      </div>
+      <p class="text-[11px] text-[#8f8f8f] mt-2">Cancel anytime • Zero long-term commitment • Instant activation</p>
+    </div>
+
+    <!-- Features Checklist -->
+    <div class="space-y-2 mb-6 text-xs text-[#333] dark:text-[#d1d1d1]">
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span><strong>Unlimited</strong> AI PDF &amp; Document Summaries</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span><strong>Unlimited</strong> YouTube &amp; Lecture Transcript-to-Notes</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span><strong>Unlimited</strong> Strict Word-Limit Essay Trimming (up to 50,000 words)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span><strong>Unlimited</strong> Flashcard Exports (.md, .csv Anki, .pdf)</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span>Sub-second Gemini 2.5 Flash server inference with dedicated priority queue</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-bold">✓</span>
+        <span>All 29 standard utilities remain 100% free with zero login required</span>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="space-y-2.5">
+      <!-- Google Sign In Simulation Button -->
+      <button
+        id="btn-google-signin"
+        type="button"
+        class="w-full flex items-center justify-center gap-2.5 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] py-2.5 px-4 text-xs font-semibold text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
+      >
+        <svg class="w-4 h-4" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span id="google-signin-btn-text">Sign in with Google</span>
+      </button>
+
+      <!-- Upgrade Button -->
+      <button
+        id="btn-confirm-upgrade-pro"
+        type="button"
+        class="w-full rounded-[8px] bg-[#171717] dark:bg-white text-white dark:text-black py-2.5 px-4 text-xs font-bold hover:opacity-90 transition cursor-pointer shadow-md"
+      >
+        Upgrade to Pro Now — Instant Access
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <!-- VERCEL CUSTOM TARGET MODAL (Clean hairline modal) -->
@@ -1341,6 +1926,18 @@ const {
   import { analyzeStyle } from '../lib/styleAnalyzer';
   import { estimateTokens } from '../lib/tokens';
   import { AI_MODELS_CATALOG, calculateModelTokens, type AIModel } from '../lib/aiModels';
+  import {
+    getAIQuota,
+    canRunAIAction,
+    recordAIRun,
+    upgradeToPro,
+    setUserProfile,
+    cleanTranscriptText,
+    callAIWorkspaceAPI,
+    exportFlashcardsToMarkdown,
+    exportFlashcardsToCSV,
+    printOrExportPDF
+  } from '../lib/aiWorkspaceClient';
 
   // Container & initial props
   const container = document.getElementById('tool-container') as HTMLElement;
@@ -3055,6 +3652,12 @@ const {
     panels.forEach((p) => p.classList.add('hidden'));
     const activePanel = document.getElementById(`tab-content-${targetTab}`);
     if (activePanel) activePanel.classList.remove('hidden');
+    if (targetTab === 'ai-study') {
+      try {
+        updateAIWorkspaceDocStatus();
+        updateQuotaUI();
+      } catch (e) {}
+    }
   }
 
   tabButtons.forEach((btn) => {
@@ -3552,4 +4155,565 @@ const {
       notify('✓ Draft restored from previous session');
     }, 400);
   }
+
+  // ============================================================
+  // TAB 7: AI STUDY & SUMMARY WORKSPACE (NoteGPT Style) CONTROLLER
+  // ============================================================
+  let activeFlashcards: Array<{ question: string; answer: string }> = [];
+  let currentDocTitle = 'Document';
+
+  // AI Sub-action buttons & sub-views
+  const aiActionButtons = document.querySelectorAll('.ai-action-btn');
+  const aiSubviews = document.querySelectorAll('.ai-subview');
+
+  function switchAISubaction(action: 'summarize' | 'transcript' | 'trim') {
+    aiActionButtons.forEach((btn) => {
+      const b = btn as HTMLElement;
+      if (b.dataset.aiAction === action) {
+        b.className = 'ai-action-btn flex items-center gap-2 px-3.5 py-1.5 rounded-[6px] text-xs font-semibold bg-white dark:bg-[#0a0a0a] text-[#171717] dark:text-white shadow-2xs transition shrink-0 cursor-pointer';
+      } else {
+        b.className = 'ai-action-btn flex items-center gap-2 px-3.5 py-1.5 rounded-[6px] text-xs font-medium text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] dark:hover:text-white transition shrink-0 cursor-pointer';
+      }
+    });
+
+    aiSubviews.forEach((v) => v.classList.add('hidden'));
+    const targetView = document.getElementById(`ai-view-${action}`);
+    if (targetView) targetView.classList.remove('hidden');
+  }
+
+  aiActionButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const act = (btn as HTMLElement).dataset.aiAction as any;
+      if (act) switchAISubaction(act);
+    });
+  });
+
+  // Freemium Quota UI Manager
+  const quotaPill = document.getElementById('ai-quota-pill');
+  const quotaPillText = document.getElementById('ai-quota-pill-text');
+  const btnTriggerProModal = document.getElementById('btn-trigger-pro-modal');
+  const proPaywallModal = document.getElementById('pro-paywall-modal');
+  const btnCloseProModal = document.getElementById('btn-close-pro-modal');
+  const proPriceDisplay = document.getElementById('pro-price-display');
+  const btnCurrencyUsd = document.getElementById('btn-currency-usd');
+  const btnCurrencyInr = document.getElementById('btn-currency-inr');
+  const btnGoogleSignin = document.getElementById('btn-google-signin');
+  const googleSigninText = document.getElementById('google-signin-btn-text');
+  const btnConfirmUpgradePro = document.getElementById('btn-confirm-upgrade-pro');
+
+  function updateQuotaUI() {
+    const quota = getAIQuota();
+    if (!quotaPill || !quotaPillText) return;
+
+    if (quota.isPro) {
+      quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/40 bg-purple-500/20 text-xs font-mono font-bold text-purple-700 dark:text-purple-300 shadow-xs';
+      quotaPillText.textContent = '⚡ PRO UNLIMITED (Active)';
+      if (btnTriggerProModal) {
+        btnTriggerProModal.textContent = 'Pro Member';
+        btnTriggerProModal.classList.add('opacity-70');
+      }
+    } else {
+      const remaining = Math.max(0, quota.max - quota.used);
+      if (remaining > 0) {
+        quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-mono font-medium text-purple-700 dark:text-purple-300';
+        quotaPillText.textContent = `⚡ ${remaining} / ${quota.max} Free Runs Left Today`;
+      } else {
+        quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono font-bold text-amber-700 dark:text-amber-400';
+        quotaPillText.textContent = '🔒 0 / 3 Free Runs (Limit Reached)';
+      }
+      if (btnTriggerProModal) {
+        btnTriggerProModal.textContent = 'Upgrade to Pro';
+        btnTriggerProModal.classList.remove('opacity-70');
+      }
+    }
+  }
+
+  function openProModal() {
+    proPaywallModal?.classList.remove('hidden');
+  }
+
+  function closeProModal() {
+    proPaywallModal?.classList.add('hidden');
+  }
+
+  btnTriggerProModal?.addEventListener('click', openProModal);
+  btnCloseProModal?.addEventListener('click', closeProModal);
+
+  proPaywallModal?.addEventListener('click', (e) => {
+    if (e.target === proPaywallModal) closeProModal();
+  });
+
+  // Currency Selector
+  btnCurrencyUsd?.addEventListener('click', () => {
+    if (proPriceDisplay) proPriceDisplay.textContent = '$4.99';
+    btnCurrencyUsd.className = 'px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer';
+    if (btnCurrencyInr) btnCurrencyInr.className = 'px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer';
+  });
+
+  btnCurrencyInr?.addEventListener('click', () => {
+    if (proPriceDisplay) proPriceDisplay.textContent = '₹199';
+    if (btnCurrencyInr) btnCurrencyInr.className = 'px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer';
+    if (btnCurrencyUsd) btnCurrencyUsd.className = 'px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer';
+  });
+
+  // Google Sign In Simulation
+  btnGoogleSignin?.addEventListener('click', () => {
+    setUserProfile('Scholar User', 'scholar@cleanwordcounter.com');
+    if (googleSigninText) googleSigninText.textContent = '✓ Signed in as scholar@cleanwordcounter.com';
+    notify('✓ Google account connected');
+  });
+
+  // Upgrade to Pro Action
+  btnConfirmUpgradePro?.addEventListener('click', () => {
+    upgradeToPro({ name: 'Pro Scholar', email: 'scholar@cleanwordcounter.com' });
+    updateQuotaUI();
+    closeProModal();
+    notify('✓ CleanWordCounter Pro Activated! Unlimited AI Workspace Unlocked.');
+  });
+
+  // Update active document metadata in AI Workspace
+  const aiSummarizeActiveDocLabel = document.getElementById('ai-summarize-active-doc-label');
+  const aiSummarizeActiveDocMeta = document.getElementById('ai-summarize-active-doc-meta');
+  const btnSummarizeUseEditor = document.getElementById('btn-summarize-use-editor');
+  const btnSummarizeCustomToggle = document.getElementById('btn-summarize-custom-toggle');
+  const aiSummarizeCustomInputBox = document.getElementById('ai-summarize-custom-input-box');
+  const aiSummarizeCustomText = document.getElementById('ai-summarize-custom-text') as HTMLTextAreaElement | null;
+
+  function updateAIWorkspaceDocStatus() {
+    const activeDoc = documents.find(d => d.id === activeDocId);
+    currentDocTitle = activeDoc?.title || 'Current Document';
+    const currentWords = textarea.value.trim() ? textarea.value.trim().split(/\s+/).length : 0;
+    
+    if (aiSummarizeActiveDocLabel) aiSummarizeActiveDocLabel.textContent = `Active Document: ${currentDocTitle}`;
+    if (aiSummarizeActiveDocMeta) aiSummarizeActiveDocMeta.textContent = `${currentWords} words ready for AI analysis`;
+  }
+
+  btnSummarizeUseEditor?.addEventListener('click', () => {
+    updateAIWorkspaceDocStatus();
+    aiSummarizeCustomInputBox?.classList.add('hidden');
+    if (aiSummarizeCustomText) aiSummarizeCustomText.value = '';
+    notify('✓ Synced with active editor document');
+  });
+
+  btnSummarizeCustomToggle?.addEventListener('click', () => {
+    aiSummarizeCustomInputBox?.classList.toggle('hidden');
+    if (!aiSummarizeCustomInputBox?.classList.contains('hidden')) {
+      aiSummarizeCustomText?.focus();
+    }
+  });
+
+  // ------------------------------------------------------------
+  // ACTION 1: Run AI PDF & Document Summarizer
+  // ------------------------------------------------------------
+  const btnRunSummarize = document.getElementById('btn-run-summarize');
+  const btnRunSummarizeSpinner = document.getElementById('btn-run-summarize-spinner');
+  const btnRunSummarizeText = document.getElementById('btn-run-summarize-text');
+  const aiSummarizeLoading = document.getElementById('ai-summarize-loading');
+  const aiSummarizeResults = document.getElementById('ai-summarize-results');
+  const outputExecSummary = document.getElementById('output-exec-summary');
+  const outputKeyTakeaways = document.getElementById('output-key-takeaways');
+  const outputFlashcardsGrid = document.getElementById('output-flashcards-grid');
+  const flashcardsCountBadge = document.getElementById('flashcards-count-badge');
+  const btnCopyExecSummary = document.getElementById('btn-copy-exec-summary');
+  const btnCopyTakeaways = document.getElementById('btn-copy-takeaways');
+  const btnExportFlashcardsMd = document.getElementById('btn-export-flashcards-md');
+  const btnExportFlashcardsCsv = document.getElementById('btn-export-flashcards-csv');
+  const btnExportFlashcardsPdf = document.getElementById('btn-export-flashcards-pdf');
+
+  btnRunSummarize?.addEventListener('click', async () => {
+    const { allowed } = canRunAIAction();
+    if (!allowed) {
+      openProModal();
+      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
+      return;
+    }
+
+    const textToAnalyze = (aiSummarizeCustomText && aiSummarizeCustomText.value.trim().length > 0)
+      ? aiSummarizeCustomText.value.trim()
+      : textarea.value.trim();
+
+    if (!textToAnalyze || textToAnalyze.length < 20) {
+      notify('Please enter or upload document text in the editor first');
+      return;
+    }
+
+    // Set loading state
+    aiSummarizeLoading?.classList.remove('hidden');
+    aiSummarizeResults?.classList.add('hidden');
+    if (btnRunSummarizeSpinner) btnRunSummarizeSpinner.classList.remove('hidden');
+    if (btnRunSummarizeText) btnRunSummarizeText.textContent = 'Analyzing Document...';
+    if (btnRunSummarize) (btnRunSummarize as HTMLButtonElement).disabled = true;
+
+    try {
+      const response = await callAIWorkspaceAPI({
+        action: 'summarize',
+        text: textToAnalyze,
+        options: { docTitle: currentDocTitle }
+      });
+
+      recordAIRun();
+      updateQuotaUI();
+
+      // Render Executive Summary
+      if (outputExecSummary) {
+        outputExecSummary.textContent = response.executiveSummary || 'Summary generated.';
+      }
+
+      // Render Takeaways
+      if (outputKeyTakeaways) {
+        outputKeyTakeaways.innerHTML = '';
+        (response.keyTakeaways || []).forEach((item: string) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-start gap-2 leading-relaxed';
+          li.innerHTML = `<span class="text-purple-600 font-bold shrink-0">•</span><span>${item}</span>`;
+          outputKeyTakeaways.appendChild(li);
+        });
+      }
+
+      // Render Flashcards
+      activeFlashcards = response.flashcards || [];
+      if (flashcardsCountBadge) flashcardsCountBadge.textContent = `${activeFlashcards.length} Cards`;
+      
+      if (outputFlashcardsGrid) {
+        outputFlashcardsGrid.innerHTML = '';
+        activeFlashcards.forEach((card, idx) => {
+          const cardEl = document.createElement('div');
+          cardEl.className = 'flashcard-item rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] p-4 transition-all hover:border-purple-500/40 cursor-pointer select-none';
+          cardEl.innerHTML = `
+            <div class="flex items-center justify-between text-[10px] font-mono text-[#8f8f8f] mb-2 uppercase">
+              <span>Card ${idx + 1}</span>
+              <span class="card-status-label text-purple-600">Click to reveal answer</span>
+            </div>
+            <div class="card-question font-semibold text-xs sm:text-sm text-[#171717] dark:text-[#ededed] mb-2">
+              ${card.question}
+            </div>
+            <div class="card-answer hidden pt-2.5 mt-2 border-t border-dashed border-[#ebebeb] dark:border-[#262626] text-xs text-[#4d4d4d] dark:text-[#a1a1a1] leading-relaxed">
+              ${card.answer}
+            </div>
+          `;
+
+          cardEl.addEventListener('click', () => {
+            const ans = cardEl.querySelector('.card-answer') as HTMLElement;
+            const status = cardEl.querySelector('.card-status-label') as HTMLElement;
+            if (ans) {
+              const isHidden = ans.classList.contains('hidden');
+              if (isHidden) {
+                ans.classList.remove('hidden');
+                if (status) status.textContent = 'Answer revealed';
+              } else {
+                ans.classList.add('hidden');
+                if (status) status.textContent = 'Click to reveal answer';
+              }
+            }
+          });
+
+          outputFlashcardsGrid.appendChild(cardEl);
+        });
+      }
+
+      aiSummarizeResults?.classList.remove('hidden');
+      notify('✓ Executive summary and study flashcards generated!');
+    } catch (err: any) {
+      alert(`AI Workspace Error: ${err.message || err}`);
+    } finally {
+      aiSummarizeLoading?.classList.add('hidden');
+      if (btnRunSummarizeSpinner) btnRunSummarizeSpinner.classList.add('hidden');
+      if (btnRunSummarizeText) btnRunSummarizeText.textContent = '⚡ Generate AI Summary & Flashcards';
+      if (btnRunSummarize) (btnRunSummarize as HTMLButtonElement).disabled = false;
+    }
+  });
+
+  // Action 1 Copy Buttons
+  btnCopyExecSummary?.addEventListener('click', () => {
+    if (outputExecSummary?.textContent) {
+      navigator.clipboard.writeText(outputExecSummary.textContent);
+      notify('✓ Copied executive summary to clipboard');
+    }
+  });
+
+  btnCopyTakeaways?.addEventListener('click', () => {
+    if (outputKeyTakeaways) {
+      const text = Array.from(outputKeyTakeaways.querySelectorAll('li')).map(li => `• ${li.textContent?.replace(/^•\s*/, '')}`).join('\n');
+      navigator.clipboard.writeText(text);
+      notify('✓ Copied key takeaways to clipboard');
+    }
+  });
+
+  // Action 1 Flashcard Exports
+  btnExportFlashcardsMd?.addEventListener('click', () => {
+    if (activeFlashcards.length === 0) return;
+    exportFlashcardsToMarkdown(currentDocTitle, activeFlashcards);
+    notify('✓ Downloaded flashcards as Markdown (.md)');
+  });
+
+  btnExportFlashcardsCsv?.addEventListener('click', () => {
+    if (activeFlashcards.length === 0) return;
+    exportFlashcardsToCSV(currentDocTitle, activeFlashcards);
+    notify('✓ Downloaded Anki-compatible CSV (.csv)');
+  });
+
+  btnExportFlashcardsPdf?.addEventListener('click', () => {
+    if (activeFlashcards.length === 0) return;
+    printOrExportPDF(currentDocTitle, activeFlashcards);
+  });
+
+  // ------------------------------------------------------------
+  // ACTION 2: YouTube / Lecture Transcript to Clean Notes
+  // ------------------------------------------------------------
+  const aiTranscriptInput = document.getElementById('ai-transcript-input') as HTMLTextAreaElement | null;
+  const transcriptInputStats = document.getElementById('transcript-input-stats');
+  const btnTranscriptPullEditor = document.getElementById('btn-transcript-pull-editor');
+  const btnTranscriptCleanLocal = document.getElementById('btn-transcript-clean-local');
+  const btnRunTranscript = document.getElementById('btn-run-transcript');
+  const btnRunTranscriptSpinner = document.getElementById('btn-run-transcript-spinner');
+  const btnRunTranscriptText = document.getElementById('btn-run-transcript-text');
+  const aiTranscriptLoading = document.getElementById('ai-transcript-loading');
+  const aiTranscriptResults = document.getElementById('ai-transcript-results');
+  const outputTranscriptTitle = document.getElementById('output-transcript-title');
+  const outputTranscriptMarkdown = document.getElementById('output-transcript-markdown');
+  const outputTranscriptActions = document.getElementById('output-transcript-actions');
+  const btnCopyTranscriptNotes = document.getElementById('btn-copy-transcript-notes');
+  const btnApplyTranscriptEditor = document.getElementById('btn-apply-transcript-editor');
+
+  function updateTranscriptWordStats() {
+    if (!aiTranscriptInput || !transcriptInputStats) return;
+    const words = aiTranscriptInput.value.trim() ? aiTranscriptInput.value.trim().split(/\s+/).length : 0;
+    transcriptInputStats.textContent = `${words} words`;
+  }
+
+  aiTranscriptInput?.addEventListener('input', updateTranscriptWordStats);
+
+  btnTranscriptPullEditor?.addEventListener('click', () => {
+    if (aiTranscriptInput) {
+      aiTranscriptInput.value = textarea.value;
+      updateTranscriptWordStats();
+      notify('✓ Pulled transcript from main editor');
+    }
+  });
+
+  btnTranscriptCleanLocal?.addEventListener('click', () => {
+    if (aiTranscriptInput && aiTranscriptInput.value.trim()) {
+      aiTranscriptInput.value = cleanTranscriptText(aiTranscriptInput.value);
+      updateTranscriptWordStats();
+      notify('✓ Stripped timestamps, speaker tags, and filler words');
+    }
+  });
+
+  btnRunTranscript?.addEventListener('click', async () => {
+    const { allowed } = canRunAIAction();
+    if (!allowed) {
+      openProModal();
+      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
+      return;
+    }
+
+    const transcriptText = (aiTranscriptInput && aiTranscriptInput.value.trim().length > 0)
+      ? aiTranscriptInput.value.trim()
+      : textarea.value.trim();
+
+    if (!transcriptText || transcriptText.length < 20) {
+      notify('Please paste transcript text first');
+      return;
+    }
+
+    aiTranscriptLoading?.classList.remove('hidden');
+    aiTranscriptResults?.classList.add('hidden');
+    if (btnRunTranscriptSpinner) btnRunTranscriptSpinner.classList.remove('hidden');
+    if (btnRunTranscriptText) btnRunTranscriptText.textContent = 'Restructuring Notes...';
+    if (btnRunTranscript) (btnRunTranscript as HTMLButtonElement).disabled = true;
+
+    try {
+      const response = await callAIWorkspaceAPI({
+        action: 'transcript',
+        text: transcriptText
+      });
+
+      recordAIRun();
+      updateQuotaUI();
+
+      if (outputTranscriptTitle) {
+        outputTranscriptTitle.textContent = response.title || 'Revision Notes';
+      }
+
+      if (outputTranscriptMarkdown) {
+        outputTranscriptMarkdown.textContent = response.cleanNotesMarkdown || 'Notes generated.';
+      }
+
+      if (outputTranscriptActions) {
+        outputTranscriptActions.innerHTML = '';
+        (response.actionItems || []).forEach((item: string) => {
+          const div = document.createElement('div');
+          div.className = 'flex items-center gap-2 text-xs text-[#333] dark:text-[#d1d1d1]';
+          div.innerHTML = `
+            <input type="checkbox" class="rounded border-[#ccc] text-blue-600 cursor-pointer" />
+            <span>${item}</span>
+          `;
+          outputTranscriptActions.appendChild(div);
+        });
+      }
+
+      aiTranscriptResults?.classList.remove('hidden');
+      notify('✓ Structured revision notes created!');
+    } catch (err: any) {
+      alert(`Transcript Error: ${err.message || err}`);
+    } finally {
+      aiTranscriptLoading?.classList.add('hidden');
+      if (btnRunTranscriptSpinner) btnRunTranscriptSpinner.classList.add('hidden');
+      if (btnRunTranscriptText) btnRunTranscriptText.textContent = '⚡ Structure Into Revision Notes';
+      if (btnRunTranscript) (btnRunTranscript as HTMLButtonElement).disabled = false;
+    }
+  });
+
+  btnCopyTranscriptNotes?.addEventListener('click', () => {
+    if (outputTranscriptMarkdown?.textContent) {
+      navigator.clipboard.writeText(outputTranscriptMarkdown.textContent);
+      notify('✓ Copied Markdown notes to clipboard');
+    }
+  });
+
+  btnApplyTranscriptEditor?.addEventListener('click', () => {
+    if (outputTranscriptMarkdown?.textContent) {
+      textarea.value = outputTranscriptMarkdown.textContent;
+      updateAll();
+      notify('✓ Replaced editor text with structured notes');
+    }
+  });
+
+  // ------------------------------------------------------------
+  // ACTION 3: Strict Word-Limit Essay Trimmer
+  // ------------------------------------------------------------
+  const aiTrimInput = document.getElementById('ai-trim-input') as HTMLTextAreaElement | null;
+  const aiTrimTargetInput = document.getElementById('ai-trim-target-input') as HTMLInputElement | null;
+  const trimInputStats = document.getElementById('trim-input-stats');
+  const btnTrimPullEditor = document.getElementById('btn-trim-pull-editor');
+  const presetTargetBtns = document.querySelectorAll('.preset-target-btn');
+  const btnRunTrim = document.getElementById('btn-run-trim');
+  const btnRunTrimSpinner = document.getElementById('btn-run-trim-spinner');
+  const btnRunTrimText = document.getElementById('btn-run-trim-text');
+  const aiTrimLoading = document.getElementById('ai-trim-loading');
+  const aiTrimResults = document.getElementById('ai-trim-results');
+  const trimStatOriginal = document.getElementById('trim-stat-original');
+  const trimStatTrimmed = document.getElementById('trim-stat-trimmed');
+  const trimStatBudget = document.getElementById('trim-stat-budget');
+  const trimStatSaved = document.getElementById('trim-stat-saved');
+  const trimCitationsList = document.getElementById('trim-citations-list');
+  const outputTrimmedEssay = document.getElementById('output-trimmed-essay');
+  const outputTrimNotes = document.getElementById('output-trim-notes');
+  const btnCopyTrimmedEssay = document.getElementById('btn-copy-trimmed-essay');
+  const btnApplyTrimmedEditor = document.getElementById('btn-apply-trimmed-editor');
+
+  function updateTrimWordStats() {
+    if (!aiTrimInput || !trimInputStats) return;
+    const words = aiTrimInput.value.trim() ? aiTrimInput.value.trim().split(/\s+/).length : 0;
+    trimInputStats.textContent = `${words} words`;
+  }
+
+  aiTrimInput?.addEventListener('input', updateTrimWordStats);
+
+  btnTrimPullEditor?.addEventListener('click', () => {
+    if (aiTrimInput) {
+      aiTrimInput.value = textarea.value;
+      updateTrimWordStats();
+      notify('✓ Pulled essay from main editor');
+    }
+  });
+
+  presetTargetBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetVal = (btn as HTMLElement).dataset.target;
+      if (targetVal && aiTrimTargetInput) {
+        aiTrimTargetInput.value = targetVal;
+        presetTargetBtns.forEach(b => b.className = 'preset-target-btn px-2.5 py-1 rounded-[4px] bg-[#f5f5f5] dark:bg-[#141414] hover:bg-emerald-500/10 hover:text-emerald-600 transition cursor-pointer');
+        (btn as HTMLElement).className = 'preset-target-btn px-2.5 py-1 rounded-[4px] bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/30 cursor-pointer';
+      }
+    });
+  });
+
+  btnRunTrim?.addEventListener('click', async () => {
+    const { allowed } = canRunAIAction();
+    if (!allowed) {
+      openProModal();
+      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
+      return;
+    }
+
+    const essayText = (aiTrimInput && aiTrimInput.value.trim().length > 0)
+      ? aiTrimInput.value.trim()
+      : textarea.value.trim();
+
+    if (!essayText || essayText.length < 20) {
+      notify('Please enter or pull your essay draft first');
+      return;
+    }
+
+    const targetWords = parseInt(aiTrimTargetInput?.value || '650', 10);
+
+    aiTrimLoading?.classList.remove('hidden');
+    aiTrimResults?.classList.add('hidden');
+    if (btnRunTrimSpinner) btnRunTrimSpinner.classList.remove('hidden');
+    if (btnRunTrimText) btnRunTrimText.textContent = 'Trimming to Word Budget...';
+    if (btnRunTrim) (btnRunTrim as HTMLButtonElement).disabled = true;
+
+    try {
+      const response = await callAIWorkspaceAPI({
+        action: 'trim',
+        text: essayText,
+        options: { targetWords }
+      });
+
+      recordAIRun();
+      updateQuotaUI();
+
+      if (trimStatOriginal) trimStatOriginal.textContent = `${response.originalWordCount || 0}w`;
+      if (trimStatTrimmed) trimStatTrimmed.textContent = `${response.trimmedWordCount || 0}w`;
+      if (trimStatBudget) trimStatBudget.textContent = `${response.targetWordCount || targetWords}w`;
+      if (trimStatSaved) trimStatSaved.textContent = `-${response.wordsSaved || 0}w`;
+
+      if (trimCitationsList) {
+        const citations = response.preservedCitations || [];
+        if (citations.length > 0) {
+          trimCitationsList.textContent = citations.join(', ');
+        } else {
+          trimCitationsList.textContent = 'All academic parenthetical references preserved';
+        }
+      }
+
+      if (outputTrimmedEssay) {
+        outputTrimmedEssay.textContent = response.trimmedEssay || 'Essay trimmed.';
+      }
+
+      if (outputTrimNotes) {
+        outputTrimNotes.textContent = response.editorialNotes || 'Verbose transitions and redundancies pruned.';
+      }
+
+      aiTrimResults?.classList.remove('hidden');
+      notify(`✓ Trimmed to ${response.trimmedWordCount} words (Budget: ${targetWords}w)!`);
+    } catch (err: any) {
+      alert(`Essay Trimmer Error: ${err.message || err}`);
+    } finally {
+      aiTrimLoading?.classList.add('hidden');
+      if (btnRunTrimSpinner) btnRunTrimSpinner.classList.add('hidden');
+      if (btnRunTrimText) btnRunTrimText.textContent = '⚡ Trim Essay to Budget';
+      if (btnRunTrim) (btnRunTrim as HTMLButtonElement).disabled = false;
+    }
+  });
+
+  btnCopyTrimmedEssay?.addEventListener('click', () => {
+    if (outputTrimmedEssay?.textContent) {
+      navigator.clipboard.writeText(outputTrimmedEssay.textContent);
+      notify('✓ Copied trimmed essay to clipboard');
+    }
+  });
+
+  btnApplyTrimmedEditor?.addEventListener('click', () => {
+    if (outputTrimmedEssay?.textContent) {
+      textarea.value = outputTrimmedEssay.textContent;
+      updateAll();
+      notify('✓ Applied trimmed essay to main editor');
+    }
+  });
+
+  // Initialize Quota & Doc Status
+  updateQuotaUI();
+  updateAIWorkspaceDocStatus();
 </script>

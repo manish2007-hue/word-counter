@@ -1,0 +1,300 @@
+/**
+ * Client-side Controller & Freemium Quota Manager for AI Study & Summary Workspace
+ */
+
+export interface QuotaState {
+  date: string;
+  used: number;
+  max: number;
+  isPro: boolean;
+  user?: {
+    name: string;
+    email: string;
+    picture?: string;
+  } | null;
+}
+
+const QUOTA_STORAGE_KEY = 'cwc_ai_quota_v1';
+const FREE_DAILY_RUNS = 3;
+
+function getTodayString(): string {
+  return new Date().toISOString().split('T')[0];
+}
+
+export function getAIQuota(): QuotaState {
+  if (typeof window === 'undefined') {
+    return { date: getTodayString(), used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
+  }
+
+  const today = getTodayString();
+  try {
+    const raw = localStorage.getItem(QUOTA_STORAGE_KEY);
+    if (!raw) {
+      const initial: QuotaState = { date: today, used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
+      localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(initial));
+      return initial;
+    }
+
+    const state: QuotaState = JSON.parse(raw);
+    // If it's a new day, reset used count while keeping Pro and user status
+    if (state.date !== today) {
+      state.date = today;
+      state.used = 0;
+      localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(state));
+    }
+    return state;
+  } catch (e) {
+    return { date: today, used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
+  }
+}
+
+export function saveAIQuota(state: QuotaState) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {}
+}
+
+export function canRunAIAction(): { allowed: boolean; remaining: number; isPro: boolean } {
+  const quota = getAIQuota();
+  if (quota.isPro) {
+    return { allowed: true, remaining: Infinity, isPro: true };
+  }
+  const remaining = Math.max(0, quota.max - quota.used);
+  return { allowed: remaining > 0, remaining, isPro: false };
+}
+
+export function recordAIRun(): QuotaState {
+  const quota = getAIQuota();
+  if (!quota.isPro) {
+    quota.used += 1;
+    saveAIQuota(quota);
+  }
+  return quota;
+}
+
+export function upgradeToPro(userProfile?: { name: string; email: string }): QuotaState {
+  const quota = getAIQuota();
+  quota.isPro = true;
+  if (userProfile) {
+    quota.user = userProfile;
+  } else if (!quota.user) {
+    quota.user = { name: 'Pro Scholar', email: 'pro.user@cleanwordcounter.com' };
+  }
+  saveAIQuota(quota);
+  return quota;
+}
+
+export function setUserProfile(name: string, email: string): QuotaState {
+  const quota = getAIQuota();
+  quota.user = { name, email };
+  saveAIQuota(quota);
+  return quota;
+}
+
+export function resetProStatusForTesting(): QuotaState {
+  const quota = getAIQuota();
+  quota.isPro = false;
+  quota.used = 0;
+  saveAIQuota(quota);
+  return quota;
+}
+
+/**
+ * Clean raw YouTube / Audio transcripts client-side:
+ * Strips timestamps like 00:12, [01:23:45], 1:23, speaker tags, and filler words.
+ */
+export function cleanTranscriptText(raw: string): string {
+  if (!raw) return '';
+  return raw
+    // Remove bracketed timestamps: [00:12], [01:23:45], (12:34)
+    .replace(/\[\d{1,2}:\d{2}(?::\d{2})?\]/g, '')
+    .replace(/\(\d{1,2}:\d{2}(?::\d{2})?\)/g, '')
+    // Remove standalone timestamps at line starts or word boundaries
+    .replace(/(?:^|\s)\d{1,2}:\d{2}(?::\d{2})?(?:\s|$)/gm, ' ')
+    // Remove common speaker prefixes like "Speaker 1:", "Host:", "Interviewer:"
+    .replace(/^(?:Speaker\s+\d+|Host|Interviewer|Guest|Dr\.\s+\w+|Prof\.\s+\w+):\s*/gmi, '')
+    // Strip common filler words gently without corrupting real words
+    .replace(/\b(um|uh|umm|uhh|er|ah)\b/gi, '')
+    .replace(/\b(you know|sort of|kind of|basically|literally)\b/gi, '')
+    // Normalize excessive whitespace
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n\s*\n\s*\n+/g, '\n\n')
+    .trim();
+}
+
+/**
+ * Call the server-side /api/ai-workspace route with streaming SSE support
+ */
+export async function callAIWorkspaceAPI(
+  payload: {
+    action: 'summarize' | 'transcript' | 'trim';
+    text: string;
+    options?: {
+      targetWords?: number;
+      stream?: boolean;
+      docTitle?: string;
+    };
+  },
+  onStreamChunk?: (chunk: string) => void
+): Promise<any> {
+  const base = (window as any).__BASE_URL__ || '';
+  const endpoint = `${base}/api/ai-workspace`;
+
+  if (payload.options?.stream && onStreamChunk) {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({ error: 'API call failed' }));
+      throw new Error(err.error || `HTTP error ${response.status}`);
+    }
+
+    if (!response.body) throw new Error('No streaming response body');
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let accumulatedText = '';
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith('data: ')) {
+          const raw = trimmed.slice(6);
+          if (raw === '[DONE]') continue;
+          try {
+            const data = JSON.parse(raw);
+            if (data.text) {
+              accumulatedText += data.text;
+              onStreamChunk(data.text);
+            }
+          } catch (e) {}
+        }
+      }
+    }
+
+    // Try parsing accumulated output as JSON
+    try {
+      return JSON.parse(accumulatedText);
+    } catch (e) {
+      const jsonMatch = accumulatedText.match(/```json\s*([\s\S]*?)\s*```/) || accumulatedText.match(/\{[\s\S]*\}/);
+      if (jsonMatch) return JSON.parse(jsonMatch[1] || jsonMatch[0]);
+      return { raw: accumulatedText };
+    }
+  }
+
+  // Non-streaming JSON fetch
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({ error: 'AI processing failed' }));
+    throw new Error(err.error || `HTTP error ${response.status}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * File Export Helpers for Flashcards & Study Notes
+ */
+export function downloadFile(filename: string, content: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+export function exportFlashcardsToMarkdown(docTitle: string, flashcards: Array<{ question: string; answer: string }>) {
+  let md = `# Study Flashcards — ${docTitle || 'Study Session'}\n`;
+  md += `*Generated by CleanWordCounter AI Workspace (${new Date().toLocaleDateString()})*\n\n`;
+  md += `---\n\n`;
+
+  flashcards.forEach((card, index) => {
+    md += `### Card ${index + 1}\n\n`;
+    md += `**Question:**\n${card.question}\n\n`;
+    md += `**Answer:**\n${card.answer}\n\n`;
+    md += `---\n\n`;
+  });
+
+  downloadFile(`${(docTitle || 'study-flashcards').toLowerCase().replace(/\s+/g, '-')}-flashcards.md`, md, 'text/markdown;charset=utf-8');
+}
+
+export function exportFlashcardsToCSV(docTitle: string, flashcards: Array<{ question: string; answer: string }>) {
+  let csv = `"Question","Answer"\n`;
+  flashcards.forEach(card => {
+    const q = card.question.replace(/"/g, '""');
+    const a = card.answer.replace(/"/g, '""');
+    csv += `"${q}","${a}"\n`;
+  });
+
+  downloadFile(`${(docTitle || 'study-flashcards').toLowerCase().replace(/\s+/g, '-')}-anki.csv`, csv, 'text/csv;charset=utf-8');
+}
+
+export function printOrExportPDF(docTitle: string, flashcards: Array<{ question: string; answer: string }>) {
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) return;
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <title>${docTitle || 'Flashcards'} – Study Deck</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 40px; color: #171717; }
+          h1 { font-size: 24px; margin-bottom: 4px; }
+          p.subtitle { color: #666; font-size: 13px; margin-bottom: 24px; font-family: monospace; }
+          .deck { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; page-break-inside: avoid; }
+          .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; background: #fafafa; }
+          .card-num { font-size: 11px; font-family: monospace; color: #0070f3; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; }
+          .question { font-weight: 600; font-size: 14px; margin-bottom: 12px; }
+          .answer { font-size: 13px; color: #333; line-height: 1.5; border-top: 1px dashed #ccc; padding-top: 8px; }
+          @media print {
+            body { padding: 0; }
+            button { display: none; }
+          }
+        </style>
+      </head>
+      <body>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+          <div>
+            <h1>${docTitle || 'Study Flashcards'}</h1>
+            <p class="subtitle">CleanWordCounter AI Study Deck • ${flashcards.length} Cards • 100% Client-Side Export</p>
+          </div>
+          <button onclick="window.print()" style="padding: 8px 16px; background:#171717; color:#fff; border:none; border-radius:6px; cursor:pointer;">Print / Save as PDF</button>
+        </div>
+        <div class="deck">
+          ${flashcards.map((card, i) => `
+            <div class="card">
+              <div class="card-num">Card ${i + 1}</div>
+              <div class="question">${card.question}</div>
+              <div class="answer">${card.answer}</div>
+            </div>
+          `).join('')}
+        </div>
+      </body>
+    </html>
+  `;
+
+  printWindow.document.write(html);
+  printWindow.document.close();
+}

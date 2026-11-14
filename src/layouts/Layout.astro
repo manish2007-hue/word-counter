@@ -83,11 +83,10 @@ const isTool = [
   'json-formatter'
 ].some(slug => canonicalSlug === slug || canonicalSlug.startsWith('character-counter'));
 
-const defaultSchema = {
-  "@context": "https://schema.org",
+const toolAppSchema = {
   "@type": ["WebApplication", "SoftwareApplication"],
-  "name": "CleanWordCounter",
-  "headline": "Free Online Word Counter Tool & Precision Word Count Checker",
+  "name": isHome ? "CleanWordCounter" : title.split('–')[0].split('—')[0].split('-')[0].trim(),
+  "headline": title,
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "All",
   "offers": {
@@ -104,7 +103,60 @@ const defaultSchema = {
   "url": canonicalUrl
 };
 
-const finalSchema = schema || defaultSchema;
+let finalSchema: any;
+
+if (schema) {
+  if (schema['@graph'] && Array.isArray(schema['@graph'])) {
+    const graph = [...schema['@graph']];
+    const hasApp = graph.some((node: any) => {
+      const type = Array.isArray(node['@type']) ? node['@type'].join(' ') : String(node['@type'] || '');
+      return type.includes('SoftwareApplication') || type.includes('WebApplication');
+    });
+    if (!hasApp) {
+      graph.unshift(toolAppSchema);
+    } else {
+      graph.forEach((node: any) => {
+        if (node['@type'] === 'WebApplication') {
+          node['@type'] = ['WebApplication', 'SoftwareApplication'];
+        }
+      });
+    }
+    finalSchema = {
+      "@context": "https://schema.org",
+      "@graph": graph
+    };
+  } else if (schema['@type'] === 'FAQPage') {
+    finalSchema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        toolAppSchema,
+        schema
+      ]
+    };
+  } else if (schema['@type'] === 'WebApplication' || (Array.isArray(schema['@type']) && schema['@type'].includes('WebApplication'))) {
+    finalSchema = {
+      ...schema,
+      "@type": ["WebApplication", "SoftwareApplication"],
+      "name": schema.name || toolAppSchema.name,
+      "url": canonicalUrl
+    };
+  } else {
+    finalSchema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        toolAppSchema,
+        schema
+      ]
+    };
+  }
+} else {
+  finalSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      toolAppSchema
+    ]
+  };
+};
 ---
 
 <!doctype html>
@@ -279,6 +331,10 @@ const finalSchema = schema || defaultSchema;
                       <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                       <span>Readability Checker</span>
                     </a>
+                    <a href={`${base}/flesch-kincaid-readability-calculator`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>
+                      <span>Flesch-Kincaid Calculator</span>
+                    </a>
                     <a href={`${base}/docx-pdf-word-counter-private`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
                       <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
                       <span>Private PDF &amp; DOCX</span>
@@ -314,6 +370,10 @@ const finalSchema = schema || defaultSchema;
                     <a href={`${base}/website-word-counter`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
                       <span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
                       <span>Website Word Counter</span>
+                    </a>
+                    <a href={`${base}/social-media-counter`} class="flex items-center gap-2 rounded-[6px] p-1.5 hover:bg-[#fafafa] dark:hover:bg-[#141414] transition text-xs font-medium text-[#171717] dark:text-[#ededed]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-pink-500"></span>
+                      <span>Social Media Limits</span>
                     </a>
                   </div>
 
@@ -783,9 +843,13 @@ const finalSchema = schema || defaultSchema;
                 <span class="text-[#52525b] dark:text-[#a1a1aa]">Style &amp; Hemingway Audit</span>
                 <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">5</kbd></span>
               </div>
-              <div class="flex items-center justify-between py-1">
+              <div class="flex items-center justify-between py-1 border-b border-[#f4f4f5] dark:border-[#1a1a1a]">
                 <span class="text-[#52525b] dark:text-[#a1a1aa]">AI Token Counter</span>
                 <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#f4f4f5] dark:bg-[#1c1c1c] border border-[#e4e4e7] dark:border-[#333] shadow-xs">6</kbd></span>
+              </div>
+              <div class="flex items-center justify-between py-1">
+                <span class="text-[#0070f3] font-medium">AI Study &amp; Summary</span>
+                <span class="flex items-center gap-1 font-mono text-[11px]"><kbd class="px-1.5 py-0.5 rounded bg-[#0070f3]/10 text-[#0070f3] border border-[#0070f3]/30 shadow-xs">Alt</kbd><span>+</span><kbd class="px-1.5 py-0.5 rounded bg-[#0070f3]/10 text-[#0070f3] border border-[#0070f3]/30 shadow-xs">7</kbd></span>
               </div>
             </div>
           </div>
@@ -1162,14 +1226,15 @@ const finalSchema = schema || defaultSchema;
           return;
         }
 
-        // Alt + 1..6: Switch analysis tabs
+        // Alt + 1..7: Switch analysis tabs
         const tabMap: Record<string, string> = {
           '1': 'keywords',
           '2': 'readability',
           '3': 'social',
           '4': 'academic',
           '5': 'style',
-          '6': 'tokens'
+          '6': 'tokens',
+          '7': 'ai-study'
         };
         if (e.altKey && tabMap[e.key]) {
           e.preventDefault();
