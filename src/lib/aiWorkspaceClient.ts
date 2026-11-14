@@ -1,103 +1,13 @@
 /**
- * Client-side Controller & Freemium Quota Manager for AI Study & Summary Workspace
+ * Client-side Controller for 100% Free & Unlimited AI Study & Summary Workspace
  */
 
-export interface QuotaState {
-  date: string;
-  used: number;
-  max: number;
-  isPro: boolean;
-  user?: {
-    name: string;
-    email: string;
-    picture?: string;
-  } | null;
+export function canRunAIAction(): { allowed: boolean; remaining: number } {
+  return { allowed: true, remaining: Infinity };
 }
 
-const QUOTA_STORAGE_KEY = 'cwc_ai_quota_v1';
-const FREE_DAILY_RUNS = 3;
-
-function getTodayString(): string {
-  return new Date().toISOString().split('T')[0];
-}
-
-export function getAIQuota(): QuotaState {
-  if (typeof window === 'undefined') {
-    return { date: getTodayString(), used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
-  }
-
-  const today = getTodayString();
-  try {
-    const raw = localStorage.getItem(QUOTA_STORAGE_KEY);
-    if (!raw) {
-      const initial: QuotaState = { date: today, used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
-      localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(initial));
-      return initial;
-    }
-
-    const state: QuotaState = JSON.parse(raw);
-    // If it's a new day, reset used count while keeping Pro and user status
-    if (state.date !== today) {
-      state.date = today;
-      state.used = 0;
-      localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(state));
-    }
-    return state;
-  } catch (e) {
-    return { date: today, used: 0, max: FREE_DAILY_RUNS, isPro: false, user: null };
-  }
-}
-
-export function saveAIQuota(state: QuotaState) {
-  if (typeof window === 'undefined') return;
-  try {
-    localStorage.setItem(QUOTA_STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {}
-}
-
-export function canRunAIAction(): { allowed: boolean; remaining: number; isPro: boolean } {
-  const quota = getAIQuota();
-  if (quota.isPro) {
-    return { allowed: true, remaining: Infinity, isPro: true };
-  }
-  const remaining = Math.max(0, quota.max - quota.used);
-  return { allowed: remaining > 0, remaining, isPro: false };
-}
-
-export function recordAIRun(): QuotaState {
-  const quota = getAIQuota();
-  if (!quota.isPro) {
-    quota.used += 1;
-    saveAIQuota(quota);
-  }
-  return quota;
-}
-
-export function upgradeToPro(userProfile?: { name: string; email: string }): QuotaState {
-  const quota = getAIQuota();
-  quota.isPro = true;
-  if (userProfile) {
-    quota.user = userProfile;
-  } else if (!quota.user) {
-    quota.user = { name: 'Pro Scholar', email: 'pro.user@cleanwordcounter.com' };
-  }
-  saveAIQuota(quota);
-  return quota;
-}
-
-export function setUserProfile(name: string, email: string): QuotaState {
-  const quota = getAIQuota();
-  quota.user = { name, email };
-  saveAIQuota(quota);
-  return quota;
-}
-
-export function resetProStatusForTesting(): QuotaState {
-  const quota = getAIQuota();
-  quota.isPro = false;
-  quota.used = 0;
-  saveAIQuota(quota);
-  return quota;
+export function recordAIRun() {
+  // 100% free & unlimited usage
 }
 
 /**

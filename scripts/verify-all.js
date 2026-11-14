@@ -173,8 +173,8 @@ if (all29ToolsValid && titlesSeen.size === 29) {
   console.log('✅ ALL 29 TOOLS HAVE DEDICATED PRE-RENDERED PAGES WITH UNIQUE TITLES, CANONICALS, H1, AND SOFTWAREAPPLICATION SCHEMA!');
 }
 
-// 4. Verify AI Workspace Service & Tab in dist/index.html
-console.log('\n--- 4. VERIFYING AI WORKSPACE & PRO PAYWALL ---');
+// 4. Verify AI Workspace Service & Tab in dist/index.html (100% Free & Unlimited)
+console.log('\n--- 4. VERIFYING 100% FREE AI WORKSPACE (NO PRO/PAYWALL) ---');
 const indexHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 
 const hasTab7 = indexHtml.includes('data-tab="ai-study"') && indexHtml.includes('AI Study &amp; Summary');
@@ -182,16 +182,18 @@ const hasTab7Panel = indexHtml.includes('id="tab-content-ai-study"');
 const hasAction1 = indexHtml.includes('id="ai-view-summarize"') && indexHtml.includes('btn-run-summarize');
 const hasAction2 = indexHtml.includes('id="ai-view-transcript"') && indexHtml.includes('btn-run-transcript');
 const hasAction3 = indexHtml.includes('id="ai-view-trim"') && indexHtml.includes('btn-run-trim');
-const hasPaywallModal = indexHtml.includes('id="pro-paywall-modal"') && indexHtml.includes('$4.99') && indexHtml.includes('₹199');
-const hasGoogleSignin = indexHtml.includes('btn-google-signin');
+const hasFreeBadge = indexHtml.includes('100% Free &amp; Unlimited');
+const hasPaywallModal = indexHtml.includes('id="pro-paywall-modal"');
+const hasPriceDisplay = indexHtml.includes('$4.99') || indexHtml.includes('₹199') || indexHtml.includes('Upgrade to Pro');
 
 console.log(`✓ Tab 7 Button (Alt + 7) rendered in HTML: ${hasTab7}`);
 console.log(`✓ Tab 7 Content Panel rendered in HTML: ${hasTab7Panel}`);
 console.log(`✓ Action 1: AI PDF & Document Summarizer rendered: ${hasAction1}`);
 console.log(`✓ Action 2: YouTube Transcript to Clean Notes rendered: ${hasAction2}`);
 console.log(`✓ Action 3: Strict Word-Limit Essay Trimmer rendered: ${hasAction3}`);
-console.log(`✓ Pro Paywall Modal ($4.99 / ₹199) rendered: ${hasPaywallModal}`);
-console.log(`✓ Google Sign-in button rendered: ${hasGoogleSignin}`);
+console.log(`✓ 100% Free & Unlimited Badge rendered: ${hasFreeBadge}`);
+console.log(`✓ Pro Paywall Modal completely removed: ${!hasPaywallModal}`);
+console.log(`✓ No money or pro pricing displayed: ${!hasPriceDisplay}`);
 
 // Verify Server-side API files
 const apiFunctionExists = fs.existsSync(path.join(process.cwd(), 'functions', 'api', 'ai-workspace.ts'));
@@ -200,9 +202,9 @@ const aiClientExists = fs.existsSync(path.join(process.cwd(), 'src', 'lib', 'aiW
 
 console.log(`✓ Cloudflare Pages Function (functions/api/ai-workspace.ts): ${apiFunctionExists}`);
 console.log(`✓ Backend Service with Gemini 2.5 Flash (src/lib/aiWorkspaceService.ts): ${aiServiceExists}`);
-console.log(`✓ Client Quota & Action Controller (src/lib/aiWorkspaceClient.ts): ${aiClientExists}`);
+console.log(`✓ Client Action Controller (src/lib/aiWorkspaceClient.ts): ${aiClientExists}`);
 
-if (!hasTab7 || !hasTab7Panel || !hasAction1 || !hasAction2 || !hasAction3 || !hasPaywallModal || !apiFunctionExists || !aiServiceExists || !aiClientExists) {
+if (!hasTab7 || !hasTab7Panel || !hasAction1 || !hasAction2 || !hasAction3 || hasPaywallModal || hasPriceDisplay || !apiFunctionExists || !aiServiceExists || !aiClientExists) {
   console.error('❌ AI Workspace verification failed');
   failed = true;
 }

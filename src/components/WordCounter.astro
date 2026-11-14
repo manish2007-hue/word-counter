@@ -1333,19 +1333,12 @@ const {
           </p>
         </div>
 
-        <!-- Freemium Quota Status Pill -->
+        <!-- 100% Free Unlimited Badge -->
         <div class="flex items-center gap-2">
-          <div id="ai-quota-pill" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-mono font-medium text-purple-700 dark:text-purple-300">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xs font-mono font-medium text-emerald-700 dark:text-emerald-400">
             <span>⚡</span>
-            <span id="ai-quota-pill-text">3 / 3 Free Runs Left Today</span>
+            <span>100% Free &amp; Unlimited</span>
           </div>
-          <button
-            id="btn-trigger-pro-modal"
-            type="button"
-            class="px-3 py-1 rounded-full text-xs font-medium bg-[#171717] text-white dark:bg-white dark:text-black hover:opacity-90 transition cursor-pointer"
-          >
-            Upgrade to Pro
-          </button>
         </div>
       </div>
 
@@ -1791,104 +1784,6 @@ const {
 
 </div>
 
-<!-- VERCEL PRO PAYWALL & FREEMIUM QUOTA MODAL -->
-<div id="pro-paywall-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-  <div class="w-full max-w-lg rounded-[14px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0c0c0c] p-6 sm:p-7 shadow-2xl transition-all relative overflow-hidden">
-    
-    <!-- Top Close Button -->
-    <button
-      id="btn-close-pro-modal"
-      type="button"
-      class="absolute top-4 right-4 h-7 w-7 rounded-[6px] border border-[#ebebeb] dark:border-[#262626] hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] flex items-center justify-center text-sm text-[#8f8f8f] hover:text-[#171717] dark:hover:text-white transition cursor-pointer"
-      aria-label="Close modal"
-    >
-      ✕
-    </button>
-
-    <!-- Modal Header -->
-    <div class="text-center mb-6">
-      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400 font-mono text-xs font-semibold border border-purple-500/20 mb-3">
-        <span>⚡</span> CleanWordCounter Pro
-      </div>
-      <h3 class="text-xl sm:text-2xl font-bold tracking-tight text-[#171717] dark:text-[#ededed]">
-        Unlock Unlimited AI Study Power
-      </h3>
-      <p class="text-xs sm:text-sm text-[#71717a] dark:text-[#a1a1aa] mt-1.5 max-w-sm mx-auto leading-relaxed">
-        You've used all 3 free daily AI runs. Upgrade for unlimited document summaries, transcript restructuring, and strict essay trimming.
-      </p>
-    </div>
-
-    <!-- Pricing Card with Currency Toggle -->
-    <div class="rounded-[10px] border border-purple-500/30 bg-purple-500/5 dark:bg-purple-500/10 p-5 mb-5 text-center">
-      <div class="flex items-center justify-center gap-2 mb-2">
-        <span class="text-3xl font-extrabold text-[#171717] dark:text-white" id="pro-price-display">$4.99</span>
-        <span class="text-xs font-mono text-[#8f8f8f]">/ month</span>
-      </div>
-      <div class="flex items-center justify-center gap-2 text-[11px] font-mono">
-        <button id="btn-currency-usd" type="button" class="px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer">USD ($4.99)</button>
-        <button id="btn-currency-inr" type="button" class="px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer">INR (₹199)</button>
-      </div>
-      <p class="text-[11px] text-[#8f8f8f] mt-2">Cancel anytime • Zero long-term commitment • Instant activation</p>
-    </div>
-
-    <!-- Features Checklist -->
-    <div class="space-y-2 mb-6 text-xs text-[#333] dark:text-[#d1d1d1]">
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span><strong>Unlimited</strong> AI PDF &amp; Document Summaries</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span><strong>Unlimited</strong> YouTube &amp; Lecture Transcript-to-Notes</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span><strong>Unlimited</strong> Strict Word-Limit Essay Trimming (up to 50,000 words)</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span><strong>Unlimited</strong> Flashcard Exports (.md, .csv Anki, .pdf)</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span>Sub-second Gemini 2.5 Flash server inference with dedicated priority queue</span>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-emerald-500 font-bold">✓</span>
-        <span>All 29 standard utilities remain 100% free with zero login required</span>
-      </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="space-y-2.5">
-      <!-- Google Sign In Simulation Button -->
-      <button
-        id="btn-google-signin"
-        type="button"
-        class="w-full flex items-center justify-center gap-2.5 rounded-[8px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#141414] py-2.5 px-4 text-xs font-semibold text-[#171717] dark:text-[#ededed] hover:bg-[#fafafa] dark:hover:bg-[#1f1f1f] transition cursor-pointer"
-      >
-        <svg class="w-4 h-4" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-        </svg>
-        <span id="google-signin-btn-text">Sign in with Google</span>
-      </button>
-
-      <!-- Upgrade Button -->
-      <button
-        id="btn-confirm-upgrade-pro"
-        type="button"
-        class="w-full rounded-[8px] bg-[#171717] dark:bg-white text-white dark:text-black py-2.5 px-4 text-xs font-bold hover:opacity-90 transition cursor-pointer shadow-md"
-      >
-        Upgrade to Pro Now — Instant Access
-      </button>
-    </div>
-
-  </div>
-</div>
-
 <!-- VERCEL CUSTOM TARGET MODAL (Clean hairline modal) -->
 <div id="target-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
   <div class="w-full max-w-sm rounded-[12px] border border-[#ebebeb] dark:border-[#262626] bg-white dark:bg-[#0a0a0a] p-6 shadow-2xl transition-all">
@@ -1927,11 +1822,6 @@ const {
   import { estimateTokens } from '../lib/tokens';
   import { AI_MODELS_CATALOG, calculateModelTokens, type AIModel } from '../lib/aiModels';
   import {
-    getAIQuota,
-    canRunAIAction,
-    recordAIRun,
-    upgradeToPro,
-    setUserProfile,
     cleanTranscriptText,
     callAIWorkspaceAPI,
     exportFlashcardsToMarkdown,
@@ -4188,89 +4078,6 @@ const {
     });
   });
 
-  // Freemium Quota UI Manager
-  const quotaPill = document.getElementById('ai-quota-pill');
-  const quotaPillText = document.getElementById('ai-quota-pill-text');
-  const btnTriggerProModal = document.getElementById('btn-trigger-pro-modal');
-  const proPaywallModal = document.getElementById('pro-paywall-modal');
-  const btnCloseProModal = document.getElementById('btn-close-pro-modal');
-  const proPriceDisplay = document.getElementById('pro-price-display');
-  const btnCurrencyUsd = document.getElementById('btn-currency-usd');
-  const btnCurrencyInr = document.getElementById('btn-currency-inr');
-  const btnGoogleSignin = document.getElementById('btn-google-signin');
-  const googleSigninText = document.getElementById('google-signin-btn-text');
-  const btnConfirmUpgradePro = document.getElementById('btn-confirm-upgrade-pro');
-
-  function updateQuotaUI() {
-    const quota = getAIQuota();
-    if (!quotaPill || !quotaPillText) return;
-
-    if (quota.isPro) {
-      quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/40 bg-purple-500/20 text-xs font-mono font-bold text-purple-700 dark:text-purple-300 shadow-xs';
-      quotaPillText.textContent = '⚡ PRO UNLIMITED (Active)';
-      if (btnTriggerProModal) {
-        btnTriggerProModal.textContent = 'Pro Member';
-        btnTriggerProModal.classList.add('opacity-70');
-      }
-    } else {
-      const remaining = Math.max(0, quota.max - quota.used);
-      if (remaining > 0) {
-        quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-xs font-mono font-medium text-purple-700 dark:text-purple-300';
-        quotaPillText.textContent = `⚡ ${remaining} / ${quota.max} Free Runs Left Today`;
-      } else {
-        quotaPill.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono font-bold text-amber-700 dark:text-amber-400';
-        quotaPillText.textContent = '🔒 0 / 3 Free Runs (Limit Reached)';
-      }
-      if (btnTriggerProModal) {
-        btnTriggerProModal.textContent = 'Upgrade to Pro';
-        btnTriggerProModal.classList.remove('opacity-70');
-      }
-    }
-  }
-
-  function openProModal() {
-    proPaywallModal?.classList.remove('hidden');
-  }
-
-  function closeProModal() {
-    proPaywallModal?.classList.add('hidden');
-  }
-
-  btnTriggerProModal?.addEventListener('click', openProModal);
-  btnCloseProModal?.addEventListener('click', closeProModal);
-
-  proPaywallModal?.addEventListener('click', (e) => {
-    if (e.target === proPaywallModal) closeProModal();
-  });
-
-  // Currency Selector
-  btnCurrencyUsd?.addEventListener('click', () => {
-    if (proPriceDisplay) proPriceDisplay.textContent = '$4.99';
-    btnCurrencyUsd.className = 'px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer';
-    if (btnCurrencyInr) btnCurrencyInr.className = 'px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer';
-  });
-
-  btnCurrencyInr?.addEventListener('click', () => {
-    if (proPriceDisplay) proPriceDisplay.textContent = '₹199';
-    if (btnCurrencyInr) btnCurrencyInr.className = 'px-2 py-0.5 rounded bg-purple-500 text-white font-bold cursor-pointer';
-    if (btnCurrencyUsd) btnCurrencyUsd.className = 'px-2 py-0.5 rounded bg-black/5 dark:bg-white/10 text-[#71717a] dark:text-[#a1a1aa] hover:text-[#171717] cursor-pointer';
-  });
-
-  // Google Sign In Simulation
-  btnGoogleSignin?.addEventListener('click', () => {
-    setUserProfile('Scholar User', 'scholar@cleanwordcounter.com');
-    if (googleSigninText) googleSigninText.textContent = '✓ Signed in as scholar@cleanwordcounter.com';
-    notify('✓ Google account connected');
-  });
-
-  // Upgrade to Pro Action
-  btnConfirmUpgradePro?.addEventListener('click', () => {
-    upgradeToPro({ name: 'Pro Scholar', email: 'scholar@cleanwordcounter.com' });
-    updateQuotaUI();
-    closeProModal();
-    notify('✓ CleanWordCounter Pro Activated! Unlimited AI Workspace Unlocked.');
-  });
-
   // Update active document metadata in AI Workspace
   const aiSummarizeActiveDocLabel = document.getElementById('ai-summarize-active-doc-label');
   const aiSummarizeActiveDocMeta = document.getElementById('ai-summarize-active-doc-meta');
@@ -4321,13 +4128,6 @@ const {
   const btnExportFlashcardsPdf = document.getElementById('btn-export-flashcards-pdf');
 
   btnRunSummarize?.addEventListener('click', async () => {
-    const { allowed } = canRunAIAction();
-    if (!allowed) {
-      openProModal();
-      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
-      return;
-    }
-
     const textToAnalyze = (aiSummarizeCustomText && aiSummarizeCustomText.value.trim().length > 0)
       ? aiSummarizeCustomText.value.trim()
       : textarea.value.trim();
@@ -4350,9 +4150,6 @@ const {
         text: textToAnalyze,
         options: { docTitle: currentDocTitle }
       });
-
-      recordAIRun();
-      updateQuotaUI();
 
       // Render Executive Summary
       if (outputExecSummary) {
@@ -4500,13 +4297,6 @@ const {
   });
 
   btnRunTranscript?.addEventListener('click', async () => {
-    const { allowed } = canRunAIAction();
-    if (!allowed) {
-      openProModal();
-      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
-      return;
-    }
-
     const transcriptText = (aiTranscriptInput && aiTranscriptInput.value.trim().length > 0)
       ? aiTranscriptInput.value.trim()
       : textarea.value.trim();
@@ -4527,9 +4317,6 @@ const {
         action: 'transcript',
         text: transcriptText
       });
-
-      recordAIRun();
-      updateQuotaUI();
 
       if (outputTranscriptTitle) {
         outputTranscriptTitle.textContent = response.title || 'Revision Notes';
@@ -4630,13 +4417,6 @@ const {
   });
 
   btnRunTrim?.addEventListener('click', async () => {
-    const { allowed } = canRunAIAction();
-    if (!allowed) {
-      openProModal();
-      notify('Free quota limit reached. Upgrade to Pro for unlimited runs.');
-      return;
-    }
-
     const essayText = (aiTrimInput && aiTrimInput.value.trim().length > 0)
       ? aiTrimInput.value.trim()
       : textarea.value.trim();
@@ -4660,9 +4440,6 @@ const {
         text: essayText,
         options: { targetWords }
       });
-
-      recordAIRun();
-      updateQuotaUI();
 
       if (trimStatOriginal) trimStatOriginal.textContent = `${response.originalWordCount || 0}w`;
       if (trimStatTrimmed) trimStatTrimmed.textContent = `${response.trimmedWordCount || 0}w`;
@@ -4713,7 +4490,6 @@ const {
     }
   });
 
-  // Initialize Quota & Doc Status
-  updateQuotaUI();
+  // Initialize Doc Status
   updateAIWorkspaceDocStatus();
 </script>
